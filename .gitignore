@@ -7,3 +7,4 @@
 /obj
 /bin/Debug/netstandard2.1
 /.vs/Gizmo.Web.Api.Client
+/bin/Debug/netstandard2.0
