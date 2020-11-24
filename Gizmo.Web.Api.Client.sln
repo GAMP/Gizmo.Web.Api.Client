@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30621.155
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gizmo.Web.Api.Client", "Gizmo.Web.Api.Client.csproj", "{81B11E36-6B49-490E-A9B0-06BF600F525B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gizmo.Web.Api.Models", "..\Gizmo.Web.Api.Models\Gizmo.Web.Api.Models.csproj", "{E752B0BD-F5E2-48C8-91C9-D25CDF5EC46D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{81B11E36-6B49-490E-A9B0-06BF600F525B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81B11E36-6B49-490E-A9B0-06BF600F525B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81B11E36-6B49-490E-A9B0-06BF600F525B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81B11E36-6B49-490E-A9B0-06BF600F525B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E752B0BD-F5E2-48C8-91C9-D25CDF5EC46D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E752B0BD-F5E2-48C8-91C9-D25CDF5EC46D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E752B0BD-F5E2-48C8-91C9-D25CDF5EC46D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E752B0BD-F5E2-48C8-91C9-D25CDF5EC46D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2B61D0E5-2B1D-4A8B-8078-F64F59EE5FAD}
+	EndGlobalSection
+EndGlobal
