@@ -1,4 +1,7 @@
-﻿using System.Net.Http;
+﻿using Gizmo.Web.Api.Models;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Gizmo.Web.Api.Client
 {
@@ -13,5 +16,10 @@ namespace Gizmo.Web.Api.Client
         } 
 
         #endregion
+
+        public Task<PagedList<Product>> GetAsync()
+        {
+            return GetAsync<PagedList<Product>>(GetRequestRoutePath(), default);
+        }
     }
 }

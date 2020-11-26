@@ -17,6 +17,8 @@ namespace Gizmo.Web.Api.Client
         {
             if (string.IsNullOrWhiteSpace(route))
                 throw new ArgumentNullException(nameof(route));
+
+            Route = route;
         }
         #endregion
 
