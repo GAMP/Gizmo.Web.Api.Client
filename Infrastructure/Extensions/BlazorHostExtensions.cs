@@ -15,8 +15,7 @@ namespace Gizmo.Web.Api.Client
         public static void AddWebApiClient(this IServiceCollection services)
         {
             services.AddSingleton<UsersWebApiClient>();
-            services.AddSingleton<ProductsWebApiClient>();
-            services.AddSingleton<ProductsWebApiClientV1>();
+            services.AddSingleton<ProductsWebApiClient>();            
             services.AddSingleton<AttributesWebApiClient>();
             services.AddSingleton<HostGroupsWebApiClient>();
         }
