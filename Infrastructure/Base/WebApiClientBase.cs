@@ -1,5 +1,7 @@
 ﻿using Gizmo.Web.Api.Models;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Reflection;
@@ -350,6 +352,25 @@ namespace Gizmo.Web.Api.Client
             return new ValueTask<HttpContent>(JsonContent.Create(obj));         
         }
 
+        #endregion
+
+        #region Validation
+
+        /// <summary>
+        /// Validates the state of current object and 
+        /// </summary>
+        /// <param name="obj"><Content object/param>
+        /// <returns> List of errors</returns>
+        protected List<ValidationResult> Validate(object obj)
+        {
+            var ctx = new ValidationContext(obj);
+            var results = new List<ValidationResult>();
+            if(!Validator.TryValidateObject(obj, ctx, results, true))
+            {
+                return results;
+            }
+            return null;
+        }
         #endregion
     }
 }

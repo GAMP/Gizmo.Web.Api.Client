@@ -8,3 +8,7 @@
 /bin/Debug/netstandard2.1
 /.vs/Gizmo.Web.Api.Client
 /bin/Debug/netstandard2.0
+/.vs
+/bin/Release/netstandard2.0
+/Gizmo.Web.Api.Client.xml
+/Properties/launchSettings.json

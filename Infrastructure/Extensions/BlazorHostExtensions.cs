@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Gizmo.Web.Api.Client.Client;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Gizmo.Web.Api.Client
 {
@@ -15,6 +16,9 @@ namespace Gizmo.Web.Api.Client
         {
             services.AddSingleton<UsersWebApiClient>();
             services.AddSingleton<ProductsWebApiClient>();
+            services.AddSingleton<ProductsWebApiClientV1>();
+            services.AddSingleton<AttributesWebApiClient>();
+            services.AddSingleton<HostGroupsWebApiClient>();
         }
     }
 }
