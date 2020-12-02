@@ -26,26 +26,22 @@ namespace Gizmo.Web.Api.Client.Client
 
         public Task<CreateResult> CreateAsync(Attribute attribute, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrl(attribute), attribute, ct);
+            return PostAsync<CreateResult>(attribute, ct);
         }
 
         public Task<CreateResult> PutAsync(Attribute attribute, CancellationToken ct = default)
         {
-            return PutAsync<CreateResult>(CreateRequestUrl(attribute), attribute, ct);
+            return PutAsync<CreateResult>(attribute, ct);
         }
 
         public Task<Attribute> FindAsync(int id, CancellationToken ct = default)
-        {
-            var extendedRoute = GetRequestRoutePath();
-            extendedRoute += "/" + id;
-            return GetAsync<Attribute>(extendedRoute, ct);
+        {            
+            return GetAsync<Attribute>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }
 
         public Task<Attribute> DeleteAsync(int id, CancellationToken ct = default)
-        {
-            var extendedRoute = GetRequestRoutePath();
-            extendedRoute += "/" + id;
-            return DeleteAsync<Attribute>(extendedRoute, ct);
+        {           
+            return DeleteAsync<Attribute>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }
     }
 }
