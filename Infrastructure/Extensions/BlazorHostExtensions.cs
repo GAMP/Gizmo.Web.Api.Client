@@ -19,6 +19,7 @@ namespace Gizmo.Web.Api.Client
             services.AddSingleton<AttributesWebApiClient>();
             services.AddSingleton<HostGroupsWebApiClient>();
             services.AddSingleton<ProductGroupsWebApiClient>();
+            services.AddSingleton<UserGroupsWebApiClient>();
         }
     }
 }

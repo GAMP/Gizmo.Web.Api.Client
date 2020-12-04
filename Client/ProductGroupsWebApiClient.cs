@@ -28,14 +28,14 @@ namespace Gizmo.Web.Api.Client.Client
             return GetAsync<PagedList<ProductGroup>>(filter, ct);
         }
 
-        public Task<CreateResult> CreateAsync(ProductGroup productGroup, CancellationToken ct = default)
+        public Task<CreateResult> CreateAsync(ProductGroupModelCreate productGroup, CancellationToken ct = default)
         {
             return PostAsync<CreateResult>(productGroup, ct);
         }
 
-        public Task<CreateResult> PutAsync(ProductGroup productGroup, CancellationToken ct = default)
+        public Task<UpdateResult> PutAsync(ProductGroupModelUpdate productGroup, CancellationToken ct = default)
         {
-            return PutAsync<CreateResult>(productGroup, ct);
+            return PutAsync<UpdateResult>(productGroup, ct);
         }
 
         public Task<ProductGroup> FindAsync(int id, CancellationToken ct = default)
@@ -43,9 +43,9 @@ namespace Gizmo.Web.Api.Client.Client
             return GetAsync<ProductGroup>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }
 
-        public Task<ProductGroup> DeleteAsync(int id, CancellationToken ct = default)
+        public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
         {
-            return DeleteAsync<ProductGroup>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }
     }
 }

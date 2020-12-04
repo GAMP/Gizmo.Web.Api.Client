@@ -62,7 +62,7 @@ namespace Gizmo.Web.Api.Client
 
         protected virtual string CreateRequestUrlWithRouteParameters(string routeParameters)
         {
-            return CreateRequestUrl(routeParameters, null);
+            return CreateRequestUrl(routeParameters, default(IUrlQueryParameters));
         }
 
         protected virtual string CreateRequestUrlWithQueryParameters(string queryParameters)
@@ -77,7 +77,12 @@ namespace Gizmo.Web.Api.Client
 
         protected virtual string CreateRequestUrl(IUrlQueryParameters queryParameters)
         {
-            return CreateRequestUrl(null, queryParameters);
+            return CreateRequestUrl(default(IUrlRouteParameters), queryParameters);
+        }
+
+        protected virtual string CreateRequestUrl(string routeParameters, IUrlQueryParameters queryParameters)
+        {
+            return CreateRequestUrl(routeParameters, ParameterGenerator.Generate(queryParameters));
         }
 
         protected virtual string CreateRequestUrl(IUrlRouteParameters routeParameters, IUrlQueryParameters queryParameters)
@@ -346,8 +351,8 @@ namespace Gizmo.Web.Api.Client
         {
             if (obj == null)
                 return new ValueTask<HttpContent>();
-            
-            //serializaer based configuration goes here 
+
+            //serializaer based configuration goes here             
 
             return new ValueTask<HttpContent>(JsonContent.Create(obj));         
         }

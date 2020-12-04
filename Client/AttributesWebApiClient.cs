@@ -23,15 +23,15 @@ namespace Gizmo.Web.Api.Client.Client
         {
             return GetAsync<PagedList<Attribute>>(filter, ct);
         }
-
-        public Task<CreateResult> CreateAsync(Attribute attribute, CancellationToken ct = default)
+        
+        public Task<CreateResult> CreateAsync(AttributeModelCreate attribute, CancellationToken ct = default)
         {
             return PostAsync<CreateResult>(attribute, ct);
         }
 
-        public Task<CreateResult> PutAsync(Attribute attribute, CancellationToken ct = default)
+        public Task<UpdateResult> PutAsync(AttributeModelUpdate attribute, CancellationToken ct = default)
         {
-            return PutAsync<CreateResult>(attribute, ct);
+            return PutAsync<UpdateResult>(attribute, ct);
         }
 
         public Task<Attribute> FindAsync(int id, CancellationToken ct = default)
@@ -39,9 +39,9 @@ namespace Gizmo.Web.Api.Client.Client
             return GetAsync<Attribute>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }
 
-        public Task<Attribute> DeleteAsync(int id, CancellationToken ct = default)
+        public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
         {           
-            return DeleteAsync<Attribute>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }
     }
 }
