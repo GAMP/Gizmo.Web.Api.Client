@@ -30,12 +30,12 @@ namespace Gizmo.Web.Api.Client.Client
 
         public Task<CreateResult> CreateAsync(ProductGroupModelCreate productGroup, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(productGroup, ct);
+            return PostAsync<CreateResult>(CreateRequestUrl(), productGroup, ct);
         }
 
         public Task<UpdateResult> PutAsync(ProductGroupModelUpdate productGroup, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(productGroup, ct);
+            return PutAsync<UpdateResult>(CreateRequestUrl(), productGroup, ct);
         }
 
         public Task<ProductGroup> FindAsync(int id, CancellationToken ct = default)

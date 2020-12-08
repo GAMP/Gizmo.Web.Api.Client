@@ -31,12 +31,12 @@ namespace Gizmo.Web.Api.Client.Client
 
         public Task<CreateResult> CreateAsync(UserGroupModelCreate userGroup, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrl(userGroup), ct);
+            return PostAsync<CreateResult>(CreateRequestUrl(),userGroup, ct);
         }
 
         public Task<UpdateResult> UpdateAsync(UserGroupModelUpdate userGroup, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(userGroup, ct);
+            return PutAsync<UpdateResult>(CreateRequestUrl(), userGroup, ct);
         }
 
         public Task<UserGroup> GetByIdAsync(int id, CancellationToken ct = default)

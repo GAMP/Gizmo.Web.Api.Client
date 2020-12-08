@@ -29,12 +29,12 @@ namespace Gizmo.Web.Api.Client.Client
 
         public Task<CreateResult> CreateAsync(HostGroupModelCreate hostGroup, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(hostGroup, ct);
+            return PostAsync<CreateResult>(CreateRequestUrl(), hostGroup, ct);
         }
 
         public Task<UpdateResult> PutAsync(HostGroupModelUpdate hostGroup, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(hostGroup, ct);
+            return PutAsync<UpdateResult>(CreateRequestUrl(), hostGroup, ct);
         }
         public Task<HostGroup> FindAsync(int id, CancellationToken ct = default)
         {           
