@@ -64,13 +64,13 @@ namespace Gizmo.Web.Api.Client
            
         }
 
-        public Task<UpdateResult> UpdateBundledProduct(BundledProductModelUpdate bundledProduct, CancellationToken ct=default)
+        public Task<UpdateResult> UpdateBundledProductAsync(BundledProductModelUpdate bundledProduct, CancellationToken ct=default)
         {
             return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"bundle/bundledproducts"), bundledProduct, ct);
             
         }
 
-        public Task<DeleteResult> DeleteBundledProduct(int bundleId, int bundledProductId, CancellationToken ct = default)
+        public Task<DeleteResult> DeleteBundledProductAsync(int bundleId, int bundledProductId, CancellationToken ct = default)
         {
             return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"bundle/{bundleId}/bundledproducts/{bundledProductId}"), ct);
         }
@@ -83,7 +83,7 @@ namespace Gizmo.Web.Api.Client
         {
             return GetAsync<IEnumerable<ProductUserPrice>>(CreateRequestUrlWithRouteParameters($"{id}/userprices"),ct);
         }
-        public Task<CreateResult> CreateProductUserPrice(int id, ProductUserPriceModelCreate productUserPrice, CancellationToken ct = default)
+        public Task<CreateResult> CreateProductUserPriceAsync(int id, ProductUserPriceModelCreate productUserPrice, CancellationToken ct = default)
         {
             return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"{id}/userprices"), productUserPrice, ct);            
         }
@@ -139,22 +139,22 @@ namespace Gizmo.Web.Api.Client
 
         #region Bundle User Prices
 
-        public Task<IEnumerable<ProductBundleUserPrice>> GetBundleUserPricesAsync(int id, int bundledProductId, CancellationToken ct = default)
+        public Task<IEnumerable<ProductBundleUserPrice>> GetBundleProductUserPricesAsync(int id, int bundledProductId, CancellationToken ct = default)
         {
             return GetAsync<IEnumerable<ProductBundleUserPrice>>(CreateRequestUrlWithRouteParameters($"bundle/{id}/bundledproducts/{bundledProductId}/userprices"), ct);
         }
 
-        public Task<CreateResult> CreateBundleUserPriceAsync(int id, int bunledProductId, ProductBundleUserPriceModelCreate productBundleUserPrice, CancellationToken ct = default)
+        public Task<CreateResult> CreateBundleProductUserPriceAsync(int id, int bunledProductId, ProductBundleUserPriceModelCreate productBundleUserPrice, CancellationToken ct = default)
         {
             return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"bundle/{id}/bundledproducts/{bunledProductId}/userprices"), productBundleUserPrice, ct);
         }
 
-        public Task<UpdateResult> UpdateBundleUserPriceAsync(ProductBundleUserPriceModelUpdate productBundleUserPrice, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateBundleProductUserPriceAsync(ProductBundleUserPriceModelUpdate productBundleUserPrice, CancellationToken ct = default)
         {
             return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters("bundle/bundledproducts/userprices"), productBundleUserPrice, ct);
         }
 
-        public Task<DeleteResult> DeleteBundleUserPriceAsync(int id, int bundledProductId, int userPriceId, CancellationToken ct = default)
+        public Task<DeleteResult> DeleteBundleProductUserPriceAsync(int id, int bundledProductId, int userPriceId, CancellationToken ct = default)
         {
             return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"bundle/{id}/bundledproducts/{bundledProductId}/userprices/{userPriceId}"), ct);
         }
@@ -212,6 +212,11 @@ namespace Gizmo.Web.Api.Client
         public Task<CreateResult> CreateProductImageAsync(int id, ProductImageModelCreate productImage, CancellationToken ct = default)
         {
             return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"{id}/images"), productImage, ct);
+        }       
+
+        public Task<UpdateResult> UpdateProductImageAsync(ProductImageModelUpdate productImage, CancellationToken ct = default)
+        {
+            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"images"), productImage, ct);
         }
 
         public Task<DeleteResult> DeleteProductImageAsync(int id, int productImageId, CancellationToken ct = default)
