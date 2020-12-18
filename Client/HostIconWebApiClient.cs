@@ -1,0 +1,51 @@
+﻿using Gizmo.Web.Api.Models;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace Gizmo.Web.Api.Client.Client
+{
+    [WebApiRoute("api/v2/hosticons")]
+    public class HostIconWebApiClient:WebApiClientBase
+    {
+        #region COSTRUCTOR
+        public HostIconWebApiClient(HttpClient client): base(client)
+        {
+
+        }
+        #endregion
+
+        public Task<PagedList<HostIcon>> GetAsync(CancellationToken ct = default)
+        {
+            return GetAsync(default, ct);
+        }
+
+        public Task<PagedList<HostIcon>> GetAsync(HostIconsFilter filter,CancellationToken ct = default)
+        {
+            return GetAsync<PagedList<HostIcon>>(filter, ct);
+        }
+
+        public Task<CreateResult> CreateAsync(HostIconModelCreate hostIconModelCreate, CancellationToken ct = default)
+        {
+            return PostAsync<CreateResult>(CreateRequestUrl(), hostIconModelCreate, ct);
+        }
+
+        public Task<UpdateResult> UpdateAsync(HostIconModelUpdate hostIconModelUpdate, CancellationToken ct = default)
+        {
+            return PutAsync<UpdateResult>(CreateRequestUrl(), hostIconModelUpdate, ct);
+        }
+
+        public Task<HostIcon> GetByIdAsync(int id, CancellationToken ct = default)
+        {
+            return GetAsync<HostIcon>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+        }
+
+        public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
+        {
+            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+        }
+    }
+}

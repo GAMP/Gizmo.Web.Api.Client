@@ -276,6 +276,8 @@ namespace Gizmo.Web.Api.Client
           
             await ThrowApiExceptionIfRequiredAsync(httpResponseMessage, ct);
 
+            var x = await httpResponseMessage.Content.ReadAsStreamAsync();
+
             using (var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync())
             {
                 //get our content headers
@@ -295,6 +297,7 @@ namespace Gizmo.Web.Api.Client
                     AllowTrailingCommas = true,
                     PropertyNameCaseInsensitive = true,
                 };
+                
                 return await JsonSerializer.DeserializeAsync<TResult>(contentStream, options, ct);
             }
         }

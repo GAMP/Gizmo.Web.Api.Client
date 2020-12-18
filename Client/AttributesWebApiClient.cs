@@ -29,7 +29,7 @@ namespace Gizmo.Web.Api.Client.Client
             return PostAsync<CreateResult>(CreateRequestUrl(), attribute, ct);
         }
 
-        public Task<UpdateResult> PutAsync(AttributeModelUpdate attribute, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateAsync(AttributeModelUpdate attribute, CancellationToken ct = default)
         {
             return PutAsync<UpdateResult>(CreateRequestUrl(), attribute, ct);
         }
