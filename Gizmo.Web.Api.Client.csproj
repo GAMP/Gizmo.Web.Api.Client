@@ -3,7 +3,15 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<LangVersion>latest</LangVersion>
-		<PackageProjectUrl>https://github.com/GAMP/Gizmo.Web.Api.Client</PackageProjectUrl>
+		<PackageProjectUrl>https://www.gizmopowered.net/</PackageProjectUrl>
+		<Authors>NETProjects</Authors>
+		<Product>Gizmo</Product>
+		<Description>Gizmo web api client. This library contains web api clients implementations.</Description>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<RepositoryUrl>https://github.com/GAMP/Gizmo.Web.Api.Client</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<Copyright>NETProjects</Copyright>
+		<PackageIcon>package_icon.png</PackageIcon>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -15,6 +23,13 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Gizmo.Shared\Gizmo.Shared.csproj" />
 		<ProjectReference Include="..\Gizmo.Web.Api.Models\Gizmo.Web.Api.Models.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="Resources\package_icon.png">
+	    <Pack>True</Pack>
+	    <PackagePath></PackagePath>
+	  </None>
 	</ItemGroup>
 
 </Project>

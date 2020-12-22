@@ -12,3 +12,4 @@
 /bin/Release/netstandard2.0
 /Gizmo.Web.Api.Client.xml
 /Properties/launchSettings.json
+*.nupkg
