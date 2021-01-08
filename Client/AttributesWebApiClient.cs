@@ -34,7 +34,7 @@ namespace Gizmo.Web.Api.Client.Client
             return PutAsync<UpdateResult>(CreateRequestUrl(), attribute, ct);
         }
 
-        public Task<Attribute> FindAsync(int id, CancellationToken ct = default)
+        public Task<Attribute> GetByIdAsync(int id, CancellationToken ct = default)
         {            
             return GetAsync<Attribute>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }

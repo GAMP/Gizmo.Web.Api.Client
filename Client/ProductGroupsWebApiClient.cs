@@ -33,12 +33,12 @@ namespace Gizmo.Web.Api.Client.Client
             return PostAsync<CreateResult>(CreateRequestUrl(), productGroup, ct);
         }
 
-        public Task<UpdateResult> PutAsync(ProductGroupModelUpdate productGroup, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateAsync(ProductGroupModelUpdate productGroup, CancellationToken ct = default)
         {
             return PutAsync<UpdateResult>(CreateRequestUrl(), productGroup, ct);
         }
 
-        public Task<ProductGroup> FindAsync(int id, CancellationToken ct = default)
+        public Task<ProductGroup> GetByIdAsync(int id, CancellationToken ct = default)
         {
             return GetAsync<ProductGroup>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }

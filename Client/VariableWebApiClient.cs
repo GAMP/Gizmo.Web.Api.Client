@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Gizmo.Web.Api.Client.Client
 {
     [WebApiRoute("api/v2/variables")]
-    class VariableWebApiClient:WebApiClientBase
+    public class VariableWebApiClient:WebApiClientBase
     {
         #region CONSTRUCTOR
         public VariableWebApiClient(HttpClient client): base(client)
@@ -38,7 +38,7 @@ namespace Gizmo.Web.Api.Client.Client
             return PutAsync<UpdateResult>(CreateRequestUrl(), variableModelUpdate, ct);
         }
 
-        public Task<Variable> FindAsync(int id, CancellationToken ct = default)
+        public Task<Variable> GetByIdAsync(int id, CancellationToken ct = default)
         {
             return GetAsync<Variable>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }

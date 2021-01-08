@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Gizmo.Web.Api.Client.Client
 {
     [WebApiRoute("api/v2/usergroups")]
-    class UserGroupsWebApiClient : WebApiClientBase
+    public class UserGroupsWebApiClient : WebApiClientBase
     {
         #region CONSTRUCTOR        
         public UserGroupsWebApiClient(HttpClient httpClient) : base(httpClient)

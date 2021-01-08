@@ -25,7 +25,7 @@ namespace Gizmo.Web.Api.Client.Client
 
         public Task<PagedList<PaymentMethod>> GetAsync(PaymentMethodsFilter filter, CancellationToken ct = default)
         {
-            return GetAsync(filter, ct);
+            return GetAsync<PagedList<PaymentMethod>>(filter, ct);
         }
 
         public Task<CreateResult> CreateAsync(PaymentMethodModelCreate paymentMethodModelCreate, CancellationToken ct = default)

@@ -25,7 +25,7 @@ namespace Gizmo.Web.Api.Client.Client
 
         public Task<PagedList<Asset>> GetAsync(AssetsFilter filter, CancellationToken ct = default)
         {
-            return GetAsync(filter, ct);
+            return GetAsync<PagedList<Asset>>(filter, ct);
         }
 
         public Task<CreateResult> CreateAsync(AssetModelCreate asset, CancellationToken ct = default)
@@ -38,7 +38,7 @@ namespace Gizmo.Web.Api.Client.Client
             return PutAsync<UpdateResult>(CreateRequestUrl(), assetModelUpdate, ct);
         }
 
-        public Task<Asset> FindByIdAsync(int id, CancellationToken ct = default)
+        public Task<Asset> GetByIdAsync(int id, CancellationToken ct = default)
         {
             return GetAsync<Asset>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }
