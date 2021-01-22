@@ -34,7 +34,7 @@ namespace Gizmo.Web.Api.Client
             services.AddSingleton<TimeSalesPresetsWebApiClient>();
             services.AddSingleton<OperatorsWebApiClient>();
             services.AddSingleton<AuthenticationWebApiClient>();
-
+            services.AddSingleton<OrdersWebApiClient>();
         }
     }
 }
