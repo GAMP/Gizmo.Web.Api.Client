@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 namespace Gizmo.Web.Api.Client.Client
 {
     [WebApiRoute("api/v2/orders")]
-    public class OrdersWebApiClient:WebApiClientBase
+    public class OrdersWebApiClient : WebApiClientBase
     {
         #region CONSTRUCTOR
-        public OrdersWebApiClient(HttpClient client):base(client)
+        public OrdersWebApiClient(HttpClient client) : base(client)
         {
 
         }
@@ -35,7 +35,7 @@ namespace Gizmo.Web.Api.Client.Client
 
         public Task<CalculatedOrder> CalculateUserOrderPriceAsync(int id, CalculateOrderOptionsModelBase order, CancellationToken ct = default)
         {
-            return GetAsync<CalculatedOrder>(CreateRequestUrlWithRouteParameters($"calculate/user/{id}"),order, ct);
+            return GetAsync<CalculatedOrder>(CreateRequestUrl($"calculate/user/{id}", order), ct);
         }
 
         public Task<CalculatedOrder> CalculateGuestOrderPriceAsync(CalculateOrderOptionsModelBase order, CancellationToken ct = default)
@@ -43,9 +43,9 @@ namespace Gizmo.Web.Api.Client.Client
             return GetAsync<CalculatedOrder>(CreateRequestUrlWithRouteParameters($"calculate/guest"), order, ct);
         }
 
-        public Task<CreateResult> CreateUserOrderAsync(int id,CalculateOrderOptions order, CancellationToken ct = default)
+        public Task<CreateResult> CreateUserOrderAsync(int id, CalculateOrderOptions order, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"user/{id}"),order, ct);
+            return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"user/{id}"), order, ct);
         }
 
         public Task<CreateResult> InvoiceUserOrderAsync(int id, CalculateInvoiceOrderOptions calculateInvoiceOrderOptions, CancellationToken ct = default)
@@ -77,7 +77,7 @@ namespace Gizmo.Web.Api.Client.Client
         {
             return GetAsync<OrderLineDeliveredStatus>(CreateRequestUrlWithRouteParameters($"{id}/orderlines/{orderLineId}/delivered"), ct);
         }
-        public Task<OrderLineDeliveredStatus> SetOrderLineDeliveredQuantityAsync(int id, int orderLineId,OrderLineDeliveredStatusModelUpdate orderLineDeliveredStatusModelUpdate, CancellationToken ct = default)
+        public Task<OrderLineDeliveredStatus> SetOrderLineDeliveredQuantityAsync(int id, int orderLineId, OrderLineDeliveredStatusModelUpdate orderLineDeliveredStatusModelUpdate, CancellationToken ct = default)
         {
             return GetAsync<OrderLineDeliveredStatus>(CreateRequestUrlWithRouteParameters($"{id}/orderlines/{orderLineId}/delivered"), ct);
         }

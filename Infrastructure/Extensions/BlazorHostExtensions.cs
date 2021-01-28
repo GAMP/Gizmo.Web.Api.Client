@@ -35,6 +35,21 @@ namespace Gizmo.Web.Api.Client
             services.AddSingleton<OperatorsWebApiClient>();
             services.AddSingleton<AuthenticationWebApiClient>();
             services.AddSingleton<OrdersWebApiClient>();
+            services.AddSingleton<ApplicationCategoriesWebApiClient>();
+            services.AddSingleton<ApplicationDeploymentsWebApiClient>();
+            services.AddSingleton<ApplicationEnterprisesWebApiClient>();
+            services.AddSingleton<ApplicationExecutablesWebApiClient>();
+            services.AddSingleton<ApplicationGroupsWebApiClient>();
+            services.AddSingleton<ApplicationLicensesWebApiClient>();
+            services.AddSingleton<ApplicationPersonalFilesWebApiClient>();
+            services.AddSingleton<ApplicationsWebApiClient>();
+            services.AddSingleton<ApplicationTasksWebApiClient>();
+            services.AddSingleton<BillingProfilesWebApiClient>();
+            services.AddSingleton<DepositTransactionsWebApiClient>();
+            services.AddSingleton<InvoicePaymentsWebApiClient>();
+            services.AddSingleton<InvoicesWebApiClient>();
+            services.AddSingleton<ProductsStockWebApiClient>();
+            services.AddSingleton<RegisterTransactionsWebApiClient>();
         }
     }
 }
