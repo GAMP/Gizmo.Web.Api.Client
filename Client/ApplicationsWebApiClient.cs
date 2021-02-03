@@ -44,5 +44,15 @@ namespace Gizmo.Web.Api.Client.Client
         {
             return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }
+
+        public Task<ApplicationImage> GetApplicationImage(int id, CancellationToken ct = default)
+        {
+            return GetAsync<ApplicationImage>(CreateRequestUrlWithRouteParameters($"{id}/image"), ct);
+        }
+
+        public Task<UpdateResult> UpdateApplicationImage(int id, ApplicationImage applicationImage, CancellationToken ct = default)
+        {
+            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"{id}/image"), applicationImage, ct);
+        }
     }
 }

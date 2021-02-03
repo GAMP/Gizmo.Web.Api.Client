@@ -40,7 +40,7 @@ namespace Gizmo.Web.Api.Client.Client
 
         public Task<CalculatedOrder> CalculateGuestOrderPriceAsync(CalculateOrderOptionsModelBase order, CancellationToken ct = default)
         {
-            return GetAsync<CalculatedOrder>(CreateRequestUrlWithRouteParameters($"calculate/guest"), order, ct);
+            return GetAsync<CalculatedOrder>(CreateRequestUrl($"calculate/guest", order), ct);
         }
 
         public Task<CreateResult> CreateUserOrderAsync(int id, CalculateOrderOptions order, CancellationToken ct = default)

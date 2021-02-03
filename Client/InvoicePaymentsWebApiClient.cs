@@ -32,7 +32,7 @@ namespace Gizmo.Web.Api.Client.Client
 
         public Task<CreateResult> CreateAsync(InvoicePaymentModelCreate invoicePaymentModelCreate, CancellationToken ct = default)
         {
-            return PutAsync<CreateResult>(CreateRequestUrl(), invoicePaymentModelCreate, ct);
+            return PostAsync<CreateResult>(CreateRequestUrl(), invoicePaymentModelCreate, ct);
         }
     }
 }

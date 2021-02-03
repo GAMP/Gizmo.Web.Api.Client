@@ -47,7 +47,7 @@ namespace Gizmo.Web.Api.Client.Client
 
         public Task<IEnumerable<ApplicationExecutablePersonalFile>> GetApplicationExecutablePersonalFiles(int id, CancellationToken ct = default)
         {
-            return GetAsync<IEnumerable<ApplicationExecutablePersonalFile>>(CreateRequestUrlWithRouteParameters("${id}/personalfiles"),ct);
+            return GetAsync<IEnumerable<ApplicationExecutablePersonalFile>>(CreateRequestUrlWithRouteParameters($"{id}/personalfiles"),ct);
         }
 
         public Task<CreateResult> CreateApplicationExecutablePersonalFile(int id, ApplicationExecutablePersonalFileModelCreate applicationExecutablePersonalFileModelCreate, CancellationToken ct = default)

@@ -32,7 +32,7 @@ namespace Gizmo.Web.Api.Client.Client
 
         public Task<CreateResult> CreateAsync(DepositTransactionModelCreate depositTransactionModelCreate, CancellationToken ct = default)
         {
-            return PutAsync<CreateResult>(CreateRequestUrl(), depositTransactionModelCreate, ct);
+            return PostAsync<CreateResult>(CreateRequestUrl(), depositTransactionModelCreate, ct);
         }
     }
 }
