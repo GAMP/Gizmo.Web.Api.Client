@@ -47,17 +47,17 @@ namespace Gizmo.Web.Api.Client.Client
 
         public Task<IEnumerable<ApplicationExecutablePersonalFile>> GetApplicationExecutablePersonalFiles(int id, CancellationToken ct = default)
         {
-            return GetAsync<IEnumerable<ApplicationExecutablePersonalFile>>(CreateRequestUrlWithRouteParameters($"{id}/personalfiles"),ct);
+            return GetAsync<IEnumerable<ApplicationExecutablePersonalFile>>(CreateRequestUrlWithRouteParameters($"{id}/personalfiles"), ct);
         }
 
         public Task<CreateResult> CreateApplicationExecutablePersonalFile(int id, ApplicationExecutablePersonalFileModelCreate applicationExecutablePersonalFileModelCreate, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"{id}/personalfiles"), applicationExecutablePersonalFileModelCreate,ct);
+            return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"{id}/personalfiles"), applicationExecutablePersonalFileModelCreate, ct);
         }
 
         public Task<UpdateResult> UpdateApplicationExecutablePersonalFile(ApplicationExecutablePersonalFileModelUpdate applicationExecutablePersonalFileModelUpdate, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"personalfiles"),applicationExecutablePersonalFileModelUpdate,ct);
+            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"personalfiles"), applicationExecutablePersonalFileModelUpdate, ct);
         }
 
         public Task<DeleteResult> DeleteApplicationExecutablePersonalFile(int id, int personalFileId, CancellationToken ct = default)
@@ -67,17 +67,17 @@ namespace Gizmo.Web.Api.Client.Client
 
         public Task<IEnumerable<ApplicationExecutableDeployment>> GetApplicationExecutableDeployments(int id, CancellationToken ct = default)
         {
-            return GetAsync<IEnumerable<ApplicationExecutableDeployment>>(CreateRequestUrlWithRouteParameters($"{id}/deployments"),ct);
+            return GetAsync<IEnumerable<ApplicationExecutableDeployment>>(CreateRequestUrlWithRouteParameters($"{id}/deployments"), ct);
         }
 
-        public Task<CreateResult> CreateApplicationExecutableDeployment(int id, ApplicationExecutableModelCreate applicationExecutableModelCreate, CancellationToken ct = default)
+        public Task<CreateResult> CreateApplicationExecutableDeployment(int id, ApplicationExecutableDeploymentModelCreate applicationExecutableDeploymentModelCreate, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"{id}/deployments"),applicationExecutableModelCreate,ct);
+            return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"{id}/deployments"), applicationExecutableDeploymentModelCreate, ct);
         }
 
-        public Task<UpdateResult> UpdateApplicationExecutableDeployment(ApplicationExecutableModelUpdate applicationExecutableModelUpdate, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateApplicationExecutableDeployment(ApplicationExecutableDeploymentModelUpdate applicationExecutableDeploymentModelUpdate, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"deployments"),applicationExecutableModelUpdate,ct);
+            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"deployments"), applicationExecutableDeploymentModelUpdate, ct);
         }
 
         public Task<DeleteResult> DeleteApplicationExecutableDeployment(int id, int deploymentId, CancellationToken ct = default)
@@ -87,10 +87,10 @@ namespace Gizmo.Web.Api.Client.Client
 
         public Task<IEnumerable<ApplicationExecutableTask>> GetApplicationExecutableTasks(int id, CancellationToken ct = default)
         {
-            return GetAsync<IEnumerable<ApplicationExecutableTask>>(CreateRequestUrlWithRouteParameters($"{id}/tasks"),ct);
+            return GetAsync<IEnumerable<ApplicationExecutableTask>>(CreateRequestUrlWithRouteParameters($"{id}/tasks"), ct);
         }
 
-        public Task<CreateResult> CreateApplicationExecutableTask(int id, ApplicationExecutableTaskModelCreate applicationExecutableTaskModelCreate, CancellationToken ct= default)
+        public Task<CreateResult> CreateApplicationExecutableTask(int id, ApplicationExecutableTaskModelCreate applicationExecutableTaskModelCreate, CancellationToken ct = default)
         {
             return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"{id}/tasks"), applicationExecutableTaskModelCreate, ct);
         }
@@ -107,7 +107,7 @@ namespace Gizmo.Web.Api.Client.Client
 
         public Task<IEnumerable<ApplicationExecutableLicense>> GetApplicationExecutableLicenses(int id, CancellationToken ct = default)
         {
-            return GetAsync<IEnumerable<ApplicationExecutableLicense>>(CreateRequestUrlWithRouteParameters($"{id}/licenses"),ct);
+            return GetAsync<IEnumerable<ApplicationExecutableLicense>>(CreateRequestUrlWithRouteParameters($"{id}/licenses"), ct);
         }
 
         public Task<CreateResult> CreateApplicationExecutableLicense(int id, ApplicationExecutableLicenseModelCreate applicationExecutableLicenseModelCreate, CancellationToken ct = default)
@@ -115,9 +115,9 @@ namespace Gizmo.Web.Api.Client.Client
             return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"{id}/licenses"), applicationExecutableLicenseModelCreate, ct);
         }
 
-        public Task<UpdateResult> UpdateApplicationExecutableLicense(ApplicationExecutableModelUpdate applicationExecutableModelUpdate, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateApplicationExecutableLicense(ApplicationExecutableLicenseModelUpdate applicationExecutableLicenseModelUpdate, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"licenses"), applicationExecutableModelUpdate, ct);
+            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"licenses"), applicationExecutableLicenseModelUpdate, ct);
         }
 
         public Task<DeleteResult> DeleteApplicationExecutableLicense(int id, int licenseId, CancellationToken ct = default)
@@ -137,7 +137,7 @@ namespace Gizmo.Web.Api.Client.Client
 
         public Task<UpdateResult> UpdateApplicationExecutableCdImage(ApplicationExecutableCdImageModelUpdate applicationExecutableCdImageModelUpdate, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"cdimages"),applicationExecutableCdImageModelUpdate,ct);
+            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"cdimages"), applicationExecutableCdImageModelUpdate, ct);
         }
 
         public Task<DeleteResult> DeleteApplicationExecutableCdImage(int id, int cdImageId, CancellationToken ct = default)

@@ -29,10 +29,5 @@ namespace Gizmo.Web.Api.Client.Client
         {
             return GetAsync<RegisterTransaction>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }
-
-        public Task<CreateResult> CreateAsync(RegisterTransactionModelCreate registerTransactionModelCreate, CancellationToken ct = default)
-        {
-            return PutAsync<CreateResult>(CreateRequestUrl(), registerTransactionModelCreate, ct);
-        }
     }
 }

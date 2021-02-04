@@ -25,24 +25,9 @@ namespace Gizmo.Web.Api.Client.Client
             return GetAsync<PagedList<ApplicationLicense>>(filter, ct);
         }
 
-        public Task<CreateResult> CreateAsync(ApplicationLicenseModelCreate applicationLicenseModelCreate, CancellationToken ct = default)
-        {
-            return PostAsync<CreateResult>(CreateRequestUrl(), applicationLicenseModelCreate, ct);
-        }
-
-        public Task<UpdateResult> UpdateAsync(ApplicationLicenseModelUpdate applicationLicenseModelUpdate, CancellationToken ct = default)
-        {
-            return PutAsync<UpdateResult>(CreateRequestUrl(), applicationLicenseModelUpdate, ct);
-        }
-
         public Task<ApplicationLicense> GetByIdAsync(int id, CancellationToken ct = default)
         {
             return GetAsync<ApplicationLicense>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
-        }
-
-        public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
-        {
-            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }
     }
 }
