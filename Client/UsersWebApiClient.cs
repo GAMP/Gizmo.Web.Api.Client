@@ -56,7 +56,7 @@ namespace Gizmo.Web.Api.Client
             return GetAsync<IEnumerable<UserAttribute>>(CreateRequestUrlWithRouteParameters($"{id}/attributes"), ct);
         }
 
-        public Task<CreateResult> CreateUserAtrributeAsync(int id, UserAttributeModelCreate userAttributeModelCreate, CancellationToken ct = default)
+        public Task<CreateResult> CreateUserAttributeAsync(int id, UserAttributeModelCreate userAttributeModelCreate, CancellationToken ct = default)
         {
             return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"{id}/attributes"), userAttributeModelCreate, ct);
         }
@@ -69,6 +69,35 @@ namespace Gizmo.Web.Api.Client
         public Task<DeleteResult> DeleteUserAttributeAsync(int id, int userAttributeId, CancellationToken ct = default)
         {
             return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}/attributes/{userAttributeId}"), ct);
+        }
+
+
+        #endregion
+
+        #region User Notes
+        public Task<PagedList<UserNote>> GetUserNotesAsync(int id, CancellationToken ct = default)
+        {
+            return GetAsync<PagedList<UserNote>>(CreateRequestUrlWithRouteParameters($"{id}/notes"), ct);
+        }
+
+        public Task<CreateResult> CreateUserNoteAsync(int id, UserNoteModelCreate userNoteModelCreate, CancellationToken ct = default)
+        {
+            return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"{id}/notes"), userNoteModelCreate, ct);
+        }
+
+        public Task<UpdateResult> UpdateUserNoteAsync(int id, UserNoteModelUpdate userNoteModelUpdate, CancellationToken ct = default)
+        {
+            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"{id}/notes"), userNoteModelUpdate, ct);
+        }
+
+        public Task<DeleteResult> DeleteUserNoteAsync(int id, int noteId, CancellationToken ct = default)
+        {
+            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}/notes/{noteId}"), ct);
+        }
+
+        public Task<UserNote> GetUserNoteByIdAsync(int id, CancellationToken ct = default)
+        {
+            return GetAsync<UserNote>(CreateRequestUrlWithRouteParameters($"{id}/notes"), ct);
         }
         #endregion
     }
