@@ -85,9 +85,9 @@ namespace Gizmo.Web.Api.Client
             return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"{id}/notes"), userNoteModelCreate, ct);
         }
 
-        public Task<UpdateResult> UpdateUserNoteAsync(int id, UserNoteModelUpdate userNoteModelUpdate, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateUserNoteAsync(UserNoteModelUpdate userNoteModelUpdate, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"{id}/notes"), userNoteModelUpdate, ct);
+            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"notes"), userNoteModelUpdate, ct);
         }
 
         public Task<DeleteResult> DeleteUserNoteAsync(int id, int noteId, CancellationToken ct = default)
@@ -95,9 +95,9 @@ namespace Gizmo.Web.Api.Client
             return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}/notes/{noteId}"), ct);
         }
 
-        public Task<UserNote> GetUserNoteByIdAsync(int id, CancellationToken ct = default)
+        public Task<UserNote> GetUserNoteByIdAsync(int id, int userNoteId, CancellationToken ct = default)
         {
-            return GetAsync<UserNote>(CreateRequestUrlWithRouteParameters($"{id}/notes"), ct);
+            return GetAsync<UserNote>(CreateRequestUrlWithRouteParameters($"{id}/notes/{userNoteId}"), ct);
         }
         #endregion
     }
