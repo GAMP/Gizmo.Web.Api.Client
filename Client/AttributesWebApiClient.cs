@@ -3,10 +3,10 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Gizmo.Web.Api.Client.Client
+namespace Gizmo.Web.Api.Client
 {
     [WebApiRoute("api/v2/attributes")]
-    public class AttributesWebApiClient:WebApiClientBase
+    public class AttributesWebApiClient : WebApiClientBase
     {
         #region CONSTRUCTOR
         public AttributesWebApiClient(HttpClient client) : base(client)
@@ -14,6 +14,9 @@ namespace Gizmo.Web.Api.Client.Client
 
         }
         #endregion
+
+        #region FUNCTIONS
+
         public Task<PagedList<Attribute>> GetAsync(CancellationToken ct = default)
         {
             return GetAsync(default, ct);
@@ -23,7 +26,7 @@ namespace Gizmo.Web.Api.Client.Client
         {
             return GetAsync<PagedList<Attribute>>(filter, ct);
         }
-        
+
         public Task<CreateResult> CreateAsync(AttributeModelCreate attribute, CancellationToken ct = default)
         {
             return PostAsync<CreateResult>(CreateRequestUrl(), attribute, ct);
@@ -35,13 +38,15 @@ namespace Gizmo.Web.Api.Client.Client
         }
 
         public Task<Attribute> GetByIdAsync(int id, CancellationToken ct = default)
-        {            
+        {
             return GetAsync<Attribute>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }
 
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
-        {           
+        {
             return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }
+
+        #endregion
     }
 }

@@ -1,15 +1,12 @@
 ﻿using Gizmo.Web.Api.Models;
-using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Gizmo.Web.Api.Client.Client
+namespace Gizmo.Web.Api.Client
 {
     [WebApiRoute("api/v2/productgroups")]
-    public class ProductGroupsWebApiClient:WebApiClientBase
+    public class ProductGroupsWebApiClient : WebApiClientBase
     {
         #region CONSTRUCTOR
         public ProductGroupsWebApiClient(HttpClient client) : base(client)
@@ -18,6 +15,8 @@ namespace Gizmo.Web.Api.Client.Client
         }
         #endregion
 
+        #region FUNCTIONS
+        
         public Task<PagedList<ProductGroup>> GetAsync(CancellationToken ct = default)
         {
             return GetAsync(default, ct);
@@ -46,6 +45,8 @@ namespace Gizmo.Web.Api.Client.Client
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
         {
             return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
-        }
+        } 
+
+        #endregion
     }
 }

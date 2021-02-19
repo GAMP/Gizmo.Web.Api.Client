@@ -1,15 +1,12 @@
 ﻿using Gizmo.Web.Api.Models;
-using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Gizmo.Web.Api.Client.Client
+namespace Gizmo.Web.Api.Client
 {
     [WebApiRoute("api/v2/assettypes")]
-    public class AssetTypesWebApiClient: WebApiClientBase
+    public class AssetTypesWebApiClient : WebApiClientBase
     {
         #region CONSTRUCTOR
         public AssetTypesWebApiClient(HttpClient client) : base(client)
@@ -17,6 +14,8 @@ namespace Gizmo.Web.Api.Client.Client
 
         }
         #endregion
+
+        #region FUNCTIONS
 
         public Task<PagedList<AssetType>> GetAsync(CancellationToken ct = default)
         {
@@ -28,7 +27,7 @@ namespace Gizmo.Web.Api.Client.Client
             return GetAsync<PagedList<AssetType>>(filter, ct);
         }
 
-        public Task<CreateResult> CreateAsync(AssetTypeModelCreate assetTypeModelCreate, CancellationToken ct= default)
+        public Task<CreateResult> CreateAsync(AssetTypeModelCreate assetTypeModelCreate, CancellationToken ct = default)
         {
             return PostAsync<CreateResult>(CreateRequestUrl(), assetTypeModelCreate, ct);
         }
@@ -46,5 +45,7 @@ namespace Gizmo.Web.Api.Client.Client
         {
             return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }
+
+        #endregion
     }
 }

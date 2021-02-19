@@ -1,12 +1,9 @@
 ﻿using Gizmo.Web.Api.Models;
-using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Gizmo.Web.Api.Client.Client
+namespace Gizmo.Web.Api.Client
 {
     [WebApiRoute("api/v2/usergroups")]
     public class UserGroupsWebApiClient : WebApiClientBase
@@ -17,7 +14,7 @@ namespace Gizmo.Web.Api.Client.Client
         }
         #endregion
 
-        #region User Groups
+        #region FUNCTIONS
 
         public Task<PagedList<UserGroup>> GetAsync(CancellationToken ct = default)
         {
@@ -31,7 +28,7 @@ namespace Gizmo.Web.Api.Client.Client
 
         public Task<CreateResult> CreateAsync(UserGroupModelCreate userGroup, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrl(),userGroup, ct);
+            return PostAsync<CreateResult>(CreateRequestUrl(), userGroup, ct);
         }
 
         public Task<UpdateResult> UpdateAsync(UserGroupModelUpdate userGroup, CancellationToken ct = default)
@@ -43,10 +40,12 @@ namespace Gizmo.Web.Api.Client.Client
         {
             return GetAsync<UserGroup>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }
+
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
         {
             return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }
+
         #endregion
     }
 }

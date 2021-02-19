@@ -1,22 +1,21 @@
 ﻿using Gizmo.Web.Api.Models;
-using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Gizmo.Web.Api.Client.Client
+namespace Gizmo.Web.Api.Client
 {
     [WebApiRoute("api/v2/registers")]
-    public class RegisterWebApiClient:WebApiClientBase
+    public class RegisterWebApiClient : WebApiClientBase
     {
         #region CONSTRUCTOR
-        public RegisterWebApiClient(HttpClient client):base(client)
+        public RegisterWebApiClient(HttpClient client) : base(client)
         {
 
         }
         #endregion
+
+        #region FUNCTIONS
 
         public Task<PagedList<Register>> GetAsync(CancellationToken ct = default)
         {
@@ -37,7 +36,7 @@ namespace Gizmo.Web.Api.Client.Client
         {
             return PutAsync<UpdateResult>(CreateRequestUrl(), registerModelUpdate, ct);
         }
-         
+
         public Task<Register> GetByIdAsync(int id, CancellationToken ct = default)
         {
             return GetAsync<Register>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
@@ -47,5 +46,7 @@ namespace Gizmo.Web.Api.Client.Client
         {
             return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }
+
+        #endregion
     }
 }

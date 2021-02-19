@@ -1,15 +1,12 @@
 ﻿using Gizmo.Web.Api.Models;
-using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Gizmo.Web.Api.Client.Client
+namespace Gizmo.Web.Api.Client
 {
     [WebApiRoute("api/v2/monetaryunits")]
-    public class MonetaryUnitsWebApiClient:WebApiClientBase
+    public class MonetaryUnitsWebApiClient : WebApiClientBase
     {
         #region CONSTRUCTOR
         public MonetaryUnitsWebApiClient(HttpClient client) : base(client)
@@ -17,6 +14,8 @@ namespace Gizmo.Web.Api.Client.Client
 
         }
         #endregion
+
+        #region FUNCTIONS
 
         public Task<PagedList<MonetaryUnit>> GetAsync(CancellationToken ct = default)
         {
@@ -48,5 +47,6 @@ namespace Gizmo.Web.Api.Client.Client
             return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }
 
+        #endregion
     }
 }

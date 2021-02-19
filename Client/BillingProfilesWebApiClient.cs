@@ -1,19 +1,21 @@
 ﻿using Gizmo.Web.Api.Models;
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Gizmo.Web.Api.Client.Client
+namespace Gizmo.Web.Api.Client
 {
     [WebApiRoute("api/v2/billingprofiles")]
     public class BillingProfilesWebApiClient : WebApiClientBase
     {
+        #region CONSTRUCTOR
         public BillingProfilesWebApiClient(HttpClient httpClient) : base(httpClient)
         {
         }
+        #endregion
+
+        #region FUNCTIONS
 
         public Task<PagedList<BillingProfile>> GetAsync(CancellationToken ct = default)
         {
@@ -47,7 +49,7 @@ namespace Gizmo.Web.Api.Client.Client
 
         public Task<IEnumerable<BillingProfile>> GetBillingProfilesRates(int id, CancellationToken ct = default)
         {
-            return GetAsync<IEnumerable<BillingProfile>>(CreateRequestUrlWithRouteParameters($"{id}/rates"),ct);
+            return GetAsync<IEnumerable<BillingProfile>>(CreateRequestUrlWithRouteParameters($"{id}/rates"), ct);
         }
 
         public Task<CreateResult> CreateBillingProfilesRate(int id, BillingProfileRateModelCreate billingProfileRateModelCreate, CancellationToken ct = default)
@@ -63,6 +65,8 @@ namespace Gizmo.Web.Api.Client.Client
         public Task<DeleteResult> DeleteBillingProfileRate(int id, int billingProfileRateId, CancellationToken ct = default)
         {
             return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}/rates/{billingProfileRateId}"), ct);
-        }
+        } 
+
+        #endregion
     }
 }

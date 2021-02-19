@@ -1,19 +1,20 @@
 ﻿using Gizmo.Web.Api.Models;
-using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Gizmo.Web.Api.Client.Client
+namespace Gizmo.Web.Api.Client
 {
     [WebApiRoute("api/v2/applications")]
     public class ApplicationsWebApiClient : WebApiClientBase
     {
+        #region CONSTRUCTOR
         public ApplicationsWebApiClient(HttpClient httpClient) : base(httpClient)
         {
         }
+        #endregion
+
+        #region FUNCTIONS
 
         public Task<PagedList<Application>> GetAsync(CancellationToken ct = default)
         {
@@ -53,6 +54,8 @@ namespace Gizmo.Web.Api.Client.Client
         public Task<UpdateResult> UpdateApplicationImage(int id, ApplicationImage applicationImage, CancellationToken ct = default)
         {
             return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"{id}/image"), applicationImage, ct);
-        }
+        } 
+
+        #endregion
     }
 }

@@ -1,19 +1,20 @@
 ﻿using Gizmo.Web.Api.Models;
-using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Gizmo.Web.Api.Client.Client
+namespace Gizmo.Web.Api.Client
 {
     [WebApiRoute("api/v2/registertransactions")]
     public class RegisterTransactionsWebApiClient : WebApiClientBase
     {
+        #region CONSTRUCTOR
         public RegisterTransactionsWebApiClient(HttpClient httpClient) : base(httpClient)
         {
         }
+        #endregion
+
+        #region FUNCTIONS
 
         public Task<PagedList<RegisterTransaction>> GetAsync(CancellationToken ct = default)
         {
@@ -28,6 +29,8 @@ namespace Gizmo.Web.Api.Client.Client
         public Task<RegisterTransaction> GetByIdAsync(int id, CancellationToken ct = default)
         {
             return GetAsync<RegisterTransaction>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
-        }
+        } 
+        
+        #endregion
     }
 }

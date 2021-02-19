@@ -18,6 +18,8 @@ namespace Gizmo.Web.Api.Client
 
         #endregion
 
+        #region FUNCTIONS
+        
         #region Users
         public Task<PagedList<User>> GetAsync(CancellationToken ct = default)
         {
@@ -99,6 +101,8 @@ namespace Gizmo.Web.Api.Client
         {
             return GetAsync<UserNote>(CreateRequestUrlWithRouteParameters($"{id}/notes/{userNoteId}"), ct);
         }
+        #endregion 
+
         #endregion
     }
 }

@@ -1,24 +1,25 @@
 ﻿using Gizmo.Web.Api.Models;
-using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Gizmo.Web.Api.Client.Client
+namespace Gizmo.Web.Api.Client
 {
     [WebApiRoute("api/v2/invoices")]
     public class InvoicesWebApiClient : WebApiClientBase
     {
+        #region CONSTRUCTOR
         public InvoicesWebApiClient(HttpClient httpClient) : base(httpClient)
         {
         }
+        #endregion
+
+        #region FUNCTIONS
 
         public Task<PagedList<Invoice>> GetAsync(CancellationToken ct = default)
         {
             return GetAsync(default, ct);
-        }        
+        }
 
         public Task<PagedList<Invoice>> GetAsync(InvoicesFilter filter, CancellationToken ct = default)
         {
@@ -32,7 +33,9 @@ namespace Gizmo.Web.Api.Client.Client
 
         public Task<UpdateResult> UpdateAsync(int id, RefundOptions refundOptions, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"{id}/void"),refundOptions, ct);
+            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"{id}/void"), refundOptions, ct);
         }
+
+        #endregion
     }
 }

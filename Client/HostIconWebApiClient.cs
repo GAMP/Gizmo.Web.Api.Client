@@ -1,12 +1,9 @@
 ﻿using Gizmo.Web.Api.Models;
-using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Gizmo.Web.Api.Client.Client
+namespace Gizmo.Web.Api.Client
 {
     [WebApiRoute("api/v2/hosticons")]
     public class HostIconWebApiClient:WebApiClientBase
@@ -18,12 +15,14 @@ namespace Gizmo.Web.Api.Client.Client
         }
         #endregion
 
+        #region FUNCTIONS
+
         public Task<PagedList<HostIcon>> GetAsync(CancellationToken ct = default)
         {
             return GetAsync(default, ct);
         }
 
-        public Task<PagedList<HostIcon>> GetAsync(HostIconsFilter filter,CancellationToken ct = default)
+        public Task<PagedList<HostIcon>> GetAsync(HostIconsFilter filter, CancellationToken ct = default)
         {
             return GetAsync<PagedList<HostIcon>>(filter, ct);
         }
@@ -46,6 +45,8 @@ namespace Gizmo.Web.Api.Client.Client
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
         {
             return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
-        }
+        } 
+
+        #endregion
     }
 }

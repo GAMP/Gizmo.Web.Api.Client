@@ -1,19 +1,21 @@
 ﻿using Gizmo.Web.Api.Models;
-using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Gizmo.Web.Api.Client.Client
+namespace Gizmo.Web.Api.Client
 {
     [WebApiRoute("api/v2/applicationpersonalfiles")]
     public class ApplicationPersonalFilesWebApiClient : WebApiClientBase
     {
+        #region CONSTRUCTOR
         public ApplicationPersonalFilesWebApiClient(HttpClient httpClient) : base(httpClient)
         {
         }
+        #endregion
+
+        #region FUNCTIONS
+
         public Task<PagedList<ApplicationPersonalFile>> GetAsync(CancellationToken ct = default)
         {
             return GetAsync(default, ct);
@@ -43,5 +45,7 @@ namespace Gizmo.Web.Api.Client.Client
         {
             return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }
+        
+        #endregion
     }
 }

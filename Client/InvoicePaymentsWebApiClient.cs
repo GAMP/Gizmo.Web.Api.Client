@@ -1,19 +1,20 @@
 ﻿using Gizmo.Web.Api.Models;
-using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Gizmo.Web.Api.Client.Client
+namespace Gizmo.Web.Api.Client
 {
     [WebApiRoute("api/v2/invoicepayments")]
     public class InvoicePaymentsWebApiClient : WebApiClientBase
     {
+        #region CONSTRUCTOR
         public InvoicePaymentsWebApiClient(HttpClient httpClient) : base(httpClient)
         {
         }
+        #endregion
+
+        #region FUNCTIONS
 
         public Task<PagedList<InvoicePayment>> GetAsync(CancellationToken ct = default)
         {
@@ -32,7 +33,9 @@ namespace Gizmo.Web.Api.Client.Client
 
         public Task<CreateResult> CreateAsync(InvoicePaymentModelCreate invoicePaymentModelCreate, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrl(), invoicePaymentModelCreate, ct);
-        }
+            return PostAsync<CreateResult>(CreateRequestUrl(), invoicePaymentModelCreate, ct);        
+        } 
+
+        #endregion
     }
 }

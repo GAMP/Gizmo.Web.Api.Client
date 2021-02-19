@@ -1,12 +1,9 @@
 ﻿using Gizmo.Web.Api.Models;
-using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Gizmo.Web.Api.Client.Client
+namespace Gizmo.Web.Api.Client
 {
     [WebApiRoute("api/v2/orders")]
     public class OrdersWebApiClient : WebApiClientBase
@@ -17,6 +14,8 @@ namespace Gizmo.Web.Api.Client.Client
 
         }
         #endregion
+
+        #region FUNCTIONS
 
         public Task<PagedList<Order>> GetAsync(CancellationToken ct = default)
         {
@@ -77,9 +76,12 @@ namespace Gizmo.Web.Api.Client.Client
         {
             return GetAsync<OrderLineDeliveredStatus>(CreateRequestUrlWithRouteParameters($"{id}/orderlines/{orderLineId}/delivered"), ct);
         }
+
         public Task<OrderLineDeliveredStatus> SetOrderLineDeliveredQuantityAsync(int id, int orderLineId, OrderLineDeliveredStatusModelUpdate orderLineDeliveredStatusModelUpdate, CancellationToken ct = default)
         {
             return GetAsync<OrderLineDeliveredStatus>(CreateRequestUrlWithRouteParameters($"{id}/orderlines/{orderLineId}/delivered"), ct);
         }
+
+        #endregion
     }
 }

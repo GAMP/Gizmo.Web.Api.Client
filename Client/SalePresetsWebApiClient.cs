@@ -1,12 +1,9 @@
 ﻿using Gizmo.Web.Api.Models;
-using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Gizmo.Web.Api.Client.Client
+namespace Gizmo.Web.Api.Client
 {
     [WebApiRoute("api/v2/salepresets")]
     public class SalePresetsWebApiClient : WebApiClientBase
@@ -17,6 +14,8 @@ namespace Gizmo.Web.Api.Client.Client
 
         }
         #endregion
+
+        #region FUNCTIONS
 
         #region TimeSalePresets
 
@@ -73,6 +72,8 @@ namespace Gizmo.Web.Api.Client.Client
         {
             return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"money/{id}"), ct);
         }
+
+        #endregion 
 
         #endregion
     }

@@ -18,6 +18,8 @@ namespace Gizmo.Web.Api.Client
 
         #endregion
 
+        #region FUNCTIONS
+        
         #region Products
 
         public Task<PagedList<Product>> GetAsync(CancellationToken ct = default)
@@ -223,6 +225,8 @@ namespace Gizmo.Web.Api.Client
         {
             return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}/images/{productImageId}"), ct);
         }
+
+        #endregion 
 
         #endregion
     }

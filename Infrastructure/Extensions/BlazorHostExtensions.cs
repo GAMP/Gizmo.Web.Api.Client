@@ -1,4 +1,4 @@
-﻿using Gizmo.Web.Api.Client.Client;
+﻿using Gizmo.Web.Api.Client;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Gizmo.Web.Api.Client
