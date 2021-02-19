@@ -143,39 +143,20 @@ namespace Gizmo.Web.Api.Client
         protected Task<TResult> GetAsync<TResult>(IUrlParameters parameters, CancellationToken ct)
         {
             return GetAsync<TResult>(CreateRequestUrl(parameters as IUrlRouteParameters, parameters as IUrlQueryParameters), ct);
-        }
-        //K<
-        
-        protected Task<TResult> GetAsync<TResult>(IUrlParameters parameters,object content, CancellationToken ct = default)
-        {
-            return GetAsync<TResult>(CreateRequestUrl(parameters as IUrlRouteParameters, parameters as IUrlQueryParameters), content, ct);
-        }
+        }       
 
         protected Task<TResult> GetAsync<TResult>(string requestUri, CancellationToken ct = default)
         {
             return AwaitWebApiResultAsync(GetWebApiResultAsync<TResult>(requestUri, ct));
-        }
-         
-        //KM
-        protected Task<TResult> GetAsync<TResult>(string requestUri, object content, CancellationToken ct = default)
-        {
-            return AwaitWebApiResultAsync(GetWebApiResultAsync<TResult>(requestUri,content,ct));
-        }
+        }         
+       
 
         protected Task<WebApiResponse<TResult>> GetWebApiResultAsync<TResult>(string requestUri, CancellationToken ct = default)
         {
             return GetResultAsync<WebApiResponse<TResult>>(requestUri, ct);
         }
 
-        //KM
-        protected async Task<WebApiResponse<TResult>> GetWebApiResultAsync<TResult>(string requestUri, object content, CancellationToken ct = default)
-        {
-            using(var httpContent = await CreateContentAsync(content, ct))
-            {
-                return await GetResultAsync<WebApiResponse<TResult>>(requestUri, httpContent, ct);
-            }            
-        }
-
+       
         protected async Task<TResult> GetResultAsync<TResult>(string requestUri, CancellationToken ct = default)
         {
             using (var httpMessage = CreateHttpRequestMessage(requestUri, HttpMethod.Get))
@@ -394,23 +375,6 @@ namespace Gizmo.Web.Api.Client
 
         #endregion
 
-        #region Validation
-
-        /// <summary>
-        /// Validates the state of current object and 
-        /// </summary>
-        /// <param name="obj"><Content object/param>
-        /// <returns> List of errors</returns>
-        protected List<ValidationResult> Validate(object obj)
-        {
-            var ctx = new ValidationContext(obj);
-            var results = new List<ValidationResult>();
-            if(!Validator.TryValidateObject(obj, ctx, results, true))
-            {
-                return results;
-            }
-            return null;
-        }
-        #endregion
+       
     }
 }
