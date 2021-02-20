@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Gizmo.Web.Api.Models;
 using System.Runtime.Serialization;
+using Microsoft.Extensions.Options;
 
 namespace Gizmo.Web.Api.Client
 {
@@ -12,7 +13,8 @@ namespace Gizmo.Web.Api.Client
     {
         #region CONSTRUCTOR
        
-        public AuthenticationWebApiClient(HttpClient client):base(client)
+        public AuthenticationWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :
+            base(httpClient, options, payloadSerializerProvider)
         {
 
         }

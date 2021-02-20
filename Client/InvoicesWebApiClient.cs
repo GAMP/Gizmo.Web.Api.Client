@@ -1,4 +1,5 @@
 ﻿using Gizmo.Web.Api.Models;
+using Microsoft.Extensions.Options;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,7 +10,8 @@ namespace Gizmo.Web.Api.Client
     public class InvoicesWebApiClient : WebApiClientBase
     {
         #region CONSTRUCTOR
-        public InvoicesWebApiClient(HttpClient httpClient) : base(httpClient)
+        public InvoicesWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :
+            base(httpClient, options, payloadSerializerProvider)
         {
         }
         #endregion

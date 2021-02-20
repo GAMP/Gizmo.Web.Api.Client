@@ -1,4 +1,5 @@
 ﻿using Gizmo.Web.Api.Models;
+using Microsoft.Extensions.Options;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -6,17 +7,17 @@ using System.Threading.Tasks;
 namespace Gizmo.Web.Api.Client
 {
     [WebApiRoute("api/v2/applicationcategories")]
-    public class ApplicationCategoriesWebApiClient:WebApiClientBase
+    public class ApplicationCategoriesWebApiClient : WebApiClientBase
     {
         #region CONSTRUCTOR
-        public ApplicationCategoriesWebApiClient(HttpClient client):base(client)
+        public ApplicationCategoriesWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :
+            base(httpClient, options, payloadSerializerProvider)
         {
-
         }
         #endregion
 
         #region FUNCTIONS
-        
+
         public Task<PagedList<ApplicationCategory>> GetAsync(CancellationToken ct = default)
         {
             return GetAsync(default, ct);
@@ -45,7 +46,7 @@ namespace Gizmo.Web.Api.Client
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
         {
             return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
-        } 
+        }
 
         #endregion
     }

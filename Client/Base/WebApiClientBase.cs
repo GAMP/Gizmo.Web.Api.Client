@@ -1,7 +1,7 @@
-﻿using Gizmo.Web.Api.Models;
+﻿using Gizmo.Web.Api.Client.Builder;
+using Gizmo.Web.Api.Models;
+using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Reflection;
@@ -21,9 +21,11 @@ namespace Gizmo.Web.Api.Client
         /// Default constructor.
         /// </summary>
         /// <param name="httpClient">Http client instance.</param>
-        public WebApiClientBase(HttpClient httpClient)
+        public WebApiClientBase(HttpClient httpClient,IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider)
         {
             HttpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+            SerializerProvider = payloadSerializerProvider;
+            CurrentSerializer = payloadSerializerProvider.DefaultSerializer;
         }
         #endregion
 
@@ -33,6 +35,10 @@ namespace Gizmo.Web.Api.Client
         /// Gets associated http client.
         /// </summary>
         public HttpClient HttpClient { get; }
+
+        private IPayloadSerializerProvider SerializerProvider { get; set; }
+
+        private IPayloadSerializer CurrentSerializer { get; set; }
 
         #endregion
 
@@ -148,14 +154,12 @@ namespace Gizmo.Web.Api.Client
         protected Task<TResult> GetAsync<TResult>(string requestUri, CancellationToken ct = default)
         {
             return AwaitWebApiResultAsync(GetWebApiResultAsync<TResult>(requestUri, ct));
-        }         
-       
+        }                
 
         protected Task<WebApiResponse<TResult>> GetWebApiResultAsync<TResult>(string requestUri, CancellationToken ct = default)
         {
             return GetResultAsync<WebApiResponse<TResult>>(requestUri, ct);
         }
-
        
         protected async Task<TResult> GetResultAsync<TResult>(string requestUri, CancellationToken ct = default)
         {
@@ -167,7 +171,7 @@ namespace Gizmo.Web.Api.Client
                 }
             }
         }
-        //KM
+
         protected async Task<TResult> GetResultAsync<TResult>(string requestUri, HttpContent content, CancellationToken ct = default)
         {
             using(var httpMessage = CreateHttpRequestMessage(requestUri, HttpMethod.Get, content))
@@ -287,14 +291,17 @@ namespace Gizmo.Web.Api.Client
             if (httpResponseMessage == null)
                 throw new ArgumentNullException(nameof(httpResponseMessage));
           
+            //the method will handle a non 200 success code and throw the exception that contains
+            //error information provided by web api error result model
             await ThrowApiExceptionIfRequiredAsync(httpResponseMessage, ct);
 
-            var x = await httpResponseMessage.Content.ReadAsStreamAsync();
-
+            //create content stream
             using (var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync())
             {
                 //get our content headers
                 var contentHeaders = httpResponseMessage.Content.Headers;
+
+                //check response media type and choose appropriate serializer for deserialization
                 switch(contentHeaders.ContentType.MediaType)
                 {
                     case MimeType.JSON:
@@ -305,13 +312,7 @@ namespace Gizmo.Web.Api.Client
                         break;
                 }
 
-                var options = new JsonSerializerOptions
-                {
-                    AllowTrailingCommas = true,
-                    PropertyNameCaseInsensitive = true,
-                };
-                
-                return await JsonSerializer.DeserializeAsync<TResult>(contentStream, options, ct);
+                return await CurrentSerializer.DeserializeAsync<TResult>(contentStream, ct);
             }
         }
 
@@ -332,14 +333,8 @@ namespace Gizmo.Web.Api.Client
             //get content stream
             using (var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync())
             {
-                var options = new JsonSerializerOptions
-                {
-                    AllowTrailingCommas = true,
-                    PropertyNameCaseInsensitive = true,
-                };
-
                 //deserialize error response
-                var errorResponse = await JsonSerializer.DeserializeAsync<WebApiErrorResponse>(contentStream, options, ct);
+                var errorResponse = await CurrentSerializer.DeserializeAsync<WebApiErrorResponse>(contentStream, ct);
 
                 //throw appropriate exception
                 throw new HTTPAPIException(httpResponseMessage.StatusCode, httpResponseMessage.ReasonPhrase, errorResponse.ErrorCode);
@@ -358,23 +353,25 @@ namespace Gizmo.Web.Api.Client
             return new HttpRequestMessage(method, requestUrl) {  Content = content };
         }
 
+        #endregion
+
+        #region SERIALIZATION
+
         /// <summary>
         /// Creates appropriate Http Content based on current client options.
         /// </summary>
         /// <param name="obj">Content object.</param>
         /// <returns>HttpContent.</returns>
-        protected ValueTask<HttpContent> CreateContentAsync(object obj,CancellationToken ct)
+        protected ValueTask<HttpContent> CreateContentAsync<T>(T obj, CancellationToken ct)
         {
+            //allow null object , this will be represented with empty content
             if (obj == null)
                 return new ValueTask<HttpContent>();
 
-            //serializaer based configuration goes here             
-
-            return new ValueTask<HttpContent>(JsonContent.Create(obj));         
+            //create the http content with current serializer
+            return CurrentSerializer.CreateContentAsync(obj, default, ct);
         }
 
         #endregion
-
-       
     }
 }
