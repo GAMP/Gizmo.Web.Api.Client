@@ -1,11 +1,8 @@
-﻿using Gizmo.Web.Api.Client.Builder;
-using Gizmo.Web.Api.Models;
+﻿using Gizmo.Web.Api.Models;
 using Microsoft.Extensions.Options;
 using System;
 using System.Net.Http;
-using System.Net.Http.Json;
 using System.Reflection;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -21,11 +18,12 @@ namespace Gizmo.Web.Api.Client
         /// Default constructor.
         /// </summary>
         /// <param name="httpClient">Http client instance.</param>
-        public WebApiClientBase(HttpClient httpClient,IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider)
+        public WebApiClientBase(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider)
         {
             HttpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
             SerializerProvider = payloadSerializerProvider;
             CurrentSerializer = payloadSerializerProvider.DefaultSerializer;
+            Options = options;
         }
         #endregion
 
@@ -36,8 +34,22 @@ namespace Gizmo.Web.Api.Client
         /// </summary>
         public HttpClient HttpClient { get; }
 
+        /// <summary>
+        /// Gets web client options.
+        /// </summary>
+        public IOptions<WebApiClientOptions> Options
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// Gets payload serializer provider.
+        /// </summary>
         private IPayloadSerializerProvider SerializerProvider { get; set; }
 
+        /// <summary>
+        /// Gets current payload serializer.
+        /// </summary>
         private IPayloadSerializer CurrentSerializer { get; set; }
 
         #endregion
@@ -93,7 +105,7 @@ namespace Gizmo.Web.Api.Client
 
         protected virtual string CreateRequestUrl(IUrlRouteParameters routeParameters, IUrlQueryParameters queryParameters)
         {
-            return CreateRequestUrl(ParameterGenerator.Generate(routeParameters),ParameterGenerator.Generate(queryParameters));
+            return CreateRequestUrl(ParameterGenerator.Generate(routeParameters), ParameterGenerator.Generate(queryParameters));
         }
 
         public virtual string CreateRequestUrl()
@@ -145,22 +157,22 @@ namespace Gizmo.Web.Api.Client
         #region PROTECTED VIRTUAL     
 
         #region GET
-        
+
         protected Task<TResult> GetAsync<TResult>(IUrlParameters parameters, CancellationToken ct)
         {
             return GetAsync<TResult>(CreateRequestUrl(parameters as IUrlRouteParameters, parameters as IUrlQueryParameters), ct);
-        }       
+        }
 
         protected Task<TResult> GetAsync<TResult>(string requestUri, CancellationToken ct = default)
         {
             return AwaitWebApiResultAsync(GetWebApiResultAsync<TResult>(requestUri, ct));
-        }                
+        }
 
         protected Task<WebApiResponse<TResult>> GetWebApiResultAsync<TResult>(string requestUri, CancellationToken ct = default)
         {
             return GetResultAsync<WebApiResponse<TResult>>(requestUri, ct);
         }
-       
+
         protected async Task<TResult> GetResultAsync<TResult>(string requestUri, CancellationToken ct = default)
         {
             using (var httpMessage = CreateHttpRequestMessage(requestUri, HttpMethod.Get))
@@ -174,7 +186,7 @@ namespace Gizmo.Web.Api.Client
 
         protected async Task<TResult> GetResultAsync<TResult>(string requestUri, HttpContent content, CancellationToken ct = default)
         {
-            using(var httpMessage = CreateHttpRequestMessage(requestUri, HttpMethod.Get, content))
+            using (var httpMessage = CreateHttpRequestMessage(requestUri, HttpMethod.Get, content))
             {
                 using (var responseMessage = await HttpClient.SendAsync(httpMessage, HttpCompletionOption.ResponseHeadersRead, ct).ConfigureAwait(false))
                 {
@@ -290,7 +302,7 @@ namespace Gizmo.Web.Api.Client
         {
             if (httpResponseMessage == null)
                 throw new ArgumentNullException(nameof(httpResponseMessage));
-          
+
             //the method will handle a non 200 success code and throw the exception that contains
             //error information provided by web api error result model
             await ThrowApiExceptionIfRequiredAsync(httpResponseMessage, ct);
@@ -302,7 +314,7 @@ namespace Gizmo.Web.Api.Client
                 var contentHeaders = httpResponseMessage.Content.Headers;
 
                 //check response media type and choose appropriate serializer for deserialization
-                switch(contentHeaders.ContentType.MediaType)
+                switch (contentHeaders.ContentType.MediaType)
                 {
                     case MimeType.JSON:
                         break;
@@ -348,9 +360,9 @@ namespace Gizmo.Web.Api.Client
         /// <param name="method">Request method.</param>
         /// <param name="content">Optional request http content.</param>
         /// <returns>Http request message.</returns>
-        protected HttpRequestMessage CreateHttpRequestMessage(string requestUrl, HttpMethod method, HttpContent content=default)
+        protected HttpRequestMessage CreateHttpRequestMessage(string requestUrl, HttpMethod method, HttpContent content = default)
         {
-            return new HttpRequestMessage(method, requestUrl) {  Content = content };
+            return new HttpRequestMessage(method, requestUrl) { Content = content };
         }
 
         #endregion
