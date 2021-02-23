@@ -49,11 +49,13 @@ namespace Gizmo.Web.Api.Client.Builder
             return new WebApiClientBuilder(services);
         }
 
-        public static IWebApiClientBuilder AddWebApiClient(this IServiceCollection services, 
+        public static IWebApiClientBuilder AddSecureWebApiClient(this IServiceCollection services, 
             string secureHttpClientName,
-            string unsecureHttpClientName, 
             Action<WebApiClientOptions> configure)
         {
+            if (string.IsNullOrWhiteSpace(secureHttpClientName))
+                throw new ArgumentNullException(nameof(secureHttpClientName));
+
             services.TryAddEnumerable(ServiceDescriptor.Singleton<IPayloadSerializerProvider, DefaultPayloadSerializerProvider>());
 
             services.AddHttpClient<UsersWebApiClient>(secureHttpClientName);
