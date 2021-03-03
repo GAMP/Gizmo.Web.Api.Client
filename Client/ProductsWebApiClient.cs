@@ -129,7 +129,7 @@ namespace Gizmo.Web.Api.Client
             return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"{id}/disallowedusergroups"), productDisallowedUserGroup, ct);
         }
 
-        public Task<UpdateResult> UpdateDisallowUserGroupAsync(ProductDisallowedUserGroupModelUpdate productDisallowedUserGroup, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateDisallowedUserGroupAsync(ProductDisallowedUserGroupModelUpdate productDisallowedUserGroup, CancellationToken ct = default)
         {
             return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"disallowedusergroups"), productDisallowedUserGroup, ct);
         }
@@ -172,12 +172,10 @@ namespace Gizmo.Web.Api.Client
             return GetAsync<TimeProductUsageAvailability>(CreateRequestUrlWithRouteParameters($"time/{id}/usageavailability"), ct);
         }
 
-        public Task<UpdateResult> UpdateUsageAvailability(int id, TimeProductUsageAvailabilityModelUpdate usageAvailability, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateUsageAvailabilityAsync(int id, TimeProductUsageAvailabilityModelUpdate usageAvailability, CancellationToken ct = default)
         {
             return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"time/{id}/usageavailability"), usageAvailability, ct);
         }
-
-
 
         #endregion
 
@@ -198,7 +196,7 @@ namespace Gizmo.Web.Api.Client
             return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"time/disallowedhostgroups"), timeProductDisallowedHostGroup, ct);
         }
 
-        public Task<DeleteResult> DeleteDisallowedHostGroup(int id, int timeProductDisallowedHostGroup, CancellationToken ct = default)
+        public Task<DeleteResult> DeleteDisallowedHostGroupAsync(int id, int timeProductDisallowedHostGroup, CancellationToken ct = default)
         {
             return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"time/{id}/disallowedhostgroups/{timeProductDisallowedHostGroup}"));
         }

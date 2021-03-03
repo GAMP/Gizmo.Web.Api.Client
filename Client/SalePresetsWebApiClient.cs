@@ -25,15 +25,15 @@ namespace Gizmo.Web.Api.Client
             return GetAsync<PagedList<TimeSalePreset>>(CreateRequestUrlWithRouteParameters($"time"), ct);
         }
 
-        //public Task<CreateResult> CreateTimeSalePresetAsync(TimeSalePresetModelCreate timeSalePresetModelCreate, CancellationToken ct = default)
-        //{
-        //    return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"time"), timeSalePresetModelCreate, ct);
-        //}
+        public Task<CreateResult> CreateTimeSalePresetAsync(TimeSalePresetModelCreate timeSalePresetModelCreate, CancellationToken ct = default)
+        {
+            return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"time"), timeSalePresetModelCreate, ct);
+        }
 
-        //public Task<UpdateResult> UpdateTimeSalePresetAsync(TimeSalePresetModelUpdate timeSalePresetModelUpdate, CancellationToken ct = default)
-        //{
-        //    return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"time"), timeSalePresetModelUpdate, ct);
-        //}
+        public Task<UpdateResult> UpdateTimeSalePresetAsync(TimeSalePresetModelUpdate timeSalePresetModelUpdate, CancellationToken ct = default)
+        {
+            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"time"), timeSalePresetModelUpdate, ct);
+        }
 
         public Task<TimeSalePreset> GetTimeSalePresetByIdAsync(int id, CancellationToken ct = default)
         {
@@ -49,25 +49,25 @@ namespace Gizmo.Web.Api.Client
 
         #region MoneySalePreset
 
-        //public Task<PagedList<MoneySalePreset>> GetMoneySalePresetsAsync(CancellationToken ct = default)
-        //{
-        //    return GetAsync<PagedList<MoneySalePreset>>(CreateRequestUrlWithRouteParameters($"money"), ct);
-        //}
+        public Task<PagedList<MoneySalePreset>> GetMoneySalePresetsAsync(CancellationToken ct = default)
+        {
+            return GetAsync<PagedList<MoneySalePreset>>(CreateRequestUrlWithRouteParameters($"money"), ct);
+        }
 
-        //public Task<CreateResult> CreateMoneySalePresetAsync(MoneySalePresetModelCreate moneySalePresetModelCreate, CancellationToken ct = default)
-        //{
-        //    return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"money"), moneySalePresetModelCreate, ct);
-        //}
+        public Task<CreateResult> CreateMoneySalePresetAsync(MoneySalePresetModelCreate moneySalePresetModelCreate, CancellationToken ct = default)
+        {
+            return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"money"), moneySalePresetModelCreate, ct);
+        }
 
-        //public Task<UpdateResult> UpdateMoneySalePresetAsync(MoneySalePresetModelUpdate moneySalePresetModelUpdate, CancellationToken ct = default)
-        //{
-        //    return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"money"), moneySalePresetModelUpdate, ct);
-        //}
+        public Task<UpdateResult> UpdateMoneySalePresetAsync(MoneySalePresetModelUpdate moneySalePresetModelUpdate, CancellationToken ct = default)
+        {
+            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"money"), moneySalePresetModelUpdate, ct);
+        }
 
-        //public Task<MoneySalePreset> GetMoneySalePresetByIdAsync(int id, CancellationToken ct = default)
-        //{
-        //    return GetAsync<MoneySalePreset>(CreateRequestUrlWithRouteParameters($"money/{id}"), ct);
-        //}
+        public Task<MoneySalePreset> GetMoneySalePresetByIdAsync(int id, CancellationToken ct = default)
+        {
+            return GetAsync<MoneySalePreset>(CreateRequestUrlWithRouteParameters($"money/{id}"), ct);
+        }
 
         public Task<DeleteResult> DeleteMoneySalePresetAsync(int id, CancellationToken ct = default)
         {
