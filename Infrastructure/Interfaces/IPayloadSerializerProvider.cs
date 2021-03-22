@@ -3,6 +3,7 @@
     /// <summary>
     /// Payload serializer provider.
     /// </summary>
+    /// <remarks>
     public interface IPayloadSerializerProvider
     {
         #region FUNCTIONS

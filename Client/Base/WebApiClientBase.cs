@@ -18,6 +18,8 @@ namespace Gizmo.Web.Api.Client
         /// Default constructor.
         /// </summary>
         /// <param name="httpClient">Http client instance.</param>
+        /// <param name="options">Web api client options.</param>
+        /// <param name="payloadSerializerProvider">Payload serializer.</param>
         public WebApiClientBase(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider)
         {
             HttpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
@@ -349,7 +351,7 @@ namespace Gizmo.Web.Api.Client
                 var errorResponse = await CurrentSerializer.DeserializeAsync<WebApiErrorResponse>(contentStream, ct);
 
                 //throw appropriate exception
-                throw new HTTPAPIException(httpResponseMessage.StatusCode, httpResponseMessage.ReasonPhrase, errorResponse.ErrorCode);
+                throw new WebApiClientException(httpResponseMessage.StatusCode, httpResponseMessage.ReasonPhrase, errorResponse.ErrorCode);
             }
         }
 

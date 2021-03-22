@@ -2,13 +2,31 @@
 
 namespace Gizmo.Web.Api.Client.Builder
 {
+    /// <summary>
+    /// Web api client builder.
+    /// </summary>
     internal class WebApiClientBuilder : IWebApiClientBuilder
     {
+        #region CONSTRCUTOR
+
+        /// <summary>
+        /// Creates new instance.
+        /// </summary>
+        /// <param name="services"></param>
         public WebApiClientBuilder(IServiceCollection services)
         {
             Services = services;
         }
 
-        public IServiceCollection Services { get; }
+        #endregion
+
+        #region PROPERTIES
+        
+        /// <summary>
+        /// Gets services collection.
+        /// </summary>
+        public IServiceCollection Services { get; } 
+
+        #endregion
     }
 }
