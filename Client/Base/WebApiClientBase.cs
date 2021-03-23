@@ -24,7 +24,7 @@ namespace Gizmo.Web.Api.Client
         {
             HttpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
             SerializerProvider = payloadSerializerProvider;
-            CurrentSerializer = payloadSerializerProvider.DefaultSerializer;
+            Serializer = SerializerProvider.DefaultSerializer;
             Options = options;
         }
         #endregion
@@ -52,7 +52,7 @@ namespace Gizmo.Web.Api.Client
         /// <summary>
         /// Gets current payload serializer.
         /// </summary>
-        private IPayloadSerializer CurrentSerializer { get; set; }
+        private IPayloadSerializer Serializer { get; set; }
 
         #endregion
 
@@ -309,49 +309,81 @@ namespace Gizmo.Web.Api.Client
             //error information provided by web api error result model
             await ThrowApiExceptionIfRequiredAsync(httpResponseMessage, ct);
 
-            //create content stream
-            using (var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync())
+            try
             {
-                //get our content headers
-                var contentHeaders = httpResponseMessage.Content.Headers;
-
-                //check response media type and choose appropriate serializer for deserialization
-                switch (contentHeaders.ContentType.MediaType)
+                //create content stream
+                using (var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync())
                 {
-                    case MimeType.JSON:
-                        break;
-                    case MimeType.MSGPACK:
-                        break;
-                    default:
-                        break;
-                }
+                    //get our content headers
+                    var contentHeaders = httpResponseMessage.Content.Headers;
 
-                return await CurrentSerializer.DeserializeAsync<TResult>(contentStream, ct);
+                    //deserialize the response
+                    return await Serializer.DeserializeAsync<TResult>(contentStream, ct);
+                }
+            }
+            catch
+            {
+                //we will have two kind of possible errors here network related and serialization related
+                //we should translate them to custom exceptions so we can handle them appropriately 
+
+                throw;
             }
         }
 
         /// <summary>
-        /// Throws http api exception in case exception code is not 200.
+        /// Throws appropriate exception based on HTTP status code and error response.
         /// </summary>
         /// <param name="httpResponseMessage">Http response message.</param>
         protected async Task ThrowApiExceptionIfRequiredAsync(HttpResponseMessage httpResponseMessage, CancellationToken ct)
         {
             //check status code
+            //this block will determine if operation is successful and can proceed
             switch (httpResponseMessage.StatusCode)
             {
-                //allow notmal response message processing in case of OK status code.
+                case System.Net.HttpStatusCode.NotFound:
+                    //custom not found exception could be thrown here in order to easily diagnose problems related to invalid routes
+                    break;
+                case System.Net.HttpStatusCode.Unauthorized:
+                    //when the request is unauthorized we wont be hitting any endpoints so response will be plain text
+                    //we should throw custom unauthorized excption here
+                    break;
+                //allow normal response message processing in case of OK status code.
                 case System.Net.HttpStatusCode.OK:
                     return;
+                default:
+                    //we will need examine other http status codes, some might mean success some not so we would need to handle them here
+                    break;
             }
 
-            //get content stream
-            using (var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync())
-            {
-                //deserialize error response
-                var errorResponse = await CurrentSerializer.DeserializeAsync<WebApiErrorResponse>(contentStream, ct);
+            //we should only read content stream when there is an serialized response expected
+            //as you can see in switch code block there are some http response code that is not expected to
+            //have any payload in their response stream
 
-                //throw appropriate exception
-                throw new WebApiClientException(httpResponseMessage.StatusCode, httpResponseMessage.ReasonPhrase, errorResponse.ErrorCode);
+            try
+            {
+                //once we reached this code block we expect the response to contain an serialized payload
+                using (var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync())
+                {
+                    //deserialize error response
+                    var errorResponse = await Serializer.DeserializeAsync<WebApiErrorResponse>(contentStream, ct);
+
+                    //based on the error response we should build appropriate exception
+                    //for now we can throw the generic webapiclientexception,
+                    //in the future we could have mappings of error response to other exception types
+
+                    //WARNING
+                    //WebApiClientException class still need work in order to be able to provide all errors contained in the errorResponse
+
+                    //throw appropriate exception
+                    throw new WebApiClientException(httpResponseMessage.StatusCode, httpResponseMessage.ReasonPhrase, errorResponse.ErrorCode);
+                }
+            }
+            catch
+            {
+                //we will have two kind of possible errors here network related and serialization related
+                //we should translate them to custom exceptions so we can handle them appropriately 
+               
+                throw;
             }
         }
 
@@ -382,8 +414,19 @@ namespace Gizmo.Web.Api.Client
             if (obj == null)
                 return new ValueTask<HttpContent>();
 
-            //create the http content with current serializer
-            return CurrentSerializer.CreateContentAsync(obj, default, ct);
+            try
+            {
+                //create the http content with current serializer
+                return Serializer.CreateContentAsync(obj, default, ct);
+            }
+            catch
+            {
+                //here we would get an serialization related error
+                //should create custom exception for handling it, the excption should have inner exception set so we can 
+                //obtain more information on what was the root cause
+
+                throw;
+            }
         }
 
         #endregion

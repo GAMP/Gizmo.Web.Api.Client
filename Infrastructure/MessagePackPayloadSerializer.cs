@@ -45,14 +45,22 @@ namespace Gizmo.Web.Api.Client
 
         public async ValueTask<HttpContent> CreateContentAsync<T>(T @object, MediaTypeHeaderValue mediaType = null, CancellationToken ct = default)
         {
+            //use default media type if one not specified
             mediaType ??= mediaTypeHeaderValue;
+            
+            //create memory stream
             var stream = new MemoryStream();
 
+            //serialize object to the memory stream
             await MessagePackSerializer.SerializeAsync(stream, @object, SerializerOptions.Value.MessagePackSerializerOptions, default);
 
+            //create stream content from serialized stream
             var content = new StreamContent(stream);
+
+            //set content type header
             content.Headers.ContentType = mediaType;
 
+            //return newly created http content
             return content;
         } 
 
