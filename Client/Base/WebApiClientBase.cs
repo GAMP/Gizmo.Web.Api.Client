@@ -340,16 +340,16 @@ namespace Gizmo.Web.Api.Client
             //this block will determine if operation is successful and can proceed
             switch (httpResponseMessage.StatusCode)
             {
+                //allow normal response message processing in case of OK status code.
+                case System.Net.HttpStatusCode.OK:
+                    return;
                 case System.Net.HttpStatusCode.NotFound:
                     //custom not found exception could be thrown here in order to easily diagnose problems related to invalid routes
                     break;
                 case System.Net.HttpStatusCode.Unauthorized:
                     //when the request is unauthorized we wont be hitting any endpoints so response will be plain text
                     //we should throw custom unauthorized excption here
-                    break;
-                //allow normal response message processing in case of OK status code.
-                case System.Net.HttpStatusCode.OK:
-                    return;
+                    break;       
                 default:
                     //we will need examine other http status codes, some might mean success some not so we would need to handle them here
                     break;
