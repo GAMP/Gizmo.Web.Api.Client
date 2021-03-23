@@ -55,6 +55,9 @@ namespace Gizmo.Web.Api.Client
 
             //serialize object to the memory stream
             await MessagePackSerializer.SerializeAsync(stream, @object, SerializerOptions.Value.MessagePackSerializerOptions, default);
+            
+            //rewind the stream
+            stream.Seek(0, SeekOrigin.Begin);
 
             //create stream content from serialized stream
             var content = new StreamContent(stream);

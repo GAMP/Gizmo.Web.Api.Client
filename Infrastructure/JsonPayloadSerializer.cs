@@ -57,6 +57,9 @@ namespace Gizmo.Web.Api.Client
             //serialize object to the memory stream
             await JsonSerializer.SerializeAsync(stream, @object, SerializerOptions.Value.JsonSerializerOptions, ct);
 
+            //rewind the stream
+            stream.Seek(0, SeekOrigin.Begin);
+
             //create stream content from serialized stream
             var httpContent = new StreamContent(stream);
 
