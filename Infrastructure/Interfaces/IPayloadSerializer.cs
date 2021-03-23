@@ -18,6 +18,11 @@ namespace Gizmo.Web.Api.Client
         /// </summary>
         string Name { get; }
 
+        /// <summary>
+        /// Gets default accept header for outgoing requests.
+        /// </summary>
+        string DefaultAcceptHeader { get; }
+
         #endregion
 
         #region FUNCTIONS

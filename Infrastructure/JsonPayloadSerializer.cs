@@ -35,10 +35,12 @@ namespace Gizmo.Web.Api.Client
             get; set;
         }
 
+        public string DefaultAcceptHeader => MimeType.JSON;
+
         #endregion
 
         #region IPayloadSerializer
-        
+
         public ValueTask<T> DeserializeAsync<T>(Stream stream, CancellationToken ct)
         {
             return JsonSerializer.DeserializeAsync<T>(stream, SerializerOptions.Value.JsonSerializerOptions, ct);

@@ -1,5 +1,6 @@
 ﻿using Gizmo.Web.Api.Models;
 using Microsoft.Extensions.Options;
+using Microsoft.Net.Http.Headers;
 using System;
 using System.Net.Http;
 using System.Reflection;
@@ -396,7 +397,17 @@ namespace Gizmo.Web.Api.Client
         /// <returns>Http request message.</returns>
         protected HttpRequestMessage CreateHttpRequestMessage(string requestUrl, HttpMethod method, HttpContent content = default)
         {
-            return new HttpRequestMessage(method, requestUrl) { Content = content };
+            //create request message with desired content
+            var requestMessage = new HttpRequestMessage(method, requestUrl) { Content = content };
+
+            //get default accept header value
+            var defaultAcceptHeader = Serializer.DefaultAcceptHeader;
+
+            //set accept header for our request message
+            requestMessage.Headers.Add(HeaderNames.Accept, defaultAcceptHeader);
+
+            //return request message
+            return requestMessage ;
         }
 
         #endregion

@@ -34,10 +34,12 @@ namespace Gizmo.Web.Api.Client
 
         public string Name => "msgpack";
 
+        public string DefaultAcceptHeader => MimeType.MSGPACK;
+
         #endregion
 
         #region IPayloadSerializer
-        
+
         public ValueTask<T> DeserializeAsync<T>(Stream stream, CancellationToken ct)
         {
             return MessagePackSerializer.DeserializeAsync<T>(stream, SerializerOptions.Value.MessagePackSerializerOptions, ct);
