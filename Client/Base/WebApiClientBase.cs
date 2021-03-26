@@ -376,7 +376,14 @@ namespace Gizmo.Web.Api.Client
                     //WebApiClientException class still need work in order to be able to provide all errors contained in the errorResponse
 
                     //throw appropriate exception
-                    throw new WebApiClientException(httpResponseMessage.StatusCode, httpResponseMessage.ReasonPhrase, errorResponse.ErrorCode);
+                    if (errorResponse.ErrorCodeType == "WebApiErrorCode" && errorResponse.ErrorCode == 1) //InvalidProperty
+                    {
+                        throw new ValidationException(httpResponseMessage.StatusCode, httpResponseMessage.ReasonPhrase, errorResponse.ErrorCodeType, errorResponse.ErrorCode, errorResponse.Errors);
+                    }
+                    else
+                    {
+                        throw new WebApiClientException(httpResponseMessage.StatusCode, httpResponseMessage.ReasonPhrase, errorResponse.ErrorCodeType, errorResponse.ErrorCode);
+                    }
                 }
             }
             catch

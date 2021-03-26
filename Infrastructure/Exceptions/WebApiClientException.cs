@@ -6,14 +6,15 @@ namespace Gizmo.Web.Api.Client
     /// <summary>
     /// Generic web api exception.
     /// </summary>
-    public class WebApiClientException :Exception
+    public class WebApiClientException : Exception
     {
         #region CONSTRUCTOR
-        public WebApiClientException(HttpStatusCode httpStatusCode, string errorMessage, int? errorCode) : base(errorMessage)
+        public WebApiClientException(HttpStatusCode httpStatusCode, string errorMessage, string errorCodeType, int? errorCode) : base(errorMessage)
         {
             HttpStatusCode = httpStatusCode;
+            ErrorCodeType = errorCodeType;
             ErrorCode = errorCode;
-        } 
+        }
         #endregion
 
         #region PROPERTIES
@@ -26,13 +27,18 @@ namespace Gizmo.Web.Api.Client
             get; protected set;
         }
 
+        public string ErrorCodeType
+        {
+            get; protected set;
+        }
+
         /// <summary>
         /// Gets api error code.
         /// </summary>
         public int? ErrorCode
         {
             get; protected set;
-        } 
+        }
 
         #endregion
     }
