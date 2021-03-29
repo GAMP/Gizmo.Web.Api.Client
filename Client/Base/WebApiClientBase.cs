@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 using System;
+using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Threading;
@@ -350,7 +351,7 @@ namespace Gizmo.Web.Api.Client
                 case System.Net.HttpStatusCode.Unauthorized:
                     //when the request is unauthorized we wont be hitting any endpoints so response will be plain text
                     //we should throw custom unauthorized excption here
-                    break;       
+                    break;
                 default:
                     //we will need examine other http status codes, some might mean success some not so we would need to handle them here
                     break;
@@ -371,26 +372,14 @@ namespace Gizmo.Web.Api.Client
                     //based on the error response we should build appropriate exception
                     //for now we can throw the generic webapiclientexception,
                     //in the future we could have mappings of error response to other exception types
-
-                    //WARNING
-                    //WebApiClientException class still need work in order to be able to provide all errors contained in the errorResponse
-
-                    //throw appropriate exception
-                    if (errorResponse.ErrorCodeType == "WebApiErrorCode" && errorResponse.ErrorCode == 1) //InvalidProperty
-                    {
-                        throw new ValidationException(httpResponseMessage.StatusCode, httpResponseMessage.ReasonPhrase, errorResponse.ErrorCodeType, errorResponse.ErrorCode, errorResponse.Errors);
-                    }
-                    else
-                    {
-                        throw new WebApiClientException(httpResponseMessage.StatusCode, httpResponseMessage.ReasonPhrase, errorResponse.ErrorCodeType, errorResponse.ErrorCode);
-                    }
+                    ThrowExceptionForResponse(errorResponse);
                 }
             }
             catch
             {
                 //we will have two kind of possible errors here network related and serialization related
                 //we should translate them to custom exceptions so we can handle them appropriately 
-               
+
                 throw;
             }
         }
@@ -414,7 +403,21 @@ namespace Gizmo.Web.Api.Client
             requestMessage.Headers.Add(HeaderNames.Accept, defaultAcceptHeader);
 
             //return request message
-            return requestMessage ;
+            return requestMessage;
+        }
+
+        protected virtual void ThrowExceptionForResponse(WebApiErrorResponse errorResponse)
+        {
+            if (errorResponse == null)
+                throw new ArgumentNullException(nameof(errorResponse));
+
+            //throw generic non-error code web api client exception
+            throw new WebApiClientException((HttpStatusCode)errorResponse.HttpStatusCode, 
+                errorResponse.Message,
+                errorResponse.ErrorCodeType,
+                errorResponse.ErrorCodeTypeReadable,
+                errorResponse.ErrorCode,
+                errorResponse.ErrorCodeReadable);
         }
 
         #endregion

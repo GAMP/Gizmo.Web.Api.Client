@@ -75,6 +75,7 @@ namespace Gizmo.Web.Api.Client.Builder
             services.AddHttpClient<TaxesWebApiClient>(secureHttpClientName);
             services.AddHttpClient<UserGroupsWebApiClient>(secureHttpClientName);
             services.AddHttpClient<VariableWebApiClient>(secureHttpClientName);
+            services.AddHttpClient<DepositTransactionsWebApiClient>(secureHttpClientName);
 
             services.Configure(configure);
 
