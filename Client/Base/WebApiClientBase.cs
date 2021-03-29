@@ -343,12 +343,12 @@ namespace Gizmo.Web.Api.Client
             switch (httpResponseMessage.StatusCode)
             {
                 //allow normal response message processing in case of OK status code.
-                case System.Net.HttpStatusCode.OK:
+                case HttpStatusCode.OK:
                     return;
-                case System.Net.HttpStatusCode.NotFound:
+                case HttpStatusCode.NotFound:
                     //custom not found exception could be thrown here in order to easily diagnose problems related to invalid routes
                     break;
-                case System.Net.HttpStatusCode.Unauthorized:
+                case HttpStatusCode.Unauthorized:
                     //when the request is unauthorized we wont be hitting any endpoints so response will be plain text
                     //we should throw custom unauthorized excption here
                     break;
@@ -417,7 +417,8 @@ namespace Gizmo.Web.Api.Client
                 errorResponse.ErrorCodeType,
                 errorResponse.ErrorCodeTypeReadable,
                 errorResponse.ErrorCode,
-                errorResponse.ErrorCodeReadable);
+                errorResponse.ErrorCodeReadable,
+                errorResponse.Errors);
         }
 
         #endregion

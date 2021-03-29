@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Gizmo.Web.Api.Models;
+using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Gizmo.Web.Api.Client
@@ -34,13 +36,15 @@ namespace Gizmo.Web.Api.Client
             int? errorCodeType,
             string errorCodeTypeReadable,
             int? errorCode,
-            string errorCodeReadable) : base(errorMessage)
+            string errorCodeReadable,
+            IEnumerable<WebApiError> errors =default) : base(errorMessage)
         {
             HttpStatusCode = httpStatusCode;
             ErrorCodeType = errorCodeType;
             ErrorCodeTypeReadable = errorCodeTypeReadable;
             ErrorCode = errorCode;
             ErrorCodeRedable = errorCodeReadable;
+            Errors = errors;
         }
 
         #endregion
@@ -85,6 +89,14 @@ namespace Gizmo.Web.Api.Client
         public string ErrorCodeRedable
         {
             get; protected set;
+        }
+
+        /// <summary>
+        /// Gets extended error collection.
+        /// </summary>
+        public IEnumerable<WebApiError> Errors
+        {
+            get;protected set;
         }
 
         #endregion
