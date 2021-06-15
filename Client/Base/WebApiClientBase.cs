@@ -345,16 +345,11 @@ namespace Gizmo.Web.Api.Client
                 //allow normal response message processing in case of OK status code.
                 case HttpStatusCode.OK:
                     return;
-                case HttpStatusCode.NotFound:
-                    //custom not found exception could be thrown here in order to easily diagnose problems related to invalid routes
-                    break;
-                case HttpStatusCode.Unauthorized:
-                    //when the request is unauthorized we wont be hitting any endpoints so response will be plain text
-                    //we should throw custom unauthorized excption here
+                case HttpStatusCode.InternalServerError:
+                case HttpStatusCode.BadRequest:
                     break;
                 default:
-                    //we will need examine other http status codes, some might mean success some not so we would need to handle them here
-                    break;
+                    throw new WebApiClientException(httpResponseMessage.StatusCode, httpResponseMessage.ReasonPhrase);
             }
 
             //we should only read content stream when there is an serialized response expected

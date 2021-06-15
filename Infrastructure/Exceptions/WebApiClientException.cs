@@ -151,6 +151,16 @@ namespace Gizmo.Web.Api.Client
             return IsErrorCodeType(errorCodeType) && IsErrorCode(errorCode);
         }
 
+        /// <summary>
+        /// Checks http status code equality.
+        /// </summary>
+        /// <param name="httpStatusCode">HTTP Status code.</param>
+        /// <returns>True or false.</returns>
+        public bool IsHttpStatusCode(HttpStatusCode httpStatusCode)
+        {
+            return HttpStatusCode == httpStatusCode;
+        }
+
         #endregion
     }
 }
