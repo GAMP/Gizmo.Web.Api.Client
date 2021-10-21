@@ -8,7 +8,12 @@
     /// </remarks>
     public static class MimeType
     {
+        #region CONSTANTS
+        
         public const string JSON = "application/json";
-        public const string MSGPACK = "application/x-msgpack";
+        
+        public const string MSGPACK = "application/x-msgpack"; 
+
+        #endregion
     }
 }

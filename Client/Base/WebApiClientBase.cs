@@ -43,7 +43,7 @@ namespace Gizmo.Web.Api.Client
         /// </summary>
         public IOptions<WebApiClientOptions> Options
         {
-            get; set;
+            get;
         }
 
         /// <summary>
@@ -302,6 +302,15 @@ namespace Gizmo.Web.Api.Client
 
         #endregion
 
+        #region HELPER METHODS
+        
+        /// <summary>
+        /// Gets the result object from specified response message.
+        /// </summary>
+        /// <typeparam name="TResult">Result object type.</typeparam>
+        /// <param name="httpResponseMessage">HTTP response message.</param>
+        /// <param name="ct">Cancellation token.</param>
+        /// <returns>Result object.</returns>
         protected async Task<TResult> GetHttpMessageResultAsync<TResult>(HttpResponseMessage httpResponseMessage, CancellationToken ct = default)
         {
             if (httpResponseMessage == null)
@@ -401,20 +410,26 @@ namespace Gizmo.Web.Api.Client
             return requestMessage;
         }
 
+        /// <summary>
+        /// Throws appropriate exception based on web api response object.
+        /// </summary>
+        /// <param name="errorResponse">Web api response object.</param>
         protected virtual void ThrowExceptionForResponse(WebApiErrorResponse errorResponse)
         {
             if (errorResponse == null)
                 throw new ArgumentNullException(nameof(errorResponse));
 
             //throw generic non-error code web api client exception
-            throw new WebApiClientException((HttpStatusCode)errorResponse.HttpStatusCode, 
+            throw new WebApiClientException((HttpStatusCode)errorResponse.HttpStatusCode,
                 errorResponse.Message,
                 errorResponse.ErrorCodeType,
                 errorResponse.ErrorCodeTypeReadable,
                 errorResponse.ErrorCode,
                 errorResponse.ErrorCodeReadable,
                 errorResponse.Errors);
-        }
+        } 
+
+        #endregion
 
         #endregion
 
