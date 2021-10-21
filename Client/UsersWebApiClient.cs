@@ -21,7 +21,8 @@ namespace Gizmo.Web.Api.Client
 
         #region FUNCTIONS
         
-        #region Users
+        #region USERS
+
         public Task<PagedList<User>> GetAsync(CancellationToken ct = default)
         {
             return GetAsync(default, ct);
@@ -51,9 +52,11 @@ namespace Gizmo.Web.Api.Client
         {
             return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }
+        
         #endregion
 
-        #region User Attribute
+        #region USER ATTRIBUTE
+
         public Task<IEnumerable<UserAttribute>> GetUserAttributeAsync(int id, CancellationToken ct = default)
         {
             return GetAsync<IEnumerable<UserAttribute>>(CreateRequestUrlWithRouteParameters($"{id}/attributes"), ct);
@@ -74,10 +77,10 @@ namespace Gizmo.Web.Api.Client
             return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}/attributes/{userAttributeId}"), ct);
         }
 
-
         #endregion
 
-        #region User Notes
+        #region USER NOTES
+
         public Task<PagedList<UserNote>> GetUserNotesAsync(int id, CancellationToken ct = default)
         {
             return GetAsync<PagedList<UserNote>>(CreateRequestUrlWithRouteParameters($"{id}/notes"), ct);
@@ -102,6 +105,7 @@ namespace Gizmo.Web.Api.Client
         {
             return GetAsync<UserNote>(CreateRequestUrlWithRouteParameters($"{id}/notes/{userNoteId}"), ct);
         }
+
         #endregion 
 
         #endregion
