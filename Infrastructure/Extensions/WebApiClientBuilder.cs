@@ -12,7 +12,7 @@ namespace Gizmo.Web.Api.Client.Builder
         /// <summary>
         /// Creates new instance.
         /// </summary>
-        /// <param name="services"></param>
+        /// <param name="services">Services collection.</param>
         public WebApiClientBuilder(IServiceCollection services)
         {
             Services = services;

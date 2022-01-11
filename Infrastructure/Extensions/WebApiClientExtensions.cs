@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System;
+using System.Linq;
 using System.Reflection;
 
 namespace Gizmo.Web.Api.Client.Builder
@@ -10,28 +11,39 @@ namespace Gizmo.Web.Api.Client.Builder
     /// </summary>
     public static class WebApiClientExtensions
     {
-        /// <summary>
-        /// Adds web api clients to service collection.
-        /// </summary>
-        /// <param name="services">Service collection.</param>
-        public static IWebApiClientBuilder AddWebApiClient(this IServiceCollection services)
-        {
-            return AddWebApiClient(services, _ => { });
-        }
+        #region PRIVATE STATIC READONLY
+        private static readonly Type _extensionType = typeof(HttpClientFactoryServiceCollectionExtensions);
+        #endregion
 
+        #region EXTENSION METHODS
+        
         /// <summary>
         /// Adds web api clients to service collection.
         /// </summary>
         /// <param name="services">Service collection.</param>
+        /// <param name="clientName">Registered http client name.</param>
         /// <param name="configure">Configuration action.</param>
         /// <returns>Web api client builder.</returns>
-        public static IWebApiClientBuilder AddWebApiClient(this IServiceCollection services, Action<WebApiClientOptions> configure)
+        public static IWebApiClientBuilder AddWebApiClient(this IServiceCollection services, string clientName, Action<WebApiClientOptions> configure)
         {
             if (services == null)
                 throw new ArgumentNullException(nameof(services));
 
+            //add payload serializer
             services.TryAddEnumerable(ServiceDescriptor.Singleton<IPayloadSerializerProvider, DefaultPayloadSerializerProvider>());
-       
+
+            //get all the extension methods
+            var methods = _extensionType.GetMethods(BindingFlags.Static | BindingFlags.Public);
+
+            //find desired http client method
+            var httpMethod = methods.Where(mi => mi.Name == "AddHttpClient" && mi.IsGenericMethod && mi.GetParameters().Count() == 2)
+                .FirstOrDefault();
+
+            //check if the desired method is found
+            if (httpMethod == null)
+                throw new NotSupportedException();
+
+            //add each web api client
             foreach (var type in Assembly.GetExecutingAssembly().ExportedTypes)
             {
                 //get type info
@@ -41,45 +53,20 @@ namespace Gizmo.Web.Api.Client.Builder
 
                 //any type that inherits from web api client base added as singelton service
                 if (typeInfo.BaseType == typeof(WebApiClientBase))
-                    services.AddSingleton(type);
+                {
+                    //invoke the method
+                    httpMethod.MakeGenericMethod(new Type[] { type })
+                        .Invoke(null, new object[] { services, clientName });
+                }
             }
 
+            //configure options
             services.Configure(configure);
 
+            //return builder
             return new WebApiClientBuilder(services);
-        }
+        } 
 
-        public static IWebApiClientBuilder AddSecureWebApiClient(this IServiceCollection services, 
-            string secureHttpClientName,
-            Action<WebApiClientOptions> configure)
-        {
-            if (string.IsNullOrWhiteSpace(secureHttpClientName))
-                throw new ArgumentNullException(nameof(secureHttpClientName));
-
-            services.TryAddEnumerable(ServiceDescriptor.Singleton<IPayloadSerializerProvider, DefaultPayloadSerializerProvider>());
-
-            services.AddHttpClient<UsersWebApiClient>(secureHttpClientName);
-            services.AddHttpClient<ProductsWebApiClient>(secureHttpClientName);
-            services.AddHttpClient<PaymentMethodWebApiClient>(secureHttpClientName);
-            services.AddHttpClient<VariableWebApiClient>(secureHttpClientName);
-            services.AddHttpClient<AssetsWebApiClient>(secureHttpClientName);
-            services.AddHttpClient<AssetTypesWebApiClient>(secureHttpClientName);
-            services.AddHttpClient<AttributesWebApiClient>(secureHttpClientName);
-            services.AddHttpClient<HostGroupsWebApiClient>(secureHttpClientName);
-            services.AddHttpClient<HostIconWebApiClient>(secureHttpClientName);
-            services.AddHttpClient<HostWebApiClient>(secureHttpClientName);
-            services.AddHttpClient<MonetaryUnitsWebApiClient>(secureHttpClientName);
-            services.AddHttpClient<OperatorsWebApiClient>(secureHttpClientName);
-            services.AddHttpClient<ProductGroupsWebApiClient>(secureHttpClientName);
-            services.AddHttpClient<RegisterWebApiClient>(secureHttpClientName);
-            services.AddHttpClient<TaxesWebApiClient>(secureHttpClientName);
-            services.AddHttpClient<UserGroupsWebApiClient>(secureHttpClientName);
-            services.AddHttpClient<VariableWebApiClient>(secureHttpClientName);
-            services.AddHttpClient<DepositTransactionsWebApiClient>(secureHttpClientName);
-
-            services.Configure(configure);
-
-            return new WebApiClientBuilder(services);
-        }
+        #endregion
     }
 }
