@@ -64,6 +64,21 @@ namespace Gizmo.Web.Api.Client
             return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"{id}/invoice"), invoiceOrderOptions, ct);
         }
 
+        public Task<CreateResult> AcceptOrderAsync(int id, CancellationToken ct = default)
+        {
+            return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"{id}/accept"), null, ct);
+        }
+
+        public Task<UpdateResult> CancelOrderAsync(int id, CancellationToken ct = default)
+        {
+            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"{id}/cancel"), null, ct);
+        }
+
+        public Task<UpdateResult> CompleteOrderAsync(int id, CancellationToken ct = default)
+        {
+            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"{id}/complete"), null, ct);
+        }
+
         public Task<GetResult<bool>> GetOrderDeliveredStatusAsync(int id, CancellationToken ct = default)
         {
             return GetAsync<GetResult<bool>>(CreateRequestUrlWithRouteParameters($"{id}/delivered"), ct);
@@ -71,7 +86,7 @@ namespace Gizmo.Web.Api.Client
 
         public Task<UpdateResult> SetOrderDeliveredStatusAsync(int id, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"{id}/delivered"), ct);
+            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"{id}/delivered"), null, ct);
         }
 
         public Task<OrderLineDeliveredStatus> GetOrderLineDeliveredStatusAsync(int id, int orderLineId, CancellationToken ct = default)
@@ -81,7 +96,7 @@ namespace Gizmo.Web.Api.Client
 
         public Task<OrderLineDeliveredStatus> SetOrderLineDeliveredQuantityAsync(int id, int orderLineId, OrderLineDeliveredStatusModelUpdate orderLineDeliveredStatusModelUpdate, CancellationToken ct = default)
         {
-            return GetAsync<OrderLineDeliveredStatus>(CreateRequestUrlWithRouteParameters($"{id}/orderlines/{orderLineId}/delivered"), ct);
+            return PutAsync<OrderLineDeliveredStatus>(CreateRequestUrlWithRouteParameters($"{id}/orderlines/{orderLineId}/delivered"), orderLineDeliveredStatusModelUpdate, ct);
         }
 
         #endregion
