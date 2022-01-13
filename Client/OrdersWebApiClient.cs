@@ -29,9 +29,14 @@ namespace Gizmo.Web.Api.Client
             return GetAsync<PagedList<Order>>(filter, ct);
         }
 
-        public Task<CalculatedOrder> GetByIdAsync(int id, CancellationToken ct = default)
+        public Task<Order> GetByIdAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<CalculatedOrder>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            return GetAsync<Order>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+        }
+
+        public Task<Order> GetByIdAsync(int id, GetOptions options, CancellationToken ct = default)
+        {
+            return GetAsync<Order>(CreateRequestUrl($"{id}", options), ct);
         }
 
         public Task<CalculatedOrder> CalculateUserOrderPriceAsync(int id, CalculateOrderOptionsModelBase order, CancellationToken ct = default)
