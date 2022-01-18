@@ -69,9 +69,9 @@ namespace Gizmo.Web.Api.Client
             return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"{id}/invoice"), invoiceOrderOptions, ct);
         }
 
-        public Task<CreateResult> AcceptOrderAsync(int id, CancellationToken ct = default)
+        public Task<CreateResult> InvoiceOrderAsync(int id, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"{id}/accept"), null, ct);
+            return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"{id}/invoice"), null, ct);
         }
 
         public Task<UpdateResult> CancelOrderAsync(int id, CancellationToken ct = default)
