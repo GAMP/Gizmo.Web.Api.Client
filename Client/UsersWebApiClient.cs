@@ -86,6 +86,11 @@ namespace Gizmo.Web.Api.Client
             return GetAsync<PagedList<UserNote>>(CreateRequestUrlWithRouteParameters($"{id}/notes"), ct);
         }
 
+        public Task<PagedList<UserNote>> GetUserNotesAsync(int id, UserNotesFilter userNotesFilter, CancellationToken ct = default)
+        {
+            return GetAsync<PagedList<UserNote>>(CreateRequestUrl($"{id}/notes", userNotesFilter), ct);
+        }
+
         public Task<CreateResult> CreateUserNoteAsync(int id, UserNoteModelCreate userNoteModelCreate, CancellationToken ct = default)
         {
             return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"{id}/notes"), userNoteModelCreate, ct);
