@@ -37,7 +37,7 @@ namespace Gizmo.Web.Api.Client
             string errorCodeTypeReadable,
             int? errorCode,
             string errorCodeReadable,
-            IEnumerable<WebApiError> errors =default) : base(errorMessage)
+            IEnumerable<WebApiErrorBase> errors =default) : base(errorMessage)
         {
             HttpStatusCode = httpStatusCode;
             ErrorCodeType = errorCodeType;
@@ -94,7 +94,7 @@ namespace Gizmo.Web.Api.Client
         /// <summary>
         /// Gets extended error collection.
         /// </summary>
-        public IEnumerable<WebApiError> Errors
+        public IEnumerable<WebApiErrorBase> Errors
         {
             get;protected set;
         }
