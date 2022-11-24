@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Gizmo.Web.Api.Client
 {
     [WebApiRoute("api/v2/variables")]
-    public class VariableWebApiClient:WebApiClientBase
+    public class VariableWebApiClient : WebApiClientBase
     {
         #region CONSTRUCTOR
         public VariableWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :
@@ -18,7 +18,7 @@ namespace Gizmo.Web.Api.Client
         #endregion
 
         #region FUNCTIONS
-        
+
         public Task<PagedList<Variable>> GetAsync(CancellationToken ct = default)
         {
             return GetAsync(default, ct);
@@ -47,7 +47,7 @@ namespace Gizmo.Web.Api.Client
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
         {
             return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
-        } 
+        }
 
         #endregion
     }
