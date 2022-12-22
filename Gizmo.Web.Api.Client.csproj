@@ -16,14 +16,15 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="MessagePack" Version="2.3.85" />
-		<PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
-		<PackageReference Include="System.Net.Http.Json" Version="6.0.0" />
+	  <Compile Remove="Submodules\**" />
+	  <EmbeddedResource Remove="Submodules\**" />
+	  <None Remove="Submodules\**" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Gizmo.Shared\Gizmo.Shared.csproj" />
-		<ProjectReference Include="..\Gizmo.Web.Api.Models\Gizmo.Web.Api.Models.csproj" />
+		<PackageReference Include="MessagePack" Version="2.3.85" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
+		<PackageReference Include="System.Net.Http.Json" Version="6.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -31,6 +32,10 @@
 	    <Pack>True</Pack>
 	    <PackagePath></PackagePath>
 	  </None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="Submodules\Gizmo.Web.Api.Models\Gizmo.Web.Api.Models.csproj" />
 	</ItemGroup>
 
 </Project>
