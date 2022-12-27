@@ -158,7 +158,8 @@ namespace Gizmo.Web.Api.Client
 
         #endregion
 
-        #region PROTECTED VIRTUAL     
+        //TODO: but this is not virtual
+        #region PROTECTED VIRTUAL
 
         #region GET
 

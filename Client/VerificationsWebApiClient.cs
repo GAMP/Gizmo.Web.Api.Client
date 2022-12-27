@@ -1,4 +1,4 @@
-﻿using Gizmo.Web.Api.Models;
+﻿using Gizmo.Web.Api.Models.Models.API.Result.Verification;
 using Microsoft.Extensions.Options;
 using System.Net.Http;
 using System.Threading;

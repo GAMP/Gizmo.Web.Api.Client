@@ -1,6 +1,10 @@
 ﻿using Gizmo.Web.Api.Models;
+using Gizmo.Web.Api.Models.Abstractions.Models.API.Request;
+using Gizmo.Web.Api.Models.Models.API.Request;
+using Gizmo.Web.Api.Models.Models.API.Request.Invoice;
+
 using Microsoft.Extensions.Options;
-using System;
+
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -34,7 +38,7 @@ namespace Gizmo.Web.Api.Client
             return GetAsync<Invoice>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }
 
-        public Task<UpdateResult> VoidAsync(int id, RefundOptions refundOptions, CancellationToken ct = default)
+        public Task<UpdateResult> VoidAsync(int id, IRefundOptions refundOptions, CancellationToken ct = default)
         {
             return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"{id}/void"), refundOptions, ct);
         }

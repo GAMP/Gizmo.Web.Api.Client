@@ -23,7 +23,7 @@ namespace Gizmo.Web.Api.Client
         public Task<AuthToken> GetToken(TestUser user ,CancellationToken ct = default)
         {
             var b = GetResultAsync<AuthToken>(CreateRequestUrl(user));
-            var c = b.GetAwaiter().GetResult();
+            var c = b.GetAwaiter().GetResult(); //TODO: Why
             var x = GetAsync<AuthToken>(user, ct);
             return b;
 

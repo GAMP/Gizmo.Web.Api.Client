@@ -1,4 +1,9 @@
 ﻿using Gizmo.Web.Api.Models;
+using Gizmo.Web.Api.Models.Models.API.Request;
+using Gizmo.Web.Api.Models.Models.API.Request.Invoice;
+using Gizmo.Web.Api.Models.Models.API.Request.Order;
+using Gizmo.Web.Api.Models.Models.API.Request.Order.Calculate;
+using Gizmo.Web.Api.Models.Models.API.Request.Order.Line.DeliveredStatus;
 using Microsoft.Extensions.Options;
 using System.Net.Http;
 using System.Threading;
@@ -39,12 +44,12 @@ namespace Gizmo.Web.Api.Client
             return GetAsync<Order>(CreateRequestUrl($"{id}", options), ct);
         }
 
-        public Task<CalculatedOrder> CalculateUserOrderPriceAsync(int id, CalculateOrderOptionsModelBase order, CancellationToken ct = default)
+        public Task<CalculatedOrder> CalculateUserOrderPriceAsync(int id, CalculateOrderOptionsModel order, CancellationToken ct = default)
         {
             return GetAsync<CalculatedOrder>(CreateRequestUrl($"calculate/user/{id}", order), ct);
         }
 
-        public Task<CalculatedOrder> CalculateGuestOrderPriceAsync(CalculateOrderOptionsModelBase order, CancellationToken ct = default)
+        public Task<CalculatedOrder> CalculateGuestOrderPriceAsync(CalculateOrderOptionsModel order, CancellationToken ct = default)
         {
             return GetAsync<CalculatedOrder>(CreateRequestUrl($"calculate/guest", order), ct);
         }
