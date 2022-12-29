@@ -1,13 +1,7 @@
 ﻿using Gizmo.Web.Api.Models;
-using Gizmo.Web.Api.Models.Models.API.Request;
-using Gizmo.Web.Api.Models.Models.API.Request.Application.Executable;
-using Gizmo.Web.Api.Models.Models.API.Request.Application.Executable.CdImage;
-using Gizmo.Web.Api.Models.Models.API.Request.Application.Executable.Deployment;
-using Gizmo.Web.Api.Models.Models.API.Request.Application.Executable.License;
-using Gizmo.Web.Api.Models.Models.API.Request.Application.Executable.Model;
-using Gizmo.Web.Api.Models.Models.API.Request.Application.Executable.PersonalFile;
-using Gizmo.Web.Api.Models.Models.API.Request.Application.Executable.Task;
+
 using Microsoft.Extensions.Options;
+
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;

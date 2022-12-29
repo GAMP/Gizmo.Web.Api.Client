@@ -1,6 +1,4 @@
 ﻿using Gizmo.Web.Api.Models;
-using Gizmo.Web.Api.Models.Models.API.Request;
-using Gizmo.Web.Api.Models.Models.API.Request.MonetaryUnit;
 
 using Microsoft.Extensions.Options;
 

@@ -1,9 +1,7 @@
 ﻿using Gizmo.Web.Api.Models;
-using Gizmo.Web.Api.Models.Models.API.Request;
-using Gizmo.Web.Api.Models.Models.API.Request.User.Attribute;
-using Gizmo.Web.Api.Models.Models.API.Request.User.Model;
-using Gizmo.Web.Api.Models.Models.API.Request.User.Note;
+
 using Microsoft.Extensions.Options;
+
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;

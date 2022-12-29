@@ -3,8 +3,6 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Gizmo.Web.Api.Models;
-using Gizmo.Web.Api.Models.Models.API.Request.Transaction.Point;
-using Gizmo.Web.Api.Models.Models.API.Request;
 
 namespace Gizmo.Web.Api.Client
 {

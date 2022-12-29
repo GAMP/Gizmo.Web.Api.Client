@@ -1,8 +1,7 @@
 ﻿using Gizmo.Web.Api.Models;
-using Gizmo.Web.Api.Models.Models.API.Request;
-using Gizmo.Web.Api.Models.Models.API.Request.Device.Host;
-using Gizmo.Web.Api.Models.Models.API.Request.Device.Model;
+
 using Microsoft.Extensions.Options;
+
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;

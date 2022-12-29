@@ -1,10 +1,7 @@
 ﻿using Gizmo.Web.Api.Models;
-using Gizmo.Web.Api.Models.Models.API.Request;
-using Gizmo.Web.Api.Models.Models.API.Request.Invoice;
-using Gizmo.Web.Api.Models.Models.API.Request.Order;
-using Gizmo.Web.Api.Models.Models.API.Request.Order.Calculate;
-using Gizmo.Web.Api.Models.Models.API.Request.Order.Line.DeliveredStatus;
+
 using Microsoft.Extensions.Options;
+
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;

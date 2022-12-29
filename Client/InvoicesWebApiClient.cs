@@ -1,7 +1,5 @@
 ﻿using Gizmo.Web.Api.Models;
 using Gizmo.Web.Api.Models.Abstractions.Models.API.Request;
-using Gizmo.Web.Api.Models.Models.API.Request;
-using Gizmo.Web.Api.Models.Models.API.Request.Invoice;
 
 using Microsoft.Extensions.Options;
 
