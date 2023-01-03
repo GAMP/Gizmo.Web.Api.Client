@@ -24,7 +24,7 @@ namespace Gizmo.Web.Api.Client
         {
             var b = GetResultAsync<AuthToken>(CreateRequestUrl(user));
             var c = b.GetAwaiter().GetResult(); //TODO: Why
-            var x = GetAsync<AuthToken>(user, ct);
+            var x = GetAsync<AuthToken>(user, ct); //TODO: Why
             return b;
 
         }      
@@ -32,22 +32,22 @@ namespace Gizmo.Web.Api.Client
 
 
     //TODO: When we decide what todo with the serialization issue, this needs to be refactored to models
-    [Serializable]
-    [DataContract]
+    //[Serializable]
+    //[DataContract]
     public class AuthToken
     {
-        public string token { get; set; }
-        public string refreshToken { get; set; }
+        public string Token { get; set; }
+        public string RefreshToken { get; set; }
     }
 
     //TODO: When we decide what todo with the serialization issue, this needs to be refactored to models
-    [Serializable]
-    [DataContract]
+    //[Serializable]
+    //[DataContract]
     public class TestUser : IUrlQueryParameters
     {
-        [DataMember]
-        public string username { get; set; } = "admin";
-        [DataMember]
-        public string password { get; set; } = "admin";
+        //[DataMember]
+        public string Username { get; set; } = "admin";
+        //[DataMember]
+        public string Password { get; set; } = "admin";
     }
 }
