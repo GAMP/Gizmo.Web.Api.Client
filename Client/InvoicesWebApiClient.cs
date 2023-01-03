@@ -1,5 +1,5 @@
 ﻿using Gizmo.Web.Api.Models;
-using Gizmo.Web.Api.Models.Abstractions.Models.API.Request;
+using Gizmo.Web.Api.Models.Abstractions;
 
 using Microsoft.Extensions.Options;
 
