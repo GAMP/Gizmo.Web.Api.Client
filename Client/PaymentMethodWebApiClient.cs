@@ -21,14 +21,14 @@ namespace Gizmo.Web.Api.Client
 
         #region FUNCTIONS
 
-        public Task<PagedList<PaymentMethod>> GetAsync(CancellationToken ct = default)
+        public Task<PagedList<PaymentMethodModel>> GetAsync(CancellationToken ct = default)
         {
             return GetAsync(default, ct);
         }
 
-        public Task<PagedList<PaymentMethod>> GetAsync(PaymentMethodsFilter filter, CancellationToken ct = default)
+        public Task<PagedList<PaymentMethodModel>> GetAsync(PaymentMethodsFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<PaymentMethod>>(filter, ct);
+            return GetAsync<PagedList<PaymentMethodModel>>(filter, ct);
         }
 
         public Task<CreateResult> CreateAsync(PaymentMethodModelCreate paymentMethodModelCreate, CancellationToken ct = default)
@@ -41,9 +41,9 @@ namespace Gizmo.Web.Api.Client
             return PutAsync<UpdateResult>(CreateRequestUrl(), paymentMethodModelUpdate, ct);
         }
 
-        public Task<PaymentMethod> GetByIdAsync(int id, CancellationToken ct = default)
+        public Task<PaymentMethodModel> GetByIdAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<PaymentMethod>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            return GetAsync<PaymentMethodModel>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }
 
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)

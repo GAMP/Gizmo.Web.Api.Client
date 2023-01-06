@@ -20,14 +20,14 @@ namespace Gizmo.Web.Api.Client
 
         #region FUNCTIONS
 
-        public Task<PagedList<ApplicationPersonalFile>> GetAsync(CancellationToken ct = default)
+        public Task<PagedList<ApplicationPersonalFileModel>> GetAsync(CancellationToken ct = default)
         {
             return GetAsync(default, ct);
         }
 
-        public Task<PagedList<ApplicationPersonalFile>> GetAsync(ApplicationPersonalFilesFilter filter, CancellationToken ct = default)
+        public Task<PagedList<ApplicationPersonalFileModel>> GetAsync(ApplicationPersonalFilesFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<ApplicationPersonalFile>>(filter, ct);
+            return GetAsync<PagedList<ApplicationPersonalFileModel>>(filter, ct);
         }
 
         public Task<CreateResult> CreateAsync(ApplicationPersonalFileModelCreate applicationPersonalFileModelCreate, CancellationToken ct = default)
@@ -40,9 +40,9 @@ namespace Gizmo.Web.Api.Client
             return PutAsync<UpdateResult>(CreateRequestUrl(), applicationPersonalFileModelUpdate, ct);
         }
 
-        public Task<ApplicationPersonalFile> GetByIdAsync(int id, CancellationToken ct = default)
+        public Task<ApplicationPersonalFileModel> GetByIdAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<ApplicationPersonalFile>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            return GetAsync<ApplicationPersonalFileModel>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }
 
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)

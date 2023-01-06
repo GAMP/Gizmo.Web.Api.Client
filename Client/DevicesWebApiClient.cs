@@ -20,7 +20,7 @@ namespace Gizmo.Web.Api.Client
 
         #region GET
 
-        public Task<PagedList<Device>> GetAsync(CancellationToken ct = default)
+        public Task<PagedList<DeviceModel>> GetAsync(CancellationToken ct = default)
         {
             return GetAsync(default, ct);
         }
@@ -29,9 +29,9 @@ namespace Gizmo.Web.Api.Client
 
         #region GET
 
-        public Task<PagedList<Device>> GetAsync(DevicesFilter filter, CancellationToken ct = default)
+        public Task<PagedList<DeviceModel>> GetAsync(DevicesFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<Device>>(filter, ct);
+            return GetAsync<PagedList<DeviceModel>>(filter, ct);
         }
 
         #endregion
@@ -92,7 +92,7 @@ namespace Gizmo.Web.Api.Client
 
         #region DEVICE HOST GET
 
-        public Task<PagedList<DeviceHost>> HostGetAsync(CancellationToken ct = default)
+        public Task<PagedList<DeviceHostModel>> HostGetAsync(CancellationToken ct = default)
         {
             return HostGetAsync(default, ct);
         }
@@ -101,9 +101,9 @@ namespace Gizmo.Web.Api.Client
 
         #region DEVICE HOST GET
 
-        public Task<PagedList<DeviceHost>> HostGetAsync(DeviceHostFilter filter, CancellationToken ct = default)
+        public Task<PagedList<DeviceHostModel>> HostGetAsync(DeviceHostFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<DeviceHost>>(CreateRequestUrl("hosts",filter), ct);
+            return GetAsync<PagedList<DeviceHostModel>>(CreateRequestUrl("hosts",filter), ct);
         }
 
         #endregion

@@ -51,9 +51,9 @@ namespace Gizmo.Web.Api.Client
 
         #region MoneySalePreset
 
-        public Task<PagedList<MoneySalePreset>> GetMoneySalePresetsAsync(CancellationToken ct = default)
+        public Task<PagedList<MoneySalePresetModel>> GetMoneySalePresetsAsync(CancellationToken ct = default)
         {
-            return GetAsync<PagedList<MoneySalePreset>>(CreateRequestUrlWithRouteParameters($"money"), ct);
+            return GetAsync<PagedList<MoneySalePresetModel>>(CreateRequestUrlWithRouteParameters($"money"), ct);
         }
 
         public Task<CreateResult> CreateMoneySalePresetAsync(MoneySalePresetModelCreate moneySalePresetModelCreate, CancellationToken ct = default)
@@ -66,9 +66,9 @@ namespace Gizmo.Web.Api.Client
             return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"money"), moneySalePresetModelUpdate, ct);
         }
 
-        public Task<MoneySalePreset> GetMoneySalePresetByIdAsync(int id, CancellationToken ct = default)
+        public Task<MoneySalePresetModel> GetMoneySalePresetByIdAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<MoneySalePreset>(CreateRequestUrlWithRouteParameters($"money/{id}"), ct);
+            return GetAsync<MoneySalePresetModel>(CreateRequestUrlWithRouteParameters($"money/{id}"), ct);
         }
 
         public Task<DeleteResult> DeleteMoneySalePresetAsync(int id, CancellationToken ct = default)

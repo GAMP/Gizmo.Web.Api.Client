@@ -20,19 +20,19 @@ namespace Gizmo.Web.Api.Client
 
         #region FUNCTIONS
 
-        public Task<PagedList<ApplicationLicense>> GetAsync(CancellationToken ct = default)
+        public Task<PagedList<ApplicationLicenseModel>> GetAsync(CancellationToken ct = default)
         {
             return GetAsync(default, ct);
         }
 
-        public Task<PagedList<ApplicationLicense>> GetAsync(ApplicationLicensesFilter filter, CancellationToken ct = default)
+        public Task<PagedList<ApplicationLicenseModel>> GetAsync(ApplicationLicensesFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<ApplicationLicense>>(filter, ct);
+            return GetAsync<PagedList<ApplicationLicenseModel>>(filter, ct);
         }
 
-        public Task<ApplicationLicense> GetByIdAsync(int id, CancellationToken ct = default)
+        public Task<ApplicationLicenseModel> GetByIdAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<ApplicationLicense>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            return GetAsync<ApplicationLicenseModel>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         } 
 
         #endregion

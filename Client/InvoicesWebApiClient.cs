@@ -21,19 +21,19 @@ namespace Gizmo.Web.Api.Client
 
         #region FUNCTIONS
 
-        public Task<PagedList<Invoice>> GetAsync(CancellationToken ct = default)
+        public Task<PagedList<InvoiceModel>> GetAsync(CancellationToken ct = default)
         {
             return GetAsync(default, ct);
         }
 
-        public Task<PagedList<Invoice>> GetAsync(InvoicesFilter filter, CancellationToken ct = default)
+        public Task<PagedList<InvoiceModel>> GetAsync(InvoicesFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<Invoice>>(filter, ct);
+            return GetAsync<PagedList<InvoiceModel>>(filter, ct);
         }
 
-        public Task<Invoice> GetByIdAsync(int id, CancellationToken ct = default)
+        public Task<InvoiceModel> GetByIdAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<Invoice>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            return GetAsync<InvoiceModel>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }
 
         public Task<UpdateResult> VoidAsync(int id, IRefundOptions refundOptions, CancellationToken ct = default)

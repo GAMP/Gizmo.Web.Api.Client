@@ -21,14 +21,14 @@ namespace Gizmo.Web.Api.Client
 
         #region FUNCTIONS
 
-        public Task<PagedList<MoneySalePreset>> GetAsync(CancellationToken ct = default)
+        public Task<PagedList<MoneySalePresetModel>> GetAsync(CancellationToken ct = default)
         {
             return GetAsync(default, ct);
         }
 
-        public Task<PagedList<MoneySalePreset>> GetAsync(MoneySalePresetsFilter filter, CancellationToken ct = default)
+        public Task<PagedList<MoneySalePresetModel>> GetAsync(MoneySalePresetsFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<MoneySalePreset>>(filter, ct);
+            return GetAsync<PagedList<MoneySalePresetModel>>(filter, ct);
         }
 
         public Task<CreateResult> CreateAsync(MoneySalePresetModelCreate moneySalePresetModelCreate, CancellationToken ct = default)
@@ -41,9 +41,9 @@ namespace Gizmo.Web.Api.Client
             return PutAsync<UpdateResult>(CreateRequestUrl(), moneySalePresetModelUpdate, ct);
         }
 
-        public Task<MoneySalePreset> GetByIdAsync(int id, CancellationToken ct = default)
+        public Task<MoneySalePresetModel> GetByIdAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<MoneySalePreset>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            return GetAsync<MoneySalePresetModel>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
         {

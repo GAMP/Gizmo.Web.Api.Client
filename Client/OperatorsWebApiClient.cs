@@ -21,14 +21,14 @@ namespace Gizmo.Web.Api.Client
 
         #region FUNCTIONS
 
-        public Task<PagedList<Operator>> GetAsync(CancellationToken ct = default)
+        public Task<PagedList<OperatorModel>> GetAsync(CancellationToken ct = default)
         {
             return GetAsync(default, ct);
         }
 
-        public Task<PagedList<Operator>> GetAsync(OperatorsFilter filter, CancellationToken ct = default)
+        public Task<PagedList<OperatorModel>> GetAsync(OperatorsFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<Operator>>(filter, ct);
+            return GetAsync<PagedList<OperatorModel>>(filter, ct);
         }
 
         public Task<CreateResult> CreateAsync(OperatorModelCreate operatorModelCreate, CancellationToken ct = default)
@@ -41,9 +41,9 @@ namespace Gizmo.Web.Api.Client
             return PutAsync<UpdateResult>(CreateRequestUrl(), operatorModelUpdate, ct);
         }
 
-        public Task<Operator> GetByIdAsync(int id, CancellationToken ct = default)
+        public Task<OperatorModel> GetByIdAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<Operator>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            return GetAsync<OperatorModel>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }
 
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)

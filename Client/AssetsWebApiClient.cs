@@ -21,14 +21,14 @@ namespace Gizmo.Web.Api.Client
 
         #region FUNCTIONS
 
-        public Task<PagedList<Asset>> GetAsync(CancellationToken ct = default)
+        public Task<PagedList<AssetModel>> GetAsync(CancellationToken ct = default)
         {
             return GetAsync(default, ct);
         }
 
-        public Task<PagedList<Asset>> GetAsync(AssetsFilter filter, CancellationToken ct = default)
+        public Task<PagedList<AssetModel>> GetAsync(AssetsFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<Asset>>(filter, ct);
+            return GetAsync<PagedList<AssetModel>>(filter, ct);
         }
 
         public Task<CreateResult> CreateAsync(AssetModelCreate asset, CancellationToken ct = default)
@@ -41,9 +41,9 @@ namespace Gizmo.Web.Api.Client
             return PutAsync<UpdateResult>(CreateRequestUrl(), assetModelUpdate, ct);
         }
 
-        public Task<Asset> GetByIdAsync(int id, CancellationToken ct = default)
+        public Task<AssetModel> GetByIdAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<Asset>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            return GetAsync<AssetModel>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }
 
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)

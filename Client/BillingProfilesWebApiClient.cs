@@ -21,14 +21,14 @@ namespace Gizmo.Web.Api.Client
 
         #region FUNCTIONS
 
-        public Task<PagedList<BillingProfile>> GetAsync(CancellationToken ct = default)
+        public Task<PagedList<BillingProfileModel>> GetAsync(CancellationToken ct = default)
         {
             return GetAsync(default, ct);
         }
 
-        public Task<PagedList<BillingProfile>> GetAsync(BillingProfilesFilter filter, CancellationToken ct = default)
+        public Task<PagedList<BillingProfileModel>> GetAsync(BillingProfilesFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<BillingProfile>>(filter, ct);
+            return GetAsync<PagedList<BillingProfileModel>>(filter, ct);
         }
 
         public Task<CreateResult> CreateAsync(BillingProfileModelCreate billingProfileModelCreate, CancellationToken ct = default)
@@ -41,9 +41,9 @@ namespace Gizmo.Web.Api.Client
             return PutAsync<UpdateResult>(CreateRequestUrl(), billingProfileModelUpdate, ct);
         }
 
-        public Task<BillingProfile> GetByIdAsync(int id, CancellationToken ct = default)
+        public Task<BillingProfileModel> GetByIdAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<BillingProfile>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            return GetAsync<BillingProfileModel>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }
 
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
@@ -51,9 +51,9 @@ namespace Gizmo.Web.Api.Client
             return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }
 
-        public Task<IEnumerable<BillingProfile>> GetBillingProfilesRates(int id, CancellationToken ct = default)
+        public Task<IEnumerable<BillingProfileModel>> GetBillingProfilesRates(int id, CancellationToken ct = default)
         {
-            return GetAsync<IEnumerable<BillingProfile>>(CreateRequestUrlWithRouteParameters($"{id}/rates"), ct);
+            return GetAsync<IEnumerable<BillingProfileModel>>(CreateRequestUrlWithRouteParameters($"{id}/rates"), ct);
         }
 
         public Task<CreateResult> CreateBillingProfilesRate(int id, BillingProfileRateModelCreate billingProfileRateModelCreate, CancellationToken ct = default)

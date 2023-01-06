@@ -21,14 +21,14 @@ namespace Gizmo.Web.Api.Client
 
         #region FUNCTIONS
 
-        public Task<PagedList<HostIcon>> GetAsync(CancellationToken ct = default)
+        public Task<PagedList<HostIconModel>> GetAsync(CancellationToken ct = default)
         {
             return GetAsync(default, ct);
         }
 
-        public Task<PagedList<HostIcon>> GetAsync(HostIconsFilter filter, CancellationToken ct = default)
+        public Task<PagedList<HostIconModel>> GetAsync(HostIconsFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<HostIcon>>(filter, ct);
+            return GetAsync<PagedList<HostIconModel>>(filter, ct);
         }
 
         public Task<CreateResult> CreateAsync(HostIconModelCreate hostIconModelCreate, CancellationToken ct = default)
@@ -41,9 +41,9 @@ namespace Gizmo.Web.Api.Client
             return PutAsync<UpdateResult>(CreateRequestUrl(), hostIconModelUpdate, ct);
         }
 
-        public Task<HostIcon> GetByIdAsync(int id, CancellationToken ct = default)
+        public Task<HostIconModel> GetByIdAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<HostIcon>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            return GetAsync<HostIconModel>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }
 
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
