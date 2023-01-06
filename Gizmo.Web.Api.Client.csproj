@@ -35,7 +35,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Gizmo.Server\Submodules\Gizmo.Web.Api.Models\Gizmo.Web.Api.Models.csproj" />
+	  <ProjectReference Include="Submodules\Gizmo.Web.Api.Models\Gizmo.Web.Api.Models.csproj" />
 	</ItemGroup>
 
 </Project>

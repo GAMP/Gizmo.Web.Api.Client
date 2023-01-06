@@ -32,8 +32,8 @@ namespace Gizmo.Web.Api.Client
 
 
     //TODO: When we decide what todo with the serialization issue, this needs to be refactored to models
-    //[Serializable]
-    //[DataContract]
+    [Serializable]
+    [DataContract]
     public class AuthToken
     {
         public string Token { get; set; }
@@ -41,13 +41,11 @@ namespace Gizmo.Web.Api.Client
     }
 
     //TODO: When we decide what todo with the serialization issue, this needs to be refactored to models
-    //[Serializable]
-    //[DataContract]
+    [Serializable]
+    [DataContract]
     public class TestUser : IUrlQueryParameters
     {
-        //[DataMember]
         public string Username { get; set; } = "admin";
-        //[DataMember]
         public string Password { get; set; } = "admin";
     }
 }
