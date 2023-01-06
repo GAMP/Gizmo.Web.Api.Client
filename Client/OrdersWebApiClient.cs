@@ -56,12 +56,12 @@ namespace Gizmo.Web.Api.Client
             return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"user/{id}"), order, ct);
         }
 
-        public Task<CreateResult> InvoiceUserOrderAsync(int id, InvoiceCalculateModelOrderOptions calculateInvoiceOrderOptions, CancellationToken ct = default)
+        public Task<CreateResult> InvoiceUserOrderAsync(int id, InvoiceOrderCalculateModelOptions calculateInvoiceOrderOptions, CancellationToken ct = default)
         {
             return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"user/{id}/invoice"), calculateInvoiceOrderOptions, ct);
         }
 
-        public Task<CreateResult> InvoiceGuestOrderAsync(InvoiceCalculateModelOrderOptions calculateInvoiceOrderOptions, CancellationToken ct = default)
+        public Task<CreateResult> InvoiceGuestOrderAsync(InvoiceOrderCalculateModelOptions calculateInvoiceOrderOptions, CancellationToken ct = default)
         {
             return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"guest/invoice"), calculateInvoiceOrderOptions, ct);
         }

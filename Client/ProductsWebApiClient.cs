@@ -22,7 +22,7 @@ namespace Gizmo.Web.Api.Client
         #endregion
 
         #region FUNCTIONS
-        
+
         #region Products
 
         public Task<PagedList<Product>> GetAsync(CancellationToken ct = default)
