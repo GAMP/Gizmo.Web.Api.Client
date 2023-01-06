@@ -20,14 +20,14 @@ namespace Gizmo.Web.Api.Client
 
         #region FUNCTIONS
 
-        public Task<PagedList<Reservation>> GetAsync(CancellationToken ct = default)
+        public Task<PagedList<ReservationModel>> GetAsync(CancellationToken ct = default)
         {
             return GetAsync(default, ct);
         }
 
-        public Task<PagedList<Reservation>> GetAsync(ReservationsFilter filter, CancellationToken ct = default)
+        public Task<PagedList<ReservationModel>> GetAsync(ReservationsFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<Reservation>>(filter, ct);
+            return GetAsync<PagedList<ReservationModel>>(filter, ct);
         }
 
         public Task<CreateResult> CreateAsync(ReservationModelCreate reservationModelCreate, CancellationToken ct = default)
@@ -40,9 +40,9 @@ namespace Gizmo.Web.Api.Client
             return PutAsync<UpdateResult>(CreateRequestUrl(), reservationModelUpdate, ct);
         }
 
-        public Task<Reservation> GetByIdAsync(int id, CancellationToken ct = default)
+        public Task<ReservationModel> GetByIdAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<Reservation>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            return GetAsync<ReservationModel>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }
 
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)

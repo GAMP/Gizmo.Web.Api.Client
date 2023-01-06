@@ -21,14 +21,14 @@ namespace Gizmo.Web.Api.Client
 
         #region FUNCTIONS
 
-        public Task<PagedList<Variable>> GetAsync(CancellationToken ct = default)
+        public Task<PagedList<VariableModel>> GetAsync(CancellationToken ct = default)
         {
             return GetAsync(default, ct);
         }
 
-        public Task<PagedList<Variable>> GetAsync(VariablesFilter filter, CancellationToken ct = default)
+        public Task<PagedList<VariableModel>> GetAsync(VariablesFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<Variable>>(filter, ct);
+            return GetAsync<PagedList<VariableModel>>(filter, ct);
         }
 
         public Task<CreateResult> CreateAsync(VariableModelCreate variableModelCreate, CancellationToken ct = default)
@@ -41,9 +41,9 @@ namespace Gizmo.Web.Api.Client
             return PutAsync<UpdateResult>(CreateRequestUrl(), variableModelUpdate, ct);
         }
 
-        public Task<Variable> GetByIdAsync(int id, CancellationToken ct = default)
+        public Task<VariableModel> GetByIdAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<Variable>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            return GetAsync<VariableModel>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }
 
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)

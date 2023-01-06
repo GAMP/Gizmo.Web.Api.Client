@@ -25,14 +25,14 @@ namespace Gizmo.Web.Api.Client
         
         #region USERS
 
-        public Task<PagedList<User>> GetAsync(CancellationToken ct = default)
+        public Task<PagedList<UserModel>> GetAsync(CancellationToken ct = default)
         {
             return GetAsync(default, ct);
         }
 
-        public Task<PagedList<User>> GetAsync(UsersFilter filter, CancellationToken ct = default)
+        public Task<PagedList<UserModel>> GetAsync(UsersFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<User>>(filter, ct);
+            return GetAsync<PagedList<UserModel>>(filter, ct);
         }
 
         public Task<CreateResult> CreateAsync(UserModelCreate user, CancellationToken ct = default)
@@ -45,9 +45,9 @@ namespace Gizmo.Web.Api.Client
             return PutAsync<UpdateResult>(CreateRequestUrl(), user, ct);
         }
 
-        public Task<User> GetByIdAsync(int id, CancellationToken ct = default)
+        public Task<UserModel> GetByIdAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<User>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            return GetAsync<UserModel>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }
 
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
@@ -59,9 +59,9 @@ namespace Gizmo.Web.Api.Client
 
         #region USER ATTRIBUTE
 
-        public Task<IEnumerable<UserAttribute>> GetUserAttributeAsync(int id, CancellationToken ct = default)
+        public Task<IEnumerable<UserAttributeModel>> GetUserAttributeAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<IEnumerable<UserAttribute>>(CreateRequestUrlWithRouteParameters($"{id}/attributes"), ct);
+            return GetAsync<IEnumerable<UserAttributeModel>>(CreateRequestUrlWithRouteParameters($"{id}/attributes"), ct);
         }
 
         public Task<CreateResult> CreateUserAttributeAsync(int id, UserAttributeModelCreate userAttributeModelCreate, CancellationToken ct = default)
@@ -83,14 +83,14 @@ namespace Gizmo.Web.Api.Client
 
         #region USER NOTES
 
-        public Task<PagedList<UserNote>> GetUserNotesAsync(int id, CancellationToken ct = default)
+        public Task<PagedList<UserNoteModel>> GetUserNotesAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<UserNote>>(CreateRequestUrlWithRouteParameters($"{id}/notes"), ct);
+            return GetAsync<PagedList<UserNoteModel>>(CreateRequestUrlWithRouteParameters($"{id}/notes"), ct);
         }
 
-        public Task<PagedList<UserNote>> GetUserNotesAsync(int id, UserNotesFilter userNotesFilter, CancellationToken ct = default)
+        public Task<PagedList<UserNoteModel>> GetUserNotesAsync(int id, UserNotesFilter userNotesFilter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<UserNote>>(CreateRequestUrl($"{id}/notes", userNotesFilter), ct);
+            return GetAsync<PagedList<UserNoteModel>>(CreateRequestUrl($"{id}/notes", userNotesFilter), ct);
         }
 
         public Task<CreateResult> CreateUserNoteAsync(int id, UserNoteModelCreate userNoteModelCreate, CancellationToken ct = default)
@@ -108,9 +108,9 @@ namespace Gizmo.Web.Api.Client
             return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}/notes/{noteId}"), ct);
         }
 
-        public Task<UserNote> GetUserNoteByIdAsync(int id, int userNoteId, CancellationToken ct = default)
+        public Task<UserNoteModel> GetUserNoteByIdAsync(int id, int userNoteId, CancellationToken ct = default)
         {
-            return GetAsync<UserNote>(CreateRequestUrlWithRouteParameters($"{id}/notes/{userNoteId}"), ct);
+            return GetAsync<UserNoteModel>(CreateRequestUrlWithRouteParameters($"{id}/notes/{userNoteId}"), ct);
         }
 
         #endregion 

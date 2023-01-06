@@ -22,9 +22,9 @@ namespace Gizmo.Web.Api.Client
 
         #region TimeSalePresets
 
-        public Task<PagedList<TimeSalePreset>> GetTimeSalePresetsAsync(CancellationToken ct = default)
+        public Task<PagedList<TimeSalePresetModel>> GetTimeSalePresetsAsync(CancellationToken ct = default)
         {
-            return GetAsync<PagedList<TimeSalePreset>>(CreateRequestUrlWithRouteParameters($"time"), ct);
+            return GetAsync<PagedList<TimeSalePresetModel>>(CreateRequestUrlWithRouteParameters($"time"), ct);
         }
 
         public Task<CreateResult> CreateTimeSalePresetAsync(TimeSalePresetModelCreate timeSalePresetModelCreate, CancellationToken ct = default)
@@ -37,9 +37,9 @@ namespace Gizmo.Web.Api.Client
             return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"time"), timeSalePresetModelUpdate, ct);
         }
 
-        public Task<TimeSalePreset> GetTimeSalePresetByIdAsync(int id, CancellationToken ct = default)
+        public Task<TimeSalePresetModel> GetTimeSalePresetByIdAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<TimeSalePreset>(CreateRequestUrlWithRouteParameters($"time/{id}"), ct);
+            return GetAsync<TimeSalePresetModel>(CreateRequestUrlWithRouteParameters($"time/{id}"), ct);
         }
 
         public Task<DeleteResult> DeleteTimeSalePresetAsync(int id, CancellationToken ct = default)

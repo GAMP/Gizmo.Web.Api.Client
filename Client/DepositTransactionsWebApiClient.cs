@@ -20,19 +20,19 @@ namespace Gizmo.Web.Api.Client
 
         #region FUNCTIONS
 
-        public Task<PagedList<DepositTransaction>> GetAsync(CancellationToken ct = default)
+        public Task<PagedList<DepositTransactionModel>> GetAsync(CancellationToken ct = default)
         {
             return GetAsync(default, ct);
         }
 
-        public Task<PagedList<DepositTransaction>> GetAsync(DepositTransactionsFilter filter, CancellationToken ct = default)
+        public Task<PagedList<DepositTransactionModel>> GetAsync(DepositTransactionsFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<DepositTransaction>>(filter, ct);
+            return GetAsync<PagedList<DepositTransactionModel>>(filter, ct);
         }
 
-        public Task<DepositTransaction> GetByIdAsync(int id, CancellationToken ct = default)
+        public Task<DepositTransactionModel> GetByIdAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<DepositTransaction>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            return GetAsync<DepositTransactionModel>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }
 
         public Task<CreateResult> CreateAsync(DepositTransactionModelCreate depositTransactionModelCreate, CancellationToken ct = default)
