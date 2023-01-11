@@ -11,12 +11,6 @@ namespace Gizmo.Web.Api.Client.Builder
     /// </summary>
     public static class WebApiClientExtensions
     {
-        #region PRIVATE STATIC READONLY
-        private static readonly Type _extensionType = typeof(HttpClientFactoryServiceCollectionExtensions);
-        #endregion
-
-        #region EXTENSION METHODS
-        
         /// <summary>
         /// Adds web api clients to service collection.
         /// </summary>
@@ -30,24 +24,31 @@ namespace Gizmo.Web.Api.Client.Builder
                 throw new ArgumentNullException(nameof(services));
 
             //add payload serializer
+            
             services.TryAddEnumerable(ServiceDescriptor.Singleton<IPayloadSerializerProvider, DefaultPayloadSerializerProvider>());
 
-            //get all the extension methods
-            var methods = _extensionType.GetMethods(BindingFlags.Static | BindingFlags.Public);
+            /*TODO: If we use IEnumerable injections for 'IPayloadSerializerProvider', then we must use in the classes constructors 'IEnumerable<IPayloadSerializerProvider>', 
+             * otherwise we don't guarantee the 'IPayloadSerializerProvider', which we get from the 'IEnumerable<IPayloadSerializerProvider>'
+             Maybe we have to use this:*/
+            //services.AddSingleton<IPayloadSerializerProvider, DefaultPayloadSerializerProvider>();
 
             //find desired http client method
-            var httpMethod = methods.Where(mi => mi.Name == "AddHttpClient" && mi.IsGenericMethod && mi.GetParameters().Count() == 2)
+            var httpMethod = typeof(HttpClientFactoryServiceCollectionExtensions)
+                .GetMethods(BindingFlags.Static | BindingFlags.Public)
+                .Where(mi => 
+                    mi.Name == nameof(HttpClientFactoryServiceCollectionExtensions.AddHttpClient) 
+                    && mi.IsGenericMethod 
+                    && mi.GetParameters().Length == 2)
                 .FirstOrDefault();
 
-            //check if the desired method is found
             if (httpMethod == null)
                 throw new NotSupportedException();
 
             //add each web api client
-            foreach (var type in Assembly.GetExecutingAssembly().ExportedTypes)
+            foreach (var assemblyType in Assembly.GetExecutingAssembly().ExportedTypes)
             {
                 //get type info
-                var typeInfo = type.GetTypeInfo();
+                var typeInfo = assemblyType.GetTypeInfo();
 
                 //attributes can be checked here for client exclusion e.t.c
 
@@ -55,7 +56,8 @@ namespace Gizmo.Web.Api.Client.Builder
                 if (typeInfo.BaseType == typeof(WebApiClientBase))
                 {
                     //invoke the method
-                    httpMethod.MakeGenericMethod(new Type[] { type })
+                    httpMethod
+                        .MakeGenericMethod(new Type[] { assemblyType })
                         .Invoke(null, new object[] { services, clientName });
                 }
             }
@@ -66,7 +68,5 @@ namespace Gizmo.Web.Api.Client.Builder
             //return builder
             return new WebApiClientBuilder(services);
         } 
-
-        #endregion
     }
 }

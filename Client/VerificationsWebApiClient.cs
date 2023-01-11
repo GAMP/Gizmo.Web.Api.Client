@@ -19,20 +19,20 @@ namespace Gizmo.Web.Api.Client
         }
         #endregion
 
-        public Task<EmailVerificationStartResult> VerifyEmailStartAsync(int userId, string emailAddress, CancellationToken cancellationToken=default)
+        public Task<VerificationStartResultModelEmail> VerifyEmailStartAsync(int userId, string emailAddress, CancellationToken cancellationToken=default)
         {
-            return PostAsync<EmailVerificationStartResult>(CreateRequestUrlWithRouteParameters($"email/{userId}/{emailAddress}"),null,cancellationToken);
+            return PostAsync<VerificationStartResultModelEmail>(CreateRequestUrlWithRouteParameters($"email/{userId}/{emailAddress}"),null,cancellationToken);
         }
 
-        public Task<MobilePhoneVerificationStartResult> VerifyMobilePhoneStart(int userId, string mobilePhoneNumber, CancellationToken cancellationToken = default)
+        public Task<VerificationStartResultModelMobilePhone> VerifyMobilePhoneStart(int userId, string mobilePhoneNumber, CancellationToken cancellationToken = default)
         {
-            return PostAsync<MobilePhoneVerificationStartResult>(CreateRequestUrlWithRouteParameters($"mobilephone/{userId:int}/{mobilePhoneNumber}"), null, cancellationToken);
+            return PostAsync<VerificationStartResultModelMobilePhone>(CreateRequestUrlWithRouteParameters($"mobilephone/{userId:int}/{mobilePhoneNumber}"), null, cancellationToken);
 
         }
 
-        public Task<MobilePhoneVerificationStartResult> VerifyCurrentUserMobilePhoneStart(string mobilePhoneNumber, CancellationToken cancellationToken =default)
+        public Task<VerificationStartResultModelMobilePhone> VerifyCurrentUserMobilePhoneStart(string mobilePhoneNumber, CancellationToken cancellationToken =default)
         {
-            return PostAsync<MobilePhoneVerificationStartResult>(CreateRequestUrlWithRouteParameters($"mobilephone/{mobilePhoneNumber}"), null, cancellationToken);
+            return PostAsync<VerificationStartResultModelMobilePhone>(CreateRequestUrlWithRouteParameters($"mobilephone/{mobilePhoneNumber}"), null, cancellationToken);
         }
     }
 }

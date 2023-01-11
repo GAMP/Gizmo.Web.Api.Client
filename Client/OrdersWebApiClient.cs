@@ -36,7 +36,7 @@ namespace Gizmo.Web.Api.Client
             return GetAsync<OrderModel>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
         }
 
-        public Task<OrderModel> GetByIdAsync(int id, GetOptions options, CancellationToken ct = default)
+        public Task<OrderModel> GetByIdAsync(int id, ModelFilterOptions options, CancellationToken ct = default)
         {
             return GetAsync<OrderModel>(CreateRequestUrl($"{id}", options), ct);
         }

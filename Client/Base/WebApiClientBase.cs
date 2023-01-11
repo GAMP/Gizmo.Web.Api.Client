@@ -114,7 +114,7 @@ namespace Gizmo.Web.Api.Client
 
         public virtual string CreateRequestUrl()
         {
-            return CreateRequestUrl(default(string), default(string));
+            return CreateRequestUrl(default, default(string));
         }
 
         /// <summary>

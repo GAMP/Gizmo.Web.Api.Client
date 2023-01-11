@@ -2,6 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
+		<Nullable>enable</Nullable>
 		<LangVersion>latest</LangVersion>
 		<PackageProjectUrl>https://www.gizmopowered.net/</PackageProjectUrl>
 		<Authors>NETProjects</Authors>

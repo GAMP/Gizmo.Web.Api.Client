@@ -10,7 +10,7 @@ namespace Gizmo.Web.Api.Client
         public DefaultPayloadSerializerProvider(IEnumerable<IPayloadSerializer> payloadSerializers)
         {
             //ensure that at least one serialzier exists
-            if (payloadSerializers.Count() == 0)
+            if (!payloadSerializers.Any())
                 throw new ArgumentException("No payload serializers registered.");
 
             //create lookpu dictionary
