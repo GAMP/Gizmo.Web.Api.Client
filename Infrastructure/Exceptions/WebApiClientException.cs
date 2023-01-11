@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 
-namespace Gizmo.Web.Api.Client
+namespace Gizmo.Web.Api.Clients
 {
     /// <summary>
     /// Generic web api exception.

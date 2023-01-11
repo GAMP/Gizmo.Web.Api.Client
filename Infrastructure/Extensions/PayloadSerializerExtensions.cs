@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace Gizmo.Web.Api.Client.Builder
+namespace Gizmo.Web.Api.Clients.Builder
 {
     /// <summary>
     /// Configures app wide serialization options for the web api clients.

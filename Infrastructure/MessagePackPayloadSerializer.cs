@@ -6,7 +6,7 @@ using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Gizmo.Web.Api.Client
+namespace Gizmo.Web.Api.Clients
 {
     internal class MessagePackPayloadSerializer : IPayloadSerializer
     {

@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
+
 using System;
 using System.Linq;
 using System.Reflection;
 
-namespace Gizmo.Web.Api.Client.Builder
+namespace Gizmo.Web.Api.Clients.Builder
 {
     /// <summary>
     /// Web api client extensions.
@@ -24,13 +24,7 @@ namespace Gizmo.Web.Api.Client.Builder
                 throw new ArgumentNullException(nameof(services));
 
             //add payload serializer
-            
-            services.TryAddEnumerable(ServiceDescriptor.Singleton<IPayloadSerializerProvider, DefaultPayloadSerializerProvider>());
-
-            /*TODO: If we use IEnumerable injections for 'IPayloadSerializerProvider', then we must use in the classes constructors 'IEnumerable<IPayloadSerializerProvider>', 
-             * otherwise we don't guarantee the 'IPayloadSerializerProvider', which we get from the 'IEnumerable<IPayloadSerializerProvider>'
-             Maybe we have to use this:*/
-            //services.AddSingleton<IPayloadSerializerProvider, DefaultPayloadSerializerProvider>();
+            services.AddSingleton<IPayloadSerializerProvider, DefaultPayloadSerializerProvider>();
 
             //find desired http client method
             var httpMethod = typeof(HttpClientFactoryServiceCollectionExtensions)

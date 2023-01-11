@@ -1,4 +1,4 @@
-﻿namespace Gizmo.Web.Api.Client
+﻿namespace Gizmo.Web.Api.Clients
 {
     /// <summary>
     /// Web api client options.

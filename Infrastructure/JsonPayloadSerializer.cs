@@ -6,7 +6,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Gizmo.Web.Api.Client
+namespace Gizmo.Web.Api.Clients
 {
     /// <summary>
     /// Json payload serializer.

@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using MessagePack;
 
-namespace Gizmo.Web.Api.Client
+namespace Gizmo.Web.Api.Clients
 {
     /// <summary>
     /// Message pack payload serializer options.

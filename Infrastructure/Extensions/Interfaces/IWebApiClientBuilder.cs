@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Gizmo.Web.Api.Client.Builder
+namespace Gizmo.Web.Api.Clients.Builder
 {
     public interface IWebApiClientBuilder
     {

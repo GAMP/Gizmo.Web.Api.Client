@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Gizmo.Web.Api.Client
+namespace Gizmo.Web.Api.Clients
 {
     /// <summary>
     /// Web api route attribute.
