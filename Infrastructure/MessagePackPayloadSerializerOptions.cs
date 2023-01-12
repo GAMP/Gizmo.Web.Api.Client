@@ -1,5 +1,4 @@
-﻿#nullable enable
-using MessagePack;
+﻿using MessagePack;
 
 namespace Gizmo.Web.Api.Clients
 {

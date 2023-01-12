@@ -53,7 +53,7 @@ namespace Gizmo.Web.Api.Clients
 
         #region FUNCTIONS
         
-        public IPayloadSerializer GetSerializer(string name)
+        public IPayloadSerializer? GetSerializer(string name)
         {
             if (_serializers.TryGetValue(name, out var serializer))
                 return serializer;

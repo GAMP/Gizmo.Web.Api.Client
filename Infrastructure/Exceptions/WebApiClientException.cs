@@ -37,7 +37,7 @@ namespace Gizmo.Web.Api.Clients
             string errorCodeTypeReadable,
             int? errorCode,
             string errorCodeReadable,
-            IEnumerable<WebApiErrorBase> errors =default) : base(errorMessage)
+            IEnumerable<WebApiErrorBase> errors = default) : base(errorMessage)
         {
             HttpStatusCode = httpStatusCode;
             ErrorCodeType = errorCodeType;

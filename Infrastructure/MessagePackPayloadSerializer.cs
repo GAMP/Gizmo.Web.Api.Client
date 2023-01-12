@@ -45,7 +45,7 @@ namespace Gizmo.Web.Api.Clients
             return MessagePackSerializer.DeserializeAsync<T>(stream, SerializerOptions.Value.MessagePackSerializerOptions, ct);
         }
 
-        public async ValueTask<HttpContent> CreateContentAsync<T>(T @object, MediaTypeHeaderValue mediaType = null, CancellationToken ct = default)
+        public async ValueTask<HttpContent> CreateContentAsync<T>(T data, MediaTypeHeaderValue? mediaType = null, CancellationToken ct = default)
         {
             //use default media type if one not specified
             mediaType ??= mediaTypeHeaderValue;
@@ -54,7 +54,7 @@ namespace Gizmo.Web.Api.Clients
             var stream = new MemoryStream();
 
             //serialize object to the memory stream
-            await MessagePackSerializer.SerializeAsync(stream, @object, SerializerOptions.Value.MessagePackSerializerOptions, default);
+            await MessagePackSerializer.SerializeAsync(stream, data, SerializerOptions.Value.MessagePackSerializerOptions, default);
             
             //rewind the stream
             stream.Seek(0, SeekOrigin.Begin);

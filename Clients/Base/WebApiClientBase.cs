@@ -24,7 +24,7 @@ namespace Gizmo.Web.Api.Clients
         /// <param name="httpClient">Http client instance.</param>
         /// <param name="options">Web api client options.</param>
         /// <param name="payloadSerializerProvider">Payload serializer.</param>
-        public WebApiClientBase(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider)
+        protected WebApiClientBase(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider)
         {
             HttpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
             SerializerProvider = payloadSerializerProvider;
@@ -47,12 +47,12 @@ namespace Gizmo.Web.Api.Clients
         /// <summary>
         /// Gets payload serializer provider.
         /// </summary>
-        private IPayloadSerializerProvider SerializerProvider { get; set; }
+        private IPayloadSerializerProvider SerializerProvider { get; }
 
         /// <summary>
         /// Gets current payload serializer.
         /// </summary>
-        private IPayloadSerializer Serializer { get; set; }
+        private IPayloadSerializer Serializer { get; }
 
         #endregion
 
@@ -84,12 +84,10 @@ namespace Gizmo.Web.Api.Clients
         {
             var uri = CreateRequestUri(parameters);
 
-            using (var httpContent = await CreateContentAsync(content, ct))
-            {
-                var response = await PutResultAsync<WebApiResponse<TResult>>(uri, httpContent, ct);
-                
-                return response.Result;
-            }
+            using var httpContent = await CreateContentAsync(content, ct);
+            var response = await PutResultAsync<WebApiResponse<TResult>>(uri, httpContent, ct);
+
+            return response.Result;
         }
         private async Task<TResult> PutResultAsync<TResult>(Uri uri, HttpContent content, CancellationToken ct = default)
         {
@@ -108,12 +106,10 @@ namespace Gizmo.Web.Api.Clients
         {
             var uri = CreateRequestUri(parameters);
 
-            using (var httpContent = await CreateContentAsync(content, ct))
-            {
-                var response = await PostResultAsync<WebApiResponse<TResult>>(uri, httpContent, ct);
+            using var httpContent = await CreateContentAsync(content, ct);
+            var response = await PostResultAsync<WebApiResponse<TResult>>(uri, httpContent, ct);
 
-                return response.Result;
-            }
+            return response.Result;
         }
         private async Task<TResult> PostResultAsync<TResult>(Uri uri, HttpContent content, CancellationToken ct = default)
         {
@@ -235,16 +231,14 @@ namespace Gizmo.Web.Api.Clients
             try
             {
                 //once we reached this code block we expect the response to contain an serialized payload
-                using (var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync())
-                {
-                    //deserialize error response
-                    var errorResponse = await Serializer.DeserializeAsync<WebApiErrorResponse>(contentStream, ct);
+                using var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync();
+                //deserialize error response
+                var errorResponse = await Serializer.DeserializeAsync<WebApiErrorResponse>(contentStream, ct);
 
-                    //based on the error response we should build appropriate exception
-                    //for now we can throw the generic webapiclientexception,
-                    //in the future we could have mappings of error response to other exception types
-                    ThrowExceptionForResponse(errorResponse);
-                }
+                //based on the error response we should build appropriate exception
+                //for now we can throw the generic webapiclientexception,
+                //in the future we could have mappings of error response to other exception types
+                ThrowExceptionForResponse(errorResponse);
             }
             catch
             {

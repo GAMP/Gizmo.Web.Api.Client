@@ -22,7 +22,7 @@ namespace Gizmo.Web.Api.Clients
 
         #region FIELDS
 
-        private static readonly MediaTypeHeaderValue mediaTypeHeaderValue = new(MimeType.JSON);
+        private static readonly MediaTypeHeaderValue MediaTypeHeaderValue = new(MimeType.JSON);
 
         #endregion
 
@@ -46,16 +46,16 @@ namespace Gizmo.Web.Api.Clients
             return JsonSerializer.DeserializeAsync<T>(stream, SerializerOptions.Value.JsonSerializerOptions, ct);
         }
 
-        public async ValueTask<HttpContent> CreateContentAsync<T>(T @object, MediaTypeHeaderValue mediaType = null, CancellationToken ct = default)
+        public async ValueTask<HttpContent> CreateContentAsync<T>(T data, MediaTypeHeaderValue? mediaType = null, CancellationToken ct = default)
         {
             //use default media type if one not specified
-            mediaType ??= mediaTypeHeaderValue;
+            mediaType ??= MediaTypeHeaderValue;
 
             //create memory stream
             var stream = new MemoryStream();
 
             //serialize object to the memory stream
-            await JsonSerializer.SerializeAsync(stream, @object, SerializerOptions.Value.JsonSerializerOptions, ct);
+            await JsonSerializer.SerializeAsync(stream, data, SerializerOptions.Value.JsonSerializerOptions, ct);
 
             //rewind the stream
             stream.Seek(0, SeekOrigin.Begin);
