@@ -23,26 +23,31 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<PagedList<MoneySalePresetModel>> GetAsync(MoneySalePresetsFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<MoneySalePresetModel>>(filter, ct);
+            var parameters = new UriParameters(filter);
+            return GetAsync<PagedList<MoneySalePresetModel>>(parameters, ct);
         }
 
-        public Task<CreateResult> CreateAsync(MoneySalePresetModelCreate moneySalePresetModelCreate, CancellationToken ct = default)
+        public Task<CreateResult> CreateAsync(MoneySalePresetModelCreate model, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrl(), moneySalePresetModelCreate, ct);
+            var parameters = new UriParameters();
+            return PostAsync<CreateResult>(parameters, model, ct);
         }
 
-        public Task<UpdateResult> UpdateAsync(MoneySalePresetModelUpdate moneySalePresetModelUpdate, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateAsync(MoneySalePresetModelUpdate model, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrl(), moneySalePresetModelUpdate, ct);
+            var parameters = new UriParameters();
+            return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
         public Task<MoneySalePresetModel> GetByIdAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<MoneySalePresetModel>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            var parameters = new UriParameters(id);
+            return GetAsync<MoneySalePresetModel>(parameters, ct);
         }
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
         {
-            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            var parameters = new UriParameters(id);
+            return DeleteAsync<DeleteResult>(parameters, ct);
         }
 
         #endregion

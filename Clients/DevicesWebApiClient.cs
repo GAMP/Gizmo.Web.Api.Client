@@ -23,61 +23,68 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<PagedList<DeviceModel>> GetAsync(DevicesFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<DeviceModel>>(filter, ct);
+            var parameters = new UriParameters(filter);
+            return GetAsync<PagedList<DeviceModel>>(parameters, ct);
         }
 
         #endregion
 
         #region CREATE
 
-        public Task<CreateResult> CreateAsync(DeviceModelCreate deviceModelCreate, CancellationToken ct = default)
+        public Task<CreateResult> CreateAsync(DeviceModelCreate model, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrl(), deviceModelCreate, ct);
+            var parameters = new UriParameters();
+            return PostAsync<CreateResult>(parameters, model, ct);
         }
         
         #endregion
 
         #region UPDATE
 
-        public Task<UpdateResult> UpdateAsync(DeviceModelUpdate deviceModelUpdate, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateAsync(DeviceModelUpdate model, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrl(), deviceModelUpdate, ct);
+            var parameters = new UriParameters();
+            return PutAsync<UpdateResult>(parameters, model, ct);
         }
         
         #endregion
 
         #region DELETE
 
-        public Task<DeleteResult> DeleteAsync(int deviceId, CancellationToken ct = default)
+        public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
         {
-            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{deviceId}"), ct);
+            var parameters = new UriParameters(id);
+            return DeleteAsync<DeleteResult>(parameters, ct);
         }
         
         #endregion
 
         #region UNDELETE
 
-        public Task UndeleteAsync(int deviceId, CancellationToken ct = default)
+        public Task UndeleteAsync(int id, CancellationToken ct = default)
         {
-            return PutAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{deviceId}/undelete"), default, ct);
+            var parameters = new UriParameters(new object[] {id, "undelete" });
+            return PutAsync<DeleteResult>(parameters, null, ct);
         }
         
         #endregion
 
         #region ENABLE
 
-        public Task EnableAsync(int deviceId, CancellationToken ct = default)
+        public Task EnableAsync(int id, CancellationToken ct = default)
         {
-            return PutAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{deviceId}/enable"), default, ct);
+            var parameters = new UriParameters(new object[] { id, "enable" });
+            return PutAsync<DeleteResult>(parameters, null, ct);
         }
         
         #endregion
 
         #region DISABLE
 
-        public Task DisableAsync(int deviceId, CancellationToken ct = default)
+        public Task DisableAsync(int id, CancellationToken ct = default)
         {
-            return PutAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{deviceId}/disable"), default, ct);
+            var parameters = new UriParameters(new object[] { id, "disable" });
+            return PutAsync<DeleteResult>(parameters, null, ct);
         }
         
         #endregion
@@ -87,7 +94,8 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<PagedList<DeviceHostModel>> HostGetAsync(DeviceHostFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<DeviceHostModel>>(CreateRequestUrl("hosts",filter), ct);
+            var parameters = new UriParameters(new object[] { "hosts" }, filter);
+            return GetAsync<PagedList<DeviceHostModel>>(parameters, ct);
         }
 
         #endregion
@@ -96,7 +104,8 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<CreateResult> HostAddAsync(int deviceId, int hostId, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"{deviceId}/host/{hostId}"),default, ct);
+            var parameters = new UriParameters(new object[] { deviceId, "host", hostId });
+            return PostAsync<CreateResult>(parameters, null, ct);
         }
 
         #endregion
@@ -105,7 +114,8 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<DeleteResult> HostRemoveAsync(int deviceId,int hostId, CancellationToken ct = default)
         {
-            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{deviceId}/host/{hostId}"), ct);
+            var parameters = new UriParameters(new object[] { deviceId, "host", hostId });
+            return DeleteAsync<DeleteResult>(parameters, ct);
         }
         
         #endregion

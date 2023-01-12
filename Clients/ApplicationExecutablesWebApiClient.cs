@@ -23,137 +23,164 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<PagedList<ApplicationExecutableModel>> GetAsync(ApplicationExecutablesFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<ApplicationExecutableModel>>(filter, ct);
+            var parameters = new UriParameters(filter);
+            return GetAsync<PagedList<ApplicationExecutableModel>>(parameters, ct);
         }
 
-        public Task<CreateResult> CreateAsync(ApplicationExecutableModelCreate applicationExecutableModelCreate, CancellationToken ct = default)
+        public Task<CreateResult> CreateAsync(ApplicationExecutableModelCreate model, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrl(), applicationExecutableModelCreate, ct);
+            var parameters = new UriParameters();
+            return PostAsync<CreateResult>(parameters, model, ct);
         }
 
-        public Task<UpdateResult> UpdateAsync(ApplicationExecutableModelUpdate applicationExecutableModelUpdate, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateAsync(ApplicationExecutableModelUpdate model, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrl(), applicationExecutableModelUpdate, ct);
+            var parameters = new UriParameters();
+            return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
         public Task<ApplicationExecutableModel> GetByIdAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<ApplicationExecutableModel>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            var parameters = new UriParameters(id);
+            return GetAsync<ApplicationExecutableModel>(parameters, ct);
         }
 
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
         {
-            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            var parameters = new UriParameters(id);
+            return DeleteAsync<DeleteResult>(parameters, ct);
         }
 
         public Task<IEnumerable<ApplicationExecutablePersonalFileModel>> GetApplicationExecutablePersonalFiles(int id, CancellationToken ct = default)
         {
-            return GetAsync<IEnumerable<ApplicationExecutablePersonalFileModel>>(CreateRequestUrlWithRouteParameters($"{id}/personalfiles"), ct);
+            var parameters = new UriParameters(new object[] { id, "personalfiles" });
+            return GetAsync<IEnumerable<ApplicationExecutablePersonalFileModel>>(parameters, ct);
         }
 
-        public Task<CreateResult> CreateApplicationExecutablePersonalFile(int id, ApplicationExecutablePersonalFileModelCreate applicationExecutablePersonalFileModelCreate, CancellationToken ct = default)
+        public Task<CreateResult> CreateApplicationExecutablePersonalFile(int id, ApplicationExecutablePersonalFileModelCreate model, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"{id}/personalfiles"), applicationExecutablePersonalFileModelCreate, ct);
+            var parameters = new UriParameters(new object[] { id, "personalfiles" });
+            return PostAsync<CreateResult>(parameters, model, ct);
         }
 
-        public Task<UpdateResult> UpdateApplicationExecutablePersonalFile(ApplicationExecutablePersonalFileModelUpdate applicationExecutablePersonalFileModelUpdate, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateApplicationExecutablePersonalFile(ApplicationExecutablePersonalFileModelUpdate model, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"personalfiles"), applicationExecutablePersonalFileModelUpdate, ct);
+            var parameters = new UriParameters(new object[] { "personalfiles" });
+            return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
         public Task<DeleteResult> DeleteApplicationExecutablePersonalFile(int id, int personalFileId, CancellationToken ct = default)
         {
-            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}/personalfiles/{personalFileId}"), ct);
+            var parameters = new UriParameters(new object[] { id, "personalfiles", personalFileId });
+            return DeleteAsync<DeleteResult>(parameters, ct);
         }
 
         public Task<IEnumerable<ApplicationExecutableDeploymentModel>> GetApplicationExecutableDeployments(int id, CancellationToken ct = default)
         {
-            return GetAsync<IEnumerable<ApplicationExecutableDeploymentModel>>(CreateRequestUrlWithRouteParameters($"{id}/deployments"), ct);
+            var parameters = new UriParameters(new object[] { id, "deployments" });
+            return GetAsync<IEnumerable<ApplicationExecutableDeploymentModel>>(parameters, ct);
         }
 
-        public Task<CreateResult> CreateApplicationExecutableDeployment(int id, ApplicationExecutableDeploymentModelCreate applicationExecutableDeploymentModelCreate, CancellationToken ct = default)
+        public Task<CreateResult> CreateApplicationExecutableDeployment(int id, ApplicationExecutableDeploymentModelCreate model, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"{id}/deployments"), applicationExecutableDeploymentModelCreate, ct);
+            var parameters = new UriParameters(new object[] { id, "deployments" });
+            return PostAsync<CreateResult>(parameters, model, ct);
         }
 
-        public Task<UpdateResult> UpdateApplicationExecutableDeployment(ApplicationExecutableDeploymentModelUpdate applicationExecutableDeploymentModelUpdate, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateApplicationExecutableDeployment(ApplicationExecutableDeploymentModelUpdate model, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"deployments"), applicationExecutableDeploymentModelUpdate, ct);
+            var parameters = new UriParameters(new object[] { "deployments" });
+            return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
         public Task<DeleteResult> DeleteApplicationExecutableDeployment(int id, int deploymentId, CancellationToken ct = default)
         {
-            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}/deployments/{deploymentId}"), ct);
+            var parameters = new UriParameters(new object[] { id, "deployments", deploymentId });
+            return DeleteAsync<DeleteResult>(parameters, ct);
         }
 
         public Task<IEnumerable<ApplicationExecutableTaskModel>> GetApplicationExecutableTasks(int id, CancellationToken ct = default)
         {
-            return GetAsync<IEnumerable<ApplicationExecutableTaskModel>>(CreateRequestUrlWithRouteParameters($"{id}/tasks"), ct);
+            var parameters = new UriParameters(new object[] { id, "tasks" });
+            return GetAsync<IEnumerable<ApplicationExecutableTaskModel>>(parameters, ct);
         }
 
-        public Task<CreateResult> CreateApplicationExecutableTask(int id, ApplicationExecutableTaskModelCreate applicationExecutableTaskModelCreate, CancellationToken ct = default)
+        public Task<CreateResult> CreateApplicationExecutableTask(int id, ApplicationExecutableTaskModelCreate model, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"{id}/tasks"), applicationExecutableTaskModelCreate, ct);
+            var parameters = new UriParameters(new object[] { id, "tasks" });
+            return PostAsync<CreateResult>(parameters, model, ct);
         }
 
-        public Task<UpdateResult> UpdateApplicationExecutableTask(ApplicationExecutableTaskModelUpdate applicationExecutableTaskModelUpdate, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateApplicationExecutableTask(ApplicationExecutableTaskModelUpdate model, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"tasks"), applicationExecutableTaskModelUpdate, ct);
+            var parameters = new UriParameters(new object[] { "tasks" });
+            return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
         public Task<DeleteResult> DeleteApplicationExecutableTask(int id, int taskId, CancellationToken ct = default)
         {
-            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}/tasks/{taskId}"), ct);
+            var parameters = new UriParameters(new object[] { id, "tasks", taskId });
+            return DeleteAsync<DeleteResult>(parameters, ct);
         }
 
         public Task<IEnumerable<ApplicationExecutableLicenseModel>> GetApplicationExecutableLicenses(int id, CancellationToken ct = default)
         {
-            return GetAsync<IEnumerable<ApplicationExecutableLicenseModel>>(CreateRequestUrlWithRouteParameters($"{id}/licenses"), ct);
+            var parameters = new UriParameters(new object[] { id, "licenses" });
+            return GetAsync<IEnumerable<ApplicationExecutableLicenseModel>>(parameters, ct);
         }
 
-        public Task<CreateResult> CreateApplicationExecutableLicense(int id, ApplicationExecutableLicenseModelCreate applicationExecutableLicenseModelCreate, CancellationToken ct = default)
+        public Task<CreateResult> CreateApplicationExecutableLicense(int id, ApplicationExecutableLicenseModelCreate model, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"{id}/licenses"), applicationExecutableLicenseModelCreate, ct);
+            var parameters = new UriParameters(new object[] { id, "licenses" });
+            return PostAsync<CreateResult>(parameters, model, ct);
         }
 
-        public Task<UpdateResult> UpdateApplicationExecutableLicense(ApplicationExecutableLicenseModelUpdate applicationExecutableLicenseModelUpdate, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateApplicationExecutableLicense(ApplicationExecutableLicenseModelUpdate model, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"licenses"), applicationExecutableLicenseModelUpdate, ct);
+            var parameters = new UriParameters(new object[] { "licenses" });
+            return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
         public Task<DeleteResult> DeleteApplicationExecutableLicense(int id, int licenseId, CancellationToken ct = default)
         {
-            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}/licenses/{licenseId}"), ct);
+            var parameters = new UriParameters(new object[] { id, "licenses", licenseId });
+            return DeleteAsync<DeleteResult>(parameters, ct);
         }
 
         public Task<IEnumerable<ApplicationExecutableCdImageModel>> GetApplicationExecutableCdImages(int id, CancellationToken ct = default)
         {
-            return GetAsync<IEnumerable<ApplicationExecutableCdImageModel>>(CreateRequestUrlWithRouteParameters($"{id}/cdimages"), ct);
+            var parameters = new UriParameters(new object[] { id, "cdimages" });
+            return GetAsync<IEnumerable<ApplicationExecutableCdImageModel>>(parameters, ct);
         }
 
-        public Task<CreateResult> CreateApplicationExecutableCdImage(int id, ApplicationExecutableCdImageModelCreate applicationExecutableCdImageModelCreate, CancellationToken ct = default)
+        public Task<CreateResult> CreateApplicationExecutableCdImage(int id, ApplicationExecutableCdImageModelCreate model, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"{id}/cdimages"), applicationExecutableCdImageModelCreate, ct);
+            var parameters = new UriParameters(new object[] { id, "cdimages" });
+            return PostAsync<CreateResult>(parameters, model, ct);
         }
 
-        public Task<UpdateResult> UpdateApplicationExecutableCdImage(ApplicationExecutableCdImageModelUpdate applicationExecutableCdImageModelUpdate, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateApplicationExecutableCdImage(ApplicationExecutableCdImageModelUpdate model, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"cdimages"), applicationExecutableCdImageModelUpdate, ct);
+            var parameters = new UriParameters(new object[] { "cdimages" });
+            return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
         public Task<DeleteResult> DeleteApplicationExecutableCdImage(int id, int cdImageId, CancellationToken ct = default)
         {
-            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}/cdimages/{cdImageId}"), ct);
+            var parameters = new UriParameters(new object[] { id, "cdimages", cdImageId });
+            return DeleteAsync<DeleteResult>(parameters, ct);
         }
 
         public Task<ApplicationExecutableModelImage> GetApplicationExecutableImage(int id, CancellationToken ct = default)
         {
-            return GetAsync<ApplicationExecutableModelImage>(CreateRequestUrlWithRouteParameters($"{id}/image"), ct);
+            var parameters = new UriParameters(new object[] { id, "image" });
+            return GetAsync<ApplicationExecutableModelImage>(parameters, ct);
         }
 
         public Task<UpdateResult> UpdateApplicationExecutableImage(int id, ApplicationExecutableModelImage image, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"{id}"), image, ct);
+            var parameters = new UriParameters(id);
+            return PutAsync<UpdateResult>(parameters, image, ct);
         } 
 
         #endregion

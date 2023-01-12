@@ -22,27 +22,32 @@ namespace Gizmo.Web.Api.Clients
         
         public Task<PagedList<ApplicationDeploymentModel>> GetAsync(ApplicationDeploymentsFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<ApplicationDeploymentModel>>(filter, ct);
+            var parameters = new UriParameters(filter);
+            return GetAsync<PagedList<ApplicationDeploymentModel>>(parameters, ct);
         }
 
-        public Task<CreateResult> CreateAsync(ApplicationDeploymentModelCreate applicationDeploymentModelCreate, CancellationToken ct = default)
+        public Task<CreateResult> CreateAsync(ApplicationDeploymentModelCreate model, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrl(), applicationDeploymentModelCreate, ct);
+            var parameters = new UriParameters();
+            return PostAsync<CreateResult>(parameters, model, ct);
         }
 
-        public Task<UpdateResult> UpdateAsync(ApplicationDeploymentModelUpdate applicationDeploymentModelUpdate, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateAsync(ApplicationDeploymentModelUpdate model, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrl(), applicationDeploymentModelUpdate, ct);
+            var parameters = new UriParameters();
+            return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
         public Task<ApplicationDeploymentModel> GetByIdAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<ApplicationDeploymentModel>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            var parameters = new UriParameters(id);
+            return GetAsync<ApplicationDeploymentModel>(parameters, ct);
         }
 
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
         {
-            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            var parameters = new UriParameters(id);
+            return DeleteAsync<DeleteResult>(parameters, ct);
         } 
 
         #endregion

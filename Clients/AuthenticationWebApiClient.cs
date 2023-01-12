@@ -2,9 +2,10 @@
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Gizmo.Web.Api.Models;
 using System.Runtime.Serialization;
 using Microsoft.Extensions.Options;
+using Gizmo.Web.Api.Models.Abstractions;
+using Gizmo.Web.Api.Models;
 
 namespace Gizmo.Web.Api.Clients
 {
@@ -22,7 +23,8 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<AuthToken> GetToken(TestUser user ,CancellationToken ct = default)
         {
-            return GetAsync<AuthToken>(user, ct);
+            var parameters = new UriParameters(user);
+            return GetAsync<AuthToken>(parameters, ct);
         }      
     }
 
@@ -39,7 +41,7 @@ namespace Gizmo.Web.Api.Clients
     //TODO: When we decide what todo with the serialization issue, this needs to be refactored to models
     [Serializable]
     [DataContract]
-    public class TestUser : IUrlQueryParameters
+    public class TestUser : IUriParametersQuery
     {
         public string Username { get; set; } = "admin";
         public string Password { get; set; } = "admin";

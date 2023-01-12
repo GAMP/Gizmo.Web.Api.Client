@@ -22,17 +22,20 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<PagedList<ProductStockModel>> GetAsync(ProductsStockFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<ProductStockModel>>(filter, ct);
+            var parameters = new UriParameters(filter);
+            return GetAsync<PagedList<ProductStockModel>>(parameters, ct);
         }
 
-        public Task<UpdateResult> UpdateAsync(ProductStockModelUpdate productStockModelUpdate, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateAsync(ProductStockModelUpdate model, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrl(), productStockModelUpdate, ct);
+            var parameters = new UriParameters();
+            return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
         public Task<ProductStockModel> GetByIdAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<ProductStockModel>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            var parameters = new UriParameters(id);
+            return GetAsync<ProductStockModel>(parameters, ct);
         }
 
         #endregion

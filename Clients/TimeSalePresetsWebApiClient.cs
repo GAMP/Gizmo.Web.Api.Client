@@ -23,26 +23,31 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<PagedList<TimeSalePresetModel>> GetAsync(TimeSalePresetsFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<TimeSalePresetModel>>(filter, ct);
+            var parameters = new UriParameters(filter);
+            return GetAsync<PagedList<TimeSalePresetModel>>(parameters, ct);
         }
 
-        public Task<CreateResult> CreateAsync(TimeSalePresetModelCreate timeSalePresetModelCreate, CancellationToken ct = default)
+        public Task<CreateResult> CreateAsync(TimeSalePresetModelCreate model, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrl(), timeSalePresetModelCreate, ct);
+            var parameters = new UriParameters();
+            return PostAsync<CreateResult>(parameters, model, ct);
         }
 
-        public Task<UpdateResult> UpdateAsync(TimeSalePresetModelUpdate timeSalePresetModelUpdate, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateAsync(TimeSalePresetModelUpdate model, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrl(), timeSalePresetModelUpdate, ct);
+            var parameters = new UriParameters();
+            return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
         public Task<TimeSalePresetModel> GetByIdAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<TimeSalePresetModel>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            var parameters = new UriParameters(id);
+            return GetAsync<TimeSalePresetModel>(parameters, ct);
         }
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
         {
-            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            var parameters = new UriParameters(id);
+            return DeleteAsync<DeleteResult>(parameters, ct);
         }
 
         #endregion

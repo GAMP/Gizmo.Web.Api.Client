@@ -27,27 +27,32 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<PagedList<UserModel>> GetAsync(UsersFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<UserModel>>(filter, ct);
+            var parameters = new UriParameters(filter);
+            return GetAsync<PagedList<UserModel>>(parameters, ct);
         }
 
-        public Task<CreateResult> CreateAsync(UserModelCreate user, CancellationToken ct = default)
+        public Task<CreateResult> CreateAsync(UserModelCreate model, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrl(), user, ct);
+            var parameters = new UriParameters();
+            return PostAsync<CreateResult>(parameters, model, ct);
         }
 
-        public Task<UpdateResult> UpdateAsync(UserModelUpdate user, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateAsync(UserModelUpdate model, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrl(), user, ct);
+            var parameters = new UriParameters();
+            return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
         public Task<UserModel> GetByIdAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<UserModel>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            var parameters = new UriParameters(id);
+            return GetAsync<UserModel>(parameters, ct);
         }
 
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
         {
-            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            var parameters = new UriParameters(id);
+            return DeleteAsync<DeleteResult>(parameters, ct);
         }
         
         #endregion
@@ -56,22 +61,26 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<IEnumerable<UserAttributeModel>> GetUserAttributeAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<IEnumerable<UserAttributeModel>>(CreateRequestUrlWithRouteParameters($"{id}/attributes"), ct);
+            var parameters = new UriParameters(new object[] { id, "attributes" });
+            return GetAsync<IEnumerable<UserAttributeModel>>(parameters, ct);
         }
 
-        public Task<CreateResult> CreateUserAttributeAsync(int id, UserAttributeModelCreate userAttributeModelCreate, CancellationToken ct = default)
+        public Task<CreateResult> CreateUserAttributeAsync(int id, UserAttributeModelCreate model, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"{id}/attributes"), userAttributeModelCreate, ct);
+            var parameters = new UriParameters(new object[] { id, "attributes" });
+            return PostAsync<CreateResult>(parameters, model, ct);
         }
 
-        public Task<UpdateResult> UpdateUserAttributeAsync(UserAttributeModelUpdate userAttributeModelUpdate, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateUserAttributeAsync(UserAttributeModelUpdate model, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters("attributes"), userAttributeModelUpdate, ct);
+            var parameters = new UriParameters(new object[] { "attributes" });
+            return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
         public Task<DeleteResult> DeleteUserAttributeAsync(int id, int userAttributeId, CancellationToken ct = default)
         {
-            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}/attributes/{userAttributeId}"), ct);
+            var parameters = new UriParameters(new object[] { id, "attributes", userAttributeId });
+            return DeleteAsync<DeleteResult>(parameters, ct);
         }
 
         #endregion
@@ -80,32 +89,38 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<PagedList<UserNoteModel>> GetUserNotesAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<UserNoteModel>>(CreateRequestUrlWithRouteParameters($"{id}/notes"), ct);
+            var parameters = new UriParameters(new object[] { id, "notes" });
+            return GetAsync<PagedList<UserNoteModel>>(parameters, ct);
         }
 
-        public Task<PagedList<UserNoteModel>> GetUserNotesAsync(int id, UserNotesFilter userNotesFilter, CancellationToken ct = default)
+        public Task<PagedList<UserNoteModel>> GetUserNotesAsync(int id, UserNotesFilter model, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<UserNoteModel>>(CreateRequestUrl($"{id}/notes", userNotesFilter), ct);
+            var parameters = new UriParameters(new object[] { id, "notes" });
+            return GetAsync<PagedList<UserNoteModel>>(parameters, ct);
         }
 
-        public Task<CreateResult> CreateUserNoteAsync(int id, UserNoteModelCreate userNoteModelCreate, CancellationToken ct = default)
+        public Task<CreateResult> CreateUserNoteAsync(int id, UserNoteModelCreate model, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"{id}/notes"), userNoteModelCreate, ct);
+            var parameters = new UriParameters(new object[] { id, "notes" });
+            return PostAsync<CreateResult>(parameters, model, ct);
         }
 
-        public Task<UpdateResult> UpdateUserNoteAsync(UserNoteModelUpdate userNoteModelUpdate, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateUserNoteAsync(UserNoteModelUpdate model, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"notes"), userNoteModelUpdate, ct);
+            var parameters = new UriParameters(new object[] { "notes" });
+            return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
         public Task<DeleteResult> DeleteUserNoteAsync(int id, int noteId, CancellationToken ct = default)
         {
-            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}/notes/{noteId}"), ct);
+            var parameters = new UriParameters(new object[] { id, "notes", noteId});
+            return DeleteAsync<DeleteResult>(parameters, ct);
         }
 
         public Task<UserNoteModel> GetUserNoteByIdAsync(int id, int userNoteId, CancellationToken ct = default)
         {
-            return GetAsync<UserNoteModel>(CreateRequestUrlWithRouteParameters($"{id}/notes/{userNoteId}"), ct);
+            var parameters = new UriParameters(new object[] { id, "notes", userNoteId });
+            return GetAsync<UserNoteModel>(parameters, ct);
         }
 
         #endregion 

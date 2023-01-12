@@ -23,27 +23,32 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<PagedList<PaymentMethodModel>> GetAsync(PaymentMethodsFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<PaymentMethodModel>>(filter, ct);
+            var parameters = new UriParameters(filter);
+            return GetAsync<PagedList<PaymentMethodModel>>(parameters, ct);
         }
 
-        public Task<CreateResult> CreateAsync(PaymentMethodModelCreate paymentMethodModelCreate, CancellationToken ct = default)
+        public Task<CreateResult> CreateAsync(PaymentMethodModelCreate model, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrl(), paymentMethodModelCreate, ct);
+            var parameters = new UriParameters();
+            return PostAsync<CreateResult>(parameters, model, ct);
         }
 
-        public Task<UpdateResult> UpdateAsync(PaymentMethodModelUpdate paymentMethodModelUpdate, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateAsync(PaymentMethodModelUpdate model, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrl(), paymentMethodModelUpdate, ct);
+            var parameters = new UriParameters();
+            return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
         public Task<PaymentMethodModel> GetByIdAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<PaymentMethodModel>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            var parameters = new UriParameters(id);
+            return GetAsync<PaymentMethodModel>(parameters, ct);
         }
 
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
         {
-            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            var parameters = new UriParameters(id);
+            return DeleteAsync<DeleteResult>(parameters, ct);
         }
 
         #endregion

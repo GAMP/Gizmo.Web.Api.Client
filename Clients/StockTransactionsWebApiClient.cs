@@ -22,12 +22,14 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<PagedList<StockTransactionModel>> GetAsync(StockTransactionsFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<StockTransactionModel>>(filter, ct);
+            var parameters = new UriParameters(filter);
+            return GetAsync<PagedList<StockTransactionModel>>(parameters, ct);
         }
 
         public Task<StockTransactionModel> GetByIdAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<StockTransactionModel>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            var parameters = new UriParameters(id);
+            return GetAsync<StockTransactionModel>(parameters, ct);
         } 
         
         #endregion

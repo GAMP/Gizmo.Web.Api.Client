@@ -27,27 +27,32 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<PagedList<ProductModel>> GetAsync(ProductsFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<ProductModel>>(filter, ct);
+            var parameters = new UriParameters(filter);
+            return GetAsync<PagedList<ProductModel>>(parameters, ct);
         }
 
-        public Task<CreateResult> CreateAsync(ProductModelCreate product, CancellationToken ct = default)
+        public Task<CreateResult> CreateAsync(ProductModelCreate model, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrl(), product, ct);
+            var parameters = new UriParameters();
+            return PostAsync<CreateResult>(parameters, model, ct);
         }
 
-        public Task<UpdateResult> UpdateAsync(ProductModelUpdate product, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateAsync(ProductModelUpdate model, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrl(), product, ct);
+            var parameters = new UriParameters();
+            return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
         public Task<ProductModel> GetByIdAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<ProductModel>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            var parameters = new UriParameters(id);
+            return GetAsync<ProductModel>(parameters, ct);
         }
 
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
         {
-            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            var parameters = new UriParameters(id);
+            return DeleteAsync<DeleteResult>(parameters, ct);
         }
 
         #endregion
@@ -55,24 +60,26 @@ namespace Gizmo.Web.Api.Clients
         #region Bundles
         public Task<IEnumerable<ProductBundledModel>> GetBundledProductsAsync(int bundleId, CancellationToken ct = default)
         {
-            return GetAsync<IEnumerable<ProductBundledModel>>(CreateRequestUrlWithRouteParameters($"bundle/{bundleId}/bundledproducts"), ct);
+            var parameters = new UriParameters(new object[] { "bundle", bundleId, "bundledproducts" });
+            return GetAsync<IEnumerable<ProductBundledModel>>(parameters, ct);
         }
 
-        public Task<CreateResult> CreateBundledProductsAsync(int bundleId, ProductBundledModelCreate bundledProduct, CancellationToken ct = default)
+        public Task<CreateResult> CreateBundledProductsAsync(int bundleId, ProductBundledModelCreate model, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"bundle/{bundleId}/bundledproducts"), bundledProduct, ct);
-
+            var parameters = new UriParameters(new object[] { "bundle", bundleId, "bundledproducts" });
+            return PostAsync<CreateResult>(parameters, model, ct);
         }
 
-        public Task<UpdateResult> UpdateBundledProductAsync(ProductBundledModelUpdate bundledProduct, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateBundledProductAsync(ProductBundledModelUpdate model, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"bundle/bundledproducts"), bundledProduct, ct);
-
+            var parameters = new UriParameters(new object[] { "bundle", "bundledproducts" });
+            return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
         public Task<DeleteResult> DeleteBundledProductAsync(int bundleId, int bundledProductId, CancellationToken ct = default)
         {
-            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"bundle/{bundleId}/bundledproducts/{bundledProductId}"), ct);
+            var parameters = new UriParameters(new object[] { "bundle", bundleId, "bundledproducts", bundledProductId });
+            return DeleteAsync<DeleteResult>(parameters, ct);
         }
 
         #endregion
@@ -81,21 +88,25 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<IEnumerable<ProductUserPriceModel>> GetProductUserPricesAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<IEnumerable<ProductUserPriceModel>>(CreateRequestUrlWithRouteParameters($"{id}/userprices"), ct);
+            var parameters = new UriParameters(new object[] { id, "userprices" });
+            return GetAsync<IEnumerable<ProductUserPriceModel>>(parameters, ct);
         }
-        public Task<CreateResult> CreateProductUserPriceAsync(int id, ProductUserPriceModelCreate productUserPrice, CancellationToken ct = default)
+        public Task<CreateResult> CreateProductUserPriceAsync(int id, ProductUserPriceModelCreate model, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"{id}/userprices"), productUserPrice, ct);
+            var parameters = new UriParameters(new object[] { id, "userprices" });
+            return PostAsync<CreateResult>(parameters, model, ct);
         }
 
-        public Task<UpdateResult> UpdateProductUserPriceAsync(ProductUserPriceModelUpdate productUserPrice, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateProductUserPriceAsync(ProductUserPriceModelUpdate model, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"userprices"), productUserPrice, ct);
+            var parameters = new UriParameters(new object[] { "userprices" });
+            return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
         public Task<DeleteResult> DeleteProductUserPriceAsync(int id, int userPriceId, CancellationToken ct = default)
         {
-            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}/userprices/{userPriceId}"));
+            var parameters = new UriParameters(new object[] { id, "userprices", userPriceId });
+            return DeleteAsync<DeleteResult>(parameters, ct);
         }
 
         #endregion
@@ -104,12 +115,14 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<ProductPurchaseAvailabilityModel> GetPurchaseAvailabilityAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<ProductPurchaseAvailabilityModel>(CreateRequestUrlWithRouteParameters($"{id}/purchaseavailability"), ct);
+            var parameters = new UriParameters(new object[] {id, "purchaseavailability" });
+            return GetAsync<ProductPurchaseAvailabilityModel>(parameters, ct);
         }
 
-        public Task<UpdateResult> UpdatePurchaseAvailabilityAsync(int id, ProductPurchaseAvailabilityModelUpdate purchaseAvailability, CancellationToken ct = default)
+        public Task<UpdateResult> UpdatePurchaseAvailabilityAsync(int id, ProductPurchaseAvailabilityModelUpdate model, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"{id}/purchaseavailability"), purchaseAvailability, ct);
+            var parameters = new UriParameters(new object[] { id, "purchaseavailability" });
+            return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
         #endregion
@@ -118,22 +131,26 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<IEnumerable<ProductDisallowedUserGroupModel>> GetDisallowedUserGroupsAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<IEnumerable<ProductDisallowedUserGroupModel>>(CreateRequestUrlWithRouteParameters($"{id}/disallowedusergroups"), ct);
+            var parameters = new UriParameters(new object[] {id, "disallowedusergroups" });
+            return GetAsync<IEnumerable<ProductDisallowedUserGroupModel>>(parameters, ct);
         }
 
-        public Task<CreateResult> CreateDisallowedUserGroupAsync(int id, ProductDisallowedUserGroupModelCreate productDisallowedUserGroup, CancellationToken ct = default)
+        public Task<CreateResult> CreateDisallowedUserGroupAsync(int id, ProductDisallowedUserGroupModelCreate model, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"{id}/disallowedusergroups"), productDisallowedUserGroup, ct);
+            var parameters = new UriParameters(new object[] { id, "disallowedusergroups" });
+            return PostAsync<CreateResult>(parameters, model, ct);
         }
 
-        public Task<UpdateResult> UpdateDisallowedUserGroupAsync(ProductDisallowedUserGroupModelUpdate productDisallowedUserGroup, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateDisallowedUserGroupAsync(ProductDisallowedUserGroupModelUpdate models, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"disallowedusergroups"), productDisallowedUserGroup, ct);
+            var parameters = new UriParameters(new object[] { "disallowedusergroups" });
+            return PutAsync<UpdateResult>(parameters, models, ct);
         }
 
         public Task<DeleteResult> DeleteDisallowedUserGroupAsync(int id, int disallowedUserGroupId, CancellationToken ct = default)
         {
-            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}/disallowedusergroups/{disallowedUserGroupId}"), ct);
+            var parameters = new UriParameters(new object[] { id, "disallowedusergroups", disallowedUserGroupId });
+            return DeleteAsync<DeleteResult>(parameters, ct);
         }
         #endregion
 
@@ -141,22 +158,26 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<IEnumerable<ProductBundledUserPriceModel>> GetBundleProductUserPricesAsync(int id, int bundledProductId, CancellationToken ct = default)
         {
-            return GetAsync<IEnumerable<ProductBundledUserPriceModel>>(CreateRequestUrlWithRouteParameters($"bundle/{id}/bundledproducts/{bundledProductId}/userprices"), ct);
+            var parameters = new UriParameters(new object[] { "bundle", id, "bundledproducts", bundledProductId, "userprices" });
+            return GetAsync<IEnumerable<ProductBundledUserPriceModel>>(parameters, ct);
         }
 
-        public Task<CreateResult> CreateBundleProductUserPriceAsync(int id, int bunledProductId, ProductBundledUserPriceModelCreate productBundleUserPrice, CancellationToken ct = default)
+        public Task<CreateResult> CreateBundleProductUserPriceAsync(int id, int bundledProductId, ProductBundledUserPriceModelCreate model, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"bundle/{id}/bundledproducts/{bunledProductId}/userprices"), productBundleUserPrice, ct);
+            var parameters = new UriParameters(new object[] { "bundle", id, "bundledproducts", bundledProductId, "userprices" });
+            return PostAsync<CreateResult>(parameters, model, ct);
         }
 
-        public Task<UpdateResult> UpdateBundleProductUserPriceAsync(ProductBundledUserPriceModelUpdate productBundleUserPrice, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateBundleProductUserPriceAsync(ProductBundledUserPriceModelUpdate model, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters("bundle/bundledproducts/userprices"), productBundleUserPrice, ct);
+            var parameters = new UriParameters(new object[] { "bundle", "bundledproducts", "userprices" });
+            return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
         public Task<DeleteResult> DeleteBundleProductUserPriceAsync(int id, int bundledProductId, int userPriceId, CancellationToken ct = default)
         {
-            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"bundle/{id}/bundledproducts/{bundledProductId}/userprices/{userPriceId}"), ct);
+            var parameters = new UriParameters(new object[] { "bundle", id, "bundledproducts", bundledProductId, "userprices", userPriceId });
+            return DeleteAsync<DeleteResult>(parameters, ct);
         }
 
 
@@ -166,12 +187,14 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<ProductTimeUsageAvailabilityModel> GetUsageAvailabilityAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<ProductTimeUsageAvailabilityModel>(CreateRequestUrlWithRouteParameters($"time/{id}/usageavailability"), ct);
+            var parameters = new UriParameters(new object[] { "time", id, "usageavailability" });
+            return GetAsync<ProductTimeUsageAvailabilityModel>(parameters, ct);
         }
 
-        public Task<UpdateResult> UpdateUsageAvailabilityAsync(int id, ProductTimeUsageAvailabilityModelUpdate usageAvailability, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateUsageAvailabilityAsync(int id, ProductTimeUsageAvailabilityModelUpdate model, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"time/{id}/usageavailability"), usageAvailability, ct);
+            var parameters = new UriParameters(new object[] { "time", id, "usageavailability" });
+            return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
         #endregion
@@ -180,22 +203,26 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<IEnumerable<ProductTimeDisallowedHostGroupModel>> GetDisallowedHostGroupsAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<IEnumerable<ProductTimeDisallowedHostGroupModel>>(CreateRequestUrlWithRouteParameters($"time/{id}/disallowedhostgroups"), ct);
+            var parameters = new UriParameters(new object[] { "time", id, "disallowedhostgroups" });
+            return GetAsync<IEnumerable<ProductTimeDisallowedHostGroupModel>>(parameters, ct);
         }
 
-        public Task<CreateResult> CreateDisallowedHostGroupAsync(int id, ProductTimeDisallowedHostGroupModelCreate timeProductDisallowedHostGroup, CancellationToken ct = default)
+        public Task<CreateResult> CreateDisallowedHostGroupAsync(int id, ProductTimeDisallowedHostGroupModelCreate model, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"time/{id}/disallowedhostgroups"), timeProductDisallowedHostGroup, ct);
+            var parameters = new UriParameters(new object[] { "time", id, "disallowedhostgroups" });
+            return PostAsync<CreateResult>(parameters, model, ct);
         }
 
-        public Task<UpdateResult> UpdateDisallowedHostGroupAsync(ProductTimeDisallowedHostGroupModelUpdate timeProductDisallowedHostGroup, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateDisallowedHostGroupAsync(ProductTimeDisallowedHostGroupModelUpdate model, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"time/disallowedhostgroups"), timeProductDisallowedHostGroup, ct);
+            var parameters = new UriParameters(new object[] { "time", "disallowedhostgroups" });
+            return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
         public Task<DeleteResult> DeleteDisallowedHostGroupAsync(int id, int timeProductDisallowedHostGroup, CancellationToken ct = default)
         {
-            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"time/{id}/disallowedhostgroups/{timeProductDisallowedHostGroup}"));
+            var parameters = new UriParameters(new object[] { "time", id, "disallowedhostgroups", timeProductDisallowedHostGroup });
+            return DeleteAsync<DeleteResult>(parameters);
         }
 
         #endregion
@@ -204,22 +231,26 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<IEnumerable<ProductImageModel>> GetProductImagesAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<IEnumerable<ProductImageModel>>(CreateRequestUrlWithRouteParameters($"{id}/images"), ct);
+            var parameters = new UriParameters(new object[] { id, "images" });
+            return GetAsync<IEnumerable<ProductImageModel>>(parameters, ct);
         }
 
-        public Task<CreateResult> CreateProductImageAsync(int id, ProductImageModelCreate productImage, CancellationToken ct = default)
+        public Task<CreateResult> CreateProductImageAsync(int id, ProductImageModelCreate model, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"{id}/images"), productImage, ct);
+            var parameters = new UriParameters(new object[] { id, "images" });
+            return PostAsync<CreateResult>(parameters, model, ct);
         }
 
-        public Task<UpdateResult> UpdateProductImageAsync(ProductImageModelUpdate productImage, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateProductImageAsync(ProductImageModelUpdate model, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"images"), productImage, ct);
+            var parameters = new UriParameters(new object[] {"images" });
+            return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
         public Task<DeleteResult> DeleteProductImageAsync(int id, int productImageId, CancellationToken ct = default)
         {
-            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}/images/{productImageId}"), ct);
+            var parameters = new UriParameters(new object[] {id, "images", productImageId });
+            return DeleteAsync<DeleteResult>(parameters, ct);
         }
 
         #endregion 

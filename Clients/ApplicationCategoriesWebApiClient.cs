@@ -1,5 +1,4 @@
 ﻿using Gizmo.Web.Api.Models;
-using Gizmo.Web.Api.Models.Abstractions.Models.RequestParameters;
 
 using Microsoft.Extensions.Options;
 
@@ -20,23 +19,34 @@ namespace Gizmo.Web.Api.Clients
         #endregion
 
         #region FUNCTIONS
-        public Task<PagedList<ApplicationCategoryModel>> GetAsync(IRequestParameters parameters, CancellationToken ct = default)
+
+        public Task<ApplicationCategoryModel> GetByIdAsync(int id, CancellationToken ct = default)
         {
+            var parameters = new UriParameters(id);
+            return GetAsync<ApplicationCategoryModel>(parameters, ct);
+        }
+
+        public Task<PagedList<ApplicationCategoryModel>> GetAsync(ApplicationCategoriesFilter filter, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters(filter);
             return GetAsync<PagedList<ApplicationCategoryModel>>(parameters, ct);
         }
 
-        public Task<CreateResult> CreateAsync(IRequestParameters parameters, ApplicationCategoryModelCreate model, CancellationToken ct = default)
+        public Task<CreateResult> CreateAsync(ApplicationCategoryModelCreate model, CancellationToken ct = default)
         {
+            var parameters = new UriParameters();
             return PostAsync<CreateResult>(parameters, model, ct);
         }
 
-        public Task<UpdateResult> UpdateAsync(IRequestParameters parameters, ApplicationCategoryModelUpdate model, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateAsync(ApplicationCategoryModelUpdate model, CancellationToken ct = default)
         {
+            var parameters = new UriParameters();
             return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
-        public Task<DeleteResult> DeleteAsync(IRequestParameters parameters, CancellationToken ct = default)
+        public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
         {
+            var parameters = new UriParameters(id);
             return DeleteAsync<DeleteResult>(parameters, ct);
         }
 

@@ -23,27 +23,32 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<PagedList<AssetModel>> GetAsync(AssetsFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<AssetModel>>(filter, ct);
+            var parameters = new UriParameters(filter);
+            return GetAsync<PagedList<AssetModel>>(parameters, ct);
         }
 
-        public Task<CreateResult> CreateAsync(AssetModelCreate asset, CancellationToken ct = default)
+        public Task<CreateResult> CreateAsync(AssetModelCreate model, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrl(), asset, ct);
+            var parameters = new UriParameters();
+            return PostAsync<CreateResult>(parameters, model, ct);
         }
 
-        public Task<UpdateResult> UpdateAsync(AssetModelUpdate assetModelUpdate, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateAsync(AssetModelUpdate model, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrl(), assetModelUpdate, ct);
+            var parameters = new UriParameters();
+            return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
         public Task<AssetModel> GetByIdAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<AssetModel>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            var parameters = new UriParameters(id);
+            return GetAsync<AssetModel>(parameters, ct);
         }
 
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
         {
-            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            var parameters = new UriParameters(id);
+            return DeleteAsync<DeleteResult>(parameters, ct);
         }
 
         #endregion

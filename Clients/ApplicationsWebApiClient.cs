@@ -22,37 +22,44 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<PagedList<ApplicationModel>> GetAsync(ApplicationsFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<ApplicationModel>>(filter, ct);
+            var parameters = new UriParameters(filter);
+            return GetAsync<PagedList<ApplicationModel>>(parameters, ct);
         }
 
-        public Task<CreateResult> CreateAsync(ApplicationModelCreate applicationModelCreate, CancellationToken ct = default)
+        public Task<CreateResult> CreateAsync(ApplicationModelCreate model, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrl(), applicationModelCreate, ct);
+            var parameters = new UriParameters();
+            return PostAsync<CreateResult>(parameters, model, ct);
         }
 
-        public Task<UpdateResult> UpdateAsync(ApplicationModelUpdate applicationModelUpdate, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateAsync(ApplicationModelUpdate model, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrl(), applicationModelUpdate, ct);
+            var parameters = new UriParameters();
+            return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
         public Task<ApplicationModel> GetByIdAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<ApplicationModel>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            var parameters = new UriParameters(id);
+            return GetAsync<ApplicationModel>(parameters, ct);
         }
 
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
         {
-            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            var parameters = new UriParameters(id);
+            return DeleteAsync<DeleteResult>(parameters, ct);
         }
 
         public Task<ApplicationModelImage> GetApplicationImage(int id, CancellationToken ct = default)
         {
-            return GetAsync<ApplicationModelImage>(CreateRequestUrlWithRouteParameters($"{id}/image"), ct);
+            var parameters = new UriParameters(new object[] {id, "image" });
+            return GetAsync<ApplicationModelImage>(parameters, ct);
         }
 
-        public Task<UpdateResult> UpdateApplicationImage(int id, ApplicationModelImage applicationImage, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateApplicationImage(int id, ApplicationModelImage model, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"{id}/image"), applicationImage, ct);
+            var parameters = new UriParameters(new object[] { id, "image" });
+            return PutAsync<UpdateResult>(parameters, model, ct);
         } 
 
         #endregion

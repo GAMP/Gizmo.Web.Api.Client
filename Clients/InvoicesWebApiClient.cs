@@ -23,17 +23,20 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<PagedList<InvoiceModel>> GetAsync(InvoicesFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<InvoiceModel>>(filter, ct);
+            var parameters = new UriParameters(filter);
+            return GetAsync<PagedList<InvoiceModel>>(parameters, ct);
         }
 
         public Task<InvoiceModel> GetByIdAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<InvoiceModel>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            var parameters = new UriParameters(id);
+            return GetAsync<InvoiceModel>(parameters, ct);
         }
 
-        public Task<UpdateResult> VoidAsync(int id, IRefundOptions refundOptions, CancellationToken ct = default)
+        public Task<UpdateResult> VoidAsync(int id, IRefundOptions model, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"{id}/void"), refundOptions, ct);
+            var parameters = new UriParameters(new object[] { id, "void" });
+            return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
         #endregion

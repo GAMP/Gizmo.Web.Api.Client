@@ -22,27 +22,32 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<PagedList<UserGroupModel>> GetAsync(UserGroupsFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<UserGroupModel>>(filter, ct);
+            var parameters = new UriParameters(filter);
+            return GetAsync<PagedList<UserGroupModel>>(parameters, ct);
         }
 
-        public Task<CreateResult> CreateAsync(UserGroupModelCreate userGroup, CancellationToken ct = default)
+        public Task<CreateResult> CreateAsync(UserGroupModelCreate model, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrl(), userGroup, ct);
+            var parameters = new UriParameters();
+            return PostAsync<CreateResult>(parameters, model, ct);
         }
 
-        public Task<UpdateResult> UpdateAsync(UserGroupModelUpdate userGroup, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateAsync(UserGroupModelUpdate model, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrl(), userGroup, ct);
+            var parameters = new UriParameters();
+            return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
         public Task<UserGroupModel> GetByIdAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<UserGroupModel>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            var parameters = new UriParameters(id);
+            return GetAsync<UserGroupModel>(parameters, ct);
         }
 
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
         {
-            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            var parameters = new UriParameters(id);
+            return DeleteAsync<DeleteResult>(parameters, ct);
         }
 
         #endregion

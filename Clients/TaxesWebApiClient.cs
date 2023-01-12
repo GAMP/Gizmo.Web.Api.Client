@@ -23,26 +23,31 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<PagedList<TaxModel>> GetAsync(TaxesFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<TaxModel>>(filter, ct);
+            var parameters = new UriParameters(filter);
+            return GetAsync<PagedList<TaxModel>>(parameters, ct);
         }
 
-        public Task<CreateResult> CreateAsync(TaxModelCreate taxModelCreate, CancellationToken ct = default)
+        public Task<CreateResult> CreateAsync(TaxModelCreate model, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrl(), taxModelCreate, ct);
+            var parameters = new UriParameters();
+            return PostAsync<CreateResult>(parameters, model, ct);
         }
 
-        public Task<UpdateResult> UpdateAsync(TaxModelUpdate taxModelUpdate, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateAsync(TaxModelUpdate model, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrl(), taxModelUpdate, ct);
+            var parameters = new UriParameters();
+            return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
         public Task<TaxModel> GetByIdAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<TaxModel>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            var parameters = new UriParameters(id);
+            return GetAsync<TaxModel>(parameters, ct);
         }
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
         {
-            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            var parameters = new UriParameters(id);
+            return DeleteAsync<DeleteResult>(parameters, ct);
         }
 
         #endregion

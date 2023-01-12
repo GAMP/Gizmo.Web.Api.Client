@@ -23,47 +23,56 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<PagedList<BillingProfileModel>> GetAsync(BillingProfilesFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<BillingProfileModel>>(filter, ct);
+            var parameters = new UriParameters(filter);
+            return GetAsync<PagedList<BillingProfileModel>>(parameters, ct);
         }
 
-        public Task<CreateResult> CreateAsync(BillingProfileModelCreate billingProfileModelCreate, CancellationToken ct = default)
+        public Task<CreateResult> CreateAsync(BillingProfileModelCreate model, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrl(), billingProfileModelCreate, ct);
+            var parameters = new UriParameters();
+            return PostAsync<CreateResult>(parameters, model, ct);
         }
 
-        public Task<UpdateResult> UpdateAsync(BillingProfileModelUpdate billingProfileModelUpdate, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateAsync(BillingProfileModelUpdate model, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrl(), billingProfileModelUpdate, ct);
+            var parameters = new UriParameters();
+            return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
         public Task<BillingProfileModel> GetByIdAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<BillingProfileModel>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            var parameters = new UriParameters(id);
+            return GetAsync<BillingProfileModel>(parameters, ct);
         }
 
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
         {
-            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            var parameters = new UriParameters(id);
+            return DeleteAsync<DeleteResult>(parameters, ct);
         }
 
         public Task<IEnumerable<BillingProfileModel>> GetBillingProfilesRates(int id, CancellationToken ct = default)
         {
-            return GetAsync<IEnumerable<BillingProfileModel>>(CreateRequestUrlWithRouteParameters($"{id}/rates"), ct);
+            var parameters = new UriParameters(new object[] { id, "rates" });
+            return GetAsync<IEnumerable<BillingProfileModel>>(parameters, ct);
         }
 
-        public Task<CreateResult> CreateBillingProfilesRate(int id, BillingProfileRateModelCreate billingProfileRateModelCreate, CancellationToken ct = default)
+        public Task<CreateResult> CreateBillingProfilesRate(int id, BillingProfileRateModelCreate model, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrlWithRouteParameters($"{id}/rates"), billingProfileRateModelCreate, ct);
+            var parameters = new UriParameters(new object[] { id, "rates" });
+            return PostAsync<CreateResult>(parameters, model, ct);
         }
 
-        public Task<UpdateResult> UpdateBillingProfileRate(BillingProfileRateModelUpdate billingProfileRateModelUpdate, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateBillingProfileRate(BillingProfileRateModelUpdate model, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrlWithRouteParameters($"rates"), billingProfileRateModelUpdate, ct);
+            var parameters = new UriParameters(new object[] { "rates" });
+            return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
         public Task<DeleteResult> DeleteBillingProfileRate(int id, int billingProfileRateId, CancellationToken ct = default)
         {
-            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}/rates/{billingProfileRateId}"), ct);
+            var parameters = new UriParameters(new object[] { id, "rates", billingProfileRateId });
+            return DeleteAsync<DeleteResult>(parameters, ct);
         } 
 
         #endregion

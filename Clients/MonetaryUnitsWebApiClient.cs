@@ -23,27 +23,32 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<PagedList<MonetaryUnitModel>> GetAsync(MonetaryUnitsFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<MonetaryUnitModel>>(filter, ct);
+            var parameters = new UriParameters(filter);
+            return GetAsync<PagedList<MonetaryUnitModel>>(parameters, ct);
         }
 
-        public Task<CreateResult> CreateAsync(MonetaryUnitModelCreate monetaryUnitModelCreate, CancellationToken ct = default)
+        public Task<CreateResult> CreateAsync(MonetaryUnitModelCreate model, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrl(), monetaryUnitModelCreate, ct);
+            var parameters = new UriParameters();
+            return PostAsync<CreateResult>(parameters, model, ct);
         }
 
-        public Task<UpdateResult> UpdateAsync(MonetaryUnitModelUpdate monetaryUnitModelUpdate, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateAsync(MonetaryUnitModelUpdate model, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrl(), monetaryUnitModelUpdate, ct);
+            var parameters = new UriParameters();
+            return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
         public Task<MonetaryUnitModel> GetByIdAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<MonetaryUnitModel>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            var parameters = new UriParameters(id);
+            return GetAsync<MonetaryUnitModel>(parameters, ct);
         }
 
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
         {
-            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            var parameters = new UriParameters(id);
+            return DeleteAsync<DeleteResult>(parameters, ct);
         }
 
         #endregion

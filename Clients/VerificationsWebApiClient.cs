@@ -19,20 +19,22 @@ namespace Gizmo.Web.Api.Clients
         }
         #endregion
 
-        public Task<VerificationStartResultModelEmail> VerifyEmailStartAsync(int userId, string emailAddress, CancellationToken cancellationToken=default)
+        public Task<VerificationStartResultModelEmail> VerifyEmailStartAsync(int userId, string emailAddress, CancellationToken ct = default)
         {
-            return PostAsync<VerificationStartResultModelEmail>(CreateRequestUrlWithRouteParameters($"email/{userId}/{emailAddress}"),null,cancellationToken);
+            var parameters = new UriParameters(new object[] { "email", userId, emailAddress });
+            return PostAsync<VerificationStartResultModelEmail>(parameters, null, ct);
         }
 
-        public Task<VerificationStartResultModelMobilePhone> VerifyMobilePhoneStart(int userId, string mobilePhoneNumber, CancellationToken cancellationToken = default)
+        public Task<VerificationStartResultModelMobilePhone> VerifyMobilePhoneStart(int userId, string mobilePhoneNumber, CancellationToken ct = default)
         {
-            return PostAsync<VerificationStartResultModelMobilePhone>(CreateRequestUrlWithRouteParameters($"mobilephone/{userId:int}/{mobilePhoneNumber}"), null, cancellationToken);
-
+            var parameters = new UriParameters(new object[] { "mobilephone", userId, mobilePhoneNumber });
+            return PostAsync<VerificationStartResultModelMobilePhone>(parameters, null, ct);
         }
 
-        public Task<VerificationStartResultModelMobilePhone> VerifyCurrentUserMobilePhoneStart(string mobilePhoneNumber, CancellationToken cancellationToken =default)
+        public Task<VerificationStartResultModelMobilePhone> VerifyCurrentUserMobilePhoneStart(string mobilePhoneNumber, CancellationToken ct = default)
         {
-            return PostAsync<VerificationStartResultModelMobilePhone>(CreateRequestUrlWithRouteParameters($"mobilephone/{mobilePhoneNumber}"), null, cancellationToken);
+            var parameters = new UriParameters(new object[] { "mobilephone", mobilePhoneNumber });
+            return PostAsync<VerificationStartResultModelMobilePhone>(parameters, null, ct);
         }
     }
 }

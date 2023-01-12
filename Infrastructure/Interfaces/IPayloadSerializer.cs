@@ -40,10 +40,10 @@ namespace Gizmo.Web.Api.Clients
         /// Creates Http Content object.
         /// </summary>
         /// <typeparam name="T">Content object type.</typeparam>
-        /// <param name="object">Content object.</param>
+        /// <param name="data">Content object.</param>
         /// <param name="mediaType">Optional media type header value.</param>
         /// <returns>HttpContent.</returns>
-        ValueTask<HttpContent> CreateContentAsync<T>(T @object, MediaTypeHeaderValue mediaType = null,CancellationToken ct=default);
+        ValueTask<HttpContent> CreateContentAsync<T>(T data, MediaTypeHeaderValue? mediaType = null, CancellationToken ct=default);
 
         #endregion
     }

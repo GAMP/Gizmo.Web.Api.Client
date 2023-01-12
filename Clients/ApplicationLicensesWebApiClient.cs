@@ -22,12 +22,14 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<PagedList<ApplicationLicenseModel>> GetAsync(ApplicationLicensesFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<ApplicationLicenseModel>>(filter, ct);
+            var parameters = new UriParameters(filter);
+            return GetAsync<PagedList<ApplicationLicenseModel>>(parameters, ct);
         }
 
         public Task<ApplicationLicenseModel> GetByIdAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<ApplicationLicenseModel>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            var parameters = new UriParameters(id);
+            return GetAsync<ApplicationLicenseModel>(parameters, ct);
         } 
 
         #endregion

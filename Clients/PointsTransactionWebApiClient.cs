@@ -19,21 +19,24 @@ namespace Gizmo.Web.Api.Clients
         #region GET
         public Task<PagedList<PointTransactionModel>> GetAsync(PointTransactionFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<PointTransactionModel>>(filter, ct);
+            var parameters = new UriParameters(filter);
+            return GetAsync<PagedList<PointTransactionModel>>(parameters, ct);
         }
         #endregion
 
         #region CREATE
-        public Task<CreateResult> CreateAsync(PointTransactionModelCreate pointTransactionModelCreate, CancellationToken ct = default)
+        public Task<CreateResult> CreateAsync(PointTransactionModelCreate model, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrl(), pointTransactionModelCreate, ct);
+            var parameters = new UriParameters();
+            return PostAsync<CreateResult>(parameters, model, ct);
         }
         #endregion
 
         #region GET BY ID
         public Task<PointTransactionModel> GetByIdAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<PointTransactionModel>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            var parameters = new UriParameters(id);
+            return GetAsync<PointTransactionModel>(parameters, ct);
         } 
         #endregion
     }

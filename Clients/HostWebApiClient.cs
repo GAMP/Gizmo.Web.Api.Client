@@ -23,26 +23,31 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<PagedList<HostModel>> GetAsync(HostsFilter filter, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<HostModel>>(filter, ct);
+            var parameters = new UriParameters(filter);
+            return GetAsync<PagedList<HostModel>>(parameters, ct);
         }
 
-        public Task<CreateResult> CreateAsync(HostModelCreate hostModelCreate, CancellationToken ct = default)
+        public Task<CreateResult> CreateAsync(HostModelCreate model, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrl(), hostModelCreate, ct);
+            var parameters = new UriParameters();
+            return PostAsync<CreateResult>(parameters, model, ct);
         }
-        public Task<UpdateResult> UpdateAsync(HostModelUpdate hostModelUpdate, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateAsync(HostModelUpdate model, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrl(), hostModelUpdate, ct);
+            var parameters = new UriParameters();
+            return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
         public Task<HostModel> GetByIdAsync(int id, CancellationToken ct = default)
         {
-            return GetAsync<HostModel>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            var parameters = new UriParameters(id);
+            return GetAsync<HostModel>(parameters, ct);
         }
 
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
         {
-            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            var parameters = new UriParameters(id);
+            return DeleteAsync<DeleteResult>(parameters, ct);
         }
 
         #endregion

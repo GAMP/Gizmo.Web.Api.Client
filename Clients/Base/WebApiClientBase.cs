@@ -1,8 +1,9 @@
 ﻿using Gizmo.Web.Api.Models;
-using Gizmo.Web.Api.Models.Abstractions.Models.RequestParameters;
+using Gizmo.Web.Api.Models.Abstractions;
 
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
+
 using System;
 using System.Net;
 using System.Net.Http;
@@ -17,7 +18,6 @@ namespace Gizmo.Web.Api.Clients
     /// </summary>
     public abstract class WebApiClientBase
     {
-        #region CONSTRUCTOR
         /// <summary>
         /// Default constructor.
         /// </summary>
@@ -29,9 +29,8 @@ namespace Gizmo.Web.Api.Clients
             HttpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
             SerializerProvider = payloadSerializerProvider;
             Serializer = SerializerProvider.DefaultSerializer;
-            Options = options;
+            Options = options.Value;
         }
-        #endregion
 
         #region PROPERTIES
 
@@ -43,7 +42,7 @@ namespace Gizmo.Web.Api.Clients
         /// <summary>
         /// Gets web client options.
         /// </summary>
-        public IOptions<WebApiClientOptions> Options { get; }
+        public WebApiClientOptions Options { get; }
 
         /// <summary>
         /// Gets payload serializer provider.
@@ -57,93 +56,10 @@ namespace Gizmo.Web.Api.Clients
 
         #endregion
 
-        #region ABSTRACT
-
-        /// <summary>
-        /// Gets current host path.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual string GetRequestHostPath()
-        {
-            return HttpClient.BaseAddress.AbsoluteUri;
-        }
-
-        /// <summary>
-        /// Returns base api endpoint request path.
-        /// </summary>
-        /// <returns>Base api endpoint path, for example api/sessions.</returns>
-        protected virtual string GetRequestRoutePath()
-        {
-            var routeAttribute = GetType().GetCustomAttribute<WebApiRouteAttribute>();
-            
-            return routeAttribute == null
-                ? throw new ArgumentNullException("Route attribute is not specified for the client.", nameof(routeAttribute))
-                : routeAttribute.Route;
-        }
-
-        protected virtual string CreateRequestUrlWithRouteParameters(string routeParameters)
-        {
-            return CreateRequestUrl(routeParameters, default(IUrlQueryParameters));
-        }
-       
-        protected virtual string CreateRequestUrl(string routeParameters, IUrlQueryParameters queryParameters)
-        {
-            return CreateRequestUrl(routeParameters, ParameterGenerator.Generate(queryParameters));
-        }
-
-        protected virtual Uri CreateRequestUri(IRequestParameters requestParameters)
-        {
-            var routeAttribute = GetType().GetCustomAttribute<WebApiRouteAttribute>();
-            
-            if (routeAttribute == null)
-                throw new ArgumentNullException("Route attribute is not specified for the client.", nameof(routeAttribute));
-
-            var uriBuilder = new UriBuilder(HttpClient.BaseAddress.AbsoluteUri);
-
-            if (requestParameters.Query != null)
-                uriBuilder.Query = requestParameters.Query;
-
-            uriBuilder.Path = requestParameters.Path != null
-                ? routeAttribute.Route + '/' + requestParameters.Path
-                : routeAttribute.Route;
-
-            return uriBuilder.Uri;
-        }
-
-        public virtual string CreateRequestUrl()
-        {
-            return CreateRequestUrl(default, default(string));
-        }
-
-        /// <summary>
-        /// Creates full request url based on specified parameters.
-        /// </summary>
-        /// <param name="routeParameters">Optional route parameters.</param>
-        /// <param name="queryParameters">Optional query parameters.</param>
-        /// <returns>Full request url.</returns>
-        protected virtual string CreateRequestUrl(string routeParameters, string queryParameters)
-        {
-            //get http client host path
-            var hostPath = GetRequestHostPath();
-
-            //get base route path
-            var routePath = GetRequestRoutePath();
-
-            //check if any route parameters specified
-            if (!string.IsNullOrWhiteSpace(routeParameters))
-                routePath = $"{routePath}/{routeParameters}";
-
-            //use uri builder to create full request url
-            //this can be done manually
-            return new UriBuilder(hostPath) { Path = routePath, Query = queryParameters, }.ToString();
-        }
-
-        #endregion
-
         #region HTTP METHODS
 
         #region GET
-        protected async Task<TResult> GetAsync<TResult>(IRequestParameters parameters, CancellationToken ct)
+        public async Task<TResult> GetAsync<TResult>(IUriParameters parameters, CancellationToken ct)
         {
             var uri = CreateRequestUri(parameters);
 
@@ -164,7 +80,7 @@ namespace Gizmo.Web.Api.Clients
         #endregion
 
         #region PUT
-        protected async Task<TResult> PutAsync<TResult>(IRequestParameters parameters, object content, CancellationToken ct = default)
+        public async Task<TResult> PutAsync<TResult>(IUriParameters parameters, object? content, CancellationToken ct = default)
         {
             var uri = CreateRequestUri(parameters);
 
@@ -188,7 +104,7 @@ namespace Gizmo.Web.Api.Clients
         #endregion
 
         #region POST
-        protected async Task<TResult> PostAsync<TResult>(IRequestParameters parameters, object content, CancellationToken ct = default)
+        public async Task<TResult> PostAsync<TResult>(IUriParameters parameters, object? content, CancellationToken ct = default)
         {
             var uri = CreateRequestUri(parameters);
 
@@ -212,7 +128,7 @@ namespace Gizmo.Web.Api.Clients
         #endregion
 
         #region DELETE
-        protected async Task<TResult> DeleteAsync<TResult>(IRequestParameters parameters, CancellationToken ct = default)
+        public async Task<TResult> DeleteAsync<TResult>(IUriParameters parameters, CancellationToken ct = default)
         {
             var uri = CreateRequestUri(parameters);
 
@@ -234,7 +150,26 @@ namespace Gizmo.Web.Api.Clients
 
         #endregion
 
-        #region HELPER METHODS
+        #region HTTP METHOD HELPERS
+        
+        protected Uri CreateRequestUri(IUriParameters requestParameters)
+        {
+            var routeAttribute = GetType().GetCustomAttribute<WebApiRouteAttribute>();
+            
+            if (routeAttribute == null)
+                throw new ArgumentNullException("Route attribute is not specified for the client.", nameof(routeAttribute));
+
+            var uriBuilder = new UriBuilder(HttpClient.BaseAddress.AbsoluteUri);
+
+            if (requestParameters.Query != null)
+                uriBuilder.Query = requestParameters.Query;
+
+            uriBuilder.Path = requestParameters.Path != null
+                ? routeAttribute.Route + requestParameters.Path
+                : routeAttribute.Route;
+
+            return uriBuilder.Uri;
+        }
 
         /// <summary>
         /// Gets the result object from specified response message.
@@ -243,7 +178,7 @@ namespace Gizmo.Web.Api.Clients
         /// <param name="httpResponseMessage">HTTP response message.</param>
         /// <param name="ct">Cancellation token.</param>
         /// <returns>Result object.</returns>
-        protected async Task<TResult> GetHttpMessageResultAsync<TResult>(HttpResponseMessage httpResponseMessage, CancellationToken ct = default)
+        private async Task<TResult> GetHttpMessageResultAsync<TResult>(HttpResponseMessage httpResponseMessage, CancellationToken ct = default)
         {
             if (httpResponseMessage == null)
                 throw new ArgumentNullException(nameof(httpResponseMessage));
@@ -277,7 +212,7 @@ namespace Gizmo.Web.Api.Clients
         /// Throws appropriate exception based on HTTP status code and error response.
         /// </summary>
         /// <param name="httpResponseMessage">Http response message.</param>
-        protected async Task ThrowApiExceptionIfRequiredAsync(HttpResponseMessage httpResponseMessage, CancellationToken ct)
+        private async Task ThrowApiExceptionIfRequiredAsync(HttpResponseMessage httpResponseMessage, CancellationToken ct)
         {
             //check status code
             //this block will determine if operation is successful and can proceed
@@ -327,7 +262,7 @@ namespace Gizmo.Web.Api.Clients
         /// <param name="method">Request method.</param>
         /// <param name="content">Optional request http content.</param>
         /// <returns>Http request message.</returns>
-        protected HttpRequestMessage CreateHttpRequestMessage(Uri uri, HttpMethod method, HttpContent? content = default)
+        private HttpRequestMessage CreateHttpRequestMessage(Uri uri, HttpMethod method, HttpContent? content = default)
         {
             //create request message with desired content
             var requestMessage = new HttpRequestMessage(method, uri) { Content = content };
@@ -346,7 +281,7 @@ namespace Gizmo.Web.Api.Clients
         /// Throws appropriate exception based on web api response object.
         /// </summary>
         /// <param name="errorResponse">Web api response object.</param>
-        protected virtual void ThrowExceptionForResponse(WebApiErrorResponse errorResponse)
+        private void ThrowExceptionForResponse(WebApiErrorResponse errorResponse)
         {
             if (errorResponse == null)
                 throw new ArgumentNullException(nameof(errorResponse));
@@ -361,25 +296,21 @@ namespace Gizmo.Web.Api.Clients
                 errorResponse.Errors);
         } 
 
-        #endregion
-
-        #region SERIALIZATION
-
         /// <summary>
         /// Creates appropriate Http Content based on current client options.
         /// </summary>
-        /// <param name="obj">Content object.</param>
+        /// <param name="data">Content object.</param>
         /// <returns>HttpContent.</returns>
-        protected ValueTask<HttpContent> CreateContentAsync<T>(T obj, CancellationToken ct)
+        private ValueTask<HttpContent> CreateContentAsync<T>(T? data, CancellationToken ct)
         {
             //allow null object , this will be represented with empty content
-            if (obj == null)
+            if (data == null)
                 return new ValueTask<HttpContent>();
 
             try
             {
                 //create the http content with current serializer
-                return Serializer.CreateContentAsync(obj, default, ct);
+                return Serializer.CreateContentAsync(data, null, ct);
             }
             catch
             {
