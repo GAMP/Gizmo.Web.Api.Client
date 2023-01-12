@@ -1,4 +1,6 @@
 ﻿using Gizmo.Web.Api.Models;
+using Gizmo.Web.Api.Models.Abstractions.Models.RequestParameters;
+
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 using System;
@@ -41,10 +43,7 @@ namespace Gizmo.Web.Api.Clients
         /// <summary>
         /// Gets web client options.
         /// </summary>
-        public IOptions<WebApiClientOptions> Options
-        {
-            get;
-        }
+        public IOptions<WebApiClientOptions> Options { get; }
 
         /// <summary>
         /// Gets payload serializer provider.
@@ -86,30 +85,29 @@ namespace Gizmo.Web.Api.Clients
         {
             return CreateRequestUrl(routeParameters, default(IUrlQueryParameters));
         }
-
-        protected virtual string CreateRequestUrlWithQueryParameters(string queryParameters)
-        {
-            return CreateRequestUrl(null, queryParameters);
-        }
-
-        protected virtual string CreateRequestUrl(IUrlRouteParameters routeParameters)
-        {
-            return CreateRequestUrl(routeParameters, null);
-        }
-
-        protected virtual string CreateRequestUrl(IUrlQueryParameters queryParameters)
-        {
-            return CreateRequestUrl(default(IUrlRouteParameters), queryParameters);
-        }
-
+       
         protected virtual string CreateRequestUrl(string routeParameters, IUrlQueryParameters queryParameters)
         {
             return CreateRequestUrl(routeParameters, ParameterGenerator.Generate(queryParameters));
         }
 
-        protected virtual string CreateRequestUrl(IUrlRouteParameters routeParameters, IUrlQueryParameters queryParameters)
+        protected virtual Uri CreateRequestUri(IRequestParameters requestParameters)
         {
-            return CreateRequestUrl(ParameterGenerator.Generate(routeParameters), ParameterGenerator.Generate(queryParameters));
+            var routeAttribute = GetType().GetCustomAttribute<WebApiRouteAttribute>();
+            
+            if (routeAttribute == null)
+                throw new ArgumentNullException("Route attribute is not specified for the client.", nameof(routeAttribute));
+
+            var uriBuilder = new UriBuilder(HttpClient.BaseAddress.AbsoluteUri);
+
+            if (requestParameters.Query != null)
+                uriBuilder.Query = requestParameters.Query;
+
+            uriBuilder.Path = requestParameters.Path != null
+                ? routeAttribute.Route + '/' + requestParameters.Path
+                : routeAttribute.Route;
+
+            return uriBuilder.Uri;
         }
 
         public virtual string CreateRequestUrl()
@@ -142,45 +140,20 @@ namespace Gizmo.Web.Api.Clients
 
         #endregion
 
-        #region PRIVATE FUNCTIONS
-
-        /// <summary>
-        /// Awaits the spcified web api http function and returns its result.
-        /// </summary>
-        /// <typeparam name="TResult">Result type.</typeparam>
-        /// <param name="task">Web api http function task.</param>
-        /// <returns>Function result.</returns>
-        private async Task<TResult> AwaitWebApiResultAsync<TResult>(Task<WebApiResponse<TResult>> task)
-        {
-            var webApiResult = await task;
-            return webApiResult.Result;
-        }
-
-        #endregion
-
-        //TODO: but this is not virtual
-        #region PROTECTED VIRTUAL
+        #region HTTP METHODS
 
         #region GET
-
-        protected Task<TResult> GetAsync<TResult>(IUrlParameters parameters, CancellationToken ct)
+        protected async Task<TResult> GetAsync<TResult>(IRequestParameters parameters, CancellationToken ct)
         {
-            return GetAsync<TResult>(CreateRequestUrl(parameters as IUrlRouteParameters, parameters as IUrlQueryParameters), ct);
+            var uri = CreateRequestUri(parameters);
+
+            var response = await GetResultAsync<WebApiResponse<TResult>>(uri, ct);
+
+            return response.Result;
         }
-
-        protected Task<TResult> GetAsync<TResult>(string requestUri, CancellationToken ct = default)
+        private async Task<TResult> GetResultAsync<TResult>(Uri uri, CancellationToken ct = default)
         {
-            return AwaitWebApiResultAsync(GetWebApiResultAsync<TResult>(requestUri, ct));
-        }
-
-        protected Task<WebApiResponse<TResult>> GetWebApiResultAsync<TResult>(string requestUri, CancellationToken ct = default)
-        {
-            return GetResultAsync<WebApiResponse<TResult>>(requestUri, ct);
-        }
-
-        protected async Task<TResult> GetResultAsync<TResult>(string requestUri, CancellationToken ct = default)
-        {
-            using (var httpMessage = CreateHttpRequestMessage(requestUri, HttpMethod.Get))
+            using (var httpMessage = CreateHttpRequestMessage(uri, HttpMethod.Get))
             {
                 using (var responseMessage = await HttpClient.SendAsync(httpMessage, HttpCompletionOption.ResponseHeadersRead, ct).ConfigureAwait(false))
                 {
@@ -188,48 +161,23 @@ namespace Gizmo.Web.Api.Clients
                 }
             }
         }
-
-        protected async Task<TResult> GetResultAsync<TResult>(string requestUri, HttpContent content, CancellationToken ct = default)
-        {
-            using (var httpMessage = CreateHttpRequestMessage(requestUri, HttpMethod.Get, content))
-            {
-                using (var responseMessage = await HttpClient.SendAsync(httpMessage, HttpCompletionOption.ResponseHeadersRead, ct).ConfigureAwait(false))
-                {
-                    return await GetHttpMessageResultAsync<TResult>(responseMessage, ct);
-                }
-            }
-        }
-
         #endregion
 
         #region PUT
-
-        protected Task<TResult> PutAsync<TResult>(IUrlParameters parameters, object content, CancellationToken ct = default)
+        protected async Task<TResult> PutAsync<TResult>(IRequestParameters parameters, object content, CancellationToken ct = default)
         {
-            return PutAsync<TResult>(CreateRequestUrl(parameters as IUrlRouteParameters, parameters as IUrlQueryParameters), content, ct);
-        }
+            var uri = CreateRequestUri(parameters);
 
-        protected async Task<TResult> PutAsync<TResult>(string requestUri, object content, CancellationToken ct = default)
-        {
             using (var httpContent = await CreateContentAsync(content, ct))
             {
-                return await AwaitWebApiResultAsync(PutWebApiResultAsync<TResult>(requestUri, httpContent, ct));
+                var response = await PutResultAsync<WebApiResponse<TResult>>(uri, httpContent, ct);
+                
+                return response.Result;
             }
         }
-
-        protected Task<TResult> PutAsync<TResult>(string requestUri, HttpContent content, CancellationToken ct = default)
+        private async Task<TResult> PutResultAsync<TResult>(Uri uri, HttpContent content, CancellationToken ct = default)
         {
-            return AwaitWebApiResultAsync(PutWebApiResultAsync<TResult>(requestUri, content, ct));
-        }
-
-        protected Task<WebApiResponse<TResult>> PutWebApiResultAsync<TResult>(string requestUri, HttpContent content, CancellationToken ct = default)
-        {
-            return PutResultAsync<WebApiResponse<TResult>>(requestUri, content, ct);
-        }
-
-        protected async Task<TResult> PutResultAsync<TResult>(string requestUri, HttpContent content, CancellationToken ct = default)
-        {
-            using (var httpMessage = CreateHttpRequestMessage(requestUri, HttpMethod.Put, content))
+            using (var httpMessage = CreateHttpRequestMessage(uri, HttpMethod.Put, content))
             {
                 using (var responseMessage = await HttpClient.SendAsync(httpMessage, HttpCompletionOption.ResponseHeadersRead, ct).ConfigureAwait(false))
                 {
@@ -237,37 +185,23 @@ namespace Gizmo.Web.Api.Clients
                 }
             }
         }
-
         #endregion
 
         #region POST
-
-        protected Task<TResult> PostAsync<TResult>(IUrlParameters parameters, object content, CancellationToken ct = default)
+        protected async Task<TResult> PostAsync<TResult>(IRequestParameters parameters, object content, CancellationToken ct = default)
         {
-            return PostAsync<TResult>(CreateRequestUrl(parameters as IUrlRouteParameters, parameters as IUrlQueryParameters), content, ct);
-        }
+            var uri = CreateRequestUri(parameters);
 
-        protected async Task<TResult> PostAsync<TResult>(string requestUri, object content, CancellationToken ct = default)
-        {
             using (var httpContent = await CreateContentAsync(content, ct))
             {
-                return await AwaitWebApiResultAsync(PostWebApiResultAsync<TResult>(requestUri, httpContent, ct));
+                var response = await PostResultAsync<WebApiResponse<TResult>>(uri, httpContent, ct);
+
+                return response.Result;
             }
         }
-
-        protected Task<TResult> PostAsync<TResult>(string requestUri, HttpContent content, CancellationToken ct = default)
+        private async Task<TResult> PostResultAsync<TResult>(Uri uri, HttpContent content, CancellationToken ct = default)
         {
-            return AwaitWebApiResultAsync(PostWebApiResultAsync<TResult>(requestUri, content, ct));
-        }
-
-        protected Task<WebApiResponse<TResult>> PostWebApiResultAsync<TResult>(string requestUri, HttpContent content, CancellationToken ct = default)
-        {
-            return PostResultAsync<WebApiResponse<TResult>>(requestUri, content, ct);
-        }
-
-        protected async Task<TResult> PostResultAsync<TResult>(string requestUri, HttpContent content, CancellationToken ct = default)
-        {
-            using (var httpMessage = CreateHttpRequestMessage(requestUri, HttpMethod.Post, content))
+            using (var httpMessage = CreateHttpRequestMessage(uri, HttpMethod.Post, content))
             {
                 using (var responseMessage = await HttpClient.SendAsync(httpMessage, HttpCompletionOption.ResponseHeadersRead, ct).ConfigureAwait(false))
                 {
@@ -275,24 +209,20 @@ namespace Gizmo.Web.Api.Clients
                 }
             }
         }
-
         #endregion
 
         #region DELETE
-
-        protected Task<TResult> DeleteAsync<TResult>(string requestUri, CancellationToken ct = default)
+        protected async Task<TResult> DeleteAsync<TResult>(IRequestParameters parameters, CancellationToken ct = default)
         {
-            return AwaitWebApiResultAsync(DeleteWebApiResultAsync<TResult>(requestUri, ct));
+            var uri = CreateRequestUri(parameters);
+
+            var response = await DeleteResultAsync<WebApiResponse<TResult>>(uri, ct);
+
+            return response.Result;
         }
-
-        protected Task<WebApiResponse<TResult>> DeleteWebApiResultAsync<TResult>(string requestUri, CancellationToken ct = default)
+        private async Task<TResult> DeleteResultAsync<TResult>(Uri uri, CancellationToken ct = default)
         {
-            return DeleteResultAsync<WebApiResponse<TResult>>(requestUri, ct);
-        }
-
-        protected async Task<TResult> DeleteResultAsync<TResult>(string requestUri, CancellationToken ct = default)
-        {
-            using (var httpMessage = CreateHttpRequestMessage(requestUri, HttpMethod.Delete))
+            using (var httpMessage = CreateHttpRequestMessage(uri, HttpMethod.Delete))
             {
                 using (var responseMessage = await HttpClient.SendAsync(httpMessage, HttpCompletionOption.ResponseHeadersRead, ct).ConfigureAwait(false))
                 {
@@ -300,11 +230,12 @@ namespace Gizmo.Web.Api.Clients
                 }
             }
         }
+        #endregion
 
         #endregion
 
         #region HELPER METHODS
-        
+
         /// <summary>
         /// Gets the result object from specified response message.
         /// </summary>
@@ -392,14 +323,14 @@ namespace Gizmo.Web.Api.Clients
         /// <summary>
         /// Creates http request message.
         /// </summary>
-        /// <param name="requestUrl">Request url.</param>
+        /// <param name="uri">Request url.</param>
         /// <param name="method">Request method.</param>
         /// <param name="content">Optional request http content.</param>
         /// <returns>Http request message.</returns>
-        protected HttpRequestMessage CreateHttpRequestMessage(string requestUrl, HttpMethod method, HttpContent content = default)
+        protected HttpRequestMessage CreateHttpRequestMessage(Uri uri, HttpMethod method, HttpContent? content = default)
         {
             //create request message with desired content
-            var requestMessage = new HttpRequestMessage(method, requestUrl) { Content = content };
+            var requestMessage = new HttpRequestMessage(method, uri) { Content = content };
 
             //get default accept header value
             var defaultAcceptHeader = Serializer.DefaultAcceptHeader;
@@ -429,8 +360,6 @@ namespace Gizmo.Web.Api.Clients
                 errorResponse.ErrorCodeReadable,
                 errorResponse.Errors);
         } 
-
-        #endregion
 
         #endregion
 

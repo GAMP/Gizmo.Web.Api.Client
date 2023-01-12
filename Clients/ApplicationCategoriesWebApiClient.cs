@@ -1,4 +1,5 @@
 ﻿using Gizmo.Web.Api.Models;
+using Gizmo.Web.Api.Models.Abstractions.Models.RequestParameters;
 
 using Microsoft.Extensions.Options;
 
@@ -19,29 +20,24 @@ namespace Gizmo.Web.Api.Clients
         #endregion
 
         #region FUNCTIONS
-        public Task<PagedList<ApplicationCategoryModel>> GetAsync(ApplicationCategoriesFilter filter, CancellationToken ct = default)
+        public Task<PagedList<ApplicationCategoryModel>> GetAsync(IRequestParameters parameters, CancellationToken ct = default)
         {
-            return GetAsync<PagedList<ApplicationCategoryModel>>(filter, ct);
+            return GetAsync<PagedList<ApplicationCategoryModel>>(parameters, ct);
         }
 
-        public Task<CreateResult> CreateAsync(ApplicationCategoryModelCreate applicationCategoryModelCreate, CancellationToken ct = default)
+        public Task<CreateResult> CreateAsync(IRequestParameters parameters, ApplicationCategoryModelCreate model, CancellationToken ct = default)
         {
-            return PostAsync<CreateResult>(CreateRequestUrl(), applicationCategoryModelCreate, ct);
+            return PostAsync<CreateResult>(parameters, model, ct);
         }
 
-        public Task<UpdateResult> UpdateAsync(ApplicationCategoryModelUpdate applicationCategoryModelUpdate, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateAsync(IRequestParameters parameters, ApplicationCategoryModelUpdate model, CancellationToken ct = default)
         {
-            return PutAsync<UpdateResult>(CreateRequestUrl(), applicationCategoryModelUpdate, ct);
+            return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
-        public Task<ApplicationCategoryModel> GetByIdAsync(int id, CancellationToken ct = default)
+        public Task<DeleteResult> DeleteAsync(IRequestParameters parameters, CancellationToken ct = default)
         {
-            return GetAsync<ApplicationCategoryModel>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
-        }
-
-        public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
-        {
-            return DeleteAsync<DeleteResult>(CreateRequestUrlWithRouteParameters($"{id}"), ct);
+            return DeleteAsync<DeleteResult>(parameters, ct);
         }
 
         #endregion
