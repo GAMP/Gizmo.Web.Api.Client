@@ -147,11 +147,11 @@ namespace Gizmo.Web.Api.Clients
         #endregion
 
         #region HTTP METHOD HELPERS
-        
+
         protected Uri CreateRequestUri(IUriParameters requestParameters)
         {
             var routeAttribute = GetType().GetCustomAttribute<WebApiRouteAttribute>();
-            
+
             if (routeAttribute == null)
                 throw new ArgumentNullException("Route attribute is not specified for the client.", nameof(routeAttribute));
 
@@ -186,14 +186,12 @@ namespace Gizmo.Web.Api.Clients
             try
             {
                 //create content stream
-                using (var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync())
-                {
-                    //get our content headers
-                    var contentHeaders = httpResponseMessage.Content.Headers;
+                using var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync();
+                //get our content headers
+                var contentHeaders = httpResponseMessage.Content.Headers;
 
-                    //deserialize the response
-                    return await Serializer.DeserializeAsync<TResult>(contentStream, ct);
-                }
+                //deserialize the response
+                return await Serializer.DeserializeAsync<TResult>(contentStream, ct);
             }
             catch
             {
@@ -288,7 +286,7 @@ namespace Gizmo.Web.Api.Clients
                 errorResponse.ErrorCode,
                 errorResponse.ErrorCodeReadable,
                 errorResponse.Errors);
-        } 
+        }
 
         /// <summary>
         /// Creates appropriate Http Content based on current client options.
