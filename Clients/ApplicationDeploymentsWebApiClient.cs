@@ -19,7 +19,7 @@ namespace Gizmo.Web.Api.Clients
         #endregion
 
         #region FUNCTIONS
-        
+
         public Task<PagedList<ApplicationDeploymentModel>> GetAsync(ApplicationDeploymentsFilter filter, CancellationToken ct = default)
         {
             var parameters = new UriParameters(filter);

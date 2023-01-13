@@ -33,28 +33,28 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<OrderModel>(parameters, ct);
         }
 
-        public Task<OrderModel> GetByIdAsync(int id, ModelFilterOptions filter, CancellationToken ct = default)
+        public Task<OrderModel> GetByIdAsync(int id, ModelFilterOptions options, CancellationToken ct = default)
         {
-            var parameters = new UriParameters(new object[] { id }, filter);
+            var parameters = new UriParameters(new object[] { id }, options);
             return GetAsync<OrderModel>(parameters, ct);
         }
 
-        public Task<OrderCalculatedModel> CalculateUserOrderPriceAsync(int id, OrderCalculateModelOptions filter, CancellationToken ct = default)
+        public Task<OrderCalculatedModel> CalculateUserOrderPriceAsync(int id, OrderCalculateModelOptions options, CancellationToken ct = default)
         {
-            var parameters = new UriParameters(new object[] { "calculate", "user", id }, filter);
+            var parameters = new UriParameters(new object[] { "calculate", "user", id }, options);
             return GetAsync<OrderCalculatedModel>(parameters, ct);
         }
 
-        public Task<OrderCalculatedModel> CalculateGuestOrderPriceAsync(OrderCalculateModelOptions filter, CancellationToken ct = default)
+        public Task<OrderCalculatedModel> CalculateGuestOrderPriceAsync(OrderCalculateModelOptions options, CancellationToken ct = default)
         {
-            var parameters = new UriParameters(new object[] { "calculate", "guest" }, filter);
+            var parameters = new UriParameters(new object[] { "calculate", "guest" }, options);
             return GetAsync<OrderCalculatedModel>(parameters, ct);
         }
 
-        public Task<CreateResult> CreateUserOrderAsync(int id, OrderCalculatePaymentModelOptions order, CancellationToken ct = default)
+        public Task<CreateResult> CreateUserOrderAsync(int id, OrderCalculatePaymentModelOptions model, CancellationToken ct = default)
         {
             var parameters = new UriParameters(new object[] { "user", id });
-            return PostAsync<CreateResult>(parameters, order, ct);
+            return PostAsync<CreateResult>(parameters, model, ct);
         }
 
         public Task<CreateResult> InvoiceUserOrderAsync(int id, InvoiceOrderCalculateModelOptions model, CancellationToken ct = default)
