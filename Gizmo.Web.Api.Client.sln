@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gizmo.Web.Api.Client", "Gizmo.Web.Api.Client.csproj", "{C19E7FE8-7FAA-4373-8E36-CDA9926686DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gizmo.Web.Api.Client", "Gizmo.Web.Api.Client\Gizmo.Web.Api.Client.csproj", "{C19E7FE8-7FAA-4373-8E36-CDA9926686DE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gizmo.Web.Api.Models", "Submodules\Gizmo.Web.Api.Models\Gizmo.Web.Api.Models.csproj", "{374560FB-39D8-427A-BE67-E7F50DEDC4A9}"
 EndProject
