@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gizmo.Web.Api.Client", "Giz
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gizmo.Web.Api.Models", "Submodules\Gizmo.Web.Api.Models\Gizmo.Web.Api.Models.csproj", "{374560FB-39D8-427A-BE67-E7F50DEDC4A9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gizmo.Shared", "Submodules\Gizmo.Web.Api.Models\Submodules\Gizmo.Shared\Gizmo.Shared.csproj", "{DF5608F4-53E8-4B94-8851-CB87B50EBA11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gizmo.Shared", "Submodules\Gizmo.Shared\Gizmo.Shared.csproj", "{C92FC3AF-05B7-4373-9412-336E97468F7A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,14 +33,14 @@ Global
 		{374560FB-39D8-427A-BE67-E7F50DEDC4A9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{374560FB-39D8-427A-BE67-E7F50DEDC4A9}.Release|x64.ActiveCfg = Release|x64
 		{374560FB-39D8-427A-BE67-E7F50DEDC4A9}.Release|x64.Build.0 = Release|x64
-		{DF5608F4-53E8-4B94-8851-CB87B50EBA11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DF5608F4-53E8-4B94-8851-CB87B50EBA11}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DF5608F4-53E8-4B94-8851-CB87B50EBA11}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{DF5608F4-53E8-4B94-8851-CB87B50EBA11}.Debug|x64.Build.0 = Debug|Any CPU
-		{DF5608F4-53E8-4B94-8851-CB87B50EBA11}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DF5608F4-53E8-4B94-8851-CB87B50EBA11}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DF5608F4-53E8-4B94-8851-CB87B50EBA11}.Release|x64.ActiveCfg = Release|Any CPU
-		{DF5608F4-53E8-4B94-8851-CB87B50EBA11}.Release|x64.Build.0 = Release|Any CPU
+		{C92FC3AF-05B7-4373-9412-336E97468F7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C92FC3AF-05B7-4373-9412-336E97468F7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C92FC3AF-05B7-4373-9412-336E97468F7A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C92FC3AF-05B7-4373-9412-336E97468F7A}.Debug|x64.Build.0 = Debug|Any CPU
+		{C92FC3AF-05B7-4373-9412-336E97468F7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C92FC3AF-05B7-4373-9412-336E97468F7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C92FC3AF-05B7-4373-9412-336E97468F7A}.Release|x64.ActiveCfg = Release|Any CPU
+		{C92FC3AF-05B7-4373-9412-336E97468F7A}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
