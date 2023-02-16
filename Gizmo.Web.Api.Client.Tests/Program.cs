@@ -1,48 +1,44 @@
-﻿using Gizmo.Web.Api.Clients;
+﻿using System;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+
+using Gizmo.Web.Api.Clients;
 using Gizmo.Web.Api.Clients.Builder;
 using Gizmo.Web.Api.Models;
-
-using MessagePack;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-
 var host = CreateHostBuilder(args).Build();
 
 try
 {
-    var ordersClient = host.Services.GetRequiredService<OrdersWebApiClient>();
-    var hostsClient = host.Services.GetRequiredService<HostWebApiClient>();
+    var usersClient = host.Services.GetRequiredService<UsersWebApiClient>();
 
-    //var getResults = await hostsClient.GetAsync(new HostsFilter { Pagination = new() { Limit = 2 }});
-    var get2Results = await ordersClient.CalculateUserOrderPriceAsync(1, new OrderCalculateModelOptions() 
-    { 
-        OrderLines = new List<OrderLineModelOptions> 
-        { 
-            new() 
-            {
-                CustomPrice = 42 
-            },
-            new()
-            {
-                CustomPrice = 44,
-                Product = new ProductLineModel()
-                {
-                    ProductId = 2
-                }
-            }
-        }
-    });
-    var createResult = await ordersClient.CreateUserOrderAsync(1, new());
-    var updateResult = await ordersClient.SetOrderLineDeliveredQuantityAsync(1,2,new());
-    var deleteResult = await ordersClient.InvoiceOrderAsync(1);
+    //// Start pulling data sorted by Id in ascending order
+    //PaginationCursor usersCursor = null;
+    //// Start pulling data sorted by Sex column (property) in ascending order
+    //PaginationCursor usersCursor = new() { Name = "sex" };
+    //// Start pulling data sorted by BirthDate column (property) in ascending order
+    //PaginationCursor usersCursor = new() { Name = "birthdate" };
+    //// Start pulling data sorted by Id column (property) in descending order
+    //PaginationCursor usersCursor = new() { Id = int.MaxValue, Name = "id", IsForward = false };
+    // Start pulling data sorted by Sex column (property) in descending order
+    //PaginationCursor usersFilterCursor = new() { Id = int.MaxValue, Name = "sex", IsForward = false };
+    
+    //Configuring filter for the request
+    UsersFilter filter = new() { Pagination = new() { Limit = 30, Cursor = new() { Id = int.MaxValue, Name = "sex", IsForward = false } } };
+
+    // Getting the first data chunk
+    var pagedData_1 = await usersClient.GetAsync(filter);
+
+    // When needs the next data chunk
+    filter.Pagination.Cursor = filter.Pagination.Cursor.IsForward ? pagedData_1.NextCursor : pagedData_1.PrevCursor;
+
+    // Getting the next data chunk
+    var pagedData_2 = await usersClient.GetAsync(filter);
 }
 catch (Exception ex)
 {
@@ -73,15 +69,15 @@ static IHostBuilder CreateHostBuilder(string[] args) => Host.CreateDefaultBuilde
           });
 
           services.AddWebApiClient("secure", _ => { })
-          .WithMessagePackSerialization(options =>
-          {
-              options.MessagePackSerializerOptions = MessagePackSerializerOptions.Standard
-              .WithResolver(MessagePack.Resolvers.StandardResolver.Instance)
-              .WithSecurity(MessagePackSecurity.UntrustedData);
-          });
-          //.WithJsonSerialization(options =>
+          //.WithMessagePackSerialization(options =>
           //{
-          //    options.JsonSerializerOptions.AllowTrailingCommas = true;
-          //    options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+          //    options.MessagePackSerializerOptions = MessagePackSerializerOptions.Standard
+          //    .WithResolver(MessagePack.Resolvers.StandardResolver.Instance)
+          //    .WithSecurity(MessagePackSecurity.UntrustedData);
           //});
+          .WithJsonSerialization(options =>
+          {
+              options.JsonSerializerOptions.AllowTrailingCommas = true;
+              options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+          });
       });
