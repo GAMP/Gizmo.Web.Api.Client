@@ -29,16 +29,22 @@ try
     //PaginationCursor usersFilterCursor = new() { Id = int.MaxValue, Name = "sex", IsForward = false };
     
     //Configuring filter for the request
-    UsersFilter filter = new() { Pagination = new() { Limit = 30, Cursor = new() { Id = int.MaxValue, Name = "sex", IsForward = false } } };
+    UsersFilter filter = new() { Pagination = new() { Limit = 5, Cursor = new() { Name = "id" } } };
 
     // Getting the first data chunk
-    var pagedData_1 = await usersClient.GetAsync(filter);
+    var chunk_1 = await usersClient.GetAsync(filter);
 
     // When needs the next data chunk
-    filter.Pagination.Cursor = filter.Pagination.Cursor.IsForward ? pagedData_1.NextCursor : pagedData_1.PrevCursor;
+    chunk_1.SetNextCursor(filter);
 
     // Getting the next data chunk
-    var pagedData_2 = await usersClient.GetAsync(filter);
+    var chunk_2 = await usersClient.GetAsync(filter);
+
+    // When needs the previous data chunk
+    chunk_2.SetPrevCursor(filter);
+
+    // Getting the previous data chunk
+    var chunk_3 = await usersClient.GetAsync(filter);
 }
 catch (Exception ex)
 {
