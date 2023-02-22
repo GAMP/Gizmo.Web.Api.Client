@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -17,34 +18,17 @@ try
 {
     var usersClient = host.Services.GetRequiredService<UsersWebApiClient>();
 
-    //// Start pulling data sorted by Id in ascending order
-    //PaginationCursor usersCursor = null;
-    //// Start pulling data sorted by Sex column (property) in ascending order
-    //PaginationCursor usersCursor = new() { Name = "sex" };
-    //// Start pulling data sorted by BirthDate column (property) in ascending order
-    //PaginationCursor usersCursor = new() { Name = "birthdate" };
-    //// Start pulling data sorted by Id column (property) in descending order
-    //PaginationCursor usersCursor = new() { Id = int.MaxValue, Name = "id", IsForward = false };
-    // Start pulling data sorted by Sex column (property) in descending order
-    //PaginationCursor usersFilterCursor = new() { Id = int.MaxValue, Name = "sex", IsForward = false };
+    UsersFilter filter = new() { Pagination = new() { Limit = 5, Cursor = new() { IsForward = false, Name = "sex" } } };
+    PagedList<UserModel> result = new(Enumerable.Empty<UserModel>());
+
+    result.SetCursor(filter);
+    result = await usersClient.GetAsync(filter);
     
-    //Configuring filter for the request
-    UsersFilter filter = new() { Pagination = new() { Limit = 5, Cursor = new() { Name = "id" } } };
-
-    // Getting the first data chunk
-    var chunk_1 = await usersClient.GetAsync(filter);
-
-    // When needs the next data chunk
-    chunk_1.SetNextCursor(filter);
-
-    // Getting the next data chunk
-    var chunk_2 = await usersClient.GetAsync(filter);
-
-    // When needs the previous data chunk
-    chunk_2.SetPrevCursor(filter);
-
-    // Getting the previous data chunk
-    var chunk_3 = await usersClient.GetAsync(filter);
+    result.SetCursor(filter);
+    result = await usersClient.GetAsync(filter);
+    
+    result.SetCursor(filter);
+    result = await usersClient.GetAsync(filter);
 }
 catch (Exception ex)
 {
