@@ -23,10 +23,10 @@ try
 
     result.SetCursor(filter);
     result = await usersClient.GetAsync(filter);
-    
+
     result.SetCursor(filter);
     result = await usersClient.GetAsync(filter);
-    
+
     result.SetCursor(filter);
     result = await usersClient.GetAsync(filter);
 }
