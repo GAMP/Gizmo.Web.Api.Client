@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace Gizmo.Web.Api.Clients
 {
+
+    //TODO: Return internal
     /// <summary>
     /// Json payload serializer.
     /// </summary>

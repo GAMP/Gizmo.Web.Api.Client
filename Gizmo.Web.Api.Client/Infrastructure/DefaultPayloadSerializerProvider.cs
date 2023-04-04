@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace Gizmo.Web.Api.Clients
 {
+    //TODO: Return internal
     public class DefaultPayloadSerializerProvider : IPayloadSerializerProvider
     {
         #region CONSTRUCTOR
