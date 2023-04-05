@@ -4,8 +4,7 @@ using System.Linq;
 
 namespace Gizmo.Web.Api.Clients
 {
-    //TODO: Return internal
-    public class DefaultPayloadSerializerProvider : IPayloadSerializerProvider
+    internal class DefaultPayloadSerializerProvider : IPayloadSerializerProvider
     {
         #region CONSTRUCTOR
         public DefaultPayloadSerializerProvider(IEnumerable<IPayloadSerializer> payloadSerializers)
@@ -33,14 +32,14 @@ namespace Gizmo.Web.Api.Clients
         #endregion
 
         #region PROPERTIES
-        
+
         /// <summary>
         /// Gets default serializer name.
         /// </summary>
         public string DefaultSerializerName
         {
             get { return _defaultSerializerName; }
-        } 
+        }
 
         /// <summary>
         /// Gets default serializer.
@@ -53,14 +52,14 @@ namespace Gizmo.Web.Api.Clients
         #endregion
 
         #region FUNCTIONS
-        
+
         public IPayloadSerializer? GetSerializer(string name)
         {
             if (_serializers.TryGetValue(name, out var serializer))
                 return serializer;
 
             return null;
-        } 
+        }
 
         #endregion
     }

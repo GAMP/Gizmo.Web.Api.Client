@@ -1,19 +1,17 @@
-﻿using Microsoft.Extensions.Options;
-using System.IO;
+﻿using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 
 namespace Gizmo.Web.Api.Clients
 {
-
-    //TODO: Return internal
     /// <summary>
     /// Json payload serializer.
     /// </summary>
-    public class JsonPayloadSerializer : IPayloadSerializer
+    internal class JsonPayloadSerializer : IPayloadSerializer
     {
         #region CONSTRUCTOR
         public JsonPayloadSerializer(IOptions<JsonPayloadSerializerOptions> options)
@@ -70,7 +68,7 @@ namespace Gizmo.Web.Api.Clients
 
             //return newly created http content
             return httpContent;
-        } 
+        }
 
         #endregion
     }
