@@ -1,6 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
 
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+
+using Polly;
 
 namespace Gizmo.Web.Api.Clients.Builder
 {
@@ -17,23 +23,80 @@ namespace Gizmo.Web.Api.Clients.Builder
         /// <param name="services">Services collection.</param>
         public WebApiClientBuilder(IServiceCollection services, IEnumerable<IHttpClientBuilder> httpClientBuilders)
         {
-            Services = services;
-            HttpClientBuilders = httpClientBuilders;
+            _services = services;
+            _httpClientBuilders = httpClientBuilders;
         }
 
         #endregion
 
-        #region PROPERTIES
+        #region FEILDS
 
-        /// <summary>
-        /// Gets services collection.
-        /// </summary>
-        public IServiceCollection Services { get; }
+        private readonly IServiceCollection _services;
+        private readonly IEnumerable<IHttpClientBuilder> _httpClientBuilders;
 
-        /// <summary>
-        /// Gets http client builders.
-        /// </summary>
-        public IEnumerable<IHttpClientBuilder> HttpClientBuilders { get; }
+        #endregion
+
+        #region FUNTIONS
+
+        public IWebApiClientBuilder WithJsonSerialization()
+        {
+            return WithJsonSerialization(_ => { });
+        }
+
+        public IWebApiClientBuilder WithJsonSerialization(Action<JsonPayloadSerializerOptions> configure)
+        {
+            _services.TryAddEnumerable(ServiceDescriptor.Singleton<IPayloadSerializer, JsonPayloadSerializer>());
+            _services.Configure(configure);
+            return this;
+        }
+
+        public IWebApiClientBuilder WithMessagePackSerialization()
+        {
+            return WithMessagePackSerialization(_ => { });
+        }
+
+        public IWebApiClientBuilder WithMessagePackSerialization(Action<MessagePackPayloadSerializerOptions> configure)
+        {
+            _services.TryAddEnumerable(ServiceDescriptor.Singleton<IPayloadSerializer, MessagePackPayloadSerializer>());
+            _services.Configure(configure);
+            return this;
+        }
+
+        public IWebApiClientBuilder WithMessageHandler<THandler>() where THandler : DelegatingHandler
+        {
+            foreach(var httpClient in _httpClientBuilders)
+                httpClient.AddHttpMessageHandler<THandler>();
+
+            return this;
+        }
+        
+        public IWebApiClientBuilder WithAdditionalOptions(Action<WebApiClientOptions> options)
+        {
+            _services.Configure(options);
+            return this;
+        }
+
+        public IWebApiClientBuilder WithRetryPolicyHandler(int retryCount)
+        {
+            var retryPolicy = Policy
+                    .HandleResult<HttpResponseMessage>(m => m.StatusCode == HttpStatusCode.Unauthorized && m.Headers.Contains("token-expired"))
+                    .WaitAndRetryAsync(retryCount, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+
+            foreach (var httpClient in _httpClientBuilders)
+                httpClient.AddPolicyHandler(retryPolicy);
+
+            return this;
+        }
+
+        public IWebApiClientBuilder WithTimeoutPolicyHandler(int timeoutSeconds)
+        {
+            var timeoutPolicy = Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(timeoutSeconds));
+
+            foreach (var httpClient in _httpClientBuilders)
+                httpClient.AddPolicyHandler(timeoutPolicy);
+
+            return this;
+        }
 
         #endregion
     }

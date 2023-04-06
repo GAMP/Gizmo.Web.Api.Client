@@ -19,7 +19,7 @@ namespace Gizmo.Web.Api.Clients.Builder
         /// <param name="clientName">Registered http client name.</param>
         /// <param name="configureClient">Http client configuration.</param>
         /// <returns>Web api client builder.</returns>
-        public static IWebApiClientBuilder AddWebApiClients(this IServiceCollection services, Action<IServiceProvider, HttpClient> configureClient, Action<WebApiClientOptions> configureOptions)
+        public static IWebApiClientBuilder AddWebApiClients(this IServiceCollection services, Action<IServiceProvider, HttpClient> configureClient)
         {
             //add payload serializer
             services.AddSingleton<IPayloadSerializerProvider, DefaultPayloadSerializerProvider>();
@@ -57,8 +57,6 @@ namespace Gizmo.Web.Api.Clients.Builder
                     httpClientBuilders.Add(httpClientBuilder);
                 }
             }
-
-            services.Configure(configureOptions);
 
             return new WebApiClientBuilder(services, httpClientBuilders);
         }

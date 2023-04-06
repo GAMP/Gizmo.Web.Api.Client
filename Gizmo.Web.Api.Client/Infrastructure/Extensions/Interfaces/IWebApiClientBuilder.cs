@@ -1,12 +1,17 @@
-﻿using System.Collections.Generic;
-
-using Microsoft.Extensions.DependencyInjection;
+﻿using System;
+using System.Net.Http;
 
 namespace Gizmo.Web.Api.Clients.Builder
 {
     public interface IWebApiClientBuilder
     {
-        IServiceCollection Services { get; }
-        IEnumerable<IHttpClientBuilder> HttpClientBuilders { get; }
+        IWebApiClientBuilder WithJsonSerialization();
+        IWebApiClientBuilder WithJsonSerialization(Action<JsonPayloadSerializerOptions> configure);
+        IWebApiClientBuilder WithMessagePackSerialization();
+        IWebApiClientBuilder WithMessagePackSerialization(Action<MessagePackPayloadSerializerOptions> configure);
+        IWebApiClientBuilder WithMessageHandler<THandler>() where THandler : DelegatingHandler;
+        IWebApiClientBuilder WithAdditionalOptions(Action<WebApiClientOptions> options);
+        IWebApiClientBuilder WithRetryPolicyHandler(int retryCount);
+        IWebApiClientBuilder WithTimeoutPolicyHandler(int timeoutSeconds);
     }
 }
