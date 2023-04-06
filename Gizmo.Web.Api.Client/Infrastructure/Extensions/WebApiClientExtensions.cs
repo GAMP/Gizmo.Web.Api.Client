@@ -1,8 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-using System;
-using System.Linq;
+﻿using System;
+using System.Net.Http;
 using System.Reflection;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Gizmo.Web.Api.Clients.Builder
 {
@@ -16,27 +15,23 @@ namespace Gizmo.Web.Api.Clients.Builder
         /// </summary>
         /// <param name="services">Service collection.</param>
         /// <param name="clientName">Registered http client name.</param>
-        /// <param name="configure">Configuration action.</param>
+        /// <param name="configureClient">Http client configuration.</param>
         /// <returns>Web api client builder.</returns>
-        public static IWebApiClientBuilder AddWebApiClient(this IServiceCollection services, string clientName, Action<WebApiClientOptions> configure)
+        public static IWebApiClientBuilder AddWebApiClient(this IServiceCollection services, string clientName, Action<IServiceProvider, HttpClient> configureClient, Action<WebApiClientOptions> configureOptions)
         {
-            if (services == null)
-                throw new ArgumentNullException(nameof(services));
-
             //add payload serializer
             services.AddSingleton<IPayloadSerializerProvider, DefaultPayloadSerializerProvider>();
 
             //find desired http client method
-            var httpMethod = typeof(HttpClientFactoryServiceCollectionExtensions)
-                .GetMethods(BindingFlags.Static | BindingFlags.Public)
-                .Where(mi => 
-                    mi.Name == nameof(HttpClientFactoryServiceCollectionExtensions.AddHttpClient) 
-                    && mi.IsGenericMethod 
-                    && mi.GetParameters().Length == 2)
-                .FirstOrDefault();
+            var httpMethod = Array.Find(typeof(HttpClientFactoryServiceCollectionExtensions).GetMethods(BindingFlags.Static | BindingFlags.Public),
+                    methodInfo =>
+                    methodInfo.Name == nameof(HttpClientFactoryServiceCollectionExtensions.AddHttpClient)
+                    && methodInfo.IsGenericMethod
+                    && methodInfo.GetParameters().Length == 3
+                    && methodInfo.GetParameters()[2].ParameterType == typeof(Action<IServiceProvider, HttpClient>));
 
             if (httpMethod == null)
-                throw new NotSupportedException();
+                throw new NotSupportedException("Unable to find AddHttpClient method.");
 
             //add each web api client
             foreach (var assemblyType in Assembly.GetExecutingAssembly().ExportedTypes)
@@ -51,16 +46,14 @@ namespace Gizmo.Web.Api.Clients.Builder
                 {
                     //invoke the method
                     httpMethod
-                        .MakeGenericMethod(new Type[] { assemblyType })
-                        .Invoke(null, new object[] { services, clientName });
+                        .MakeGenericMethod(assemblyType)
+                        .Invoke(null, new object[] { services, clientName, configureClient });
                 }
             }
 
-            //configure options
-            services.Configure(configure);
+            services.Configure(clientName, configureOptions);
 
-            //return builder
-            return new WebApiClientBuilder(services);
-        } 
+            return new WebApiClientBuilder(services, clientName);
+        }
     }
 }

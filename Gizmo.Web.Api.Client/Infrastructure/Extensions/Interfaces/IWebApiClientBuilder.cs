@@ -2,8 +2,7 @@
 
 namespace Gizmo.Web.Api.Clients.Builder
 {
-    public interface IWebApiClientBuilder
+    public interface IWebApiClientBuilder : IHttpClientBuilder
     {
-        IServiceCollection Services { get; }
     }
 }

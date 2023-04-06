@@ -10,7 +10,7 @@ namespace Gizmo.Web.Api.Clients.Builder
     public static class PayloadSerializerExtensions
     {
         #region FUNCTIONS
-        
+
         public static TBuilder WithJsonSerialization<TBuilder>(this TBuilder builder) where TBuilder : IWebApiClientBuilder
         {
             return WithJsonSerialization(builder, _ => { });
@@ -33,7 +33,7 @@ namespace Gizmo.Web.Api.Clients.Builder
             builder.Services.TryAddEnumerable(ServiceDescriptor.Singleton<IPayloadSerializer, MessagePackPayloadSerializer>());
             builder.Services.Configure(configure);
             return builder;
-        } 
+        }
 
         #endregion
     }
