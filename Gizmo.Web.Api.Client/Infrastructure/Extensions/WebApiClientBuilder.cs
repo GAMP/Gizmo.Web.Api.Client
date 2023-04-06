@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Collections.Generic;
+
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Gizmo.Web.Api.Clients.Builder
 {
@@ -13,10 +15,10 @@ namespace Gizmo.Web.Api.Clients.Builder
         /// Creates new instance.
         /// </summary>
         /// <param name="services">Services collection.</param>
-        public WebApiClientBuilder(IServiceCollection services, string clientName)
+        public WebApiClientBuilder(IServiceCollection services, IEnumerable<IHttpClientBuilder> httpClientBuilders)
         {
             Services = services;
-            Name = clientName;
+            HttpClientBuilders = httpClientBuilders;
         }
 
         #endregion
@@ -29,9 +31,9 @@ namespace Gizmo.Web.Api.Clients.Builder
         public IServiceCollection Services { get; }
 
         /// <summary>
-        /// Gets client name.
+        /// Gets http client builders.
         /// </summary>
-        public string Name { get; }
+        public IEnumerable<IHttpClientBuilder> HttpClientBuilders { get; }
 
         #endregion
     }

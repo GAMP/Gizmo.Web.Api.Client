@@ -9,7 +9,7 @@ using Microsoft.Extensions.Options;
 
 namespace Gizmo.Web.Api.Clients
 {
-    [WebApiRoute("auth/token")]
+    [WebApiRoute("auth")]
     public class AuthenticationWebApiClient : WebApiClientBase
     {
         #region CONSTRUCTOR
@@ -49,5 +49,6 @@ namespace Gizmo.Web.Api.Clients
     {
         public string Username { get; set; } = "admin";
         public string Password { get; set; } = "admin";
+        public bool UserToken { get; set; } = true;
     }
 }

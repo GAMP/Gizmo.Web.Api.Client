@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,7 +19,7 @@ namespace Gizmo.Web.Api.Clients.Builder
         /// <param name="clientName">Registered http client name.</param>
         /// <param name="configureClient">Http client configuration.</param>
         /// <returns>Web api client builder.</returns>
-        public static IWebApiClientBuilder AddWebApiClient(this IServiceCollection services, string clientName, Action<IServiceProvider, HttpClient> configureClient, Action<WebApiClientOptions> configureOptions)
+        public static IWebApiClientBuilder AddWebApiClients(this IServiceCollection services, Action<IServiceProvider, HttpClient> configureClient, Action<WebApiClientOptions> configureOptions)
         {
             //add payload serializer
             services.AddSingleton<IPayloadSerializerProvider, DefaultPayloadSerializerProvider>();
@@ -27,17 +29,20 @@ namespace Gizmo.Web.Api.Clients.Builder
                     methodInfo =>
                     methodInfo.Name == nameof(HttpClientFactoryServiceCollectionExtensions.AddHttpClient)
                     && methodInfo.IsGenericMethod
-                    && methodInfo.GetParameters().Length == 3
-                    && methodInfo.GetParameters()[2].ParameterType == typeof(Action<IServiceProvider, HttpClient>));
+                    && methodInfo.GetParameters().Length == 2
+                    && methodInfo.GetParameters()[1].ParameterType == typeof(Action<IServiceProvider, HttpClient>));
 
             if (httpMethod == null)
                 throw new NotSupportedException("Unable to find AddHttpClient method.");
 
+            var httpWebApiClientTypes = Assembly.GetExecutingAssembly().ExportedTypes.ToArray();
+            var httpClientBuilders = new List<IHttpClientBuilder>(httpWebApiClientTypes.Length);
+
             //add each web api client
-            foreach (var assemblyType in Assembly.GetExecutingAssembly().ExportedTypes)
+            foreach (var clientType in httpWebApiClientTypes)
             {
                 //get type info
-                var typeInfo = assemblyType.GetTypeInfo();
+                var typeInfo = clientType.GetTypeInfo();
 
                 //attributes can be checked here for client exclusion e.t.c
 
@@ -45,15 +50,17 @@ namespace Gizmo.Web.Api.Clients.Builder
                 if (typeInfo.BaseType == typeof(WebApiClientBase))
                 {
                     //invoke the method
-                    httpMethod
-                        .MakeGenericMethod(assemblyType)
-                        .Invoke(null, new object[] { services, clientName, configureClient });
+                    var httpClientBuilder = (IHttpClientBuilder)httpMethod
+                        .MakeGenericMethod(clientType)
+                        .Invoke(null, new object[] { services, configureClient });
+                    
+                    httpClientBuilders.Add(httpClientBuilder);
                 }
             }
 
-            services.Configure(clientName, configureOptions);
+            services.Configure(configureOptions);
 
-            return new WebApiClientBuilder(services, clientName);
+            return new WebApiClientBuilder(services, httpClientBuilders);
         }
     }
 }
