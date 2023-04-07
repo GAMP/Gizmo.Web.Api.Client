@@ -10,7 +10,7 @@ namespace Gizmo.Web.Api.Clients.Builder
         IWebApiClientBuilder WithMessagePackSerialization();
         IWebApiClientBuilder WithMessagePackSerialization(Action<MessagePackPayloadSerializerOptions> configure);
         IWebApiClientBuilder WithMessageHandler<THandler>() where THandler : DelegatingHandler;
-        IWebApiClientBuilder WithAdditionalOptions(Action<WebApiClientOptions> options);
+        IWebApiClientBuilder WithAdditionalOptions(string clientName, Action<WebApiClientOptions> options);
         IWebApiClientBuilder WithRetryPolicyHandler(int retryCount);
         IWebApiClientBuilder WithTimeoutPolicyHandler(int timeoutSeconds);
     }

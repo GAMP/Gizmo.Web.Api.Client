@@ -19,7 +19,7 @@ namespace Gizmo.Web.Api.Clients.Builder
         /// <param name="clientName">Registered http client name.</param>
         /// <param name="configureClient">Http client configuration.</param>
         /// <returns>Web api client builder.</returns>
-        public static IWebApiClientBuilder AddWebApiClients(this IServiceCollection services, Action<IServiceProvider, HttpClient> configureClient)
+        public static IWebApiClientBuilder AddWebApiClients(this IServiceCollection services, string clientName,  Action<IServiceProvider, HttpClient> configureClient)
         {
             //add payload serializer
             services.AddSingleton<IPayloadSerializerProvider, DefaultPayloadSerializerProvider>();
@@ -29,8 +29,8 @@ namespace Gizmo.Web.Api.Clients.Builder
                     methodInfo =>
                     methodInfo.Name == nameof(HttpClientFactoryServiceCollectionExtensions.AddHttpClient)
                     && methodInfo.IsGenericMethod
-                    && methodInfo.GetParameters().Length == 2
-                    && methodInfo.GetParameters()[1].ParameterType == typeof(Action<IServiceProvider, HttpClient>));
+                    && methodInfo.GetParameters().Length == 3
+                    && methodInfo.GetParameters()[2].ParameterType == typeof(Action<IServiceProvider, HttpClient>));
 
             if (httpMethod == null)
                 throw new NotSupportedException("Unable to find AddHttpClient method.");
@@ -52,7 +52,7 @@ namespace Gizmo.Web.Api.Clients.Builder
                     //invoke the method
                     var httpClientBuilder = (IHttpClientBuilder)httpMethod
                         .MakeGenericMethod(clientType)
-                        .Invoke(null, new object[] { services, configureClient });
+                        .Invoke(null, new object[] { services, clientName, configureClient });
                     
                     httpClientBuilders.Add(httpClientBuilder);
                 }

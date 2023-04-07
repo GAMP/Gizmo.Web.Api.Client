@@ -70,9 +70,9 @@ namespace Gizmo.Web.Api.Clients.Builder
             return this;
         }
         
-        public IWebApiClientBuilder WithAdditionalOptions(Action<WebApiClientOptions> options)
+        public IWebApiClientBuilder WithAdditionalOptions(string clientName, Action<WebApiClientOptions> options)
         {
-            _services.Configure(options);
+            _services.Configure(clientName, options);
             return this;
         }
 
