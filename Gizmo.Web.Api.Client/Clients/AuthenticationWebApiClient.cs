@@ -49,6 +49,6 @@ namespace Gizmo.Web.Api.Clients
     {
         public string Username { get; set; } = "admin";
         public string Password { get; set; } = "admin";
-        public bool UserToken { get; set; } = true;
+        public bool UserToken { get; set; }
     }
 }
