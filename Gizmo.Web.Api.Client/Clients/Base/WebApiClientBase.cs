@@ -54,6 +54,15 @@ namespace Gizmo.Web.Api.Clients
         /// </summary>
         private IPayloadSerializer Serializer { get; }
 
+        /// <summary>
+        /// Indicates that responses expected to be wrapped with <see cref="WebApiResponse{T}"/>.<br></br>
+        /// <b>Default value is true.</b>
+        /// </summary>
+        /// <remarks>
+        /// Set this value to true in cases of apis that is not expected to return wrapped response.
+        /// </remarks>
+        protected bool UseResponseWrapping { get; set; } = true;
+
         #endregion
 
         #region HTTP METHODS
@@ -63,9 +72,15 @@ namespace Gizmo.Web.Api.Clients
         {
             var uri = CreateRequestUri(parameters);
 
-            var response = await GetResultAsync<WebApiResponse<TResult>>(uri, ct);
-
-            return response.Result;
+            if (UseResponseWrapping)
+            {
+                var response = await GetResultAsync<WebApiResponse<TResult>>(uri, ct);
+                return response.Result;
+            }
+            else
+            {
+                return await GetResultAsync<TResult>(uri, ct);
+            }
         }
         private async Task<TResult> GetResultAsync<TResult>(Uri uri, CancellationToken ct = default)
         {
@@ -187,6 +202,7 @@ namespace Gizmo.Web.Api.Clients
             {
                 //create content stream
                 using var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync();
+
                 //get our content headers
                 var contentHeaders = httpResponseMessage.Content.Headers;
 
@@ -228,8 +244,13 @@ namespace Gizmo.Web.Api.Clients
 
             try
             {
+                //in case responses are not wrapped we have no way of obtaining extended error information
+                if(!UseResponseWrapping)
+                    throw new WebApiClientException(httpResponseMessage.StatusCode, httpResponseMessage.ReasonPhrase);
+
                 //once we reached this code block we expect the response to contain an serialized payload
                 using var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync();
+
                 //deserialize error response
                 var errorResponse = await Serializer.DeserializeAsync<WebApiErrorResponse>(contentStream, ct);
 
