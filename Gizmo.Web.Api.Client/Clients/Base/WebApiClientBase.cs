@@ -231,9 +231,15 @@ namespace Gizmo.Web.Api.Clients
                 //allow normal response message processing in case of OK status code.
                 case HttpStatusCode.OK:
                     return;
+                //web api should always respond with this two http status codes in case of an error
                 case HttpStatusCode.InternalServerError:
                 case HttpStatusCode.BadRequest:
-                    break;
+                    if (!UseResponseWrapping)
+                    {
+                        //in case responses are not wrapped we have no way of obtaining extended error information
+                        goto default;
+                    }
+                    break;                    
                 default:
                     throw new WebApiClientException(httpResponseMessage.StatusCode, httpResponseMessage.ReasonPhrase);
             }
@@ -244,10 +250,6 @@ namespace Gizmo.Web.Api.Clients
 
             try
             {
-                //in case responses are not wrapped we have no way of obtaining extended error information
-                if(!UseResponseWrapping)
-                    throw new WebApiClientException(httpResponseMessage.StatusCode, httpResponseMessage.ReasonPhrase);
-
                 //once we reached this code block we expect the response to contain an serialized payload
                 using var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync();
 

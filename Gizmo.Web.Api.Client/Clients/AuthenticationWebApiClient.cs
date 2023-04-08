@@ -28,5 +28,5 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters(new object[] { "refreshtoken" }, token);
             return GetAsync<AuthTokenResultModel>(parameters, ct);
         }
-    }   
+    }
 }
