@@ -21,13 +21,13 @@ try
     UsersFilter filter = new() { Pagination = new() { Limit = 5, Cursor = new() { IsForward = false, Name = "sex" } } };
     PagedList<UserModel> result = new(Enumerable.Empty<UserModel>());
 
-    result.SetCursor(filter);
+    result.SetCursor(filter.Pagination);
     result = await usersClient.GetAsync(filter);
 
-    result.SetCursor(filter);
+    result.SetCursor(filter.Pagination);
     result = await usersClient.GetAsync(filter);
 
-    result.SetCursor(filter);
+    result.SetCursor(filter.Pagination);
     result = await usersClient.GetAsync(filter);
 }
 catch (Exception ex)
@@ -45,20 +45,13 @@ static IHostBuilder CreateHostBuilder(string[] args) => Host.CreateDefaultBuilde
               opt.AddConsole();
           });
 
-          services.AddHttpClient("secure", httpClient =>
+          services.AddWebApiClients("secure", (sp,httpClient) =>
            {
                var credentials = Convert.ToBase64String(Encoding.UTF8.GetBytes("admin:admin"));
 
                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
                httpClient.BaseAddress = new Uri("http://localhost:80");
            })
-          .ConfigureHttpClient(__ => { })
-          .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler()
-          {
-              ServerCertificateCustomValidationCallback = (_, _, _, _) => true
-          });
-
-          services.AddWebApiClient("secure", _ => { })
           //.WithMessagePackSerialization(options =>
           //{
           //    options.MessagePackSerializerOptions = MessagePackSerializerOptions.Standard
