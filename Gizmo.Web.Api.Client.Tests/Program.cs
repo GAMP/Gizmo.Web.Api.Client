@@ -16,10 +16,10 @@ var host = CreateHostBuilder(args).Build();
 
 try
 {
-    var usersClient = host.Services.GetRequiredService<UsersWebApiClient>();
+    var usersClient = host.Services.GetRequiredService<ApplicationCategoriesWebApiClient>();
 
-    UsersFilter filter = new() { Pagination = new() { Limit = 5, Cursor = new() { IsForward = false, Name = "sex" } } };
-    PagedList<UserModel> result = new(Enumerable.Empty<UserModel>());
+    ApplicationCategoriesFilter filter = new() { Pagination = new() { Limit = 5 } };
+    PagedList<ApplicationCategoryModel> result = new(Enumerable.Empty<ApplicationCategoryModel>());
 
     result.SetCursor(filter.Pagination);
     result = await usersClient.GetAsync(filter);
