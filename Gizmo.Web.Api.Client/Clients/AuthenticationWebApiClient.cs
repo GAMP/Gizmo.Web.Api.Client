@@ -17,13 +17,13 @@ namespace Gizmo.Web.Api.Clients
         }
         #endregion
 
-        public Task<AuthTokenResultModel> GetAsync(TokenParameters user, CancellationToken ct = default)
+        public Task<AuthTokenResultModel> TokenGetAsync(TokenParameters user, CancellationToken ct = default)
         {
             var parameters = new UriParameters(new object[] { "token" }, user);
             return GetAsync<AuthTokenResultModel>(parameters, ct);
         }
 
-        public Task<AuthTokenResultModel> GetAsync(RefreshTokenParameters token, CancellationToken ct = default)
+        public Task<AuthTokenResultModel> TokenRefreshAsync(RefreshTokenParameters token, CancellationToken ct = default)
         {
             var parameters = new UriParameters(new object[] { "refreshtoken" }, token);
             return GetAsync<AuthTokenResultModel>(parameters, ct);
