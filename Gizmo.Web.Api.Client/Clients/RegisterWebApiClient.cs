@@ -50,6 +50,18 @@ namespace Gizmo.Web.Api.Clients
             return DeleteAsync<DeleteResult>(parameters, ct);
         }
 
+        public Task<DeleteResult> UndeleteAsync(int id, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters(id);
+            return PutAsync<DeleteResult>(parameters,null, ct);
+        }
+
+        public Task<RegisterModel> CurrentAsync(CancellationToken ct = default)
+        {
+            var parameters = new UriParameters(new[] { "current" });
+            return GetAsync<RegisterModel>(parameters, ct);
+        }
+
         #endregion
     }
 }
