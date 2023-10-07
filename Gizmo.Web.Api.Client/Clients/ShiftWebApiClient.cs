@@ -15,70 +15,70 @@ namespace Gizmo.Web.Api.Client
         {
         }
 
-        public Task<PagedList<ShiftModel>> GetAsync(ShiftFilterModel filter, CancellationToken ct = default)
+        public Task<PagedList<ShiftModel>> GetAsync(ShiftFilterModel filter, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(filter);
-            return GetAsync<PagedList<ShiftModel>>(parameters, ct);
+            return GetAsync<PagedList<ShiftModel>>(parameters, cancellationToken);
         }
 
-        public Task<ShiftModel> GetAsync(int id, CancellationToken ct = default)
+        public Task<ShiftModel> GetAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(id);
-            return GetAsync<ShiftModel>(parameters, ct);
+            return GetAsync<ShiftModel>(parameters, cancellationToken);
         }
 
-        public Task<ShiftModel> StartAsync(ShiftStartModel model, CancellationToken ct = default)
+        public Task<ShiftModel> StartAsync(ShiftStartModel model, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(new[] {"start"} );
-            return PostAsync<ShiftModel>(parameters,model, ct);
+            var parameters = new UriParameters(new[] { "start" });
+            return PostAsync<ShiftModel>(parameters, model, cancellationToken);
         }
 
-        public Task<ShiftModel> StartAsync(int operatorId ,ShiftStartModel model, CancellationToken ct = default)
+        public Task<ShiftModel> StartAsync(int operatorId, ShiftStartModel model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(new object[] { operatorId, "start" });
-            return PostAsync<ShiftModel>(parameters, model, ct);
+            return PostAsync<ShiftModel>(parameters, model, cancellationToken);
         }
 
-        public Task<UpdateResult> EndAsync(int id, ShiftEndModel model, CancellationToken ct = default)
+        public Task<UpdateResult> EndAsync(int id, ShiftEndModel model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(new object[] { id, "end" });
-            return PutAsync<UpdateResult>(parameters, model, ct);
+            return PutAsync<UpdateResult>(parameters, model, cancellationToken);
         }
 
-        public Task<ActiveShiftModel> ActiveAsync(CancellationToken ct = default)
+        public Task<ActiveShiftModel> ActiveAsync(CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(new object[] { "active" });
-            return GetAsync<ActiveShiftModel>(parameters, ct);
+            return GetAsync<ActiveShiftModel>(parameters, cancellationToken);
         }
 
-        public Task<UpdateResult> ActiveEndAsync(ShiftEndModel model, CancellationToken ct = default)
+        public Task<UpdateResult> ActiveEndAsync(ShiftEndModel model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(new object[] { "active", "end" });
-            return PostAsync<UpdateResult>(parameters, model, ct);
+            return PostAsync<UpdateResult>(parameters, model, cancellationToken);
         }
 
-        public Task<UpdateResult> LockAsync(int id, CancellationToken ct = default)
+        public Task<UpdateResult> LockAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(new object[] { id, "lock" });
-            return PutAsync<UpdateResult>(parameters, null, ct);
+            return PutAsync<UpdateResult>(parameters, null, cancellationToken);
         }
 
-        public Task<UpdateResult> UnlockAsync(int id, CancellationToken ct = default)
+        public Task<UpdateResult> UnlockAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(new object[] { id, "unlock" });
-            return PutAsync<UpdateResult>(parameters, null, ct);
+            return PutAsync<UpdateResult>(parameters, null, cancellationToken);
         }
 
-        public Task<UpdateResult> ActiveLockAsync(CancellationToken ct = default)
+        public Task<UpdateResult> ActiveLockAsync(CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(new object[] { "active", "lock" });
-            return PutAsync<UpdateResult>(parameters, null, ct);
+            return PutAsync<UpdateResult>(parameters, null, cancellationToken);
         }
 
-        public Task<UpdateResult> ActiveUnlockAsync(CancellationToken ct = default)
+        public Task<UpdateResult> ActiveUnlockAsync(CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(new object[] { "active", "unlock" });
-            return PutAsync<UpdateResult>(parameters, null, ct);
+            return PutAsync<UpdateResult>(parameters, null, cancellationToken);
         }
     }
 }
