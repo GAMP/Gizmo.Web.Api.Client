@@ -3,11 +3,11 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-
+using Gizmo.Web.Api.Client;
 using Gizmo.Web.Api.Clients;
 using Gizmo.Web.Api.Clients.Builder;
 using Gizmo.Web.Api.Models;
-
+using MessagePack;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -16,10 +16,24 @@ var host = CreateHostBuilder(args).Build();
 
 try
 {
-    var usersClient = host.Services.GetRequiredService<ApplicationCategoriesWebApiClient>();
+    var registersClient = host.Services.GetRequiredService<ShiftWebApiClient>();
+ 
+    var activeShift = await registersClient.StartAsync(new ShiftStartModel() { RegisterId = 2, StartCash = 500 });
 
-    ApplicationCategoriesFilter filter = new() { Pagination = new() { Limit = 5 } };
-    PagedList<ApplicationCategoryModel> result = new(Enumerable.Empty<ApplicationCategoryModel>());
+    var shift = await registersClient.GetAsync(new ShiftFilterModel() { IsActive = false });
+    await registersClient.LockAsync(activeShift.Id);
+    await registersClient.UnlockAsync(activeShift.Id);
+    await registersClient.ActiveLockAsync();
+    await registersClient.ActiveUnlockAsync();
+    var current = await registersClient.ActiveEndAsync(new ShiftEndModel());
+
+
+    var authClient = host.Services.GetRequiredService<AuthenticationWebApiClient>();
+   var tokenResult = await authClient.GetAsync(new TokenParameters() { Username = "admin", Password = "admin" , UserToken =false});
+    var usersClient = host.Services.GetRequiredService<ApplicationsWebApiClient>();
+
+    ApplicationsFilter filter = new() { Pagination = new() { Limit = 100000 } };
+    PagedList<ApplicationModel> result = new(Enumerable.Empty<ApplicationModel>());
 
     result.SetCursor(filter.Pagination);
     result = await usersClient.GetAsync(filter);
@@ -52,15 +66,15 @@ static IHostBuilder CreateHostBuilder(string[] args) => Host.CreateDefaultBuilde
                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", credentials);
                httpClient.BaseAddress = new Uri("http://localhost:80");
            })
-          //.WithMessagePackSerialization(options =>
-          //{
-          //    options.MessagePackSerializerOptions = MessagePackSerializerOptions.Standard
-          //    .WithResolver(MessagePack.Resolvers.StandardResolver.Instance)
-          //    .WithSecurity(MessagePackSecurity.UntrustedData);
-          //});
-          .WithJsonSerialization(options =>
+          .WithMessagePackSerialization(options =>
           {
-              options.JsonSerializerOptions.AllowTrailingCommas = true;
-              options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+              options.MessagePackSerializerOptions = MessagePackSerializerOptions.Standard
+              .WithResolver(MessagePack.Resolvers.StandardResolver.Instance)
+              .WithSecurity(MessagePackSecurity.UntrustedData);
           });
+          //.WithJsonSerialization(options =>
+          //{
+          //    options.JsonSerializerOptions.AllowTrailingCommas = true;
+          //    options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+          //});
       });
