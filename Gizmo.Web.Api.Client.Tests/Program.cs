@@ -16,20 +16,8 @@ var host = CreateHostBuilder(args).Build();
 
 try
 {
-    var registersClient = host.Services.GetRequiredService<ShiftWebApiClient>();
- 
-    var activeShift = await registersClient.StartAsync(new ShiftStartModel() { RegisterId = 2, StartCash = 500 });
-
-    var shift = await registersClient.GetAsync(new ShiftFilterModel() { IsActive = false });
-    await registersClient.LockAsync(activeShift.Id);
-    await registersClient.UnlockAsync(activeShift.Id);
-    await registersClient.ActiveLockAsync();
-    await registersClient.ActiveUnlockAsync();
-    var current = await registersClient.ActiveEndAsync(new ShiftEndModel());
-
-
     var authClient = host.Services.GetRequiredService<AuthenticationWebApiClient>();
-   var tokenResult = await authClient.GetAsync(new TokenParameters() { Username = "admin", Password = "admin" , UserToken =false});
+   var tokenResult = await authClient.TokenGetAsync(new TokenParameters() { Username = "admin", Password = "admin" , UserToken =false});
     var usersClient = host.Services.GetRequiredService<ApplicationsWebApiClient>();
 
     ApplicationsFilter filter = new() { Pagination = new() { Limit = 100000 } };
