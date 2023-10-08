@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Gizmo.Web.Api.Clients
 {
     [WebApiRoute("api/v2/productgroups")]
-    public class ProductGroupsWebApiClient : WebApiClientBase
+    public sealed class ProductGroupsWebApiClient : WebApiClientBase
     {
         #region CONSTRUCTOR
         public ProductGroupsWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :

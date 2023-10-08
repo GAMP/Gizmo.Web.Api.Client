@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Gizmo.Web.Api.Clients
 {
     [WebApiRoute("api/v2/salepresets/time")]
-    public class TimeSalePresetsWebApiClient : WebApiClientBase
+    public sealed class TimeSalePresetsWebApiClient : WebApiClientBase
     {
         #region CONSTRUCTOR
         public TimeSalePresetsWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :

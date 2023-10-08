@@ -5,7 +5,7 @@ namespace Gizmo.Web.Api.Clients
     /// <summary>
     /// Json payload serializer options.
     /// </summary>
-    public class JsonPayloadSerializerOptions
+    public sealed class JsonPayloadSerializerOptions
     {
         #region PROPERTIES
         

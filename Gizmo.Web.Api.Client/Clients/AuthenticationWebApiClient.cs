@@ -7,7 +7,7 @@ using Microsoft.Extensions.Options;
 namespace Gizmo.Web.Api.Clients
 {
     [WebApiRoute("auth")]
-    public class AuthenticationWebApiClient : WebApiClientBase
+    public sealed class AuthenticationWebApiClient : WebApiClientBase
     {
         #region CONSTRUCTOR
         public AuthenticationWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :
@@ -27,6 +27,30 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters(new object[] { "refreshtoken" }, token);
             return GetAsync<AccessTokenResultModel>(parameters, ct);
+        }
+
+        public Task<AccessTokenResultModel> AccessToken(AccessTokenRequestModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(new object[] { "accesstoken" }, model);
+            return GetAsync<AccessTokenResultModel>(parameters, cancellationToken);
+        }
+       
+        public Task<AccessTokenResultModel> AccessToken(UserAccessTokenRequestModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(new object[] { "user", "accesstoken" }, model);
+            return GetAsync<AccessTokenResultModel>(parameters, cancellationToken);
+        }
+
+        public Task<AccessTokenResultModel> AccessTokenRefresh(AccessTokenRefreshRequestModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(new object[] { "accesstoken", "refresh" }, model);
+            return GetAsync<AccessTokenResultModel>(parameters, cancellationToken);
+        }
+
+        public Task<AccessTokenResultModel> AccessTokenRefresh(UserAccessTokenRefreshRequestModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(new object[] { "user", "accesstoken", "refresh" }, model);
+            return GetAsync<AccessTokenResultModel>(parameters, cancellationToken);
         }
     }
 }

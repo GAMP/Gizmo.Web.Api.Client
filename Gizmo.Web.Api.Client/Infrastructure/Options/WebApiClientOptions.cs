@@ -6,7 +6,7 @@
     /// <remarks><b>Intended for future use.</b><br/>
     /// Will allow injecting custom configuration that will govern the behavior of our web api clients.
     /// </remarks>
-    public class WebApiClientOptions
+    public sealed class WebApiClientOptions
     {
     }
 }

@@ -7,7 +7,7 @@ using Gizmo.Web.Api.Models;
 namespace Gizmo.Web.Api.Clients
 {
     [WebApiRoute("api/v2/pointstransactions")]
-    public class PointsTransactionWebApiClient : WebApiClientBase
+    public sealed class PointsTransactionWebApiClient : WebApiClientBase
     {
         #region CONSTRUCTOR
         public PointsTransactionWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :

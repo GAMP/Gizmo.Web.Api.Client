@@ -5,7 +5,7 @@ namespace Gizmo.Web.Api.Clients
     /// <summary>
     /// Message pack payload serializer options.
     /// </summary>
-    public class MessagePackPayloadSerializerOptions
+    public sealed class MessagePackPayloadSerializerOptions
     {
         #region FIELDS
         private MessagePackSerializerOptions? _messagePackSerializerOptions;

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Gizmo.Web.Api.Clients
 {
     [WebApiRoute("api/v2/devices")]
-    public class DevicesWebApiClient : WebApiClientBase
+    public sealed class DevicesWebApiClient : WebApiClientBase
     {
         #region CONSTRUCTOR
         public DevicesWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :
@@ -17,7 +17,6 @@ namespace Gizmo.Web.Api.Clients
         {
         }
         #endregion
-
 
         #region GET
 

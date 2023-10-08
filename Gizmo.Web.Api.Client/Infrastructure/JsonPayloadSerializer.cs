@@ -11,7 +11,7 @@ namespace Gizmo.Web.Api.Clients
     /// <summary>
     /// Json payload serializer.
     /// </summary>
-    internal class JsonPayloadSerializer : IPayloadSerializer
+    internal sealed class JsonPayloadSerializer : IPayloadSerializer
     {
         #region CONSTRUCTOR
         public JsonPayloadSerializer(IOptions<JsonPayloadSerializerOptions> options)

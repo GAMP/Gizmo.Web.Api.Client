@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Gizmo.Web.Api.Clients
 {
     [WebApiRoute("api/v2/hosticons")]
-    public class HostIconWebApiClient:WebApiClientBase
+    public sealed class HostIconWebApiClient:WebApiClientBase
     {
         #region COSTRUCTOR
         public HostIconWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :

@@ -8,7 +8,7 @@ namespace Gizmo.Web.Api.Clients
     /// <summary>
     /// Generic web api exception.
     /// </summary>
-    public class WebApiClientException : Exception
+    public sealed class WebApiClientException : Exception
     {
         #region CONSTRUCTOR
 
@@ -56,7 +56,7 @@ namespace Gizmo.Web.Api.Clients
         /// </summary>
         public HttpStatusCode HttpStatusCode
         {
-            get; protected set;
+            get; init;
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Gizmo.Web.Api.Clients
         /// </summary>
         public int? ErrorCodeType
         {
-            get; protected set;
+            get; init;
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Gizmo.Web.Api.Clients
         /// </summary>
         public string ErrorCodeTypeReadable
         {
-            get; protected set;
+            get; init;
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Gizmo.Web.Api.Clients
         /// </summary>
         public string ErrorCodeRedable
         {
-            get; protected set;
+            get; init;
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Gizmo.Web.Api.Clients
         /// </summary>
         public IEnumerable<WebApiErrorBase> Errors
         {
-            get;protected set;
+            get;init;
         }
 
         #endregion

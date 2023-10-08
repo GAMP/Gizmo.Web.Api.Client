@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Gizmo.Web.Api.Clients
 {
-    internal class MessagePackPayloadSerializer : IPayloadSerializer
+    internal sealed class MessagePackPayloadSerializer : IPayloadSerializer
     {
         #region CONSTRUCTOR
 

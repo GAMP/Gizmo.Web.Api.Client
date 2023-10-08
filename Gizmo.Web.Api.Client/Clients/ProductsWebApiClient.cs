@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Gizmo.Web.Api.Clients
 {
     [WebApiRoute("api/v2/products")]
-    public class ProductsWebApiClient : WebApiClientBase
+    public sealed class ProductsWebApiClient : WebApiClientBase
     {
         #region CONSTRUCTOR
 

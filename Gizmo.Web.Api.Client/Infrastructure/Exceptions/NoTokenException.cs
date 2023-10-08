@@ -5,7 +5,7 @@ namespace Gizmo.Web.Api.Clients
     /// <summary>
     /// Exception to represent state where its impossible to obtain authentication token.
     /// </summary>
-    public class NoTokenException : Exception
+    public sealed class NoTokenException : Exception
     {
         #region CONSTRUCTOR
         /// <summary>

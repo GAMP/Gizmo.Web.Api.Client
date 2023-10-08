@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Gizmo.Web.Api.Clients
 {
     [WebApiRoute("api/v2/billingprofiles")]
-    public class BillingProfilesWebApiClient : WebApiClientBase
+    public sealed class BillingProfilesWebApiClient : WebApiClientBase
     {
         #region CONSTRUCTOR
         public BillingProfilesWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) : 
