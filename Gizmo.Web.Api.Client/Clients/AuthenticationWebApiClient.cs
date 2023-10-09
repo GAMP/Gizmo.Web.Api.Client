@@ -17,40 +17,40 @@ namespace Gizmo.Web.Api.Clients
         }
         #endregion
 
-        public Task<AccessTokenResultModel> TokenGetAsync(TokenParameters user, CancellationToken ct = default)
+        public Task<AuthTokenResultModel> TokenGetAsync(TokenParameters user, CancellationToken ct = default)
         {
             var parameters = new UriParameters(new object[] { "token" }, user);
-            return GetAsync<AccessTokenResultModel>(parameters, ct);
+            return GetAsync<AuthTokenResultModel>(parameters, ct);
         }
 
-        public Task<AccessTokenResultModel> TokenRefreshAsync(RefreshTokenParameters token, CancellationToken ct = default)
+        public Task<AuthTokenResultModel> TokenRefreshAsync(RefreshTokenParameters token, CancellationToken ct = default)
         {
             var parameters = new UriParameters(new object[] { "refreshtoken" }, token);
-            return GetAsync<AccessTokenResultModel>(parameters, ct);
+            return GetAsync<AuthTokenResultModel>(parameters, ct);
         }
 
-        public Task<AccessTokenResultModel> AccessToken(AccessTokenRequestModel model, CancellationToken cancellationToken = default)
+        public Task<AuthTokenResultModel> AccessToken(AccessTokenRequestModel model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(new object[] { "accesstoken" }, model);
-            return GetAsync<AccessTokenResultModel>(parameters, cancellationToken);
+            return GetAsync<AuthTokenResultModel>(parameters, cancellationToken);
         }
        
-        public Task<AccessTokenResultModel> AccessToken(UserAccessTokenRequestModel model, CancellationToken cancellationToken = default)
+        public Task<AuthTokenResultModel> AccessToken(UserAccessTokenRequestModel model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(new object[] { "user", "accesstoken" }, model);
-            return GetAsync<AccessTokenResultModel>(parameters, cancellationToken);
+            return GetAsync<AuthTokenResultModel>(parameters, cancellationToken);
         }
 
-        public Task<AccessTokenResultModel> AccessTokenRefresh(AccessTokenRefreshRequestModel model, CancellationToken cancellationToken = default)
+        public Task<AuthTokenResultModel> AccessTokenRefresh(AccessTokenRefreshRequestModel model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(new object[] { "accesstoken", "refresh" }, model);
-            return GetAsync<AccessTokenResultModel>(parameters, cancellationToken);
+            return GetAsync<AuthTokenResultModel>(parameters, cancellationToken);
         }
 
-        public Task<AccessTokenResultModel> AccessTokenRefresh(UserAccessTokenRefreshRequestModel model, CancellationToken cancellationToken = default)
+        public Task<AuthTokenResultModel> AccessTokenRefresh(UserAccessTokenRefreshRequestModel model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(new object[] { "user", "accesstoken", "refresh" }, model);
-            return GetAsync<AccessTokenResultModel>(parameters, cancellationToken);
+            return GetAsync<AuthTokenResultModel>(parameters, cancellationToken);
         }
     }
 }
