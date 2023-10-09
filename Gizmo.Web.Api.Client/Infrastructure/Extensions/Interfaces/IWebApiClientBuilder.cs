@@ -13,5 +13,6 @@ namespace Gizmo.Web.Api.Clients.Builder
         IWebApiClientBuilder WithAdditionalOptions(string clientName, Action<WebApiClientOptions> options);
         IWebApiClientBuilder WithRetryPolicyHandler(int retryCount);
         IWebApiClientBuilder WithTimeoutPolicyHandler(int timeoutSeconds);
+        IWebApiClientBuilder ConfigurePrimaryHttpMessageHandler<THandler>(Func<THandler> configure) where THandler : HttpMessageHandler;
     }
 }

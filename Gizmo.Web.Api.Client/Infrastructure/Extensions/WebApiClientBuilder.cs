@@ -98,6 +98,14 @@ namespace Gizmo.Web.Api.Clients.Builder
             return this;
         }
 
+        public IWebApiClientBuilder ConfigurePrimaryHttpMessageHandler<THandler>(Func<THandler> configure) where THandler : HttpMessageHandler
+        {
+            foreach (var httpClient in _httpClientBuilders)
+                httpClient.ConfigurePrimaryHttpMessageHandler(configure);
+
+            return this;
+        }
+
         #endregion
     }
 }
