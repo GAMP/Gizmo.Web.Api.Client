@@ -11,15 +11,10 @@ namespace Gizmo.Web.Api.Clients
     [WebApiRoute("api/v2/operators")]
     public sealed class OperatorsWebApiClient : WebApiClientBase
     {
-        #region CONSTRUCTOR
         public OperatorsWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :
             base(httpClient, options, payloadSerializerProvider)
         {
-
         }
-        #endregion
-
-        #region FUNCTIONS
 
         public Task<PagedList<OperatorModel>> GetAsync(OperatorsFilter filter, CancellationToken ct = default)
         {
@@ -50,8 +45,6 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters(id);
             return DeleteAsync<DeleteResult>(parameters, ct);
         }
-
-        #endregion
 
         public Task<PagedList<BranchModel>> BranchesAsync(OpeatorBranchFilter filter, CancellationToken cancellationToken = default)
         {
