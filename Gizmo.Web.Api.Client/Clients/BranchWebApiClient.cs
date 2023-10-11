@@ -14,7 +14,7 @@ namespace Gizmo.Web.Api.Clients
         {
         }
 
-        public Task<PagedList<BranchModel>> GetAsync(BranchFilterModel filter, CancellationToken ct = default)
+        public Task<PagedList<BranchModel>> GetAsync(BranchFilter filter, CancellationToken ct = default)
         {
             var parameters = new UriParameters(filter);
             return GetAsync<PagedList<BranchModel>>(parameters, ct);
@@ -24,6 +24,18 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters(id);
             return GetAsync<BranchModel>(parameters, ct);
+        }
+
+        public Task<CreateResult> CreateAsync(BranchModelCreate model, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters();
+            return PostAsync<CreateResult>(parameters, model, ct);
+        }
+
+        public Task<UpdateResult> UpdateAsync(BranchModelUpdate model, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters();
+            return PutAsync<UpdateResult>(parameters, model, ct);
         }
     }
 }

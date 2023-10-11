@@ -34,7 +34,7 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters(new object[] { "accesstoken" }, model);
             return GetAsync<AuthTokenResultModel>(parameters, cancellationToken);
         }
-       
+
         public Task<AuthTokenResultModel> AccessToken(UserAccessTokenRequestModel model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(new object[] { "user", "accesstoken" }, model);

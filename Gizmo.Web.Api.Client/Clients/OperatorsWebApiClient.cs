@@ -52,5 +52,35 @@ namespace Gizmo.Web.Api.Clients
         }
 
         #endregion
+
+        public Task<PagedList<BranchModel>> BranchesAsync(OpeatorBranchFilter filter, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(new object[] { "branches" }, filter);
+            return GetAsync<PagedList<BranchModel>>(parameters, cancellationToken);
+        }
+
+        public Task<BranchModel?> BranchCurrentAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(new object[] { "branches", "current" });
+            return GetAsync<BranchModel?>(parameters, cancellationToken);
+        }
+
+        public Task<PagedList<RegisterModel>> RegistersAsync(int branchId, OperatorRegisterFilter filter, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(new object[] { "branches", branchId, "registers" }, filter);
+            return GetAsync<PagedList<RegisterModel>>(parameters, cancellationToken);
+        }
+
+        public Task<PagedList<RegisterModel>> RegistersAsync(OperatorRegisterFilter filter, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(new object[] { "registers" }, filter);
+            return GetAsync<PagedList<RegisterModel>>(parameters, cancellationToken);
+        }
+
+        public Task<RegisterModel?> RegisterCurrentAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(new object[] { "registers", "current" });
+            return GetAsync<RegisterModel?>(parameters, cancellationToken);
+        }
     }
 }
