@@ -55,31 +55,37 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<PagedList<BranchModel>> BranchesAsync(OpeatorBranchFilter filter, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(new object[] { "branches" }, filter);
+            var parameters = new UriParameters(new object[] {"current", "branches" }, filter);
+            return GetAsync<PagedList<BranchModel>>(parameters, cancellationToken);
+        }
+
+        public Task<PagedList<BranchModel>> BranchesAsync(int operatorId , OpeatorBranchFilter filter, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(new object[] { operatorId, "branches" }, filter);
             return GetAsync<PagedList<BranchModel>>(parameters, cancellationToken);
         }
 
         public Task<BranchModel?> BranchCurrentAsync(CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(new object[] { "branches", "current" });
+            var parameters = new UriParameters(new object[] { "current", "branches", "current" });
             return GetAsync<BranchModel?>(parameters, cancellationToken);
         }
 
         public Task<PagedList<RegisterModel>> RegistersAsync(int branchId, OperatorRegisterFilter filter, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(new object[] { "branches", branchId, "registers" }, filter);
+            var parameters = new UriParameters(new object[] { "current", "branches", branchId, "registers" }, filter);
             return GetAsync<PagedList<RegisterModel>>(parameters, cancellationToken);
         }
 
         public Task<PagedList<RegisterModel>> RegistersAsync(OperatorRegisterFilter filter, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(new object[] { "registers" }, filter);
+            var parameters = new UriParameters(new object[] { "current", "registers" }, filter);
             return GetAsync<PagedList<RegisterModel>>(parameters, cancellationToken);
-        }
+        }     
 
         public Task<RegisterModel?> RegisterCurrentAsync(CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(new object[] { "registers", "current" });
+            var parameters = new UriParameters(new object[] { "current", "registers", "current" });
             return GetAsync<RegisterModel?>(parameters, cancellationToken);
         }
     }
