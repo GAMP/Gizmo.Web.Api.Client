@@ -29,25 +29,25 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<AuthTokenResultModel>(parameters, ct);
         }
 
-        public Task<AuthTokenResultModel> AccessToken(AccessTokenRequestModel model, CancellationToken cancellationToken = default)
+        public Task<AuthTokenResultModel> AccessTokenGetAsync(AccessTokenRequestModel model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(new object[] { "accesstoken" }, model);
             return GetAsync<AuthTokenResultModel>(parameters, cancellationToken);
         }
 
-        public Task<AuthTokenResultModel> AccessToken(UserAccessTokenRequestModel model, CancellationToken cancellationToken = default)
+        public Task<AuthTokenResultModel> AccessTokenGetAsync(UserAccessTokenRequestModel model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(new object[] { "user", "accesstoken" }, model);
             return GetAsync<AuthTokenResultModel>(parameters, cancellationToken);
         }
 
-        public Task<AuthTokenResultModel> AccessTokenRefresh(AccessTokenRefreshRequestModel model, CancellationToken cancellationToken = default)
+        public Task<AuthTokenResultModel> AccessTokenRefreshAsync(AccessTokenRefreshRequestModel model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(new object[] { "accesstoken", "refresh" }, model);
             return GetAsync<AuthTokenResultModel>(parameters, cancellationToken);
         }
 
-        public Task<AuthTokenResultModel> AccessTokenRefresh(UserAccessTokenRefreshRequestModel model, CancellationToken cancellationToken = default)
+        public Task<AuthTokenResultModel> AccessTokenRefreshAsync(UserAccessTokenRefreshRequestModel model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(new object[] { "user", "accesstoken", "refresh" }, model);
             return GetAsync<AuthTokenResultModel>(parameters, cancellationToken);
