@@ -40,6 +40,12 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<OperatorModel>(parameters, ct);
         }
 
+        public Task<OperatorModel> CurrentAsync(CancellationToken ct = default)
+        {
+            var parameters = new UriParameters(new object[] {"current"});
+            return GetAsync<OperatorModel>(parameters, ct);
+        }
+
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
         {
             var parameters = new UriParameters(id);
@@ -116,6 +122,12 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters(new object[] { "current", "shift", "active", "unlock" });
             return PutAsync<UpdateResult>(parameters, null, cancellationToken);
+        }
+
+        public Task<ShiftOptionsModel> ShiftOptionsAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(new object[] { "current", "shift", "options"});
+            return GetAsync<ShiftOptionsModel>(parameters, cancellationToken);
         }
     }
 }
