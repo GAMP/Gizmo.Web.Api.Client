@@ -129,5 +129,11 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters(new object[] { "current", "shift", "options"});
             return GetAsync<ShiftOptionsModel>(parameters, cancellationToken);
         }
+
+        public Task<ShiftExpectedModel> ShiftActiveExpectedAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(new object[] { "current", "shift", "active" , "expected" });
+            return GetAsync<ShiftExpectedModel>(parameters, cancellationToken);
+        }
     }
 }

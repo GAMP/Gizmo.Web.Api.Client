@@ -42,6 +42,12 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters(new object[] { id, "unlock" });
             return PutAsync<UpdateResult>(parameters, null, cancellationToken);
-        }  
+        }
+
+        public Task<ShiftExpectedModel> ExpectedAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(new object[] { id, "expected" });
+            return GetAsync<ShiftExpectedModel>(parameters, cancellationToken);
+        }
     }
 }
