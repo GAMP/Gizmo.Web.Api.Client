@@ -135,5 +135,11 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters(new object[] { "current", "shift", "active" , "expected" });
             return GetAsync<ShiftExpectedModel>(parameters, cancellationToken);
         }
+
+        public Task<UpdateResult> PasswordUpdateAsync(OperatorPasswordUpdateModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(new object[] { "current", "password" });
+            return PostAsync<UpdateResult>(parameters, model, cancellationToken);
+        }
     }
 }
