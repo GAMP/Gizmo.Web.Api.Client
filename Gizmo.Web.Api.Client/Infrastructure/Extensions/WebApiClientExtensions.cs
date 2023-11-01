@@ -19,6 +19,9 @@ namespace Gizmo.Web.Api.Clients.Builder
         /// <param name="clientName">Registered http client name.</param>
         /// <param name="configureClient">Http client configuration.</param>
         /// <returns>Web api client builder.</returns>
+        /// <remarks>
+        /// This function will add any api client that does not have <see cref="UnsecureWebApiClientAttribute"/> applied to it.
+        /// </remarks>
         public static IWebApiClientBuilder AddSecureWebApiClients(this IServiceCollection services, string clientName,  Action<IServiceProvider, HttpClient> configureClient)
         {
             //add payload serializer
@@ -65,12 +68,15 @@ namespace Gizmo.Web.Api.Clients.Builder
         }
 
         /// <summary>
-        /// Adds secure web api clients to service collection.
+        /// Adds unsesecured web api clients to service collection.
         /// </summary>
         /// <param name="services">Service collection.</param>
         /// <param name="clientName">Registered http client name.</param>
         /// <param name="configureClient">Http client configuration.</param>
         /// <returns>Web api client builder.</returns>
+        /// <remarks>
+        /// This function will add any api client that have <see cref="UnsecureWebApiClientAttribute"/> applied to it.
+        /// </remarks>
         public static IWebApiClientBuilder AddUnsecureWebApiClients(this IServiceCollection services, string clientName, Action<IServiceProvider, HttpClient> configureClient)
         {
             //add payload serializer
