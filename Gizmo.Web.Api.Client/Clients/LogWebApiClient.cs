@@ -15,7 +15,7 @@ namespace Gizmo.Web.Api.Client.Clients
         {
         }
 
-        public Task<PagedList<LogModel>> GetAsync(LogFilterModel filter, CancellationToken cancellationToken = default)
+        public Task<PagedList<LogModel>> GetAsync(LogsFilter filter, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(filter);
             return GetAsync<PagedList<LogModel>>(parameters, cancellationToken);
