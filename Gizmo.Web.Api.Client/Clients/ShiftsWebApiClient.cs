@@ -6,10 +6,10 @@ using Microsoft.Extensions.Options;
 
 namespace Gizmo.Web.Api.Clients
 {
-    [WebApiRoute("api/v2/shift")]
-    public sealed class ShiftWebApiClient : WebApiClientBase
+    [WebApiRoute("api/v2/shifts")]
+    public sealed class ShiftsWebApiClient : WebApiClientBase
     {
-        public ShiftWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :
+        public ShiftsWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :
             base(httpClient, options, payloadSerializerProvider)
         {
         }
