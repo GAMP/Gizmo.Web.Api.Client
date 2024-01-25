@@ -68,6 +68,7 @@ namespace Gizmo.Web.Api.Clients
         #region HTTP METHODS
 
         #region GET
+
         public async Task<TResult> GetAsync<TResult>(IUriParameters parameters, CancellationToken ct)
         {
             var uri = CreateRequestUri(parameters);

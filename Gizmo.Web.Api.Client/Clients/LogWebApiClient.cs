@@ -27,7 +27,7 @@ namespace Gizmo.Web.Api.Client.Clients
             return GetAsync<LogModel>(parameters, cancellationToken);
         }
 
-        public Task<LogExceptionModel> ExceptionAsync(int id , CancellationToken cancellationToken = default)
+        public Task<LogExceptionModel> ExceptionAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(new object[] { id, "exception" });
             return GetAsync<LogExceptionModel>(parameters, cancellationToken);
@@ -38,5 +38,5 @@ namespace Gizmo.Web.Api.Client.Clients
             var parameters = new UriParameters(new object[] { "clear" });
             return PostAsync<UpdateResult>(parameters, cancellationToken);
         }
-    }
+    }   
 }

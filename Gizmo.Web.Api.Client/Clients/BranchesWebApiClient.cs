@@ -6,10 +6,10 @@ using Microsoft.Extensions.Options;
 
 namespace Gizmo.Web.Api.Clients
 {
-    [WebApiRoute("api/v2/branch")]
-    public sealed class BranchWebApiClient : WebApiClientBase
+    [WebApiRoute("api/v2/branches")]
+    public sealed class BranchesWebApiClient : WebApiClientBase
     {
-        public BranchWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :
+        public BranchesWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :
             base(httpClient, options, payloadSerializerProvider)
         {
         }
@@ -36,6 +36,18 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters();
             return PutAsync<UpdateResult>(parameters, model, ct);
+        }
+
+        public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters(id);
+            return DeleteAsync<DeleteResult>(parameters, ct);
+        }
+
+        public Task<UpdateResult> UnDeleteAsync(int id, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters([id, "undelete"]);
+            return PutAsync<UpdateResult>(parameters,null, ct);
         }
     }
 }
