@@ -27,7 +27,6 @@ namespace Gizmo.Web.Api.Client
             ModelFilterPagination pagination = filter.Pagination;
             while (!cancellationToken.IsCancellationRequested)
             {
-                filter.Pagination = pagination;
                 var pagedResult = await func(filter, cancellationToken);
                 foreach (var item in pagedResult.Data)
                 {
