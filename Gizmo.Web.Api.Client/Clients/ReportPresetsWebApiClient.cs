@@ -1,11 +1,10 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 using System.Threading;
-using Gizmo.Web.Api.Clients;
 using Gizmo.Web.Api.Models;
 using Microsoft.Extensions.Options;
 
-namespace Gizmo.Web.Api.Client
+namespace Gizmo.Web.Api.Clients
 {
     [WebApiRoute("api/v2/reportpresets")]
     public sealed class ReportPresetsWebApiClient : WebApiClientBase

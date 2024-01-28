@@ -1,11 +1,10 @@
 ﻿using System.Net.Http;
-using Gizmo.Web.Api.Clients;
 using Gizmo.Web.Api.Models;
 using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
 using System.Threading;
 
-namespace Gizmo.Web.Api.Client.Clients
+namespace Gizmo.Web.Api.Clients
 {
     [WebApiRoute("api/v2/log")]
     public sealed class LogWebApiClient : WebApiClientBase

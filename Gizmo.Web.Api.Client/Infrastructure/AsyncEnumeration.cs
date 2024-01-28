@@ -6,7 +6,7 @@ using Gizmo.Web.Api.Models;
 using System.Threading.Tasks;
 using System.Threading;
 
-namespace Gizmo.Web.Api.Client
+namespace Gizmo.Web.Api.Clients
 {
     public static class AsyncEnumeration
     {
