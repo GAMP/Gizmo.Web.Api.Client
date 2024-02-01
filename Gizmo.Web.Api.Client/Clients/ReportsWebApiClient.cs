@@ -18,5 +18,11 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters(parametersModel);
             return GetAsync<OverviewReportModel>(parameters, cancellationToken);
         }
+
+        public Task<FinancialReportModel> FinancialAsync(FinancialReportParametersModel parametersModel, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(parametersModel);
+            return GetAsync<FinancialReportModel>(parameters, cancellationToken);
+        }
     }
 }
