@@ -15,13 +15,13 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<OverviewReportModel> OverviewAsync(OverviewReportParametersModel parametersModel, CancellationToken cancellationToken =default)
         {
-            var parameters = new UriParameters(parametersModel);
+            var parameters = new UriParameters(["overview"], parametersModel);
             return GetAsync<OverviewReportModel>(parameters, cancellationToken);
         }
 
         public Task<FinancialReportModel> FinancialAsync(FinancialReportParametersModel parametersModel, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(parametersModel);
+            var parameters = new UriParameters(["financial"],parametersModel);
             return GetAsync<FinancialReportModel>(parameters, cancellationToken);
         }
     }
