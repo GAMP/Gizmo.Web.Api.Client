@@ -1,6 +1,7 @@
 ﻿using Gizmo.Web.Api.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 
 namespace Gizmo.Web.Api.Clients
@@ -17,9 +18,9 @@ namespace Gizmo.Web.Api.Clients
         /// </summary>
         /// <param name="httpStatusCode">Http status code.</param>
         /// <param name="errorMessage">Error message.</param>
-        public WebApiClientException(HttpStatusCode httpStatusCode, string errorMessage) : this(httpStatusCode, errorMessage, null, null, null, null)
+        public WebApiClientException(HttpStatusCode httpStatusCode, string errorMessage) :
+            this(httpStatusCode, errorMessage, null, null, null, null)
         {
-
         }
 
         /// <summary>
@@ -33,18 +34,18 @@ namespace Gizmo.Web.Api.Clients
         /// <param name="errorCodeReadable">Error code in human readable form.</param>
         public WebApiClientException(HttpStatusCode httpStatusCode,
             string errorMessage,
-            int? errorCodeType,
-            string errorCodeTypeReadable,
-            int? errorCode,
-            string errorCodeReadable,
-            IEnumerable<WebApiErrorBase> errors = default) : base(errorMessage)
+            int? errorCodeType = default,
+            string? errorCodeTypeReadable = default,
+            int? errorCode = default,
+            string? errorCodeReadable = default,
+            IEnumerable<WebApiErrorBase>? errors = default) : base(errorMessage)
         {
             HttpStatusCode = httpStatusCode;
             ErrorCodeType = errorCodeType;
             ErrorCodeTypeReadable = errorCodeTypeReadable;
             ErrorCode = errorCode;
             ErrorCodeRedable = errorCodeReadable;
-            Errors = errors;
+            Errors = errors ?? Enumerable.Empty<WebApiError>();
         }
 
         #endregion
@@ -70,7 +71,7 @@ namespace Gizmo.Web.Api.Clients
         /// <summary>
         /// Error code type in human readable form.
         /// </summary>
-        public string ErrorCodeTypeReadable
+        public string? ErrorCodeTypeReadable
         {
             get; init;
         }
@@ -86,7 +87,7 @@ namespace Gizmo.Web.Api.Clients
         /// <summary>
         /// Error code in human readable form.
         /// </summary>
-        public string ErrorCodeRedable
+        public string? ErrorCodeRedable
         {
             get; init;
         }
@@ -96,7 +97,7 @@ namespace Gizmo.Web.Api.Clients
         /// </summary>
         public IEnumerable<WebApiErrorBase> Errors
         {
-            get;init;
+            get; init;
         }
 
         #endregion

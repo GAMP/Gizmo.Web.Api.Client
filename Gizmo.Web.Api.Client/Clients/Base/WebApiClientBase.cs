@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 
 using System;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
@@ -137,6 +138,20 @@ namespace Gizmo.Web.Api.Clients
                 }
             }
         }
+        protected async Task PostContentCopyAsync(IUriParameters parameters, object? content, Stream stream, CancellationToken ct = default)
+        {
+            var uri = CreateRequestUri(parameters);
+            using var httpContent = await CreateContentAsync(content, ct);
+
+            using (var httpMessage = CreateHttpRequestMessage(uri, HttpMethod.Post, httpContent))
+            {
+                using (var responseMessage = await HttpClient.SendAsync(httpMessage, HttpCompletionOption.ResponseHeadersRead, ct).ConfigureAwait(false))
+                {
+                    await ThrowApiExceptionIfRequiredAsync(responseMessage, ct);
+                    await responseMessage.Content.CopyToAsync(stream, ct);
+                }
+            }
+        }
         #endregion
 
         #region DELETE
@@ -202,7 +217,7 @@ namespace Gizmo.Web.Api.Clients
             try
             {
                 //create content stream
-                using var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync();
+                using var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync(ct);
 
                 //get our content headers
                 var contentHeaders = httpResponseMessage.Content.Headers;
@@ -223,7 +238,7 @@ namespace Gizmo.Web.Api.Clients
         /// Throws appropriate exception based on HTTP status code and error response.
         /// </summary>
         /// <param name="httpResponseMessage">Http response message.</param>
-        private async Task ThrowApiExceptionIfRequiredAsync(HttpResponseMessage httpResponseMessage, CancellationToken ct)
+        protected async Task ThrowApiExceptionIfRequiredAsync(HttpResponseMessage httpResponseMessage, CancellationToken ct)
         {
             //check status code
             //this block will determine if operation is successful and can proceed
@@ -240,9 +255,9 @@ namespace Gizmo.Web.Api.Clients
                         //in case responses are not wrapped we have no way of obtaining extended error information
                         goto default;
                     }
-                    break;                    
+                    break;
                 default:
-                    throw new WebApiClientException(httpResponseMessage.StatusCode, httpResponseMessage.ReasonPhrase);
+                    throw new WebApiClientException(httpResponseMessage.StatusCode, httpResponseMessage.ReasonPhrase ?? string.Empty);
             }
 
             //we should only read content stream when there is an serialized response expected
@@ -252,7 +267,7 @@ namespace Gizmo.Web.Api.Clients
             try
             {
                 //once we reached this code block we expect the response to contain an serialized payload
-                using var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync();
+                using var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync(ct);
 
                 //deserialize error response
                 var errorResponse = await Serializer.DeserializeAsync<WebApiErrorResponse>(contentStream, ct);
@@ -317,7 +332,7 @@ namespace Gizmo.Web.Api.Clients
         /// </summary>
         /// <param name="data">Content object.</param>
         /// <returns>HttpContent.</returns>
-        private ValueTask<HttpContent> CreateContentAsync<T>(T? data, CancellationToken ct)
+        protected ValueTask<HttpContent> CreateContentAsync<T>(T? data, CancellationToken ct)
         {
             //allow null object , this will be represented with empty content
             if (data == null)
