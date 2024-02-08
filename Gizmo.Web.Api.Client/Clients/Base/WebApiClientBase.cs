@@ -33,6 +33,8 @@ namespace Gizmo.Web.Api.Clients
             Options = options.Value;
         }
 
+        private const string DEFAULT_HTTP_ERROR_MESSAGE = "Unknown error";
+
         #region PROPERTIES
 
         /// <summary>
@@ -186,6 +188,9 @@ namespace Gizmo.Web.Api.Clients
             if (routeAttribute == null)
                 throw new ArgumentNullException("Route attribute is not specified for the client.", nameof(routeAttribute));
 
+            if (HttpClient.BaseAddress == null)
+                throw new ArgumentNullException("Http client base address not set.");
+
             var uriBuilder = new UriBuilder(HttpClient.BaseAddress.AbsoluteUri);
 
             if (requestParameters.Query != null)
@@ -223,7 +228,7 @@ namespace Gizmo.Web.Api.Clients
                 var contentHeaders = httpResponseMessage.Content.Headers;
 
                 //deserialize the response
-                return await Serializer.DeserializeAsync<TResult>(contentStream, ct);
+                return (await Serializer.DeserializeAsync<TResult>(contentStream, ct))!; //TODO :TResult should be marked nullable
             }
             catch
             {
@@ -257,7 +262,8 @@ namespace Gizmo.Web.Api.Clients
                     }
                     break;
                 default:
-                    throw new WebApiClientException(httpResponseMessage.StatusCode, httpResponseMessage.ReasonPhrase ?? string.Empty);
+                    ThrowExceptionForStatusCode(httpResponseMessage.StatusCode, httpResponseMessage.ReasonPhrase);
+                    break;
             }
 
             //we should only read content stream when there is an serialized response expected
@@ -272,10 +278,16 @@ namespace Gizmo.Web.Api.Clients
                 //deserialize error response
                 var errorResponse = await Serializer.DeserializeAsync<WebApiErrorResponse>(contentStream, ct);
 
+                //throw generic cleint exception since no information where provided in response
+                //at this stage we dont have any api response nor error message, pass null message to generic exception handler so default error message would be used
+                if (errorResponse == null)
+                    ThrowExceptionForStatusCode(httpResponseMessage.StatusCode, null);
+                    
+
                 //based on the error response we should build appropriate exception
                 //for now we can throw the generic webapiclientexception,
                 //in the future we could have mappings of error response to other exception types
-                ThrowExceptionForResponse(errorResponse);
+                ThrowExceptionForResponse(errorResponse!);
             }
             catch
             {
@@ -312,7 +324,7 @@ namespace Gizmo.Web.Api.Clients
         /// Throws appropriate exception based on web api response object.
         /// </summary>
         /// <param name="errorResponse">Web api response object.</param>
-        private void ThrowExceptionForResponse(WebApiErrorResponse errorResponse)
+        private static void ThrowExceptionForResponse(WebApiErrorResponse errorResponse)
         {
             if (errorResponse == null)
                 throw new ArgumentNullException(nameof(errorResponse));
@@ -325,6 +337,21 @@ namespace Gizmo.Web.Api.Clients
                 errorResponse.ErrorCode,
                 errorResponse.ErrorCodeReadable,
                 errorResponse.Errors);
+        }
+
+        /// <summary>
+        /// Throws appropriate exception in cases where api response wehre not provided.
+        /// </summary>
+        /// <param name="httpStatusCode">Http status code.</param>
+        /// <param name="message">Error message.</param>
+        /// <exception cref="WebApiClientException"></exception>
+        /// <remarks>
+        /// This can occur in cases where server does not respond with api response, for an example if we hit some endpoint that does not produce it or other internal server error occurs.
+        /// </remarks>
+        private static void ThrowExceptionForStatusCode(HttpStatusCode httpStatusCode, string? message)
+        {
+            message ??= DEFAULT_HTTP_ERROR_MESSAGE; //use default message if one is not provided
+            throw new WebApiClientException(httpStatusCode, message);
         }
 
         /// <summary>

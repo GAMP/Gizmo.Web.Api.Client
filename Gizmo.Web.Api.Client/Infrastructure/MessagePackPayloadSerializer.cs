@@ -21,7 +21,7 @@ namespace Gizmo.Web.Api.Clients
 
         #region FIELDS
 
-        private static readonly MediaTypeHeaderValue mediaTypeHeaderValue = new(MimeType.MSGPACK);
+        private static readonly MediaTypeHeaderValue MediaTypeHeaderValue = new(MimeType.MSGPACK);
 
         #endregion
 
@@ -40,15 +40,15 @@ namespace Gizmo.Web.Api.Clients
 
         #region IPayloadSerializer
 
-        public ValueTask<T> DeserializeAsync<T>(Stream stream, CancellationToken ct)
+        public ValueTask<T?> DeserializeAsync<T>(Stream stream, CancellationToken ct)
         {
-            return MessagePackSerializer.DeserializeAsync<T>(stream, SerializerOptions.Value.MessagePackSerializerOptions, ct);
+            return MessagePackSerializer.DeserializeAsync<T?>(stream, SerializerOptions.Value.MessagePackSerializerOptions, ct);
         }
 
         public async ValueTask<HttpContent> CreateContentAsync<T>(T data, MediaTypeHeaderValue? mediaType = null, CancellationToken ct = default)
         {
             //use default media type if one not specified
-            mediaType ??= mediaTypeHeaderValue;
+            mediaType ??= MediaTypeHeaderValue;
             
             //create memory stream
             var stream = new MemoryStream();

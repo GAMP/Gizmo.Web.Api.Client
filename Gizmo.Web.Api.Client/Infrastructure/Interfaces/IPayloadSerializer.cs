@@ -34,7 +34,7 @@ namespace Gizmo.Web.Api.Clients
         /// <param name="stream">Payload stream.</param>
         /// <param name="ct">Cancellation token.</param>
         /// <returns>Deserialized object.</returns>
-        ValueTask<T> DeserializeAsync<T>(Stream stream, CancellationToken ct = default);
+        ValueTask<T?> DeserializeAsync<T>(Stream stream, CancellationToken ct = default);
 
         /// <summary>
         /// Creates Http Content object.

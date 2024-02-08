@@ -41,9 +41,9 @@ namespace Gizmo.Web.Api.Clients
 
         #region IPayloadSerializer
 
-        public ValueTask<T> DeserializeAsync<T>(Stream stream, CancellationToken ct)
+        public ValueTask<T?> DeserializeAsync<T>(Stream stream, CancellationToken ct)
         {
-            return JsonSerializer.DeserializeAsync<T>(stream, SerializerOptions.Value.JsonSerializerOptions, ct);
+            return JsonSerializer.DeserializeAsync<T?>(stream, SerializerOptions.Value.JsonSerializerOptions, ct);
         }
 
         public async ValueTask<HttpContent> CreateContentAsync<T>(T data, MediaTypeHeaderValue? mediaType = null, CancellationToken ct = default)
