@@ -8,13 +8,13 @@ using Microsoft.Extensions.Options;
 namespace Gizmo.Web.Api.Clients
 {
     /// <summary>
-    /// Store options web api client.
+    /// Options web api client.
     /// </summary>
-    [WebApiRoute("api/v2/storeoptions")]
-    public sealed class StoreOptionsWebApiClient : WebApiClientBase
+    [WebApiRoute("api/v2/options")]
+    public sealed class OptionsWebApiClient : WebApiClientBase
     {
         /// <inheritdoc cref="WebApiClientBase(HttpClient, IOptions{WebApiClientOptions}, IPayloadSerializerProvider)"/>
-        public StoreOptionsWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :
+        public OptionsWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :
           base(httpClient, options, payloadSerializerProvider)
         {
         }
