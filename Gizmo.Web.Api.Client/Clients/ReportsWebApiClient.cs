@@ -43,21 +43,15 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<UserReportModel>(parameters, cancellationToken);
         }
 
-        public Task<ProductsLogReportModel> UserAsync(ProductsLogReportParametersModel parametersModel, CancellationToken cancellationToken = default)
-        {
-            var parameters = new UriParameters(["products"], parametersModel);
-            return GetAsync<ProductsLogReportModel>(parameters, cancellationToken);
-        }
-
         public Task<ProductsReportModel> ProductsAsync(ProductsReportParametersModel parametersModel, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["users"], parametersModel);
+            var parameters = new UriParameters(["products"], parametersModel);
             return GetAsync<ProductsReportModel>(parameters, cancellationToken);
         }
 
         public Task<ProductsLogReportModel> ProductsLogAsync(ProductsLogReportParametersModel parametersModel, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["user"], parametersModel);
+            var parameters = new UriParameters(["productslog"], parametersModel);
             return GetAsync<ProductsLogReportModel>(parameters, cancellationToken);
         }
 
