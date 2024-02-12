@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Gizmo.Server.Options;
 using Gizmo.Web.Api.Models;
 using Microsoft.Extensions.Options;
 
@@ -27,7 +28,7 @@ namespace Gizmo.Web.Api.Clients
         /// <returns>Options read pack.</returns>
         public Task<StoreOptionsReadPack> ReadAsync(string optionsType, CancellationToken cancellationToken = default)
         {
-            var queryParameters = new Dictionary<string, string>() { { "optionsType" , optionsType } };
+            var queryParameters = new Dictionary<string, string>() { { "optionsType", optionsType } };
             var parameters = new UriParameters([], queryParameters);
             return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
         }
@@ -41,6 +42,42 @@ namespace Gizmo.Web.Api.Clients
         public Task<UpdateResult> WriteAsync(StoreOptionsWritePack storeOptionsWrite, CancellationToken cancellationToken = default)
         {
             return PostAsync<UpdateResult>(UriParameters.Empty, storeOptionsWrite, cancellationToken);
+        }
+
+        public Task<GeneralOptions> GeneralAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["general"]);
+            return GetAsync<GeneralOptions>(parameters, cancellationToken);
+        }
+
+        public Task<StoreOptionsReadPack> GeneralPackAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["general", "pack"]);
+            return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
+        }
+
+        public Task<CurrencyOptions> CurrencyAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["currency"]);
+            return GetAsync<CurrencyOptions>(parameters, cancellationToken);
+        }
+
+        public Task<StoreOptionsReadPack> CurrencyPackAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["currency", "pack"]);
+            return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
+        }
+
+        public Task<BusinessOptions> BusinessAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["business"]);
+            return GetAsync<BusinessOptions>(parameters, cancellationToken);
+        }
+
+        public Task<StoreOptionsReadPack> BusinessPackAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["business", "pack"]);
+            return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
         }
     }
 }

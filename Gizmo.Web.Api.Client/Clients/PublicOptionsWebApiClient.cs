@@ -20,13 +20,13 @@ namespace Gizmo.Web.Api.Clients
         {
         }
 
-        public Task<GeneralOptions> GetGeneralAsync(CancellationToken cancellationToken = default)
+        public Task<GeneralOptions> GeneralAsync(CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["general"]);
             return GetAsync<GeneralOptions>(parameters, cancellationToken);
         }
 
-        public Task<StoreOptionsReadPack> GetGeneralPackAsync(CancellationToken cancellationToken = default)
+        public Task<StoreOptionsReadPack> GeneralPackAsync(CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["general","pack"]);
             return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
