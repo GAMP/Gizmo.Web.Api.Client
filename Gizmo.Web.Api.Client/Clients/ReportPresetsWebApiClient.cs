@@ -14,40 +14,52 @@ namespace Gizmo.Web.Api.Clients
         {
         }
 
-        public Task<PagedList<ReportPresetModel>> GetAsync(ReportPresetFilter filter, CancellationToken ct = default)
+        public async Task<PagedList<ReportPresetModel>> GetAsync(ReportPresetFilter filter, CancellationToken ct = default)
         {
             var parameters = new UriParameters(filter);
-            return GetAsync<PagedList<ReportPresetModel>>(parameters, ct);
+            return await GetAsync<PagedList<ReportPresetModel>>(parameters, ct).ConfigureAwait(false);
         }
 
-        public Task<ReportPresetModel> GetAsync(int id, CancellationToken ct = default)
+        public async Task<ReportPresetModel> GetAsync(int id, CancellationToken ct = default)
         {
             var parameters = new UriParameters(id);
-            return GetAsync<ReportPresetModel>(parameters, ct);
+            return await GetAsync<ReportPresetModel>(parameters, ct).ConfigureAwait(false);
         }
 
-        public Task<CreateResult> CreateAsync(ReportPresetModelCreate model, CancellationToken ct = default)
+        public async Task<CreateResult> CreateAsync(ReportPresetModelCreate model, CancellationToken ct = default)
         {
             var parameters = new UriParameters();
-            return PostAsync<CreateResult>(parameters, model, ct);
+            return await PostAsync<CreateResult>(parameters, model, ct).ConfigureAwait(false);
         }
 
-        public Task<UpdateResult> UpdateAsync(ReportPresetModelUpdate model, CancellationToken ct = default)
+        public async Task<UpdateResult> UpdateAsync(ReportPresetModelUpdate model, CancellationToken ct = default)
         {
             var parameters = new UriParameters();
-            return PutAsync<UpdateResult>(parameters, model, ct);
+            return await PutAsync<UpdateResult>(parameters, model, ct).ConfigureAwait(false);
         }
 
-        public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
+        public async Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
         {
             var parameters = new UriParameters(id);
-            return DeleteAsync<DeleteResult>(parameters, ct);
+            return await DeleteAsync<DeleteResult>(parameters, ct).ConfigureAwait(false);
         }
 
-        public async Task SetDisplayOrderAsync(int id, int displayOrder, CancellationToken cancellationToken = default)
+        public async Task<UpdateResult> SetDisplayOrderAsync(int id, int displayOrder, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters([id,"displayOrder", displayOrder]);
-            await PutAsync<UpdateResult>(parameters, null, cancellationToken);
+            var parameters = new UriParameters([id, "displayOrder", displayOrder]);
+            return await PutAsync<UpdateResult>(parameters, null, cancellationToken).ConfigureAwait(false);
+        }
+
+        public async Task<UpdateResult> RenameAsync(int id, string name, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "name", name]);
+            return await PutAsync<UpdateResult>(parameters, null, cancellationToken).ConfigureAwait(false);
+        }
+
+        public async Task<ExistResult> NameExistAsync(string name, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["name", name, "exist"]);
+            return await GetAsync<ExistResult>(parameters, cancellationToken).ConfigureAwait(false);
         }
     }
 }
