@@ -17,7 +17,7 @@ namespace Gizmo.Web.Api.Clients.Builder
         IWebApiClientBuilder ConfigurePrimaryHttpMessageHandler<THandler>(Func<THandler> configure) where THandler : HttpMessageHandler;
 
         /// <summary>
-        /// Adds delegating current UI culture delegating handler.
+        /// Adds current UI culture delegating handler.
         /// </summary>
         /// <remarks>
         /// The handler will automatically add <see cref="CultureInfo.CurrentUICulture"/> value to AcceptLanguage header in <see cref="HttpRequestMessage.Headers"/>. 
