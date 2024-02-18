@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Net.Http;
 
 namespace Gizmo.Web.Api.Clients.Builder
@@ -14,5 +15,14 @@ namespace Gizmo.Web.Api.Clients.Builder
         IWebApiClientBuilder WithRetryPolicyHandler(int retryCount);
         IWebApiClientBuilder WithTimeoutPolicyHandler(int timeoutSeconds);
         IWebApiClientBuilder ConfigurePrimaryHttpMessageHandler<THandler>(Func<THandler> configure) where THandler : HttpMessageHandler;
+
+        /// <summary>
+        /// Adds delegating current UI culture delegating handler.
+        /// </summary>
+        /// <remarks>
+        /// The handler will automatically add <see cref="CultureInfo.CurrentUICulture"/> value to AcceptLanguage header in <see cref="HttpRequestMessage.Headers"/>. 
+        /// </remarks>
+        /// <returns>WebApiClient builder.</returns>
+        IWebApiClientBuilder AddCurrentUICultureDelegatingHandler();
     }
 }

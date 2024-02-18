@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-
+using Gizmo.Web.Api.Client;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -64,12 +64,12 @@ namespace Gizmo.Web.Api.Clients.Builder
 
         public IWebApiClientBuilder WithMessageHandler<THandler>() where THandler : DelegatingHandler
         {
-            foreach(var httpClient in _httpClientBuilders)
+            foreach (var httpClient in _httpClientBuilders)
                 httpClient.AddHttpMessageHandler<THandler>();
 
             return this;
         }
-        
+
         public IWebApiClientBuilder WithAdditionalOptions(string clientName, Action<WebApiClientOptions> options)
         {
             _services.Configure(clientName, options);
@@ -102,6 +102,16 @@ namespace Gizmo.Web.Api.Clients.Builder
         {
             foreach (var httpClient in _httpClientBuilders)
                 httpClient.ConfigurePrimaryHttpMessageHandler(configure);
+
+            return this;
+        }
+
+        public IWebApiClientBuilder AddCurrentUICultureDelegatingHandler()
+        {
+            _services.AddTransient<CurrentUICultureDelegatingHandler>();
+
+            foreach (var httpClient in _httpClientBuilders)
+                httpClient.AddHttpMessageHandler((sp) => sp.GetRequiredService<CurrentUICultureDelegatingHandler>());
 
             return this;
         }
