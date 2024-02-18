@@ -58,7 +58,7 @@ namespace Gizmo.Web.Api.Clients.Builder
                     //invoke the method
                     var httpClientBuilder = (IHttpClientBuilder)httpMethod
                         .MakeGenericMethod(clientType)
-                        .Invoke(null, new object[] { services, clientName, configureClient });
+                        .Invoke(null, new object[] { services, clientName, configureClient })!;
                   
                     httpClientBuilders.Add(httpClientBuilder);
                 }
@@ -113,7 +113,7 @@ namespace Gizmo.Web.Api.Clients.Builder
                         //invoke the method
                         var httpClientBuilder = (IHttpClientBuilder)httpMethod
                             .MakeGenericMethod(clientType)
-                            .Invoke(null, new object[] { services, clientName, configureClient });
+                            .Invoke(null, new object[] { services, clientName, configureClient })!;
 
                         httpClientBuilders.Add(httpClientBuilder);
                     }
