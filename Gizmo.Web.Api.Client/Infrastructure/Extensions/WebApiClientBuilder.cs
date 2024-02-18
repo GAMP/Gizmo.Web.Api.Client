@@ -111,7 +111,7 @@ namespace Gizmo.Web.Api.Clients.Builder
             _services.AddTransient<CurrentUICultureDelegatingHandler>();
 
             foreach (var httpClient in _httpClientBuilders)
-                httpClient.AddHttpMessageHandler((sp) => sp.GetRequiredService<CurrentUICultureDelegatingHandler>());
+                httpClient.AddHttpMessageHandler<CurrentUICultureDelegatingHandler>();
 
             return this;
         }
