@@ -31,10 +31,10 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<HostUsageReportModel>(parameters, cancellationToken);
         }
 
-        public Task<UsersReportModel> UsersAsync(UsersReportParametersModel parametersModel, CancellationToken cancellationToken = default)
+        public Task<TopUsersReportModel> UsersAsync(UsersReportParametersModel parametersModel, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["users"], parametersModel);
-            return GetAsync<UsersReportModel>(parameters, cancellationToken);
+            return GetAsync<TopUsersReportModel>(parameters, cancellationToken);
         }
 
         public Task<UserReportModel> UserAsync(UserReportParametersModel parametersModel, CancellationToken cancellationToken = default)
@@ -61,10 +61,10 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<StockReportModel>(parameters, cancellationToken);
         }
 
-        public Task<TransactionsReportModel> TransactionsLogAsync(TransactionsLogReportParametersModel parametersModel, CancellationToken cancellationToken = default)
+        public Task<TransactionsLogReportModel> TransactionsLogAsync(TransactionsLogReportParametersModel parametersModel, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["transactions"], parametersModel);
-            return GetAsync<TransactionsReportModel>(parameters, cancellationToken);
+            return GetAsync<TransactionsLogReportModel>(parameters, cancellationToken);
         }
 
         public Task<ShiftsLogReportModel> ShiftsLogAsync(ShiftsLogReportParametersModel parametersModel, CancellationToken cancellationToken = default)
@@ -89,6 +89,12 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters(["zlog"], parametersModel);
             return GetAsync<ZLogReportModel>(parameters, cancellationToken);
+        }
+
+        public Task<ApplicationReportModel> ApplicationAsync(ApplicationReportParametersModel parametersModel, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["application"], parametersModel);
+            return GetAsync<ApplicationReportModel>(parameters, cancellationToken);
         }
 
         public Task<ApplicationsReportModel> ApplicationsAsync(ApplicationsReportParametersModel parametersModel, CancellationToken cancellationToken = default)
