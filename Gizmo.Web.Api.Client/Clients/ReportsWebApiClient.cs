@@ -31,7 +31,7 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<HostUsageReportModel>(parameters, cancellationToken);
         }
 
-        public Task<TopUsersReportModel> UsersAsync(UsersReportParametersModel parametersModel, CancellationToken cancellationToken = default)
+        public Task<TopUsersReportModel> UsersAsync(TopUsersReportParametersModel parametersModel, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["users"], parametersModel);
             return GetAsync<TopUsersReportModel>(parameters, cancellationToken);
