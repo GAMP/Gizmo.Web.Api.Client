@@ -27,13 +27,13 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<HostUsageReportModel> HostUsageAsync(HostUsageReportParametersModel parametersModel, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["hosts"], parametersModel);
+            var parameters = new UriParameters(["hostusage"], parametersModel);
             return GetAsync<HostUsageReportModel>(parameters, cancellationToken);
         }
 
         public Task<TopUsersReportModel> TopUsersAsync(TopUsersReportParametersModel parametersModel, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["users"], parametersModel);
+            var parameters = new UriParameters(["topusers"], parametersModel);
             return GetAsync<TopUsersReportModel>(parameters, cancellationToken);
         }
 
@@ -41,6 +41,12 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters(["user"], parametersModel);
             return GetAsync<UserReportModel>(parameters, cancellationToken);
+        }
+
+        public Task<ProductReportModel> ProductAsync(ProductReportParametersModel parametersModel, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["product"], parametersModel);
+            return GetAsync<ProductReportModel>(parameters, cancellationToken);
         }
 
         public Task<ProductsReportModel> ProductsAsync(ProductsReportParametersModel parametersModel, CancellationToken cancellationToken = default)
@@ -63,25 +69,31 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<TransactionsLogReportModel> TransactionsLogAsync(TransactionsLogReportParametersModel parametersModel, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["transactions"], parametersModel);
+            var parameters = new UriParameters(["transactionslog"], parametersModel);
             return GetAsync<TransactionsLogReportModel>(parameters, cancellationToken);
         }
 
         public Task<ShiftsLogReportModel> ShiftsLogAsync(ShiftsLogReportParametersModel parametersModel, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["shifts"], parametersModel);
+            var parameters = new UriParameters(["shiftslog"], parametersModel);
             return GetAsync<ShiftsLogReportModel>(parameters, cancellationToken);
         }
 
         public Task<AssetsLogReportModel> AssetsLogAsync(AssetsLogReportParametersModel parametersModel, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["assets"], parametersModel);
+            var parameters = new UriParameters(["assetslog"], parametersModel);
             return GetAsync<AssetsLogReportModel>(parameters, cancellationToken);
+        }
+
+        public Task<InvoiceReportModel> InvoiceAsync(InvoiceReportParametersModel parametersModel, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["invoice"], parametersModel);
+            return GetAsync<InvoiceReportModel>(parameters, cancellationToken);
         }
 
         public Task<InvoicesLogReportModel> InvoicesLogAsync(InvoicesLogReportParametersModel parametersModel, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["invoices"], parametersModel);
+            var parameters = new UriParameters(["invoiceslog"], parametersModel);
             return GetAsync<InvoicesLogReportModel>(parameters, cancellationToken);
         }
 
@@ -89,6 +101,12 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters(["zlog"], parametersModel);
             return GetAsync<ZLogReportModel>(parameters, cancellationToken);
+        }
+
+        public Task<ZReportModel> ZAsync(ZReportParametersModel parametersModel, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["z"], parametersModel);
+            return GetAsync<ZReportModel>(parameters, cancellationToken);
         }
 
         public Task<ApplicationReportModel> ApplicationAsync(ApplicationReportParametersModel parametersModel, CancellationToken cancellationToken = default)
@@ -105,8 +123,14 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<SessionsLogReportModel> SessionsLogAsync(SessionsLogReportParametersModel parametersModel, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["sessions"], parametersModel);
+            var parameters = new UriParameters(["sessionslog"], parametersModel);
             return GetAsync<SessionsLogReportModel>(parameters, cancellationToken);
+        }
+
+        public Task<LicenseReportModel> LicenseAsync(LicenseReportParametersModel parametersModel, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["license"], parametersModel);
+            return GetAsync<LicenseReportModel>(parameters, cancellationToken);
         }
 
         public Task<LicensesReportModel> LicensesAsync(LicensesReportParametersModel parametersModel, CancellationToken cancellationToken = default)
@@ -117,8 +141,14 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<OrdersLogReportModel> OrdersLogAsync(OrdersLogReportParametersModel parametersModel, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["orders"], parametersModel);
+            var parameters = new UriParameters(["orderslog"], parametersModel);
             return GetAsync<OrdersLogReportModel>(parameters, cancellationToken);
+        }
+
+        public Task<OrdersStatisticsReportModel> OrdersStatisticsAsync(OrdersStatisticsReportParametersModel parametersModel, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["ordersstatistics"], parametersModel);
+            return GetAsync<OrdersStatisticsReportModel>(parameters, cancellationToken);
         }
     }
 }
