@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Gizmo.Web.Api.Client
+namespace Gizmo.Web.Api.Clients
 {
     /// <summary>
     /// Delegating handler that adds current culture to the http requests.
