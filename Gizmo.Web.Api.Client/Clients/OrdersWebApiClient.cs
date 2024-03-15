@@ -11,15 +11,11 @@ namespace Gizmo.Web.Api.Clients
     [WebApiRoute("api/v2/orders")]
     public sealed class OrdersWebApiClient : WebApiClientBase
     {
-        #region CONSTRUCTOR
         public OrdersWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :
             base(httpClient, options, payloadSerializerProvider)
         {
 
         }
-        #endregion
-
-        #region FUNCTIONS
 
         public Task<PagedList<OrderModel>> GetAsync(OrdersFilter filter, CancellationToken ct = default)
         {
@@ -81,42 +77,47 @@ namespace Gizmo.Web.Api.Clients
             return PostAsync<CreateResult>(parameters, null, ct);
         }
 
-        public Task<UpdateResult> CancelOrderAsync(int id, CancellationToken ct = default)
+        public Task<UpdateResult> AcceptAsync(int id, CancellationToken ct = default)
         {
-            var parameters = new UriParameters(new object[] { id, "cancel" });
+            var parameters = new UriParameters([id, "accept"]);
             return PutAsync<UpdateResult>(parameters, null, ct);
         }
 
-        public Task<UpdateResult> CompleteOrderAsync(int id, CancellationToken ct = default)
+        public Task<UpdateResult> CancelAsync(int id, CancellationToken ct = default)
         {
-            var parameters = new UriParameters(new object[] { id, "complete" });
+            var parameters = new UriParameters([id, "cancel"]);
             return PutAsync<UpdateResult>(parameters, null, ct);
         }
 
-        public Task<GetResult<bool>> GetOrderDeliveredStatusAsync(int id, CancellationToken ct = default)
+        public Task<UpdateResult> CompleteAsync(int id, CancellationToken ct = default)
         {
-            var parameters = new UriParameters(new object[] { id, "delivered" });
-            return GetAsync<GetResult<bool>>(parameters, ct);
-        }
-
-        public Task<UpdateResult> SetOrderDeliveredStatusAsync(int id, CancellationToken ct = default)
-        {
-            var parameters = new UriParameters(new object[] { id, "delivered" });
+            var parameters = new UriParameters([id, "complete"]);
             return PutAsync<UpdateResult>(parameters, null, ct);
         }
 
-        public Task<OrderLineDeliveredStatusModel> GetOrderLineDeliveredStatusAsync(int id, int orderLineId, CancellationToken ct = default)
+        public Task<OrderDeliveredStatusModel> DeliveredAsync(int id, CancellationToken ct = default)
         {
-            var parameters = new UriParameters(new object[] { id, "orderlines", orderLineId, "delivered" });
+            var parameters = new UriParameters([id, "delivered"]);
+            return GetAsync<OrderDeliveredStatusModel>(parameters, ct);
+        }
+
+        public Task<UpdateResult> DeliverAsync(int id, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters([id, "delivered"]);
+            return PutAsync<UpdateResult>(parameters, null, ct);
+        }
+
+        public Task<OrderLineDeliveredStatusModel> OrderLineDeliveredAsync(int id, int orderLineId, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters([id, "orderlines", orderLineId, "delivered"]);
             return GetAsync<OrderLineDeliveredStatusModel>(parameters, ct);
         }
 
-        public Task<OrderLineDeliveredStatusModel> SetOrderLineDeliveredQuantityAsync(int id, int orderLineId, OrderLineDeliveredStatusModelUpdate model, CancellationToken ct = default)
+        public Task<OrderLineDeliveredStatusModel> OrderLineDeliverAsync(int id, int orderLineId, OrderLineDeliveredStatusModelUpdate model, CancellationToken ct = default)
         {
-            var parameters = new UriParameters(new object[] { id, "orderlines", orderLineId, "delivered" });
+            var parameters = new UriParameters([id, "orderlines", orderLineId, "delivered"]);
             return PutAsync<OrderLineDeliveredStatusModel>(parameters, model, ct);
         }
 
-        #endregion
     }
 }
