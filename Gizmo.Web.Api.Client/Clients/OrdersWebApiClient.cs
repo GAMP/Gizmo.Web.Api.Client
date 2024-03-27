@@ -135,5 +135,16 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters(["product", productId, "user", userId, "quantity",  quantity, "price"]);
             return GetAsync<ProductPriceRequestResponseModel>(parameters, cancellationToken);
         }
+
+        public Task<OrderInvoiceCreateResultModel> CreateAsync(OrderInvoiceModel model, CancellationToken cancellationToken = default)
+        {
+            return PostAsync<OrderInvoiceCreateResultModel>(UriParameters.Empty, model, cancellationToken);
+        }
+
+        public Task<OrderInvoiceCreateMultiResultModel> CreateAsync(OrderInvoiceCreateMultiModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["multi"]);
+            return PostAsync<OrderInvoiceCreateMultiResultModel>(parameters, model, cancellationToken);
+        }
     }
 }
