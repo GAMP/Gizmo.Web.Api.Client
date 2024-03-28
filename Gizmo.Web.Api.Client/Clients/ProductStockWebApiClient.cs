@@ -11,33 +11,45 @@ namespace Gizmo.Web.Api.Clients
     [WebApiRoute("api/v2/productstock")]
     public sealed class ProductStockWebApiClient : WebApiClientBase
     {
-        #region CONSTRUCTOR
         public ProductStockWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :
             base(httpClient, options, payloadSerializerProvider)
         {
         }
-        #endregion
 
-        #region FUNCTIONS
-
-        public Task<PagedList<ProductStockModel>> GetAsync(ProductsStockFilter filter, CancellationToken ct = default)
+        public async Task<PagedList<ProductStockModel>> GetAsync(ProductsStockFilter filter, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(filter);
-            return GetAsync<PagedList<ProductStockModel>>(parameters, ct);
+            return await GetAsync<PagedList<ProductStockModel>>(parameters, cancellationToken);
         }
 
-        public Task<UpdateResult> UpdateAsync(ProductStockModelUpdate model, CancellationToken ct = default)
+        public async Task<ProductStockModel> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters();
-            return PutAsync<UpdateResult>(parameters, model, ct);
+            var parameters = new UriParameters([id]);
+            return await GetAsync<ProductStockModel>(parameters, cancellationToken);
         }
 
-        public Task<ProductStockModel> GetByIdAsync(int id, CancellationToken ct = default)
+        public async Task<UpdateResult> SetAsync(int id, decimal amount, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(id);
-            return GetAsync<ProductStockModel>(parameters, ct);
+            var parameters = new UriParameters([id, "set", amount]);
+            return await PostAsync<UpdateResult>(parameters, null, cancellationToken);
         }
 
-        #endregion
+        public async Task<UpdateResult> AddAsync(int id, decimal amount, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "add", amount]);
+            return await PostAsync<UpdateResult>(parameters, null, cancellationToken);
+        }
+
+        public async Task<UpdateResult> RemoveAsync(int id, decimal amount, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "remove", amount]);
+            return await PostAsync<UpdateResult>(parameters, null, cancellationToken);
+        }
+
+        public async Task<UpdateResult> TransactionAsync(int id, ProductStockTransactionCreateModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "transaction"]);
+            return await PostAsync<UpdateResult>(parameters, model, cancellationToken);
+        }
     }
 }

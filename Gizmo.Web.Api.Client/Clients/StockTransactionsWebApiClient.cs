@@ -11,14 +11,10 @@ namespace Gizmo.Web.Api.Clients
     [WebApiRoute("api/v2/stocktransactions")]
     public sealed class StockTransactionsWebApiClient : WebApiClientBase
     {
-        #region CONSTRUCTOR
         public StockTransactionsWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :
             base(httpClient, options, payloadSerializerProvider)
         {
         }
-        #endregion
-
-        #region FUNCTIONS
 
         public Task<PagedList<StockTransactionModel>> GetAsync(StockTransactionsFilter filter, CancellationToken ct = default)
         {
@@ -30,8 +26,11 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters(id);
             return GetAsync<StockTransactionModel>(parameters, ct);
-        } 
-        
-        #endregion
+        }
+
+        public async Task<UpdateResult> TransactionAsync(StockTransactionCreateModel model, CancellationToken cancellationToken = default)
+        {
+            return await PostAsync<UpdateResult>(UriParameters.Empty, model, cancellationToken);
+        }
     }
 }
