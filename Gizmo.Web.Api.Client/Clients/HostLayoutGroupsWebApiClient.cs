@@ -46,10 +46,10 @@ namespace Gizmo.Web.Api.Clients
             return DeleteAsync<DeleteResult>(parameters, cancellationToken);
         }
 
-        public async Task<HostLayoutGroupLayoutModel> LayoutGetAsync(int id, int hostId, CancellationToken cancellationToken = default)
+        public async Task<HostLayoutModel> LayoutGetAsync(int id, int hostId, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "host", hostId, "layout"]);
-            return await GetAsync<HostLayoutGroupLayoutModel>(parameters, cancellationToken);
+            return await GetAsync<HostLayoutModel>(parameters, cancellationToken);
         }
 
         public async Task<IEnumerable<HostLayoutModel>> LayoutsAsync(int id, CancellationToken cancellationToken = default)
@@ -58,7 +58,7 @@ namespace Gizmo.Web.Api.Clients
             return await GetAsync<IEnumerable<HostLayoutModel>>(parameters, cancellationToken);
         }
 
-        public async Task<CreateResult> LayoutSetAsync(int id, int hostId, HostLayoutGroupLayoutModel model, CancellationToken cancellationToken = default)
+        public async Task<CreateResult> LayoutSetAsync(int id, int hostId, HostLayoutCreateUpdateModel model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "host", hostId, "layout"]);
             return await PostAsync<CreateResult>(parameters, model, cancellationToken);
