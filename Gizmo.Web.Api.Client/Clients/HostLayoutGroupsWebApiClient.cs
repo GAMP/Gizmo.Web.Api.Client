@@ -52,10 +52,10 @@ namespace Gizmo.Web.Api.Clients
             return await GetAsync<HostLayoutGroupLayoutModel>(parameters, cancellationToken);
         }
 
-        public async Task<IEnumerable<HostLayoutGroupLayoutModel>> LayoutsAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<HostLayoutModel>> LayoutsAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "layouts"]);
-            return await GetAsync<IEnumerable<HostLayoutGroupLayoutModel>>(parameters, cancellationToken);
+            return await GetAsync<IEnumerable<HostLayoutModel>>(parameters, cancellationToken);
         }
 
         public async Task<CreateResult> LayoutSetAsync(int id, int hostId, HostLayoutGroupLayoutModel model, CancellationToken cancellationToken = default)
