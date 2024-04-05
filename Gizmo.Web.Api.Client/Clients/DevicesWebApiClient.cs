@@ -11,112 +11,63 @@ namespace Gizmo.Web.Api.Clients
     [WebApiRoute("api/v2/devices")]
     public sealed class DevicesWebApiClient : WebApiClientBase
     {
-        #region CONSTRUCTOR
         public DevicesWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :
             base(httpClient, options, payloadSerializerProvider)
         {
         }
-        #endregion
 
-        #region GET
-
-        public Task<PagedList<DeviceModel>> GetAsync(DevicesFilter filter, CancellationToken ct = default)
+        public Task<PagedList<DeviceModel>> GetAsync(DevicesFilter filter, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(filter);
-            return GetAsync<PagedList<DeviceModel>>(parameters, ct);
+            return GetAsync<PagedList<DeviceModel>>(parameters, cancellationToken);
         }
 
-        #endregion
-
-        #region CREATE
-
-        public Task<CreateResult> CreateAsync(DeviceModelCreate model, CancellationToken ct = default)
+        public Task<CreateResult> CreateAsync(DeviceModelCreate model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters();
-            return PostAsync<CreateResult>(parameters, model, ct);
+            return PostAsync<CreateResult>(parameters, model, cancellationToken);
         }
-        
-        #endregion
 
-        #region UPDATE
-
-        public Task<UpdateResult> UpdateAsync(DeviceModelUpdate model, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateAsync(DeviceModelUpdate model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters();
-            return PutAsync<UpdateResult>(parameters, model, ct);
+            return PutAsync<UpdateResult>(parameters, model, cancellationToken);
         }
-        
-        #endregion
 
-        #region DELETE
-
-        public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
+        public Task<DeleteResult> DeleteAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(id);
-            return DeleteAsync<DeleteResult>(parameters, ct);
+            return DeleteAsync<DeleteResult>(parameters, cancellationToken);
         }
-        
-        #endregion
 
-        #region UNDELETE
-
-        public Task UndeleteAsync(int id, CancellationToken ct = default)
+        public Task EnableAsync(int id, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(new object[] {id, "undelete" });
-            return PutAsync<DeleteResult>(parameters, null, ct);
+            var parameters = new UriParameters([id, "enable"]);
+            return PutAsync<DeleteResult>(parameters, null, cancellationToken);
         }
-        
-        #endregion
-
-        #region ENABLE
-
-        public Task EnableAsync(int id, CancellationToken ct = default)
-        {
-            var parameters = new UriParameters(new object[] { id, "enable" });
-            return PutAsync<DeleteResult>(parameters, null, ct);
-        }
-        
-        #endregion
-
-        #region DISABLE
 
         public Task DisableAsync(int id, CancellationToken ct = default)
         {
-            var parameters = new UriParameters(new object[] { id, "disable" });
+            var parameters = new UriParameters([id, "disable"]);
             return PutAsync<DeleteResult>(parameters, null, ct);
         }
-        
-        #endregion
 
-
-        #region DEVICE HOST GET
-
-        public Task<PagedList<DeviceHostModel>> HostGetAsync(DeviceHostFilter filter, CancellationToken ct = default)
+        public Task<PagedList<DeviceHostModel>> DeviceHostGetAsync(DeviceHostFilter filter, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(new object[] { "hosts" }, filter);
-            return GetAsync<PagedList<DeviceHostModel>>(parameters, ct);
+            var parameters = new UriParameters(["hosts"], filter);
+            return GetAsync<PagedList<DeviceHostModel>>(parameters, cancellationToken);
         }
 
-        #endregion
-
-        #region HOST ADD
-
-        public Task<CreateResult> HostAddAsync(int deviceId, int hostId, CancellationToken ct = default)
+        public Task<CreateResult> DeviceHostAddAsync(int deviceId, int hostId, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(new object[] { deviceId, "host", hostId });
-            return PostAsync<CreateResult>(parameters, null, ct);
+            var parameters = new UriParameters([deviceId, "host", hostId]);
+            return PostAsync<CreateResult>(parameters, null, cancellationToken);
         }
 
-        #endregion
-
-        #region HOST REMOVE
-
-        public Task<DeleteResult> HostRemoveAsync(int deviceId,int hostId, CancellationToken ct = default)
+        public Task<DeleteResult> DeviceHostRemoveAsync(int deviceId, int hostId, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(new object[] { deviceId, "host", hostId });
-            return DeleteAsync<DeleteResult>(parameters, ct);
+            var parameters = new UriParameters([deviceId, "host", hostId]);
+            return DeleteAsync<DeleteResult>(parameters, cancellationToken);
         }
-        
-        #endregion
     }
 }
