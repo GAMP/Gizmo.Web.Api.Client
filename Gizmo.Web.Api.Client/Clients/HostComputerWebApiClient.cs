@@ -13,16 +13,16 @@ namespace Gizmo.Web.Api.Clients
         {
         }
 
-        public Task<byte[]> ScreenGetAsync(int id, ScreenCaptureParametersModel screenCaptureParameters,CancellationToken cancellationToken = default)
+        public Task<ScreenCaptureModel> ScreenGetAsync(int id, ScreenCaptureParametersModel screenCaptureParameters,CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "screen"],screenCaptureParameters);
-            return GetAsync<byte[]>(parameters, cancellationToken);
+            return GetAsync<ScreenCaptureModel>(parameters, cancellationToken);
         }
 
-        public Task<byte[]> ScreenLastGetAsync(int id, CancellationToken cancellationToken = default)
+        public Task<ScreenCaptureModel> ScreenLastGetAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "screen", "last"]);
-            return GetAsync<byte[]>(parameters, cancellationToken);
+            return GetAsync<ScreenCaptureModel>(parameters, cancellationToken);
         }
     }
 }
