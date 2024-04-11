@@ -17,10 +17,10 @@ namespace Gizmo.Web.Api.Clients
         {
         }
 
-        public Task<RemoteControlSessionModel> CreateSessionAsync(int hostId, CancellationToken ct = default)
+        public Task<RemoteControlSessionCreateResultModel> CreateSessionAsync(int hostId, CancellationToken ct = default)
         {
             var parameters = new UriParameters(["hosts", hostId, "session"]);
-            return GetAsync<RemoteControlSessionModel>(parameters, ct);
+            return GetAsync<RemoteControlSessionCreateResultModel>(parameters, ct);
         }
     }
 }
