@@ -5,7 +5,7 @@ using Gizmo.Web.Api.Models;
 using Microsoft.Extensions.Options;
 
 namespace Gizmo.Web.Api.Clients
-{    
+{
     [WebApiRoute("api/v2/hostcomputers")]
     public sealed class HostComputersWebApiClient : WebApiClientBase
     {
@@ -13,9 +13,9 @@ namespace Gizmo.Web.Api.Clients
         {
         }
 
-        public Task<ScreenCaptureModel> ScreenGetAsync(int id, ScreenCaptureParametersModel screenCaptureParameters,CancellationToken cancellationToken = default)
+        public Task<ScreenCaptureModel> ScreenGetAsync(int id, ScreenCaptureParametersModel screenCaptureParameters, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters([id, "screen"],screenCaptureParameters);
+            var parameters = new UriParameters([id, "screen"], screenCaptureParameters);
             return GetAsync<ScreenCaptureModel>(parameters, cancellationToken);
         }
 
@@ -23,6 +23,48 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters([id, "screen", "last"]);
             return GetAsync<ScreenCaptureModel>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> RebootAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "reboot"]);
+            return PostAsync<UpdateResult>(parameters, null, cancellationToken);
+        }
+
+        public Task<UpdateResult> ShutdownAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "shutdown"]);
+            return PostAsync<UpdateResult>(parameters, null, cancellationToken);
+        }
+
+        public Task<UpdateResult> InputLockAsync(int id, bool state, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "input", "lock", state]);
+            return PostAsync<UpdateResult>(parameters, null, cancellationToken);
+        }
+
+        public Task<UpdateResult> MaintenanceAsync(int id, bool state, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "maintenance", state]);
+            return PostAsync<UpdateResult>(parameters, null, cancellationToken);
+        }
+
+        public Task<UpdateResult> SecurityAsync(int id, bool state, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "security", state]);
+            return PostAsync<UpdateResult>(parameters, null, cancellationToken);
+        }
+
+        public Task<UpdateResult> OutOfOrderAsync(int id, bool state, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "outoforder", state]);
+            return PostAsync<UpdateResult>(parameters, null, cancellationToken);
+        }
+
+        public Task<UpdateResult> RestartClientAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "client", "restart"]);
+            return PostAsync<UpdateResult>(parameters, null, cancellationToken);
         }
     }
 }

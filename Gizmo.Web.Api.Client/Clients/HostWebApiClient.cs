@@ -73,5 +73,17 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters([id, "devices", deviceId]);
             return await DeleteAsync<DeleteResult>(parameters, cancellationToken);
         }
+
+        public Task<UpdateResult> LockAsync(int id, bool state, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "lock", state]);
+            return PostAsync<UpdateResult>(parameters, null, cancellationToken);
+        }
+
+        public Task<UpdateResult> OutOfOrderAsync(int id, bool state, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "outoforder", state]);
+            return PostAsync<UpdateResult>(parameters, null, cancellationToken);
+        }
     }
 }
