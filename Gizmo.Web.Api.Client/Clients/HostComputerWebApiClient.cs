@@ -43,10 +43,22 @@ namespace Gizmo.Web.Api.Clients
             return PostAsync<UpdateResult>(parameters, null, cancellationToken);
         }
 
+        public Task<bool> InputLockGetAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "input", "lock"]);
+            return GetAsync<bool>(parameters, cancellationToken);
+        }
+
         public Task<UpdateResult> MaintenanceAsync(int id, bool state, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "maintenance", state]);
             return PostAsync<UpdateResult>(parameters, null, cancellationToken);
+        }
+
+        public Task<bool> MaintenanceGetAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "maintenance"]);
+            return GetAsync<bool>(parameters, cancellationToken);
         }
 
         public Task<UpdateResult> SecurityAsync(int id, bool state, CancellationToken cancellationToken = default)
@@ -55,10 +67,22 @@ namespace Gizmo.Web.Api.Clients
             return PostAsync<UpdateResult>(parameters, null, cancellationToken);
         }
 
+        public Task<bool> SecurityGetAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "security"]);
+            return GetAsync<bool>(parameters, cancellationToken);
+        }
+
         public Task<UpdateResult> OutOfOrderAsync(int id, bool state, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "outoforder", state]);
             return PostAsync<UpdateResult>(parameters, null, cancellationToken);
+        }
+
+        public Task<bool> OutOfOrderGetAsync(int id, bool state, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "outoforder"]);
+            return GetAsync<bool>(parameters, cancellationToken);
         }
 
         public Task<UpdateResult> RestartClientAsync(int id, CancellationToken cancellationToken = default)
