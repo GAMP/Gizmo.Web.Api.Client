@@ -47,7 +47,7 @@ namespace Gizmo.Web.Api.Clients.Builder
                 //get type info
                 var typeInfo = clientType.GetTypeInfo();
 
-                //any type that inherits from web api client base added as singelton service
+                //any type that inherits from web api client base added as singleton service
                 if (typeInfo.BaseType == typeof(WebApiClientBase))
                 {
                     //check if the web api client is unsecure, in such cases it should not be added
@@ -58,7 +58,7 @@ namespace Gizmo.Web.Api.Clients.Builder
                     //invoke the method
                     var httpClientBuilder = (IHttpClientBuilder)httpMethod
                         .MakeGenericMethod(clientType)
-                        .Invoke(null, new object[] { services, clientName, configureClient })!;
+                        .Invoke(null, [services, clientName, configureClient])!;
                   
                     httpClientBuilders.Add(httpClientBuilder);
                 }
@@ -102,7 +102,7 @@ namespace Gizmo.Web.Api.Clients.Builder
                 //get type info
                 var typeInfo = clientType.GetTypeInfo();
 
-                //any type that inherits from web api client base added as singelton service
+                //any type that inherits from web api client base added as singleton service
                 if (typeInfo.BaseType == typeof(WebApiClientBase))
                 {
                     //check if the web api client is unsecure, only unsecured clients should be added
@@ -113,7 +113,7 @@ namespace Gizmo.Web.Api.Clients.Builder
                         //invoke the method
                         var httpClientBuilder = (IHttpClientBuilder)httpMethod
                             .MakeGenericMethod(clientType)
-                            .Invoke(null, new object[] { services, clientName, configureClient })!;
+                            .Invoke(null, [services, clientName, configureClient])!;
 
                         httpClientBuilders.Add(httpClientBuilder);
                     }
