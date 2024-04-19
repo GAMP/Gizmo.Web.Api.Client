@@ -61,14 +61,6 @@ namespace Gizmo.Web.Api.Clients.Builder
             return this;
         }
 
-        public IWebApiClientBuilder WithMessageHandler<THandler>() where THandler : DelegatingHandler
-        {
-            foreach (var httpClient in _httpClientBuilders)
-                httpClient.AddHttpMessageHandler<THandler>();
-
-            return this;
-        }
-
         public IWebApiClientBuilder WithAdditionalOptions(string clientName, Action<WebApiClientOptions> options)
         {
             _services.Configure(clientName, options);
@@ -105,9 +97,17 @@ namespace Gizmo.Web.Api.Clients.Builder
             return this;
         }
 
-        public IWebApiClientBuilder AddCurrentUICultureDelegatingHandler()
+        public IWebApiClientBuilder WithMessageHandler<THandler>() where THandler : DelegatingHandler
         {
-            _services.AddTransient<CurrentUICultureDelegatingHandler>();
+            foreach (var httpClient in _httpClientBuilders)
+                httpClient.AddHttpMessageHandler<THandler>();
+
+            return this;
+        }
+
+        public IWebApiClientBuilder WithCurrentUICultureMessageHandler()
+        {
+            _services.TryAddTransient<CurrentUICultureDelegatingHandler>();
 
             foreach (var httpClient in _httpClientBuilders)
                 httpClient.AddHttpMessageHandler<CurrentUICultureDelegatingHandler>();

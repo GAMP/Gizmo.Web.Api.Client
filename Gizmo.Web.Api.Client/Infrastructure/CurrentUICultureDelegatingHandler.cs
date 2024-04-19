@@ -12,14 +12,20 @@ namespace Gizmo.Web.Api.Clients
     {
         protected override HttpResponseMessage Send(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            request.Headers.AcceptLanguage.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue(CultureInfo.CurrentUICulture.ToString()));
+            AddHeaders(request);
             return base.Send(request, cancellationToken);
         }
 
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            request.Headers.AcceptLanguage.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue(CultureInfo.CurrentUICulture.ToString()));
+            AddHeaders(request);
             return base.SendAsync(request, cancellationToken);
+        }
+
+        private static void AddHeaders(HttpRequestMessage request)
+        {
+            if (request.Headers.AcceptLanguage.Count == 0)
+                request.Headers.AcceptLanguage.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue(CultureInfo.CurrentUICulture.ToString()));
         }
     }
 }

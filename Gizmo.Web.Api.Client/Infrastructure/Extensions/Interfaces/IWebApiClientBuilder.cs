@@ -23,6 +23,6 @@ namespace Gizmo.Web.Api.Clients.Builder
         /// The handler will automatically add <see cref="CultureInfo.CurrentUICulture"/> value to AcceptLanguage header in <see cref="HttpRequestMessage.Headers"/>. 
         /// </remarks>
         /// <returns>WebApiClient builder.</returns>
-        IWebApiClientBuilder AddCurrentUICultureDelegatingHandler();
+        IWebApiClientBuilder WithCurrentUICultureMessageHandler();
     }
 }
