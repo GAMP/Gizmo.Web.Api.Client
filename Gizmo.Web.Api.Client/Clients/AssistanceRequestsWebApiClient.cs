@@ -17,7 +17,7 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters(filter);
             return GetAsync<PagedList<AssistanceRequestModel>>(parameters, cancellationToken);
-        } 
+        }
 
         public Task<AssistanceRequestModel> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
@@ -33,13 +33,13 @@ namespace Gizmo.Web.Api.Clients
         public Task<AssistanceRequestModel> AcceptAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "accept"]);
-            return GetAsync<AssistanceRequestModel>(parameters, cancellationToken);
+            return PutAsync<AssistanceRequestModel>(parameters, null, cancellationToken);
         }
 
         public Task<AssistanceRequestModel> RejectAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "reject"]);
-            return GetAsync<AssistanceRequestModel>(parameters, cancellationToken);
+            return PutAsync<AssistanceRequestModel>(parameters, null, cancellationToken);
         }
     }
 }
