@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 namespace Gizmo.Web.Api.Clients
 {
     [WebApiRoute("api/v2/registers")]
-    public sealed class RegisterWebApiClient : WebApiClientBase
+    public sealed class RegistersWebApiClient : WebApiClientBase
     {
         #region CONSTRUCTOR
-        public RegisterWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :
+        public RegistersWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :
             base(httpClient, options, payloadSerializerProvider)
         {
         }

@@ -1,28 +1,27 @@
 ﻿using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Gizmo.Web.Api.Clients;
 using Gizmo.Web.Api.Models;
 using Microsoft.Extensions.Options;
 
-namespace Gizmo.Web.Api.User.Clients
+namespace Gizmo.Web.Api.Clients
 {
     [UnsecureWebApiClient()]
-    [WebApiRoute("api/user/v2/auth")]
-    public sealed class AuthenticationWebApiClient : WebApiClientBase
+    [WebApiRoute("api/v2/auth")]
+    public sealed class AuthWebApiClient : WebApiClientBase
     {
-        public AuthenticationWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :
+        public AuthWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :
             base(httpClient, options, payloadSerializerProvider)
         {
         }
 
-        public Task<AuthTokenResultModel> AccessTokenGetAsync(UserAccessTokenRequestModel model, CancellationToken cancellationToken = default)
+        public Task<AuthTokenResultModel> AccessTokenGetAsync(AccessTokenRequestModel model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(new object[] { "accesstoken" }, model);
             return GetAsync<AuthTokenResultModel>(parameters, cancellationToken);
         }
 
-        public Task<AuthTokenResultModel> AccessTokenRefreshAsync(UserAccessTokenRefreshRequestModel model, CancellationToken cancellationToken = default)
+        public Task<AuthTokenResultModel> AccessTokenRefreshAsync(AccessTokenRefreshRequestModel model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(new object[] { "accesstoken", "refresh" }, model);
             return GetAsync<AuthTokenResultModel>(parameters, cancellationToken);
