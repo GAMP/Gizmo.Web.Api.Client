@@ -25,12 +25,12 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<AssistanceRequestTypeModel>(parameters, cancellationToken);
         }
 
-        public Task<CreateResult> CreateAsync(AssetModelCreate assetModelCreate, CancellationToken cancellationToken = default)
+        public Task<CreateResult> CreateAsync(AssistanceRequestTypeModelCreate assetModelCreate, CancellationToken cancellationToken = default)
         {
             return PostAsync<CreateResult>(UriParameters.Empty, assetModelCreate, cancellationToken);
         }
 
-        public Task<CreateResult> UpdateAsync(AssetModelCreate assetModelCreate, CancellationToken cancellationToken = default)
+        public Task<CreateResult> UpdateAsync(AssistanceRequestTypeModelUpdate assetModelCreate, CancellationToken cancellationToken = default)
         {
             return PutAsync<CreateResult>(UriParameters.Empty, assetModelCreate, cancellationToken);
         }
@@ -44,7 +44,7 @@ namespace Gizmo.Web.Api.Clients
         public Task<DeleteResult> UnDeleteAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "undelete"]);
-            return PostAsync<DeleteResult>(parameters, cancellationToken);
+            return PostAsync<DeleteResult>(parameters, null, cancellationToken);
         }
     }
 }
