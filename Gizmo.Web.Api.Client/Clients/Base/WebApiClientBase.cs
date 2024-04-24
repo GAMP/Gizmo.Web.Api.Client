@@ -34,6 +34,7 @@ namespace Gizmo.Web.Api.Clients
         }
 
         private const string DEFAULT_HTTP_ERROR_MESSAGE = "Unknown error";
+        private static readonly ValueTask<HttpContent> EMPTY_HTTP_CONTENT_VALUE_TASK = new();
 
         #region PROPERTIES
 
@@ -72,7 +73,7 @@ namespace Gizmo.Web.Api.Clients
 
         #region GET
 
-        public async Task<TResult> GetAsync<TResult>(IUriParameters parameters, CancellationToken ct)
+        protected async Task<TResult> GetAsync<TResult>(IUriParameters parameters, CancellationToken ct)
         {
             var uri = CreateRequestUri(parameters);
 
@@ -86,6 +87,7 @@ namespace Gizmo.Web.Api.Clients
                 return await GetResultAsync<TResult>(uri, ct);
             }
         }
+
         private async Task<TResult> GetResultAsync<TResult>(Uri uri, CancellationToken ct = default)
         {
             using (var httpMessage = CreateHttpRequestMessage(uri, HttpMethod.Get))
@@ -96,10 +98,12 @@ namespace Gizmo.Web.Api.Clients
                 }
             }
         }
+
         #endregion
 
         #region PUT
-        public async Task<TResult> PutAsync<TResult>(IUriParameters parameters, object? content, CancellationToken ct = default)
+
+        protected async Task<TResult> PutAsync<TResult>(IUriParameters parameters, object? content, CancellationToken ct = default)
         {
             var uri = CreateRequestUri(parameters);
 
@@ -108,6 +112,7 @@ namespace Gizmo.Web.Api.Clients
 
             return response.Result;
         }
+
         private async Task<TResult> PutResultAsync<TResult>(Uri uri, HttpContent content, CancellationToken ct = default)
         {
             using (var httpMessage = CreateHttpRequestMessage(uri, HttpMethod.Put, content))
@@ -118,10 +123,17 @@ namespace Gizmo.Web.Api.Clients
                 }
             }
         }
+
         #endregion
 
         #region POST
-        public async Task<TResult> PostAsync<TResult>(IUriParameters parameters, object? content, CancellationToken ct = default)
+
+        protected Task<TResult> PostAsync<TResult>(IUriParameters parameters, CancellationToken ct = default)
+        {
+            return PostAsync<TResult>(parameters, null, ct);
+        }
+
+        protected async Task<TResult> PostAsync<TResult>(IUriParameters parameters, object? content, CancellationToken ct = default)
         {
             var uri = CreateRequestUri(parameters);
 
@@ -130,6 +142,7 @@ namespace Gizmo.Web.Api.Clients
 
             return response.Result;
         }
+
         private async Task<TResult> PostResultAsync<TResult>(Uri uri, HttpContent content, CancellationToken ct = default)
         {
             using (var httpMessage = CreateHttpRequestMessage(uri, HttpMethod.Post, content))
@@ -140,6 +153,7 @@ namespace Gizmo.Web.Api.Clients
                 }
             }
         }
+
         protected async Task PostContentCopyAsync(IUriParameters parameters, object? content, Stream stream, CancellationToken ct = default)
         {
             var uri = CreateRequestUri(parameters);
@@ -154,10 +168,12 @@ namespace Gizmo.Web.Api.Clients
                 }
             }
         }
+
         #endregion
 
         #region DELETE
-        public async Task<TResult> DeleteAsync<TResult>(IUriParameters parameters, CancellationToken ct = default)
+
+        protected async Task<TResult> DeleteAsync<TResult>(IUriParameters parameters, CancellationToken ct = default)
         {
             var uri = CreateRequestUri(parameters);
 
@@ -165,6 +181,7 @@ namespace Gizmo.Web.Api.Clients
 
             return response.Result;
         }
+
         private async Task<TResult> DeleteResultAsync<TResult>(Uri uri, CancellationToken ct = default)
         {
             using (var httpMessage = CreateHttpRequestMessage(uri, HttpMethod.Delete))
@@ -175,6 +192,7 @@ namespace Gizmo.Web.Api.Clients
                 }
             }
         }
+
         #endregion
 
         #endregion
@@ -363,7 +381,7 @@ namespace Gizmo.Web.Api.Clients
         {
             //allow null object , this will be represented with empty content
             if (data == null)
-                return new ValueTask<HttpContent>();
+                return EMPTY_HTTP_CONTENT_VALUE_TASK;
 
             try
             {
@@ -373,7 +391,7 @@ namespace Gizmo.Web.Api.Clients
             catch
             {
                 //here we would get an serialization related error
-                //should create custom exception for handling it, the excption should have inner exception set so we can 
+                //should create custom exception for handling it, the exception should have inner exception set so we can 
                 //obtain more information on what was the root cause
 
                 throw;
