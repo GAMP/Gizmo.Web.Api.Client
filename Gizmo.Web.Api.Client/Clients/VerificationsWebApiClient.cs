@@ -21,19 +21,19 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<VerificationStartResultModelEmail> VerifyEmailStartAsync(int userId, string emailAddress, CancellationToken ct = default)
         {
-            var parameters = new UriParameters(new object[] { "email", userId, emailAddress });
+            var parameters = new UriParameters(["email", userId, emailAddress]);
             return PostAsync<VerificationStartResultModelEmail>(parameters, null, ct);
         }
 
         public Task<VerificationStartResultModelMobilePhone> VerifyMobilePhoneStart(int userId, string mobilePhoneNumber, CancellationToken ct = default)
         {
-            var parameters = new UriParameters(new object[] { "mobilephone", userId, mobilePhoneNumber });
+            var parameters = new UriParameters(["mobilephone", userId, mobilePhoneNumber]);
             return PostAsync<VerificationStartResultModelMobilePhone>(parameters, null, ct);
         }
 
         public Task<VerificationStartResultModelMobilePhone> VerifyCurrentUserMobilePhoneStart(string mobilePhoneNumber, CancellationToken ct = default)
         {
-            var parameters = new UriParameters(new object[] { "mobilephone", mobilePhoneNumber });
+            var parameters = new UriParameters(["mobilephone", mobilePhoneNumber]);
             return PostAsync<VerificationStartResultModelMobilePhone>(parameters, null, ct);
         }
     }
