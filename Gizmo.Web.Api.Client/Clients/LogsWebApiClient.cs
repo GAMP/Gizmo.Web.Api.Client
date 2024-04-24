@@ -6,10 +6,10 @@ using System.Threading;
 
 namespace Gizmo.Web.Api.Clients
 {
-    [WebApiRoute("api/v2/log")]
-    public sealed class LogWebApiClient : WebApiClientBase
+    [WebApiRoute("api/v2/logs")]
+    public sealed class LogsWebApiClient : WebApiClientBase
     {
-        public LogWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :
+        public LogsWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :
             base(httpClient, options, payloadSerializerProvider)
         {
         }
