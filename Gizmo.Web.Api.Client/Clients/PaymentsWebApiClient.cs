@@ -16,10 +16,10 @@ namespace Gizmo.Web.Api.Clients
         {
         }
 
-        public Task<PagedList<PaymentTransactionModel>> TransactionsAsync(PaymentTransactionFilter filter, CancellationToken cancellationToken = default)
+        public Task<PagedListClassic<PaymentTransactionModel>> TransactionsAsync(PaymentTransactionFilterClassic filter, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["transactions"],filter);
-            return GetAsync<PagedList<PaymentTransactionModel>>(parameters, cancellationToken);
+            var parameters = new UriParameters(["transactions"], filter);
+            return GetAsync<PagedListClassic<PaymentTransactionModel>>(parameters, cancellationToken);
         }
     }
 }
