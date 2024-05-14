@@ -85,5 +85,17 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters([id, "outoforder", state]);
             return PostAsync<UpdateResult>(parameters, null, cancellationToken);
         }
+
+        public Task<UpdateResult> OnAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "on"]);
+            return PostAsync<UpdateResult>(parameters, null, cancellationToken);
+        }
+
+        public Task<UpdateResult> OffAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "off"]);
+            return PostAsync<UpdateResult>(parameters, null, cancellationToken);
+        }
     }
 }
