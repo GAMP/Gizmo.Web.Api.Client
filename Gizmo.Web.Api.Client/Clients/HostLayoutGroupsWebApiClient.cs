@@ -64,6 +64,12 @@ namespace Gizmo.Web.Api.Clients
             return await PostAsync<CreateResult>(parameters, model, cancellationToken);
         }
 
+        public async Task<CreateResult> LayoutGridPositionSetAsync(int id, int hostId, HostLayoutGridPositionCreateUpdateModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "host", hostId, "layout", "grid", "position"]);
+            return await PostAsync<CreateResult>(parameters, model, cancellationToken);
+        }
+
         public async Task<DeleteResult> LayoutDeleteAsync(int id, int hostId, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "host", hostId, "layout"]);
