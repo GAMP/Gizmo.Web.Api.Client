@@ -1,0 +1,26 @@
+﻿using System.Net.Http;
+using System.Threading.Tasks;
+using System.Threading;
+using Gizmo.Web.Api.Models;
+
+using Microsoft.Extensions.Options;
+
+namespace Gizmo.Web.Api.Clients
+{
+    /// <summary>
+    /// Remote control web api client.
+    /// </summary>
+    [WebApiRoute("api/v3/remotecontrol")]
+    public sealed class RemoteControlWebApiClient : WebApiClientBase
+    {
+        public RemoteControlWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) : base(httpClient, options, payloadSerializerProvider)
+        {
+        }
+
+        public Task<RemoteControlSessionCreateResultModel> CreateSessionAsync(int hostId, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters(["hosts", hostId, "session"]);
+            return GetAsync<RemoteControlSessionCreateResultModel>(parameters, ct);
+        }
+    }
+}
