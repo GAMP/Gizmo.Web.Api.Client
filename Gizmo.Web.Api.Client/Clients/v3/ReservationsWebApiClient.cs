@@ -50,10 +50,10 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<PagedList<HostNextReservationModel>>(parameters, cancellationToken);
         }
 
-        public Task<HostNextReservationModel> HostNextAsync(int hostId, CancellationToken cancellationToken = default)
+        public Task<NextHostReservationModel> HostNextAsync(int hostId, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["hosts", hostId, "next"]);
-            return GetAsync<HostNextReservationModel>(parameters, cancellationToken);
+            return GetAsync<NextHostReservationModel>(parameters, cancellationToken);
         }
     }
 }
