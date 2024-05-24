@@ -1,7 +1,5 @@
 ﻿using Gizmo.Web.Api.Models;
-
 using Microsoft.Extensions.Options;
-
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,45 +9,51 @@ namespace Gizmo.Web.Api.Clients
     [WebApiRoute("api/v3/reservations")]
     public sealed class ReservationsWebApiClient : WebApiClientBase
     {
-        #region CONSTRUCTOR
         public ReservationsWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :
             base(httpClient, options, payloadSerializerProvider)
         {
         }
-        #endregion
 
-        #region FUNCTIONS
-
-        public Task<PagedList<ReservationModel>> GetAsync(ReservationsFilter filter, CancellationToken ct = default)
+        public Task<PagedList<ReservationModel>> GetAsync(ReservationsFilter filter, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(filter);
-            return GetAsync<PagedList<ReservationModel>>(parameters, ct);
+            return GetAsync<PagedList<ReservationModel>>(parameters, cancellationToken);
         }
 
-        public Task<CreateResult> CreateAsync(ReservationModelCreate model, CancellationToken ct = default)
+        public Task<CreateResult> CreateAsync(ReservationModelCreate model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters();
-            return PostAsync<CreateResult>(parameters, model, ct);
+            return PostAsync<CreateResult>(parameters, model, cancellationToken);
         }
 
-        public Task<UpdateResult> UpdateAsync(ReservationModelUpdate model, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateAsync(ReservationModelUpdate model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters();
-            return PutAsync<UpdateResult>(parameters, model, ct);
+            return PutAsync<UpdateResult>(parameters, model, cancellationToken);
         }
 
-        public Task<ReservationModel> GetByIdAsync(int id, CancellationToken ct = default)
+        public Task<ReservationModel> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(id);
-            return GetAsync<ReservationModel>(parameters, ct);
+            return GetAsync<ReservationModel>(parameters, cancellationToken);
         }
 
-        public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
+        public Task<DeleteResult> DeleteAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(id);
-            return DeleteAsync<DeleteResult>(parameters, ct);
-        } 
+            return DeleteAsync<DeleteResult>(parameters, cancellationToken);
+        }
 
-        #endregion
+        public Task<PagedList<HostNextReservationModel>> HostsNextAsync(HostNextReservationFilter filter, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["hosts", "next"], filter);
+            return GetAsync<PagedList<HostNextReservationModel>>(parameters, cancellationToken);
+        }
+
+        public Task<HostNextReservationModel> HostNextAsync(int hostId, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["hosts", hostId, "next"]);
+            return GetAsync<HostNextReservationModel>(parameters, cancellationToken);
+        }
     }
 }
