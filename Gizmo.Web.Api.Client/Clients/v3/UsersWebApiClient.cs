@@ -11,19 +11,11 @@ namespace Gizmo.Web.Api.Clients
 {
     [WebApiRoute("api/v3/users")]
     public sealed class UsersWebApiClient : WebApiClientBase
-    {
-        #region CONSTRUCTOR
-        
+    {        
         public UsersWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) : 
             base(httpClient,options, payloadSerializerProvider)
         {
         }
-
-        #endregion
-
-        #region FUNCTIONS
-        
-        #region USERS
 
         public Task<PagedList<UserModel>> GetAsync(UsersFilter filter, CancellationToken ct = default)
         {
@@ -54,10 +46,6 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters(id);
             return DeleteAsync<DeleteResult>(parameters, ct);
         }
-        
-        #endregion
-
-        #region USER ATTRIBUTE
 
         public Task<IEnumerable<UserAttributeModel>> GetUserAttributeAsync(int id, CancellationToken ct = default)
         {
@@ -82,10 +70,6 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters(new object[] { id, "attributes", userAttributeId });
             return DeleteAsync<DeleteResult>(parameters, ct);
         }
-
-        #endregion
-
-        #region USER NOTES
 
         public Task<PagedList<UserNoteModel>> GetUserNotesAsync(int id, CancellationToken ct = default)
         {
@@ -123,9 +107,11 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<UserNoteModel>(parameters, ct);
         }
 
-        #endregion 
-
-        #endregion
+        public Task<PagedList<UserCurrentUsageModel>> CurrentUsageAsync(UserCurrentUsageFilter filter, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters(["usage", "current"], filter);
+            return GetAsync<PagedList<UserCurrentUsageModel>>(parameters, ct);
+        }
 
         public Task<UsageModel?> CurrentUsageAsync(int id, CancellationToken ct = default)
         {
