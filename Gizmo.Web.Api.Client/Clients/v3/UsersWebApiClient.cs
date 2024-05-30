@@ -126,5 +126,11 @@ namespace Gizmo.Web.Api.Clients
         #endregion 
 
         #endregion
+
+        public Task<UsageModel?> CurrentUsageAsync(int id, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters([id, "usage", "current"]);
+            return GetAsync<UsageModel?>(parameters, ct);
+        }
     }
 }
