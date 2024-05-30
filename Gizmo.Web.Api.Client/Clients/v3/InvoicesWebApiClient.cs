@@ -12,33 +12,33 @@ namespace Gizmo.Web.Api.Clients
     [WebApiRoute("api/v3/invoices")]
     public sealed class InvoicesWebApiClient : WebApiClientBase
     {
-        #region CONSTRUCTOR
         public InvoicesWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :
             base(httpClient, options, payloadSerializerProvider)
         {
         }
-        #endregion
 
-        #region FUNCTIONS
-
-        public Task<PagedList<InvoiceModel>> GetAsync(InvoicesFilter filter, CancellationToken ct = default)
+        public Task<PagedList<InvoiceModel>> GetAsync(InvoicesFilter filter, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(filter);
-            return GetAsync<PagedList<InvoiceModel>>(parameters, ct);
+            return GetAsync<PagedList<InvoiceModel>>(parameters, cancellationToken);
         }
 
-        public Task<InvoiceModel> GetByIdAsync(int id, CancellationToken ct = default)
+        public Task<InvoiceModel> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(id);
-            return GetAsync<InvoiceModel>(parameters, ct);
+            return GetAsync<InvoiceModel>(parameters, cancellationToken);
         }
 
-        public Task<UpdateResult> VoidAsync(int id, IRefundOptions model, CancellationToken ct = default)
+        public Task<UpdateResult> VoidAsync(int id, IRefundOptions model, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(new object[] { id, "void" });
-            return PutAsync<UpdateResult>(parameters, model, ct);
+            var parameters = new UriParameters([id, "void"]);
+            return PutAsync<UpdateResult>(parameters, model, cancellationToken);
         }
 
-        #endregion
+        public Task<decimal> LineQuantityAsync(int invoiceLineId, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["lines", invoiceLineId, "quantity"]);
+            return GetAsync<decimal>(parameters, cancellationToken);
+        }
     }
 }
