@@ -50,6 +50,12 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<PagedList<WaitingLineEntryModel>>(parameters, cancellationToken);
         }
 
+        public Task<WaitingLineEntryModel> EntryAsync(int entryId, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["entries", entryId]);
+            return GetAsync<WaitingLineEntryModel>(parameters, cancellationToken);
+        }
+
         public Task UserAddAsync(int userId, int hostGroupId, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["users", userId, "hostgroups", hostGroupId]);
