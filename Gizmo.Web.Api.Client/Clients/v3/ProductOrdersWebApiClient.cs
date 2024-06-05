@@ -82,6 +82,12 @@ namespace Gizmo.Web.Api.Clients
             return PutAsync<UpdateResult>(parameters, null, cancellationToken);
         }
 
+        public Task<UpdateResult> ProcessAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "process"]);
+            return PutAsync<UpdateResult>(parameters, null, cancellationToken);
+        }
+
         public Task<UpdateResult> CancelAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "cancel"]);
