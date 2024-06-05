@@ -34,52 +34,10 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<OrderModel>(parameters, cancellationToken);
         }
 
-        public Task<OrderCalculatedModel> CalculateUserOrderPriceAsync(int id, OrderCalculateModelOptions options, CancellationToken cancellationToken = default)
+        public Task<OrderInvoiceResultModel> InvoiceAsync(int id, OrderInvoiceModel orderInvoiceModel, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(new object[] { "calculate", "user", id }, options);
-            return GetAsync<OrderCalculatedModel>(parameters, cancellationToken);
-        }
-
-        public Task<OrderCalculatedModel> CalculateGuestOrderPriceAsync(OrderCalculateModelOptions options, CancellationToken cancellationToken = default)
-        {
-            var parameters = new UriParameters(new object[] { "calculate", "guest" }, options);
-            return GetAsync<OrderCalculatedModel>(parameters, cancellationToken);
-        }
-
-        public Task<CreateResult> CreateUserOrderAsync(int id, OrderCalculatePaymentModelOptions model, CancellationToken cancellationToken = default)
-        {
-            var parameters = new UriParameters(new object[] { "user", id });
-            return PostAsync<CreateResult>(parameters, model, cancellationToken);
-        }
-
-        public Task<CreateResult> InvoiceUserOrderAsync(int id, InvoiceOrderCalculateModelOptions model, CancellationToken cancellationToken = default)
-        {
-            var parameters = new UriParameters(new object[] { "user", id, "invoice" });
-            return PostAsync<CreateResult>(parameters, model, cancellationToken);
-        }
-
-        public Task<CreateResult> InvoiceGuestOrderAsync(InvoiceOrderCalculateModelOptions model, CancellationToken cancellationToken = default)
-        {
-            var parameters = new UriParameters(new object[] { "guest", "invoice" });
-            return PostAsync<CreateResult>(parameters, model, cancellationToken);
-        }
-
-        public Task<CreateResult> InvoiceOrderAsync(int id, InvoiceOrderModelOptions model, CancellationToken cancellationToken = default)
-        {
-            var parameters = new UriParameters(new object[] { id, "invoice" });
-            return PostAsync<CreateResult>(parameters, model, cancellationToken);
-        }
-
-        public Task<CreateResult> InvoiceOrderAsync(int id, CancellationToken cancellationToken = default)
-        {
-            var parameters = new UriParameters(new object[] { id, "invoice" });
-            return PostAsync<CreateResult>(parameters, null, cancellationToken);
-        }
-
-        public Task<UpdateResult> AcceptAsync(int id, CancellationToken cancellationToken = default)
-        {
-            var parameters = new UriParameters([id, "accept"]);
-            return PutAsync<UpdateResult>(parameters, null, cancellationToken);
+            var parameters = new UriParameters([id, "invoice"]);
+            return PutAsync<OrderInvoiceResultModel>(parameters, orderInvoiceModel, cancellationToken);
         }
 
         public Task<UpdateResult> ProcessAsync(int id, CancellationToken cancellationToken = default)
