@@ -71,6 +71,12 @@ namespace Gizmo.Web.Api.Clients
             return DeleteAsync<DeleteResult>(parameters, ct);
         }
 
+        public Task<UserNoteCountModel> GetUserNotesCountAsync(int id, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters([id, "notes", "count"]);
+            return GetAsync<UserNoteCountModel>(parameters, ct);
+        }
+
         public Task<PagedList<UserNoteModel>> GetUserNotesAsync(int id, CancellationToken ct = default)
         {
             var parameters = new UriParameters(new object[] { id, "notes" });
