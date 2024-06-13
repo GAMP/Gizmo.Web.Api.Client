@@ -34,8 +34,14 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<PagedList<ActiveOrderModel>> ActiveAsync(ActiveOrdersFilter filter, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["active"],filter);
+            var parameters = new UriParameters(["active"], filter);
             return GetAsync<PagedList<ActiveOrderModel>>(parameters, cancellationToken);
+        }
+
+        public Task<ActiveOrderModel?> ActiveAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "active"]);
+            return GetAsync<ActiveOrderModel?>(parameters, cancellationToken);
         }
 
         public Task<OrderInvoiceResultModel> InvoiceAsync(int id, OrderInvoiceModel orderInvoiceModel, CancellationToken cancellationToken = default)
@@ -88,7 +94,7 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<ProductPriceRequestResponseModel> ProductPriceAsync(int productId, decimal quantity, int userGroupId, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["product", productId , "usergroup", userGroupId, "quantity",quantity,  "price"]);
+            var parameters = new UriParameters(["product", productId, "usergroup", userGroupId, "quantity", quantity, "price"]);
             return GetAsync<ProductPriceRequestResponseModel>(parameters, cancellationToken);
         }
 
@@ -100,7 +106,7 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<ProductPriceRequestResponseModel> ProductUserPriceAsync(int userId, int productId, decimal quantity, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["product", productId, "user", userId, "quantity",  quantity, "price"]);
+            var parameters = new UriParameters(["product", productId, "user", userId, "quantity", quantity, "price"]);
             return GetAsync<ProductPriceRequestResponseModel>(parameters, cancellationToken);
         }
 
