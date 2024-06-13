@@ -1,7 +1,5 @@
 ﻿using Gizmo.Web.Api.Models;
-
 using Microsoft.Extensions.Options;
-
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -32,6 +30,12 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters(new object[] { id }, options);
             return GetAsync<OrderModel>(parameters, cancellationToken);
+        }
+
+        public Task<PagedList<ActiveOrderModel>> ActiveAsync(ActiveOrdersFilter filter, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["active"],filter);
+            return GetAsync<PagedList<ActiveOrderModel>>(parameters, cancellationToken);
         }
 
         public Task<OrderInvoiceResultModel> InvoiceAsync(int id, OrderInvoiceModel orderInvoiceModel, CancellationToken cancellationToken = default)
