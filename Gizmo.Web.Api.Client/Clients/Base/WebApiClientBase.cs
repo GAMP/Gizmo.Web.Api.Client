@@ -103,6 +103,11 @@ namespace Gizmo.Web.Api.Clients
 
         #region PUT
 
+        protected Task<TResult> PutAsync<TResult>(IUriParameters parameters, CancellationToken ct = default)
+        {
+            return PutAsync<TResult>(parameters,null, ct);
+        }
+
         protected async Task<TResult> PutAsync<TResult>(IUriParameters parameters, object? content, CancellationToken ct = default)
         {
             var uri = CreateRequestUri(parameters);
