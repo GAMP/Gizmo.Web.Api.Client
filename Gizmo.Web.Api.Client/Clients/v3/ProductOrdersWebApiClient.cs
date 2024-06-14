@@ -81,9 +81,15 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<OrderDeliveredStatusModel>(parameters, cancellationToken);
         }
 
-        public Task<UpdateResult> OrderLineDeliverAsync(int id, int orderLineId, OrderLineDeliveredStatusModelUpdate model, CancellationToken cancellationToken = default)
+        public Task<UpdateResult> OrderLineDeliverAsync(int orderLineId, decimal quantity, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters([id, "orderlines", orderLineId, "delivered"]);
+            var parameters = new UriParameters(["orderlines", orderLineId, "delivered", quantity]);
+            return PutAsync<UpdateResult>(parameters, null, cancellationToken);
+        }
+
+        public Task<UpdateResult> OrderLineDeliverAsync(int orderLineId, OrderLineDeliveredStatusModelUpdate model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["orderlines", orderLineId, "delivered"]);
             return PutAsync<UpdateResult>(parameters, model, cancellationToken);
         }
 
@@ -93,9 +99,9 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<IEnumerable<OrderDeliveredStatusModel>>(parameters, cancellationToken);
         }      
 
-        public Task<OrderLineDeliveredStatusModel> OrderLineDeliveredAsync(int id, int orderLineId, CancellationToken cancellationToken = default)
+        public Task<OrderLineDeliveredStatusModel> OrderLineDeliveredAsync(int orderLineId, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters([id, "orderlines", orderLineId, "delivered"]);
+            var parameters = new UriParameters(["orderlines", orderLineId, "delivered"]);
             return GetAsync<OrderLineDeliveredStatusModel>(parameters, cancellationToken);
         }    
 
