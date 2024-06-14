@@ -1,5 +1,6 @@
 ﻿using Gizmo.Web.Api.Models;
 using Microsoft.Extensions.Options;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -68,29 +69,35 @@ namespace Gizmo.Web.Api.Clients
             return PutAsync<UpdateResult>(parameters, null, cancellationToken);
         }
 
-        public Task<OrderDeliveredStatusModel> DeliveredAsync(int id, CancellationToken cancellationToken = default)
-        {
-            var parameters = new UriParameters([id, "delivered"]);
-            return GetAsync<OrderDeliveredStatusModel>(parameters, cancellationToken);
-        }
-
         public Task<UpdateResult> DeliverAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "delivered"]);
             return PutAsync<UpdateResult>(parameters, null, cancellationToken);
         }
 
+        public Task<OrderDeliveredStatusModel> DeliveredAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "delivered"]);
+            return GetAsync<OrderDeliveredStatusModel>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> OrderLineDeliverAsync(int id, int orderLineId, OrderLineDeliveredStatusModelUpdate model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "orderlines", orderLineId, "delivered"]);
+            return PutAsync<UpdateResult>(parameters, model, cancellationToken);
+        }
+
+        public Task<IEnumerable<OrderDeliveredStatusModel>> OrderLinesDeliveredAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "orderlines", "delivered"]);
+            return GetAsync<IEnumerable<OrderDeliveredStatusModel>>(parameters, cancellationToken);
+        }      
+
         public Task<OrderLineDeliveredStatusModel> OrderLineDeliveredAsync(int id, int orderLineId, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "orderlines", orderLineId, "delivered"]);
             return GetAsync<OrderLineDeliveredStatusModel>(parameters, cancellationToken);
-        }
-
-        public Task<OrderLineDeliveredStatusModel> OrderLineDeliverAsync(int id, int orderLineId, OrderLineDeliveredStatusModelUpdate model, CancellationToken cancellationToken = default)
-        {
-            var parameters = new UriParameters([id, "orderlines", orderLineId, "delivered"]);
-            return PutAsync<OrderLineDeliveredStatusModel>(parameters, model, cancellationToken);
-        }
+        }    
 
         public Task<ProductPriceRequestResponseModel> ProductPriceAsync(int productId, decimal quantity, int userGroupId, CancellationToken cancellationToken = default)
         {
