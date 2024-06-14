@@ -63,7 +63,7 @@ namespace Gizmo.Web.Api.Clients
         /// <b>Default value is true.</b>
         /// </summary>
         /// <remarks>
-        /// Set this value to true in cases of apis that is not expected to return wrapped response.
+        /// Set this value to true in cases of API's that is not expected to return wrapped response.
         /// </remarks>
         protected bool UseResponseWrapping { get; set; } = true;
 
@@ -363,7 +363,7 @@ namespace Gizmo.Web.Api.Clients
         }
 
         /// <summary>
-        /// Throws appropriate exception in cases where api response wehre not provided.
+        /// Throws appropriate exception in cases where api response where not provided.
         /// </summary>
         /// <param name="httpStatusCode">Http status code.</param>
         /// <param name="message">Error message.</param>
