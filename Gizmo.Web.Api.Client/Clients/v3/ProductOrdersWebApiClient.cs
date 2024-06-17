@@ -87,23 +87,17 @@ namespace Gizmo.Web.Api.Clients
             return PutAsync<UpdateResult>(parameters, null, cancellationToken);
         }
 
-        public Task<UpdateResult> OrderLineDeliverAsync(int orderLineId, OrderLineDeliveredStatusModelUpdate model, CancellationToken cancellationToken = default)
-        {
-            var parameters = new UriParameters(["orderlines", orderLineId, "delivered"]);
-            return PutAsync<UpdateResult>(parameters, model, cancellationToken);
-        }
-
         public Task<IEnumerable<OrderDeliveredStatusModel>> OrderLinesDeliveredAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "orderlines", "delivered"]);
             return GetAsync<IEnumerable<OrderDeliveredStatusModel>>(parameters, cancellationToken);
-        }      
+        }
 
         public Task<OrderLineDeliveredStatusModel> OrderLineDeliveredAsync(int orderLineId, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["orderlines", orderLineId, "delivered"]);
             return GetAsync<OrderLineDeliveredStatusModel>(parameters, cancellationToken);
-        }    
+        }
 
         public Task<ProductPriceRequestResponseModel> ProductPriceAsync(int productId, decimal quantity, int userGroupId, CancellationToken cancellationToken = default)
         {
@@ -132,6 +126,12 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters(["multi"]);
             return PostAsync<OrderInvoiceCreateMultiResultModel>(parameters, model, cancellationToken);
+        }
+
+        public Task<OrderPaymentsCreateResult> PaymentsAsync(int id, OrderPaymentsCreateModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "payments"]);
+            return PostAsync<OrderPaymentsCreateResult>(parameters, model, cancellationToken);
         }
     }
 }
