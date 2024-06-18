@@ -301,7 +301,7 @@ namespace Gizmo.Web.Api.Clients
                 //deserialize error response
                 var errorResponse = await Serializer.DeserializeAsync<WebApiErrorResponse>(contentStream, ct);
 
-                //throw generic cleint exception since no information where provided in response
+                //throw generic client exception since no information where provided in response
                 //at this stage we dont have any api response nor error message, pass null message to generic exception handler so default error message would be used
                 if (errorResponse == null)
                     ThrowExceptionForStatusCode(httpResponseMessage.StatusCode, null);
