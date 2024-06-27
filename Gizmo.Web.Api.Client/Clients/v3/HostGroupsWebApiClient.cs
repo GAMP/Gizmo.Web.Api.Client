@@ -37,6 +37,7 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters();
             return PutAsync<UpdateResult>(parameters, model, ct);
         }
+
         public Task<HostGroupModel> GetByIdAsync(int id, CancellationToken ct = default)
         {
             var parameters = new UriParameters(id);

@@ -1,5 +1,7 @@
 ﻿using Gizmo.Web.Api.Models;
 using Microsoft.Extensions.Options;
+using System.Collections;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -96,6 +98,12 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters([id, "off"]);
             return PostAsync<UpdateResult>(parameters, null, cancellationToken);
+        }
+
+        public Task<IEnumerable<HostHostLayoutGroupModel>> GetHostLayoutGroups(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "layoutgroups"]);
+            return GetAsync<IEnumerable<HostHostLayoutGroupModel>>(parameters, cancellationToken);
         }
     }
 }
