@@ -1,7 +1,7 @@
 ﻿using Gizmo.Web.Api.Models;
 
 using Microsoft.Extensions.Options;
-
+using System;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -68,6 +68,12 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters([deviceId, "host", hostId]);
             return DeleteAsync<DeleteResult>(parameters, cancellationToken);
+        }
+
+        public Task<DeviceModel> GetByIdAsync(int id, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters(id);
+            return GetAsync<DeviceModel>(parameters, ct);
         }
     }
 }
