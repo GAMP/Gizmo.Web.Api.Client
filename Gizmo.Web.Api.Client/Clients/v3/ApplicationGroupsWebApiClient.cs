@@ -1,7 +1,7 @@
 ﻿using Gizmo.Web.Api.Models;
 
 using Microsoft.Extensions.Options;
-
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -48,7 +48,25 @@ namespace Gizmo.Web.Api.Clients
         {   
             var parameters = new UriParameters(id);
             return DeleteAsync<DeleteResult>(parameters, ct);
-        } 
+        }
+
+        public Task<IEnumerable<ApplicationGroupApplicationModel>> ApplicationGroupApplicationsGet(int id, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters([id, "applications"]);
+            return GetAsync<IEnumerable<ApplicationGroupApplicationModel>>(parameters, ct);
+        }
+
+        public Task<CreateResult> ApplicationGroupApplicationsCreate(ApplicationGroupApplicationsModelCreate model, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters(["applications", "create"]);
+            return PostAsync<CreateResult>(parameters, model, ct);
+        }
+
+        public Task<UpdateResult> ApplicationGroupApplicationsUpdate(ApplicationGroupApplicationsModelUpdate model, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters(["applications", "update"]);
+            return PutAsync<UpdateResult>(parameters, model, ct);
+        }
 
         #endregion
     }
