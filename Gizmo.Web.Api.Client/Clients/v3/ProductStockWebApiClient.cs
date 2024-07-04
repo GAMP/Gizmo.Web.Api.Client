@@ -28,9 +28,21 @@ namespace Gizmo.Web.Api.Clients
             return await GetAsync<ProductStockModel>(parameters, cancellationToken);
         }
 
+        public async Task<ProductStockModel> GetByIdAsync(int id, int branchId, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "branch", branchId]);
+            return await GetAsync<ProductStockModel>(parameters, cancellationToken);
+        }
+
         public async Task<UpdateResult> SetAsync(int id, decimal amount, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "set", amount]);
+            return await PostAsync<UpdateResult>(parameters, null, cancellationToken);
+        }
+
+        public async Task<UpdateResult> SetAsync(int id, int branchId, decimal amount, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "branch", branchId, "set", amount]);
             return await PostAsync<UpdateResult>(parameters, null, cancellationToken);
         }
 
@@ -40,9 +52,21 @@ namespace Gizmo.Web.Api.Clients
             return await PostAsync<UpdateResult>(parameters, null, cancellationToken);
         }
 
+        public async Task<UpdateResult> AddAsync(int id, int branchId, decimal amount, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "branch", branchId, "add", amount]);
+            return await PostAsync<UpdateResult>(parameters, null, cancellationToken);
+        }
+
         public async Task<UpdateResult> RemoveAsync(int id, decimal amount, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "remove", amount]);
+            return await PostAsync<UpdateResult>(parameters, null, cancellationToken);
+        }
+
+        public async Task<UpdateResult> RemoveAsync(int id, int branchId, decimal amount, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "branch", branchId, "remove", amount]);
             return await PostAsync<UpdateResult>(parameters, null, cancellationToken);
         }
 
