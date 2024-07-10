@@ -136,5 +136,17 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters([id, "hostgroup", hostGroupId, "balance"]);
             return GetAsync<UserBalanceExtendedModel>(parameters, ct);
         }
+
+        public Task<UserLoginResultModel> Login(int id, int hostId, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters([id, "login", hostId]);
+            return GetAsync<UserLoginResultModel>(parameters, ct);
+        }
+
+        public Task<UserLogoutResultModel> Logout(int id, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters([id, "login"]);
+            return GetAsync<UserLogoutResultModel>(parameters, ct);
+        }
     }
 }
