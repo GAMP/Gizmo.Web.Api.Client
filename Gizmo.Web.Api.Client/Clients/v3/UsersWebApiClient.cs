@@ -17,136 +17,136 @@ namespace Gizmo.Web.Api.Clients
         {
         }
 
-        public Task<PagedList<UserModel>> GetAsync(UsersFilter filter, CancellationToken ct = default)
+        public Task<PagedList<UserModel>> GetAsync(UsersFilter filter, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(filter);
-            return GetAsync<PagedList<UserModel>>(parameters, ct);
+            return GetAsync<PagedList<UserModel>>(parameters, cancellationToken);
         }
 
-        public Task<CreateResult> CreateAsync(UserModelCreate model, CancellationToken ct = default)
+        public Task<CreateResult> CreateAsync(UserModelCreate model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters();
-            return PostAsync<CreateResult>(parameters, model, ct);
+            return PostAsync<CreateResult>(parameters, model, cancellationToken);
         }
 
-        public Task<UpdateResult> UpdateAsync(UserModelUpdate model, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateAsync(UserModelUpdate model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters();
-            return PutAsync<UpdateResult>(parameters, model, ct);
+            return PutAsync<UpdateResult>(parameters, model, cancellationToken);
         }
 
-        public Task<UserModel> GetByIdAsync(int id, CancellationToken ct = default)
+        public Task<UserModel> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(id);
-            return GetAsync<UserModel>(parameters, ct);
+            return GetAsync<UserModel>(parameters, cancellationToken);
         }
 
-        public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
+        public Task<DeleteResult> DeleteAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(id);
-            return DeleteAsync<DeleteResult>(parameters, ct);
+            return DeleteAsync<DeleteResult>(parameters, cancellationToken);
         }
 
-        public Task<IEnumerable<UserAttributeModel>> GetUserAttributeAsync(int id, CancellationToken ct = default)
+        public Task<IEnumerable<UserAttributeModel>> GetUserAttributeAsync(int id, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(new object[] { id, "attributes" });
-            return GetAsync<IEnumerable<UserAttributeModel>>(parameters, ct);
+            var parameters = new UriParameters([id, "attributes"]);
+            return GetAsync<IEnumerable<UserAttributeModel>>(parameters, cancellationToken);
         }
 
-        public Task<CreateResult> CreateUserAttributeAsync(int id, UserAttributeModelCreate model, CancellationToken ct = default)
+        public Task<CreateResult> CreateUserAttributeAsync(int id, UserAttributeModelCreate model, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(new object[] { id, "attributes" });
-            return PostAsync<CreateResult>(parameters, model, ct);
+            var parameters = new UriParameters([id, "attributes"]);
+            return PostAsync<CreateResult>(parameters, model, cancellationToken);
         }
 
-        public Task<UpdateResult> UpdateUserAttributeAsync(UserAttributeModelUpdate model, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateUserAttributeAsync(UserAttributeModelUpdate model, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(new object[] { "attributes" });
-            return PutAsync<UpdateResult>(parameters, model, ct);
+            var parameters = new UriParameters(["attributes"]);
+            return PutAsync<UpdateResult>(parameters, model, cancellationToken);
         }
 
-        public Task<DeleteResult> DeleteUserAttributeAsync(int id, int userAttributeId, CancellationToken ct = default)
+        public Task<DeleteResult> DeleteUserAttributeAsync(int id, int userAttributeId, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(new object[] { id, "attributes", userAttributeId });
-            return DeleteAsync<DeleteResult>(parameters, ct);
+            var parameters = new UriParameters([id, "attributes", userAttributeId]);
+            return DeleteAsync<DeleteResult>(parameters, cancellationToken);
         }
 
-        public Task<UserNoteCountModel> GetUserNotesCountAsync(int id, CancellationToken ct = default)
+        public Task<UserNoteCountModel> GetUserNotesCountAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "notes", "count"]);
-            return GetAsync<UserNoteCountModel>(parameters, ct);
+            return GetAsync<UserNoteCountModel>(parameters, cancellationToken);
         }
 
-        public Task<PagedList<UserNoteModel>> GetUserNotesAsync(int id, CancellationToken ct = default)
+        public Task<PagedList<UserNoteModel>> GetUserNotesAsync(int id, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(new object[] { id, "notes" });
-            return GetAsync<PagedList<UserNoteModel>>(parameters, ct);
+            var parameters = new UriParameters([id, "notes"]);
+            return GetAsync<PagedList<UserNoteModel>>(parameters, cancellationToken);
         }
 
-        public Task<PagedList<UserNoteModel>> GetUserNotesAsync(int id, UserNotesFilter model, CancellationToken ct = default)
+        public Task<PagedList<UserNoteModel>> GetUserNotesAsync(int id, UserNotesFilter model, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(new object[] { id, "notes" });
-            return GetAsync<PagedList<UserNoteModel>>(parameters, ct);
+            var parameters = new UriParameters([id, "notes"], model);
+            return GetAsync<PagedList<UserNoteModel>>(parameters, cancellationToken);
         }
 
-        public Task<CreateResult> CreateUserNoteAsync(int id, UserNoteModelCreate model, CancellationToken ct = default)
+        public Task<CreateResult> CreateUserNoteAsync(int id, UserNoteModelCreate model, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(new object[] { id, "notes" });
-            return PostAsync<CreateResult>(parameters, model, ct);
+            var parameters = new UriParameters([id, "notes"]);
+            return PostAsync<CreateResult>(parameters, model, cancellationToken);
         }
 
-        public Task<UpdateResult> UpdateUserNoteAsync(UserNoteModelUpdate model, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateUserNoteAsync(UserNoteModelUpdate model, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(new object[] { "notes" });
-            return PutAsync<UpdateResult>(parameters, model, ct);
+            var parameters = new UriParameters(["notes"]);
+            return PutAsync<UpdateResult>(parameters, model, cancellationToken);
         }
 
-        public Task<DeleteResult> DeleteUserNoteAsync(int id, int noteId, CancellationToken ct = default)
+        public Task<DeleteResult> DeleteUserNoteAsync(int id, int noteId, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(new object[] { id, "notes", noteId});
-            return DeleteAsync<DeleteResult>(parameters, ct);
+            var parameters = new UriParameters([id, "notes", noteId]);
+            return DeleteAsync<DeleteResult>(parameters, cancellationToken);
         }
 
-        public Task<UserNoteModel> GetUserNoteByIdAsync(int id, int userNoteId, CancellationToken ct = default)
+        public Task<UserNoteModel> GetUserNoteByIdAsync(int id, int userNoteId, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(new object[] { id, "notes", userNoteId });
-            return GetAsync<UserNoteModel>(parameters, ct);
+            var parameters = new UriParameters([id, "notes", userNoteId]);
+            return GetAsync<UserNoteModel>(parameters, cancellationToken);
         }
 
-        public Task<PagedList<UserCurrentUsageModel>> CurrentUsageAsync(UserCurrentUsageFilter filter, CancellationToken ct = default)
+        public Task<PagedList<UserCurrentUsageModel>> CurrentUsageAsync(UserCurrentUsageFilter filter, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["usage", "current"], filter);
-            return GetAsync<PagedList<UserCurrentUsageModel>>(parameters, ct);
+            return GetAsync<PagedList<UserCurrentUsageModel>>(parameters, cancellationToken);
         }
 
-        public Task<UsageModel?> CurrentUsageAsync(int id, CancellationToken ct = default)
+        public Task<UsageModel?> CurrentUsageAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "usage", "current"]);
-            return GetAsync<UsageModel?>(parameters, ct);
+            return GetAsync<UsageModel?>(parameters, cancellationToken);
         }
 
-        public Task<UserBalanceExtendedModel> BalanceAsync(int id, CancellationToken ct = default)
+        public Task<UserBalanceExtendedModel> BalanceAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "balance"]);
-            return GetAsync<UserBalanceExtendedModel>(parameters, ct);
+            return GetAsync<UserBalanceExtendedModel>(parameters, cancellationToken);
         }
 
-        public Task<UserBalanceExtendedModel> BalanceAsync(int id, int hostGroupId, CancellationToken ct = default)
+        public Task<UserBalanceExtendedModel> BalanceAsync(int id, int hostGroupId, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "hostgroup", hostGroupId, "balance"]);
-            return GetAsync<UserBalanceExtendedModel>(parameters, ct);
+            return GetAsync<UserBalanceExtendedModel>(parameters, cancellationToken);
         }
 
-        public Task<UserLoginResultModel> Login(int id, int hostId, CancellationToken ct = default)
+        public Task<UserLoginResultModel> LoginAsync(int id, int hostId, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "login", hostId]);
-            return GetAsync<UserLoginResultModel>(parameters, ct);
+            return GetAsync<UserLoginResultModel>(parameters, cancellationToken);
         }
 
-        public Task<UserLogoutResultModel> Logout(int id, CancellationToken ct = default)
+        public Task<UserLogoutResultModel> LogoutAsync(int id, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters([id, "login"]);
-            return GetAsync<UserLogoutResultModel>(parameters, ct);
+            var parameters = new UriParameters([id, "logout"]);
+            return GetAsync<UserLogoutResultModel>(parameters, cancellationToken);
         }
     }
 }
