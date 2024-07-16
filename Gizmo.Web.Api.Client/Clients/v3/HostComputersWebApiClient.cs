@@ -90,5 +90,17 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters([id, "client", "restart"]);
             return PostAsync<UpdateResult>(parameters, null, cancellationToken);
         }
+
+        public Task<PagedList<HostComputerConnectionStateModel>> ConnectionsAsync(HostComputerConnectionStateFilter filter, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["client", "connections"], filter);
+            return GetAsync<PagedList<HostComputerConnectionStateModel>>(parameters, cancellationToken);
+        }
+
+        public Task<HostComputerConnectionStateModel> ConnectionAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "client", "connection"]);
+            return GetAsync<HostComputerConnectionStateModel>(parameters, cancellationToken);
+        }
     }
 }
