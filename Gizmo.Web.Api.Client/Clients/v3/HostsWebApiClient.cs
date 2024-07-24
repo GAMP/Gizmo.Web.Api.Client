@@ -40,10 +40,10 @@ namespace Gizmo.Web.Api.Clients
             return await GetAsync<HostModel>(parameters, cancellationToken);
         }
 
-        public async Task<DeleteResult> DeleteAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<HostDeleteResultModel> DeleteAsync(int id, HostDeleteOptionsModel options, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(id);
-            return await DeleteAsync<DeleteResult>(parameters, cancellationToken);
+            var parameters = new UriParameters([id], options);
+            return await DeleteAsync<HostDeleteResultModel>(parameters, cancellationToken);
         }
 
         public async Task<UpdateResult> UnDeleteAsync(int id, CancellationToken cancellationToken = default)

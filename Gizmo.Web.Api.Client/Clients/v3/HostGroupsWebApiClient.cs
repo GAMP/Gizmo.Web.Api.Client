@@ -44,11 +44,11 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<HostGroupModel>(parameters, ct);
         }
 
-        public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
+        public Task<HostGroupDeleteResultModel> DeleteAsync(int id, HostGroupDeleteOptionsModel options, CancellationToken ct = default)
         {
-            var parameters = new UriParameters(id);
-            return DeleteAsync<DeleteResult>(parameters, ct);
-        } 
+            var parameters = new UriParameters([id], options);
+            return DeleteAsync<HostGroupDeleteResultModel>(parameters, ct);
+        }
 
         #endregion
     }
