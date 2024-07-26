@@ -44,10 +44,10 @@ namespace Gizmo.Web.Api.Clients
             return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
-        public Task<AppCategoryDeleteResultModel> DeleteAsync(int id, AppCategoryDeleteOptionsModel options, CancellationToken ct = default)
+        public Task<ApplicationCategoryDeleteResultModel> DeleteAsync(int id, ApplicationCategoryDeleteOptionsModel options, CancellationToken ct = default)
         {
             var parameters = new UriParameters([id], options);
-            return DeleteAsync<AppCategoryDeleteResultModel>(parameters, ct);
+            return DeleteAsync<ApplicationCategoryDeleteResultModel>(parameters, ct);
         }
 
         #endregion
