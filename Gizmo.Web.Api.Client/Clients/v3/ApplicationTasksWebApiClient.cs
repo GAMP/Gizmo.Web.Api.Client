@@ -1,7 +1,7 @@
 ﻿using Gizmo.Web.Api.Models;
 
 using Microsoft.Extensions.Options;
-
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -48,7 +48,13 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters(id);
             return DeleteAsync<DeleteResult>(parameters, ct);
-        } 
+        }
+
+        public Task<IEnumerable<ApplicationTaskUsageModel>> GetUsagesAsync(int id, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters([id, "usages"]);
+            return GetAsync<IEnumerable<ApplicationTaskUsageModel>>(parameters, ct);
+        }
 
         #endregion
     }

@@ -68,6 +68,30 @@ namespace Gizmo.Web.Api.Clients
             return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
+        public Task<UpdateResult> ApplicationApplicationGroupsUpdate(int applicationId, ApplicationApplicationGroupsModelUpdate model, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters(["application", applicationId, "update"]);
+            return PutAsync<UpdateResult>(parameters, model, ct);
+        }
+
+        public Task<IEnumerable<ApplicationGroupApplicationModel>> ApplicationApplicationGroupsGet(int id, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters(["application", id]);
+            return GetAsync<IEnumerable<ApplicationGroupApplicationModel>>(parameters, ct);
+        }
+
+        public Task<CreateResult> ApplicationApplicationGroupCreate(int applicationId, int applicationGroupId, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters(["application", applicationId, applicationGroupId]);
+            return PostAsync<CreateResult>(parameters, ct);
+        }
+
+        public Task<DeleteResult> ApplicationApplicationGroupDelete(int applicationId, int applicationGroupId, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters(["application", applicationId, applicationGroupId]);
+            return DeleteAsync<DeleteResult>(parameters, ct);
+        }
+
         #endregion
     }
 }
