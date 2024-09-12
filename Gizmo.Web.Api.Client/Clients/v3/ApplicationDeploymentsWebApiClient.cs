@@ -56,6 +56,12 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<IEnumerable<ApplicationDeploymentUsageModel>>(parameters, ct);
         }
 
+        public Task<UpdateResult> UnassignAsync(int id, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters([id, "unassign"]);
+            return PutAsync<UpdateResult>(parameters, ct);
+        }
+
         #endregion
     }
 }
