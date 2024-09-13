@@ -60,7 +60,13 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters(new object[] { id, "image" });
             return PutAsync<UpdateResult>(parameters, model, ct);
-        } 
+        }
+
+        public Task<CreateResult> Duplicate(int id, ApplicationModelDuplicate model, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters(new object[] { id, "duplicate" });
+            return PostAsync<CreateResult>(parameters, model, ct);
+        }
 
         #endregion
     }
