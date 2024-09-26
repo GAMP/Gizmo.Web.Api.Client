@@ -11,9 +11,9 @@ namespace Gizmo.Web.Api.Clients
 {
     [WebApiRoute("api/v3/users")]
     public sealed class UsersWebApiClient : WebApiClientBase
-    {        
-        public UsersWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) : 
-            base(httpClient,options, payloadSerializerProvider)
+    {
+        public UsersWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :
+            base(httpClient, options, payloadSerializerProvider)
         {
         }
 
@@ -161,5 +161,16 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<UserCountersModel>(parameters, cancellationToken);
         }
 
+        public Task<UserModelPicture> GetUserPictureAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "picture"]);
+            return GetAsync<UserModelPicture>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> UpdateUserPictureAsync(int id, UserModelPicture model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "picture"]);
+            return PutAsync<UpdateResult>(parameters, model, cancellationToken);
+        }
     }
 }
