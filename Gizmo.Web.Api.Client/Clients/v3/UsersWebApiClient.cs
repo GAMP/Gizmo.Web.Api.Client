@@ -53,7 +53,7 @@ namespace Gizmo.Web.Api.Clients
             return DeleteAsync<DeleteResult>(parameters, cancellationToken);
         }
 
-        public Task<IEnumerable<UserAttributeModel>> GetUserAttributeAsync(int id, CancellationToken cancellationToken = default)
+        public Task<IEnumerable<UserAttributeModel>> GetUserAttributesAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "attributes"]);
             return GetAsync<IEnumerable<UserAttributeModel>>(parameters, cancellationToken);
