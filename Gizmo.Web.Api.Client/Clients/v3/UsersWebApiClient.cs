@@ -190,5 +190,23 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters([id, "contactinformation"]);
             return PutAsync<UpdateResult>(parameters, model, cancellationToken);
         }
+
+        public Task<UpdateResult> RequestPersonalInfoAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "requestpersonalinfo"]);
+            return PutAsync<UpdateResult>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> ResetPasswordAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "resetpassword"]);
+            return PutAsync<UpdateResult>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> UpdateUserGroupAsync(int id, UserUserGroupModelUpdate model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "usergroup"]);
+            return PutAsync<UpdateResult>(parameters, model, cancellationToken);
+        }
     }
 }
