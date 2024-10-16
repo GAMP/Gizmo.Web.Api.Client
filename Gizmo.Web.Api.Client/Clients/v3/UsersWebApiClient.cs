@@ -197,6 +197,12 @@ namespace Gizmo.Web.Api.Clients
             return PutAsync<UpdateResult>(parameters, model, cancellationToken);
         }
 
+        public Task<UpdateResult> UpdateUserPersonalInformationAsync(int id, UserPersonalInformationModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "personalinformation"]);
+            return PutAsync<UpdateResult>(parameters, model, cancellationToken);
+        }
+
         public Task<UpdateResult> RequestPersonalInfoAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "requestpersonalinfo"]);
