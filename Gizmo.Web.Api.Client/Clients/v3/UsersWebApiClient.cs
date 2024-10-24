@@ -3,6 +3,7 @@
 using Microsoft.Extensions.Options;
 
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -161,9 +162,15 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<UserLogoutResultModel>(parameters, cancellationToken);
         }
 
-        public Task<UserCountersModel> GetCountersAsync(CancellationToken cancellationToken = default)
+        public Task<UsersCountersModel> GetCountersAsync(CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["counters"]);
+            return GetAsync<UsersCountersModel>(parameters, cancellationToken);
+        }
+
+        public Task<UserCountersModel> GetCountersAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "counters"]);
             return GetAsync<UserCountersModel>(parameters, cancellationToken);
         }
 
