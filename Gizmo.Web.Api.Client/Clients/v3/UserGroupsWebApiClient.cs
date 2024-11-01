@@ -1,7 +1,7 @@
 ﻿using Gizmo.Web.Api.Models;
 
 using Microsoft.Extensions.Options;
-
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -48,6 +48,12 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters([id], options);
             return DeleteAsync<UserGroupDeleteResultModel>(parameters, ct);
+        }
+
+        public Task<IEnumerable<UserGroupDisallowedHostGroupModel>> GetDisallowedHostGroupsAsync(int userGroupId, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters([userGroupId, "disallowedhostgroups"]);
+            return GetAsync<IEnumerable<UserGroupDisallowedHostGroupModel>>(parameters, ct);
         }
 
         #endregion
