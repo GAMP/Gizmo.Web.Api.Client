@@ -56,6 +56,24 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<IEnumerable<UserGroupDisallowedHostGroupModel>>(parameters, ct);
         }
 
+        public Task<CreateResult> CreateDisallowedHostGroupAsync(int userGroupId, UserGroupDisallowedHostGroupModelCreate model, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters([userGroupId, "disallowedhostgroups"]);
+            return PostAsync<CreateResult>(parameters, model, ct);
+        }
+
+        public Task<UpdateResult> UpdateDisallowedHostGroupAsync(UserGroupDisallowedHostGroupModelUpdate model, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters(["disallowedhostgroups"]);
+            return PutAsync<UpdateResult>(parameters, model, ct);
+        }
+
+        public Task<DeleteResult> DeleteDisallowedHostGroupAsync(int userGroupId, int id, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters([userGroupId, "disallowedhostgroups", id]);
+            return DeleteAsync<DeleteResult>(parameters, ct);
+        }
+
         #endregion
     }
 }
