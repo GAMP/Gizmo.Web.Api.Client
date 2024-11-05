@@ -1,29 +1,20 @@
-﻿using Gizmo.Web.Api.Models;
-
-using Microsoft.Extensions.Options;
-
+﻿using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+
+using Gizmo.Web.Api.Models;
 
 namespace Gizmo.Web.Api.Clients
 {
     [WebApiRoute("api/v3/products")]
     public sealed class ProductsWebApiClient : WebApiClientBase
     {
-        #region CONSTRUCTOR
-
         public ProductsWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :
             base(httpClient, options, payloadSerializerProvider)
         {
         }
-
-        #endregion
-
-        #region FUNCTIONS
-
-        #region Products
 
         public Task<PagedList<ProductModel>> GetAsync(ProductsFilter filter, CancellationToken ct = default)
         {
@@ -55,9 +46,6 @@ namespace Gizmo.Web.Api.Clients
             return DeleteAsync<DeleteResult>(parameters, ct);
         }
 
-        #endregion
-
-        #region Bundles
         public Task<IEnumerable<ProductBundledModel>> GetBundledProductsAsync(int bundleId, CancellationToken ct = default)
         {
             var parameters = new UriParameters(new object[] { "bundle", bundleId, "bundledproducts" });
@@ -82,10 +70,6 @@ namespace Gizmo.Web.Api.Clients
             return DeleteAsync<DeleteResult>(parameters, ct);
         }
 
-        #endregion
-
-        #region User Price
-
         public Task<IEnumerable<ProductUserPriceModel>> GetProductUserPricesAsync(int id, CancellationToken ct = default)
         {
             var parameters = new UriParameters(new object[] { id, "userprices" });
@@ -109,13 +93,9 @@ namespace Gizmo.Web.Api.Clients
             return DeleteAsync<DeleteResult>(parameters, ct);
         }
 
-        #endregion
-
-        #region Purchase Availability
-
         public Task<ProductPurchaseAvailabilityModel> GetPurchaseAvailabilityAsync(int id, CancellationToken ct = default)
         {
-            var parameters = new UriParameters(new object[] {id, "purchaseavailability" });
+            var parameters = new UriParameters(new object[] { id, "purchaseavailability" });
             return GetAsync<ProductPurchaseAvailabilityModel>(parameters, ct);
         }
 
@@ -125,13 +105,9 @@ namespace Gizmo.Web.Api.Clients
             return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
-        #endregion
-
-        #region Disallowed User Groups 
-
         public Task<IEnumerable<ProductDisallowedUserGroupModel>> GetDisallowedUserGroupsAsync(int id, CancellationToken ct = default)
         {
-            var parameters = new UriParameters(new object[] {id, "disallowedusergroups" });
+            var parameters = new UriParameters(new object[] { id, "disallowedusergroups" });
             return GetAsync<IEnumerable<ProductDisallowedUserGroupModel>>(parameters, ct);
         }
 
@@ -152,9 +128,6 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters(new object[] { id, "disallowedusergroups", disallowedUserGroupId });
             return DeleteAsync<DeleteResult>(parameters, ct);
         }
-        #endregion
-
-        #region Bundle User Prices
 
         public Task<IEnumerable<ProductBundledUserPriceModel>> GetBundleProductUserPricesAsync(int id, int bundledProductId, CancellationToken ct = default)
         {
@@ -180,11 +153,6 @@ namespace Gizmo.Web.Api.Clients
             return DeleteAsync<DeleteResult>(parameters, ct);
         }
 
-
-        #endregion
-
-        #region Usage Availability
-
         public Task<ProductTimeUsageAvailabilityModel> GetUsageAvailabilityAsync(int id, CancellationToken ct = default)
         {
             var parameters = new UriParameters(new object[] { "time", id, "usageavailability" });
@@ -196,10 +164,6 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters(new object[] { "time", id, "usageavailability" });
             return PutAsync<UpdateResult>(parameters, model, ct);
         }
-
-        #endregion
-
-        #region Disallowed Host Groups
 
         public Task<IEnumerable<ProductTimeDisallowedHostGroupModel>> GetDisallowedHostGroupsAsync(int id, CancellationToken ct = default)
         {
@@ -225,10 +189,6 @@ namespace Gizmo.Web.Api.Clients
             return DeleteAsync<DeleteResult>(parameters);
         }
 
-        #endregion
-
-        #region Images
-
         public Task<IEnumerable<ProductImageModel>> GetProductImagesAsync(int id, CancellationToken ct = default)
         {
             var parameters = new UriParameters(new object[] { id, "images" });
@@ -243,18 +203,26 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<UpdateResult> UpdateProductImageAsync(ProductImageModelUpdate model, CancellationToken ct = default)
         {
-            var parameters = new UriParameters(new object[] {"images" });
+            var parameters = new UriParameters(new object[] { "images" });
             return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
         public Task<DeleteResult> DeleteProductImageAsync(int id, int productImageId, CancellationToken ct = default)
         {
-            var parameters = new UriParameters(new object[] {id, "images", productImageId });
+            var parameters = new UriParameters(new object[] { id, "images", productImageId });
             return DeleteAsync<DeleteResult>(parameters, ct);
         }
 
-        #endregion 
+        public Task<IEnumerable<BranchReferenceModel>> BranchesGetAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "branches"]);
+            return GetAsync<IEnumerable<BranchReferenceModel>>(parameters, cancellationToken);
+        }
 
-        #endregion
+        public Task<UpdateResult> BranchSetAsync(int id, IEnumerable<BranchReferenceUpdateModel> entries, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "branches"]);
+            return PostAsync<UpdateResult>(parameters, entries, cancellationToken);
+        }
     }
 }
