@@ -239,5 +239,11 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters(["asset", assetId, "checkin"]);
             return PutAsync<UpdateResult>(parameters, cancellationToken);
         }
+
+        public Task<UserStatsModel> GetStatsAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "stats"]);
+            return GetAsync<UserStatsModel>(parameters, cancellationToken);
+        }
     }
 }
