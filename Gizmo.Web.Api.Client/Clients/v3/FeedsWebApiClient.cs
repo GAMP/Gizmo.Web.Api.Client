@@ -52,7 +52,7 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<IEnumerable<BranchReferenceModel>>(parameters, cancellationToken);
         }
 
-        public Task<UpdateResult> BranchSetAsync(int id, IEnumerable<BranchReferenceUpdateModel> entries, CancellationToken cancellationToken = default)
+        public Task<UpdateResult> BranchSetAsync(int id, IEnumerable<BranchReferenceModelUpdate> entries, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "branches"]);
             return PostAsync<UpdateResult>(parameters, entries, cancellationToken);
