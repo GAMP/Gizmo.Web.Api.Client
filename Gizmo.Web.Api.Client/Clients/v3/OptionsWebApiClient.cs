@@ -79,5 +79,17 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters(["business", "pack"]);
             return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
         }
+
+        public Task<ManagerFeaturesOptions> ManagerFeaturesAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["managerfeatures"]);
+            return GetAsync<ManagerFeaturesOptions>(parameters, cancellationToken);
+        }
+
+        public Task<StoreOptionsReadPack> ManagerFeaturesPackAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["managerfeatures", "pack"]);
+            return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
+        }
     }
 }
