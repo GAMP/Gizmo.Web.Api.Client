@@ -74,6 +74,12 @@ namespace Gizmo.Web.Api.Clients
             return DeleteAsync<DeleteResult>(parameters, ct);
         }
 
+        public Task<UpdateResult> SetAsDefaultAsync(int id, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters([id, "setasdefault"]);
+            return PutAsync<UpdateResult>(parameters, ct);
+        }
+
         #endregion
     }
 }
