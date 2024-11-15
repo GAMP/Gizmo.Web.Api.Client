@@ -68,7 +68,7 @@ namespace Gizmo.Web.Api.Clients.Builder
         }
 
         /// <summary>
-        /// Adds unsesecured web api clients to service collection.
+        /// Adds unsecured web api clients to service collection.
         /// </summary>
         /// <param name="services">Service collection.</param>
         /// <param name="clientName">Registered http client name.</param>
