@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Gizmo.Server.Options;
 using Gizmo.Web.Api.Models;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Gizmo.Web.Api.Clients
 {
@@ -28,6 +29,20 @@ namespace Gizmo.Web.Api.Clients
         /// <returns>Options read pack.</returns>
         public Task<StoreOptionsReadPack> ReadAsync(string optionsType, CancellationToken cancellationToken = default)
         {
+            var queryParameters = new Dictionary<string, string>() { { "optionsType", optionsType } };
+            var parameters = new UriParameters([], queryParameters);
+            return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// Reads store options.
+        /// </summary>
+        /// <typeparam name="TOptions">Options type.</typeparam>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>Options read pack.</returns>
+        public Task<StoreOptionsReadPack> ReadAsync<TOptions>(CancellationToken cancellationToken = default) where TOptions : IStoreOptions
+        {
+            var optionsType = typeof(TOptions).GetShortTypeName();
             var queryParameters = new Dictionary<string, string>() { { "optionsType", optionsType } };
             var parameters = new UriParameters([], queryParameters);
             return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
