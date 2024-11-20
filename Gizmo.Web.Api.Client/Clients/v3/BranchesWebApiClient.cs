@@ -14,40 +14,46 @@ namespace Gizmo.Web.Api.Clients
         {
         }
 
-        public Task<PagedList<BranchModel>> GetAsync(BranchFilter filter, CancellationToken ct = default)
+        public Task<PagedList<BranchModel>> GetAsync(BranchFilter filter, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(filter);
-            return GetAsync<PagedList<BranchModel>>(parameters, ct);
+            return GetAsync<PagedList<BranchModel>>(parameters, cancellationToken);
         }
 
-        public Task<BranchModel> GetAsync(int id, CancellationToken ct = default)
+        public Task<BranchModel> GetAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(id);
-            return GetAsync<BranchModel>(parameters, ct);
+            return GetAsync<BranchModel>(parameters, cancellationToken);
         }
 
-        public Task<CreateResult> CreateAsync(BranchModelCreate model, CancellationToken ct = default)
+        public Task<CreateResult> CreateAsync(BranchModelCreate model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters();
-            return PostAsync<CreateResult>(parameters, model, ct);
+            return PostAsync<CreateResult>(parameters, model, cancellationToken);
         }
 
-        public Task<UpdateResult> UpdateAsync(BranchModelUpdate model, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateAsync(BranchModelUpdate model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters();
-            return PutAsync<UpdateResult>(parameters, model, ct);
+            return PutAsync<UpdateResult>(parameters, model, cancellationToken);
         }
 
-        public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
+        public Task<DeleteResult> DeleteAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(id);
-            return DeleteAsync<DeleteResult>(parameters, ct);
+            return DeleteAsync<DeleteResult>(parameters, cancellationToken);
         }
 
-        public Task<UpdateResult> UnDeleteAsync(int id, CancellationToken ct = default)
+        public Task<UpdateResult> UnDeleteAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "undelete"]);
-            return PutAsync<UpdateResult>(parameters,null, ct);
+            return PutAsync<UpdateResult>(parameters, null, cancellationToken);
+        }
+
+        public Task<ExistResult> NameExistAsync(string name, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["name", name, "exist"]);
+            return GetAsync<ExistResult>(parameters, cancellationToken);
         }
     }
 }
