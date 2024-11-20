@@ -20,7 +20,7 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<PagedList<BranchModel>>(parameters, cancellationToken);
         }
 
-        public Task<BranchModel> GetAsync(int id, CancellationToken cancellationToken = default)
+        public Task<BranchModel> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(id);
             return GetAsync<BranchModel>(parameters, cancellationToken);
