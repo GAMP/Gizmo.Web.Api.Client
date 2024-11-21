@@ -56,7 +56,7 @@ namespace Gizmo.Web.Api.Clients
         /// <returns>Update result.</returns>
         public Task<UpdateResult> WriteAsync(StoreOptionsWritePack storeOptionsWrite, CancellationToken cancellationToken = default)
         {
-            return PostAsync<UpdateResult>(UriParameters.Empty, storeOptionsWrite, cancellationToken);
+            return PutAsync<UpdateResult>(UriParameters.Empty, storeOptionsWrite, cancellationToken);
         }
 
         public Task<GeneralOptions> GeneralAsync(CancellationToken cancellationToken = default)
