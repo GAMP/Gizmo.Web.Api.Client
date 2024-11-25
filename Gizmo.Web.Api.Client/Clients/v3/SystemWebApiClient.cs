@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Gizmo.Web.Api.Clients;
 using Gizmo.Web.Api.Models;
 using Microsoft.Extensions.Options;
 
@@ -19,6 +18,12 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters(["timezones"]);
             return GetAsync<IEnumerable<TimeZoneInfoModel>>(parameters, default);
+        }
+
+        public Task<TimeZoneInfoModel> TimeZonesLocalAsync()
+        {
+            var parameters = new UriParameters(["timezones", "local"]);
+            return GetAsync<TimeZoneInfoModel>(parameters, default);
         }
     }
 }

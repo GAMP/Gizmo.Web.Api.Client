@@ -55,5 +55,11 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters(["name", name, "exist"]);
             return GetAsync<ExistResult>(parameters, cancellationToken);
         }
+
+        public Task<TimeZoneInfoModel> TimeZoneAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "timezone"]);
+            return GetAsync<TimeZoneInfoModel>(parameters, cancellationToken);
+        }
     }
 }
