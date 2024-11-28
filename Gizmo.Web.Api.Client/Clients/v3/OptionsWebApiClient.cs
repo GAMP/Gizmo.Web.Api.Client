@@ -220,5 +220,23 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters(["reservations"]);
             return PostAsync<UpdateResult>(parameters, options, cancellationToken);
         }
+
+        public Task<AgeRestrictionsOptions> AgeRestrictionsAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["agerestrictions"]);
+            return GetAsync<AgeRestrictionsOptions>(parameters, cancellationToken);
+        }
+
+        public Task<StoreOptionsReadPack> AgeRestrictionsPackAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["agerestrictions", "pack"]);
+            return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> AgeRestrictionsAsync(AgeRestrictionsOptions options, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["agerestrictions"]);
+            return PostAsync<UpdateResult>(parameters, options, cancellationToken);
+        }
     }
 }
