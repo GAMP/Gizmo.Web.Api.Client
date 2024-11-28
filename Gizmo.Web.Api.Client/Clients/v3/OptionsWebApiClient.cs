@@ -238,5 +238,23 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters(["agerestrictions"]);
             return PostAsync<UpdateResult>(parameters, options, cancellationToken);
         }
+
+        public Task<WaitingLinesOptions> WaitingLinesAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["waitinglines"]);
+            return GetAsync<WaitingLinesOptions>(parameters, cancellationToken);
+        }
+
+        public Task<StoreOptionsReadPack> WaitingLinesPackAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["waitinglines", "pack"]);
+            return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> WaitingLinesAsync(WaitingLinesOptions options, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["waitinglines"]);
+            return PostAsync<UpdateResult>(parameters, options, cancellationToken);
+        }
     }
 }
