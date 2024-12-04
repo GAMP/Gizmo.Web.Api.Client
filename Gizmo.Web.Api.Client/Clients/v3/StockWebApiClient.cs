@@ -6,6 +6,9 @@ using Microsoft.Extensions.Options;
 
 namespace Gizmo.Web.Api.Clients
 {
+    /// <summary>
+    /// Stock web api client.
+    /// </summary>
     [WebApiRoute("api/v3/stock")]
     public sealed class StockWebApiClient : WebApiClientBase
     {
