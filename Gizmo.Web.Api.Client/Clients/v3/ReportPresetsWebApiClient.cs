@@ -52,8 +52,8 @@ namespace Gizmo.Web.Api.Clients
 
         public async Task<UpdateResult> RenameAsync(int id, string name, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters([id, "name", name]);
-            return await PutAsync<UpdateResult>(parameters, null, cancellationToken).ConfigureAwait(false);
+            var parameters = new UriParameters([id, "name"]);
+            return await PutAsync<UpdateResult>(parameters, name, cancellationToken).ConfigureAwait(false);
         }
 
         public async Task<ExistResult> NameExistAsync(string name, CancellationToken cancellationToken = default)

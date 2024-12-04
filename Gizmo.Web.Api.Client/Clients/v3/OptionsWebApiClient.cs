@@ -256,5 +256,41 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters(["waitinglines"]);
             return PostAsync<UpdateResult>(parameters, options, cancellationToken);
         }
+
+        public Task<TopUpOptions> TopUpAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["topup"]);
+            return GetAsync<TopUpOptions>(parameters, cancellationToken);
+        }
+
+        public Task<StoreOptionsReadPack> TopUpPackAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["topup", "pack"]);
+            return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> TopUpAsync(TopUpOptions options, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["topup"]);
+            return PostAsync<UpdateResult>(parameters, options, cancellationToken);
+        }
+
+        public Task<PaymentProcessingOptions> PaymentProcessingAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["paymentprocessing"]);
+            return GetAsync<PaymentProcessingOptions>(parameters, cancellationToken);
+        }
+
+        public Task<StoreOptionsReadPack> PaymentProcessingPackAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["paymentprocessing", "pack"]);
+            return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> PaymentProcessingAsync(PaymentProcessingOptions options, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["paymentprocessing"]);
+            return PostAsync<UpdateResult>(parameters, options, cancellationToken);
+        }
     }
 }

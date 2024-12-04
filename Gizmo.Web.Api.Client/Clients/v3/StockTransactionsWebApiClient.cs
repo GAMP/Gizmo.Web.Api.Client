@@ -28,7 +28,7 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<StockTransactionModel>(parameters, ct);
         }
 
-        public async Task<UpdateResult> TransactionAsync(StockTransactionCreateModel model, CancellationToken cancellationToken = default)
+        public async Task<UpdateResult> TransactionAsync(StockTransactionModelCreate model, CancellationToken cancellationToken = default)
         {
             return await PostAsync<UpdateResult>(UriParameters.Empty, model, cancellationToken);
         }

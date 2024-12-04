@@ -26,6 +26,12 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<PagedList<RegisterModel>>(parameters, ct);
         }
 
+        public Task<RegisterModel> GetByIdAsync(int id, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters(id);
+            return GetAsync<RegisterModel>(parameters, ct);
+        }
+
         public Task<CreateResult> CreateAsync(RegisterModelCreate model, CancellationToken ct = default)
         {
             var parameters = new UriParameters();
@@ -36,13 +42,7 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters();
             return PutAsync<UpdateResult>(parameters, model, ct);
-        }
-
-        public Task<RegisterModel> GetByIdAsync(int id, CancellationToken ct = default)
-        {
-            var parameters = new UriParameters(id);
-            return GetAsync<RegisterModel>(parameters, ct);
-        }
+        }  
 
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
         {
