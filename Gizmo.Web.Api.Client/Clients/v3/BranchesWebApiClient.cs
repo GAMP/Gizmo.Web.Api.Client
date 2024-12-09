@@ -73,5 +73,11 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters([id, "disable"]);
             return PutAsync<UpdateResult>(parameters, null, cancellationToken);
         }
+
+        public Task<BranchCountersModel> CountersAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "counters"]);
+            return GetAsync<BranchCountersModel>(parameters, cancellationToken);
+        }
     }
 }
