@@ -50,16 +50,16 @@ namespace Gizmo.Web.Api.Clients
             return PutAsync<UpdateResult>(parameters, model, cancellationToken);
         }
 
-        public Task EnableAsync(int id, CancellationToken cancellationToken = default)
+        public Task<UpdateResult> EnableAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "enable"]);
-            return PutAsync<DeleteResult>(parameters, null, cancellationToken);
+            return PutAsync<UpdateResult>(parameters, null, cancellationToken);
         }
 
-        public Task DisableAsync(int id, CancellationToken cancellationToken = default)
+        public Task<UpdateResult> DisableAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "disable"]);
-            return PutAsync<DeleteResult>(parameters, null, cancellationToken);
+            return PutAsync<UpdateResult>(parameters, null, cancellationToken);
         }
 
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken cancellationToken = default)
