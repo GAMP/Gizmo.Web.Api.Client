@@ -11,14 +11,10 @@ namespace Gizmo.Web.Api.Clients
     [WebApiRoute("api/v3/registers")]
     public sealed class RegistersWebApiClient : WebApiClientBase
     {
-        #region CONSTRUCTOR
         public RegistersWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :
             base(httpClient, options, payloadSerializerProvider)
         {
         }
-        #endregion
-
-        #region FUNCTIONS
 
         public Task<PagedList<RegisterModel>> GetAsync(RegistersFilter filter, CancellationToken ct = default)
         {
@@ -42,7 +38,7 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters();
             return PutAsync<UpdateResult>(parameters, model, ct);
-        }  
+        }
 
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
         {
@@ -52,8 +48,8 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<DeleteResult> UndeleteAsync(int id, CancellationToken ct = default)
         {
-            var parameters = new UriParameters([id,"undelete"]);
-            return PutAsync<DeleteResult>(parameters,null, ct);
+            var parameters = new UriParameters([id, "undelete"]);
+            return PutAsync<DeleteResult>(parameters, null, ct);
         }
 
         public Task<RegisterModel> CurrentAsync(CancellationToken ct = default)
@@ -62,6 +58,22 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<RegisterModel>(parameters, ct);
         }
 
-        #endregion
+        public async Task<UpdateResult> RenameAsync(int id, string name, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "name"]);
+            return await PutAsync<UpdateResult>(parameters, name, cancellationToken).ConfigureAwait(false);
+        }
+
+        public async Task<ExistResult> NameExistAsync(string name, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["name", name, "exist"]);
+            return await GetAsync<ExistResult>(parameters, cancellationToken).ConfigureAwait(false);
+        }
+
+        public async Task<ExistResult> NameExistAsync(string name, int branchId, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["name", name, "branch", branchId, "exist"]);
+            return await GetAsync<ExistResult>(parameters, cancellationToken).ConfigureAwait(false);
+        }
     }
 }
