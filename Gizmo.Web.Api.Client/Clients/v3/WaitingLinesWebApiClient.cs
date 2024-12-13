@@ -28,7 +28,7 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<UpdateResult> SetAsync(int id, WaitingLineParametersModel parametersModel, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["id", id]);
+            var parameters = new UriParameters(["hostgroups", id]);
             return PostAsync<UpdateResult>(parameters, parametersModel, cancellationToken);
         }
 
