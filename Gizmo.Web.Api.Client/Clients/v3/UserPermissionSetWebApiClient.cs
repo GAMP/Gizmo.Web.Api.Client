@@ -72,10 +72,10 @@ namespace Gizmo.Web.Api.Clients
             return PutAsync<UpdateResult>(parameters, permissions, cancellationToken);
         }
 
-        public Task<IEnumerable<UserPermissionMetadataModel>> PermissionMetadata(CancellationToken cancellationToken = default)
+        public Task<PoliciesMetadataModel> Policies(CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["permissionmetadata"]);
-            return GetAsync<IEnumerable<UserPermissionMetadataModel>>(parameters, cancellationToken);
+            var parameters = new UriParameters(["policies"]);
+            return GetAsync<PoliciesMetadataModel>(parameters, cancellationToken);
         }
     }
 }
