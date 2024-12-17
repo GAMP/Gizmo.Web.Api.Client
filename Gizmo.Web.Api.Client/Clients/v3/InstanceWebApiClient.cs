@@ -32,10 +32,10 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<AuthorizationModel>(parameters, cancellationToken);
         }
 
-        public Task<AuthorizeResultModel> AuthorizationAsync(CancellationToken cancellationToken = default)
+        public Task<AuthorizationResultModel> AuthorizationAsync(CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["authorization"]);
-            return PostAsync<AuthorizeResultModel>(parameters, cancellationToken);
+            return PostAsync<AuthorizationResultModel>(parameters, cancellationToken);
         }
 
         public Task<InstanceIdModel> InstanceIdAsync(CancellationToken cancellationToken = default)
