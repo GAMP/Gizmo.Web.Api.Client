@@ -388,6 +388,10 @@ namespace Gizmo.Web.Api.Clients
             if (data == null)
                 return EMPTY_HTTP_CONTENT_VALUE_TASK;
 
+            //allow to use http content directly, in such case no serialization will occur
+            if (data is HttpContent httpContent)
+                return ValueTask.FromResult(httpContent);
+
             try
             {
                 //create the http content with current serializer
