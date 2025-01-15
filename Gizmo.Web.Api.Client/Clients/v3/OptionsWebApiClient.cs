@@ -131,24 +131,6 @@ namespace Gizmo.Web.Api.Clients
             return PostAsync<UpdateResult>(parameters, options, cancellationToken);
         }
 
-        public Task<SubscriptionOptions> SubscriptionAsync(CancellationToken cancellationToken = default)
-        {
-            var parameters = new UriParameters(["subscription"]);
-            return GetAsync<SubscriptionOptions>(parameters, cancellationToken);
-        }
-
-        public Task<StoreOptionsReadPack> SubscriptionPackAsync(CancellationToken cancellationToken = default)
-        {
-            var parameters = new UriParameters(["subscription", "pack"]);
-            return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
-        }
-
-        public Task<UpdateResult> SubscriptionAsync(SubscriptionOptions options, CancellationToken cancellationToken = default)
-        {
-            var parameters = new UriParameters(["subscription"]);
-            return PostAsync<UpdateResult>(parameters, options, cancellationToken);
-        }
-
         public Task<RegionalOptions> RegionalAsync(CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["regional"]);
