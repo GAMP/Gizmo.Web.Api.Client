@@ -346,5 +346,23 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters(["client", "network", "connection"]);
             return PostAsync<UpdateResult>(parameters, options, cancellationToken);
         }
+
+        public Task<HttpsCertificateOptions> HttpsCertificateAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["https", "certificate"]);
+            return GetAsync<HttpsCertificateOptions>(parameters, cancellationToken);
+        }
+
+        public Task<StoreOptionsReadPack> HttpsCertificatePackAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["https", "certificate", "pack"]);
+            return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> HttpsCertificateAsync(HttpsCertificateOptions options, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["https", "certificate"]);
+            return PostAsync<UpdateResult>(parameters, options, cancellationToken);
+        }
     }
 }
