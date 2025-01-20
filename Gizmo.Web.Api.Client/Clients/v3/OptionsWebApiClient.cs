@@ -110,7 +110,7 @@ namespace Gizmo.Web.Api.Clients
         public Task<UpdateResult> GeneralAsync(GeneralOptions options, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["general"]);
-            return PostAsync<UpdateResult>(parameters,options, cancellationToken);
+            return PostAsync<UpdateResult>(parameters, options, cancellationToken);
         }
 
         public Task<ManagerFeaturesOptions> ManagerFeaturesAsync(CancellationToken cancellationToken = default)
@@ -272,6 +272,78 @@ namespace Gizmo.Web.Api.Clients
         public Task<UpdateResult> PaymentProcessingAsync(PaymentProcessingOptions options, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["paymentprocessing"]);
+            return PostAsync<UpdateResult>(parameters, options, cancellationToken);
+        }
+
+        public Task<SMTPOptions> SMTPAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["smtp"]);
+            return GetAsync<SMTPOptions>(parameters, cancellationToken);
+        }
+
+        public Task<StoreOptionsReadPack> SMTPPackAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["smtp", "pack"]);
+            return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> SMTPAsync(SMTPOptions options, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["smtp"]);
+            return PostAsync<UpdateResult>(parameters, options, cancellationToken);
+        }
+
+        public Task<SMSGatewayOptions> SmsGatewayAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["smsgateway"]);
+            return GetAsync<SMSGatewayOptions>(parameters, cancellationToken);
+        }
+
+        public Task<StoreOptionsReadPack> SmsGatewayPackAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["smsgateway", "pack"]);
+            return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> SmsGatewayAsync(SMSGatewayOptions options, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["smsgateway"]);
+            return PostAsync<UpdateResult>(parameters, options, cancellationToken);
+        }
+
+        public Task<NetworkOptions> NetworkAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["network"]);
+            return GetAsync<NetworkOptions>(parameters, cancellationToken);
+        }
+
+        public Task<StoreOptionsReadPack> NetworkPackAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["network", "pack"]);
+            return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> NetworkAsync(NetworkOptions options, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["network"]);
+            return PostAsync<UpdateResult>(parameters, options, cancellationToken);
+        }
+
+        public Task<ClientNetworkConnectionOptions> ClientNetworkConnectionAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["client", "network", "connection"]);
+            return GetAsync<ClientNetworkConnectionOptions>(parameters, cancellationToken);
+        }
+
+        public Task<StoreOptionsReadPack> ClientNetworkConnectionPackAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["client", "network", "connection", "pack"]);
+            return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> ClientNetworkConnectionAsync(ClientNetworkConnectionOptions options, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["client", "network", "connection"]);
             return PostAsync<UpdateResult>(parameters, options, cancellationToken);
         }
     }
