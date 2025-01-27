@@ -22,9 +22,9 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<PagedList<HostLayoutGroupModel>>(parameters, cancellationToken);
         }
 
-        public Task<HostLayoutGroupModel> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+        public Task<HostLayoutGroupModel> GetByIdAsync(int id, ModelFilterOptions options, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(id);
+            var parameters = new UriParameters(new object[] { id }, options);
             return GetAsync<HostLayoutGroupModel>(parameters, cancellationToken);
         }
 
@@ -80,6 +80,12 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters([id, "host", hostId, "layout", "hide", hide]);
             return await PostAsync<UpdateResult>(parameters, null, cancellationToken);
+        }
+
+        public async Task<UpdateResult> HostsLayoutGridPositionSetAsync(int id, HostsLayoutGridPositionModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "host", "layout", "grid", "position"]);
+            return await PutAsync<UpdateResult>(parameters, model, cancellationToken);
         }
     }
 }
