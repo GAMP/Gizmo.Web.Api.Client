@@ -156,6 +156,12 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<UserLoginResultModel>(parameters, cancellationToken);
         }
 
+        public Task<UserLoginResultModel> LoginAsync(int id, int hostId, int slot, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "login", hostId, "slot", slot]);
+            return GetAsync<UserLoginResultModel>(parameters, cancellationToken);
+        }
+
         public Task<UserLogoutResultModel> LogoutAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "logout"]);
