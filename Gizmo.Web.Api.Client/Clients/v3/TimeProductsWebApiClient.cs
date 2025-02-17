@@ -21,5 +21,11 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters(filter);
             return GetAsync<PagedList<TimeProductModel>>(parameters, cancellationToken);
         }
+
+        public Task<DeleteResult> DeleteAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(id);
+            return DeleteAsync<DeleteResult>(parameters, cancellationToken);
+        }
     }
 }
