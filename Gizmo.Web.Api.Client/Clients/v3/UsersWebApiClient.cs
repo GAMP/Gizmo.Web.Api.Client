@@ -138,6 +138,12 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<UsageModel?>(parameters, cancellationToken);
         }
 
+        public Task<Dictionary<int,UserBalanceExtendedModel>> BalanceAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["balance"]);
+            return GetAsync<Dictionary<int, UserBalanceExtendedModel>>(parameters, cancellationToken);
+        }
+
         public Task<UserBalanceExtendedModel> BalanceAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "balance"]);
