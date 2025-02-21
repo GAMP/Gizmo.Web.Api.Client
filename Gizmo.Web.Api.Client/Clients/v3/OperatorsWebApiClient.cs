@@ -58,6 +58,18 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<PagedList<BranchModel>>(parameters, cancellationToken);
         }
 
+        public Task<CreateResult> AddToBranch(int operatorId, int branchId, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(new object[] { operatorId, "branch", branchId });
+            return PostAsync<CreateResult>(parameters, cancellationToken);
+        }
+
+        public Task<DeleteResult> RemoveFromBranchAsync(int operatorId, int branchId, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(new object[] { operatorId, "branch", branchId });
+            return DeleteAsync<DeleteResult>(parameters, cancellationToken);
+        }
+
         public Task<PagedList<BranchModel>> BranchesAsync(int operatorId, OpeatorBranchFilter filter, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(new object[] { operatorId, "branches" }, filter);
