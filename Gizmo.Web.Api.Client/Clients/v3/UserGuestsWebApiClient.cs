@@ -19,13 +19,19 @@ namespace Gizmo.Web.Api.Clients
         public Task<ReserveGuestResultModel> ReserveAsync(ReservedGuestModelCreate model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["reserve"]);
-            return PostAsync<ReserveGuestResultModel>(parameters,model, cancellationToken);
+            return PostAsync<ReserveGuestResultModel>(parameters, model, cancellationToken);
         }
 
         public Task<IEnumerable<ReservedGuestReleaseModel>> HostReleaseAsync(int hostId, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["host", hostId, "release"]);
             return PostAsync<IEnumerable<ReservedGuestReleaseModel>>(parameters, null, cancellationToken);
+        }
+
+        public Task<bool> ReleaseAsync(int userId, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([userId, "release"]);
+            return PostAsync<bool>(parameters, null, cancellationToken);
         }
     }
 }
