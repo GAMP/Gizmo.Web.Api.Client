@@ -174,7 +174,7 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<UpdateResult> UpdateApplicationExecutableImage(int id, ApplicationExecutableModelImage image, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(id);
+            var parameters = new UriParameters([id, "image"]);
             return PutAsync<UpdateResult>(parameters, image, cancellationToken);
         }
 
