@@ -364,5 +364,77 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters(["https", "certificate"]);
             return PostAsync<UpdateResult>(parameters, options, cancellationToken);
         }
+
+        public Task<UserSessionsOptions> UserSessionsAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["user", "sessions"]);
+            return GetAsync<UserSessionsOptions>(parameters, cancellationToken);
+        }
+
+        public Task<StoreOptionsReadPack> UserSessionsPackAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["user", "sessions", "pack"]);
+            return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> UserSessionsAsync(UserSessionsOptions options, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["user", "sessions"]);
+            return PostAsync<UpdateResult>(parameters, options, cancellationToken);
+        }
+
+        public Task<UserLoginOptions> UserLoginAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["user", "login"]);
+            return GetAsync<UserLoginOptions>(parameters, cancellationToken);
+        }
+
+        public Task<StoreOptionsReadPack> UserLoginPackAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["user", "login", "pack"]);
+            return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> UserLoginAsync(UserLoginOptions options, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["user", "login"]);
+            return PostAsync<UpdateResult>(parameters, options, cancellationToken);
+        }
+
+        public Task<MiscOptions> MiscAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["misc"]);
+            return GetAsync<MiscOptions>(parameters, cancellationToken);
+        }
+
+        public Task<StoreOptionsReadPack> MiscPackAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["misc", "pack"]);
+            return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> MiscAsync(MiscOptions options, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["misc"]);
+            return PostAsync<UpdateResult>(parameters, options, cancellationToken);
+        }
+
+        public Task<ClientUpdateOptions> ClientUpdateAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["client", "update"]);
+            return GetAsync<ClientUpdateOptions>(parameters, cancellationToken);
+        }
+
+        public Task<StoreOptionsReadPack> ClientUpdatePackAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["client", "update", "pack"]);
+            return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> ClientUpdateAsync(ClientUpdateOptions options, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["client", "update"]);
+            return PostAsync<UpdateResult>(parameters, options, cancellationToken);
+        }
     }
 }
