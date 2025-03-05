@@ -1,5 +1,6 @@
 ﻿using Gizmo.Web.Api.Models;
 using Microsoft.Extensions.Options;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -42,6 +43,24 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters(id);
             return DeleteAsync<DeleteResult>(parameters, cancellationToken);
+        }
+
+        public Task<IEnumerable<SecurityProfileRestrictionModel>> RestrictionsAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "restrictions"]);
+            return GetAsync<IEnumerable<SecurityProfileRestrictionModel>>(parameters, cancellationToken);
+        }
+
+        public Task<IEnumerable<SecurityProfilePolicyModel>> PoliciesAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "policies"]);
+            return GetAsync<IEnumerable<SecurityProfilePolicyModel>>(parameters, cancellationToken);
+        }
+
+        public Task<SecurityProfilePolicesMetadataModel> PoliciesMetadataAsync(CancellationToken cancellationToken)
+        {
+            var parameters = new UriParameters(["policies", "metadata"]);
+            return GetAsync<SecurityProfilePolicesMetadataModel>(parameters, cancellationToken);
         }
     }
 }
