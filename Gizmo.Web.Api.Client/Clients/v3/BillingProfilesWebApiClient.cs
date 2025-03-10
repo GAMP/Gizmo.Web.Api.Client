@@ -39,9 +39,9 @@ namespace Gizmo.Web.Api.Clients
             return PutAsync<UpdateResult>(parameters, model, ct);
         }
 
-        public Task<BillingProfileModel> GetByIdAsync(int id, CancellationToken ct = default)
+        public Task<BillingProfileModel> GetByIdAsync(int id, ModelFilterOptions options, CancellationToken ct = default)
         {
-            var parameters = new UriParameters(id);
+            var parameters = new UriParameters(new object[] { id }, options);
             return GetAsync<BillingProfileModel>(parameters, ct);
         }
 
