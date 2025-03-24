@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Gizmo.Web.Api.Models;
+using Gizmo.Web.Api.Models.Enumerations;
 
 namespace Gizmo.Web.Api.Clients
 {
@@ -43,6 +44,18 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters([id]);
             return DeleteAsync<DeleteResult>(parameters, cancellationToken);
+        }
+
+        public Task<ClientOptionSkinImageModel> GetImageAsync(int id, SkinImageType skinImageType, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "image", (int)skinImageType]);
+            return GetAsync<ClientOptionSkinImageModel>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> UpdateImageAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "image"]);
+            return PutAsync<UpdateResult>(parameters, cancellationToken);
         }
     }
 }
