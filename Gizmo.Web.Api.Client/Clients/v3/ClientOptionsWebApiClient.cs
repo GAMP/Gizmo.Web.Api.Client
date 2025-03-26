@@ -52,10 +52,10 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<ClientOptionSkinImageModel>(parameters, cancellationToken);
         }
 
-        public Task<UpdateResult> UpdateImageAsync(int id, CancellationToken cancellationToken = default)
+        public Task<UpdateResult> UpdateImageAsync(int id, ClientOptionSkinImageModel model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "image"]);
-            return PutAsync<UpdateResult>(parameters, cancellationToken);
+            return PutAsync<UpdateResult>(parameters, model, cancellationToken);
         }
     }
 }
