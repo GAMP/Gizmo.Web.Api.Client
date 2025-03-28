@@ -46,6 +46,12 @@ namespace Gizmo.Web.Api.Clients
             return DeleteAsync<DeleteResult>(parameters, cancellationToken);
         }
 
+        public Task<UpdateResult> SetAsDefaultAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "setasdefault"]);
+            return PutAsync<UpdateResult>(parameters, cancellationToken);
+        }
+
         public Task<ClientOptionSkinImageModel> GetImageAsync(int id, SkinImageType skinImageType, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "image", (int)skinImageType]);
