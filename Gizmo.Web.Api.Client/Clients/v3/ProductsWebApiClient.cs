@@ -75,6 +75,7 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters(new object[] { id, "userprices" });
             return GetAsync<IEnumerable<ProductUserPriceModel>>(parameters, ct);
         }
+        
         public Task<CreateResult> CreateProductUserPriceAsync(int id, ProductUserPriceModelCreate model, CancellationToken ct = default)
         {
             var parameters = new UriParameters(new object[] { id, "userprices" });
@@ -224,5 +225,30 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters([id, "branches"]);
             return PostAsync<UpdateResult>(parameters, entries, cancellationToken);
         }
+
+        public Task<IEnumerable<ProductHiddenHostGroupModel>> GetHiddenHostGroupsAsync(int id, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters(new object[] { id, "hiddenhostgroups" });
+            return GetAsync<IEnumerable<ProductHiddenHostGroupModel>>(parameters, ct);
+        }
+
+        public Task<CreateResult> CreateHiddenHostGroupAsync(int id, ProductHiddenHostGroupModelCreate model, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters(new object[] { id, "hiddenhostgroups" });
+            return PostAsync<CreateResult>(parameters, model, ct);
+        }
+
+        public Task<UpdateResult> UpdateHiddenHostGroupAsync(ProductHiddenHostGroupModelUpdate model, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters(new object[] { "hiddenhostgroups" });
+            return PutAsync<UpdateResult>(parameters, model, ct);
+        }
+
+        public Task<DeleteResult> DeleteHiddenHostGroupAsync(int id, int productHiddenHostGroup, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters(new object[] { id, "hiddenhostgroups", productHiddenHostGroup });
+            return DeleteAsync<DeleteResult>(parameters);
+        }
+
     }
 }
