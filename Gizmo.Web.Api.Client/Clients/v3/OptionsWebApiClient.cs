@@ -528,21 +528,21 @@ namespace Gizmo.Web.Api.Clients
             return PostAsync<UpdateResult>(parameters, options, cancellationToken);
         }
 
-        public Task<GracePeriodOptions> UserGraceAsync(CancellationToken cancellationToken = default)
+        public Task<UserLogoutGraceOptions> UserLogoutGraceAsync(CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["user", "grace"]);
-            return GetAsync<GracePeriodOptions>(parameters, cancellationToken);
+            var parameters = new UriParameters(["user", "logout", "grace"]);
+            return GetAsync<UserLogoutGraceOptions>(parameters, cancellationToken);
         }
 
-        public Task<StoreOptionsReadPack> UserGracePackAsync(CancellationToken cancellationToken = default)
+        public Task<StoreOptionsReadPack> UserLogoutGracePackAsync(CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["user", "grace", "pack"]);
+            var parameters = new UriParameters(["user", "logout", "grace", "pack"]);
             return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
         }
 
-        public Task<UpdateResult> UserGraceAsync(GracePeriodOptions options, CancellationToken cancellationToken = default)
+        public Task<UpdateResult> UserLogoutGraceAsync(UserLogoutGraceOptions options, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["user", "grace"]);
+            var parameters = new UriParameters(["user", "logout", "grace"]);
             return PostAsync<UpdateResult>(parameters, options, cancellationToken);
         }
     }
