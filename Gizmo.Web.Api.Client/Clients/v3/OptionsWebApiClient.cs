@@ -6,6 +6,7 @@ using Gizmo.Server.Options;
 using Gizmo.Web.Api.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.DependencyInjection;
+using Gizmo.Shared.Options;
 
 namespace Gizmo.Web.Api.Clients
 {
@@ -434,6 +435,114 @@ namespace Gizmo.Web.Api.Clients
         public Task<UpdateResult> ClientUpdateAsync(ClientUpdateOptions options, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["client", "update"]);
+            return PostAsync<UpdateResult>(parameters, options, cancellationToken);
+        }
+
+        public Task<ClientGeneralOptions> ClientAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["client"]);
+            return GetAsync<ClientGeneralOptions>(parameters, cancellationToken);
+        }
+
+        public Task<StoreOptionsReadPack> ClientPackAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["client", "pack"]);
+            return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> ClientAsync(ClientGeneralOptions options, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["client"]);
+            return PostAsync<UpdateResult>(parameters, options, cancellationToken);
+        }
+
+        public Task<ConfirmationCodeOptions> ConfirmationCodeAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["confirmation", "code"]);
+            return GetAsync<ConfirmationCodeOptions>(parameters, cancellationToken);
+        }
+
+        public Task<StoreOptionsReadPack> ConfirmationCodePackAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["confirmation", "code", "pack"]);
+            return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> ConfirmationCodeAsync(ConfirmationCodeOptions options, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["confirmation", "code"]);
+            return PostAsync<UpdateResult>(parameters, options, cancellationToken);
+        }
+
+        public Task<UserPasswordPolicyOptions> UserPasswordPolicyAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["user", "password", "policy"]);
+            return GetAsync<UserPasswordPolicyOptions>(parameters, cancellationToken);
+        }
+
+        public Task<StoreOptionsReadPack> UserPasswordPolicyPackAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["user", "password", "policy", "pack"]);
+            return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> UserPasswordPolicyAsync(UserPasswordPolicyOptions options, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["user", "password", "policy"]);
+            return PostAsync<UpdateResult>(parameters, options, cancellationToken);
+        }
+
+        public Task<UserPasswordRecoveryOptions> UserPasswordRecoveryAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["user", "password", "recovery"]);
+            return GetAsync<UserPasswordRecoveryOptions>(parameters, cancellationToken);
+        }
+
+        public Task<StoreOptionsReadPack> UserPasswordRecoveryPackAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["user", "password", "recovery", "pack"]);
+            return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> UserPasswordRecoveryAsync(UserPasswordRecoveryOptions options, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["user", "password", "recovery"]);
+            return PostAsync<UpdateResult>(parameters, options, cancellationToken);
+        }
+
+        public Task<UserRegistrationOptions> UserUserRegistrationAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["user", "registration"]);
+            return GetAsync<UserRegistrationOptions>(parameters, cancellationToken);
+        }
+
+        public Task<StoreOptionsReadPack> UserUserRegistrationPackAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["user", "registration", "pack"]);
+            return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> UserUserRegistrationAsync(UserRegistrationOptions options, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["user", "registration"]);
+            return PostAsync<UpdateResult>(parameters, options, cancellationToken);
+        }
+
+        public Task<GracePeriodOptions> UserGraceAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["user", "grace"]);
+            return GetAsync<GracePeriodOptions>(parameters, cancellationToken);
+        }
+
+        public Task<StoreOptionsReadPack> UserGracePackAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["user", "grace", "pack"]);
+            return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> UserGraceAsync(GracePeriodOptions options, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["user", "grace"]);
             return PostAsync<UpdateResult>(parameters, options, cancellationToken);
         }
     }
