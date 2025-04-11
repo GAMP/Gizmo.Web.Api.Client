@@ -7,6 +7,7 @@ using Gizmo.Web.Api.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.DependencyInjection;
 using Gizmo.Shared.Options;
+using Gizmo.Shared.Server.Options;
 
 namespace Gizmo.Web.Api.Clients
 {
@@ -543,6 +544,42 @@ namespace Gizmo.Web.Api.Clients
         public Task<UpdateResult> UserLogoutGraceAsync(UserLogoutGraceOptions options, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["user", "logout", "grace"]);
+            return PostAsync<UpdateResult>(parameters, options, cancellationToken);
+        }
+
+        public Task<UserFilesOptions> UserFilesAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["user", "files"]);
+            return GetAsync<UserFilesOptions>(parameters, cancellationToken);
+        }
+
+        public Task<StoreOptionsReadPack> UserFilesPackAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["user", "files", "pack"]);
+            return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> UserFilesAsync(UserFilesOptions options, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["user", "files"]);
+            return PostAsync<UpdateResult>(parameters, options, cancellationToken);
+        }
+
+        public Task<UserStorageOptions> UserStorageAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["user", "storage"]);
+            return GetAsync<UserStorageOptions>(parameters, cancellationToken);
+        }
+
+        public Task<StoreOptionsReadPack> UserStoragePackAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["user", "storage", "pack"]);
+            return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> UserStorageAsync(UserStorageOptions options, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["user", "storage"]);
             return PostAsync<UpdateResult>(parameters, options, cancellationToken);
         }
     }
