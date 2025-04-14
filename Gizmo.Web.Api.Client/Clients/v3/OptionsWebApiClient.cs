@@ -6,8 +6,6 @@ using Gizmo.Server.Options;
 using Gizmo.Web.Api.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.DependencyInjection;
-using Gizmo.Shared.Options;
-using Gizmo.Shared.Server.Options;
 
 namespace Gizmo.Web.Api.Clients
 {
@@ -580,6 +578,24 @@ namespace Gizmo.Web.Api.Clients
         public Task<UpdateResult> UserStorageAsync(UserStorageOptions options, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["user", "storage"]);
+            return PostAsync<UpdateResult>(parameters, options, cancellationToken);
+        }
+
+        public Task<DeploymentOptions> DeploymentAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["deployment"]);
+            return GetAsync<DeploymentOptions>(parameters, cancellationToken);
+        }
+
+        public Task<StoreOptionsReadPack> DeploymentPackAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["deployment", "pack"]);
+            return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> DeploymentAsync(DeploymentOptions options, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["deployment"]);
             return PostAsync<UpdateResult>(parameters, options, cancellationToken);
         }
     }
