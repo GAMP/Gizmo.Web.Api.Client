@@ -28,7 +28,7 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<InventoryAdjustmentModel>(parameters, cancellationToken);
         }
 
-        public Task<CreateResult> CreateAsync(InventoryAdjustmentModelCreate model, CancellationToken cancellationToken = default)
+        public Task<CreateResult> CreateAsync(InventoryAdjustmentReasonModelCreate model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters();
             return PostAsync<CreateResult>(parameters, model, cancellationToken);
