@@ -598,5 +598,23 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters(["deployment"]);
             return PostAsync<UpdateResult>(parameters, options, cancellationToken);
         }
+
+        public Task<ClientNotificationOptions> ClientNotificationsAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["client", "notifications"]);
+            return GetAsync<ClientNotificationOptions>(parameters, cancellationToken);
+        }
+
+        public Task<StoreOptionsReadPack> ClientNotificationsPackAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["client", "notifications", "pack"]);
+            return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> ClientNotificationsAsync(ClientNotificationOptions options, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["client", "notifications"]);
+            return PostAsync<UpdateResult>(parameters, options, cancellationToken);
+        }
     }
 }
