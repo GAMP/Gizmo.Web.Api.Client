@@ -44,13 +44,13 @@ namespace Gizmo.Web.Api.Clients
             return PostAsync<CreateResult>(parameters, model, cancellationToken);
         }
 
-        public Task<UpdateResult> UpdateAsync(NetworkDriveMappingCreateModel model, CancellationToken cancellationToken = default)
+        public Task<UpdateResult> UpdateAsync(VirtualFolderMappingUpdateModel model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["virtualFolder"]);
             return PutAsync<UpdateResult>(parameters, model, cancellationToken);
         }
 
-        public Task<CreateResult> CreateAsync(NetworkDriveMappingUpdateModel model, CancellationToken cancellationToken = default)
+        public Task<CreateResult> CreateAsync(NetworkDriveMappingCreateModel model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["networkDrive"]);
             return PostAsync<CreateResult>(parameters, model, cancellationToken);
