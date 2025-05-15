@@ -52,7 +52,7 @@ namespace Gizmo.Web.Api.Clients
             return DeleteAsync<DeleteResult>(parameters, ct);
         }
 
-        public async Task<ExistResult> RfidExistAsync(string rfid, CancellationToken cancellationToken)
+        public async Task<ExistResult> RfidExistAsync(string rfid, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["rfid", rfid, "exist"]);
             return await GetAsync<ExistResult>(parameters, cancellationToken).ConfigureAwait(false);
