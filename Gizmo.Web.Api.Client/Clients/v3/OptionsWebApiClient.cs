@@ -616,5 +616,59 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters(["client", "notifications"]);
             return PostAsync<UpdateResult>(parameters, options, cancellationToken);
         }
+
+        public Task<UserBalanceOptions> UserBalanceAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["user", "balance"]);
+            return GetAsync<UserBalanceOptions>(parameters, cancellationToken);
+        }
+
+        public Task<StoreOptionsReadPack> UserBalancePackAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["user", "balance", "pack"]);
+            return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> UserBalanceAsync(UserBalanceOptions options, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["user", "balance"]);
+            return PostAsync<UpdateResult>(parameters, options, cancellationToken);
+        }
+
+        public Task<InvoicingOptions> InvoicingAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["invoicing"]);
+            return GetAsync<InvoicingOptions>(parameters, cancellationToken);
+        }
+
+        public Task<StoreOptionsReadPack> InvoicingPackAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["invoicing", "pack"]);
+            return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> InvoicingAsync(InvoicingOptions options, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["invoicing"]);
+            return PostAsync<UpdateResult>(parameters, options, cancellationToken);
+        }
+
+        public Task<POSAutomationOptions> POSAutomationAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["pos", "automation"]);
+            return GetAsync<POSAutomationOptions>(parameters, cancellationToken);
+        }
+
+        public Task<StoreOptionsReadPack> POSAutomationPackAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["pos", "automation", "pack"]);
+            return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> POSAutomationAsync(POSAutomationOptions options, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["post", "automation"]);
+            return PostAsync<UpdateResult>(parameters, options, cancellationToken);
+        }
     }
 }
