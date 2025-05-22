@@ -32,6 +32,12 @@ namespace Gizmo.Web.Api.Clients
             return PostAsync<CreateResult>(parameters, model, ct);
         }
 
+        public Task<UpdateResult> UpdateAsync(ClientTaskUpdateModel model, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters();
+            return PutAsync<UpdateResult>(parameters, model, ct);
+        }
+
         public Task<ClientTaskModel> GetByIdAsync(int id, CancellationToken ct = default)
         {
             var parameters = new UriParameters(id);

@@ -94,19 +94,19 @@ namespace Gizmo.Web.Api.Clients
             return DeleteAsync<DeleteResult>(parameters, cancellationToken);
         }
 
-        public Task<IEnumerable<ApplicationExecutableTaskModel>> GetApplicationExecutableTasks(int id, CancellationToken cancellationToken = default)
+        public Task<IEnumerable<V3ApplicationExecutableTaskModel>> GetApplicationExecutableTasks(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "tasks"]);
-            return GetAsync<IEnumerable<ApplicationExecutableTaskModel>>(parameters, cancellationToken);
+            return GetAsync<IEnumerable<V3ApplicationExecutableTaskModel>>(parameters, cancellationToken);
         }
 
-        public Task<CreateResult> CreateApplicationExecutableTask(int id, ApplicationExecutableTaskModelCreate model, CancellationToken cancellationToken = default)
+        public Task<CreateResult> CreateApplicationExecutableTask(int id, V3ApplicationExecutableTaskModelCreate model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "tasks"]);
             return PostAsync<CreateResult>(parameters, model, cancellationToken);
         }
 
-        public Task<UpdateResult> UpdateApplicationExecutableTask(ApplicationExecutableTaskModelUpdate model, CancellationToken cancellationToken = default)
+        public Task<UpdateResult> UpdateApplicationExecutableTask(V3ApplicationExecutableTaskModelUpdate model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["tasks"]);
             return PutAsync<UpdateResult>(parameters, model, cancellationToken);
