@@ -8,9 +8,9 @@ using Microsoft.Extensions.Options;
 namespace Gizmo.Web.Api.Client.Clients.v3
 {
     [WebApiRoute("api/v3/discountgroups")]
-    public sealed class DiscountGroupWebApiClient : WebApiClientBase
+    public sealed class DiscountGroupsWebApiClient : WebApiClientBase
     {
-        public DiscountGroupWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) : base(httpClient, options, payloadSerializerProvider)
+        public DiscountGroupsWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) : base(httpClient, options, payloadSerializerProvider)
         {
         }
 
