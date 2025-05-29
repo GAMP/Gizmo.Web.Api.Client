@@ -16,6 +16,12 @@ namespace Gizmo.Web.Api.Clients
         {
         }
 
+        public Task<IEnumerable<UserGuestVirtualResult>> VirtualAsync(UserGuestVirtualFilter filter, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["virtual"],filter);
+            return GetAsync<IEnumerable<UserGuestVirtualResult>>(parameters, cancellationToken);
+        }
+
         public Task<ReserveGuestResultModel> ReserveAsync(ReservedGuestModelCreate model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["reserve"]);
