@@ -28,7 +28,7 @@ namespace Gizmo.Web.Api.Clients
 
         public async Task<ProductStockModel> GetByIdAsync(int id, int stockId, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters([id, "branch", stockId]);
+            var parameters = new UriParameters([id, "stockId", stockId]);
             return await GetAsync<ProductStockModel>(parameters, cancellationToken);
         }
 
@@ -40,7 +40,7 @@ namespace Gizmo.Web.Api.Clients
 
         public async Task<UpdateResult> SetAsync(int id, int stockId, decimal amount, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters([id, "branch", stockId, "set", amount]);
+            var parameters = new UriParameters([id, "stockId", stockId, "set", amount]);
             return await PostAsync<UpdateResult>(parameters, null, cancellationToken);
         }
 
@@ -52,7 +52,7 @@ namespace Gizmo.Web.Api.Clients
 
         public async Task<UpdateResult> AddAsync(int id, int stockId, decimal amount, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters([id, "branch", stockId, "add", amount]);
+            var parameters = new UriParameters([id, stockId, "add", amount]);
             return await PostAsync<UpdateResult>(parameters, null, cancellationToken);
         }
 
@@ -64,7 +64,7 @@ namespace Gizmo.Web.Api.Clients
 
         public async Task<UpdateResult> RemoveAsync(int id, int stockId, decimal amount, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters([id, "branch", stockId, "remove", amount]);
+            var parameters = new UriParameters([id, stockId, "remove", amount]);
             return await PostAsync<UpdateResult>(parameters, null, cancellationToken);
         }
 
