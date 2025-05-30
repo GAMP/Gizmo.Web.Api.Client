@@ -24,6 +24,12 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<PagedList<UserModel>>(parameters, cancellationToken);
         }
 
+        public Task<PagedList<UserSearchResultModel>> SearchAsync(UserSearchFilter filter, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["search"],filter);
+            return GetAsync<PagedList<UserSearchResultModel>>(parameters, cancellationToken);
+        }
+
         public Task<CreateResult> CreateAsync(UserModelCreate model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters();
