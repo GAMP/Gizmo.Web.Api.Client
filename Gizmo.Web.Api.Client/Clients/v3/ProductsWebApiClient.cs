@@ -250,5 +250,11 @@ namespace Gizmo.Web.Api.Clients
             return DeleteAsync<DeleteResult>(parameters);
         }
 
+        public async Task<ExistResult> NameExistAsync(string name, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["name", name, "exist"]);
+            return await GetAsync<ExistResult>(parameters, cancellationToken).ConfigureAwait(false);
+        }
+
     }
 }

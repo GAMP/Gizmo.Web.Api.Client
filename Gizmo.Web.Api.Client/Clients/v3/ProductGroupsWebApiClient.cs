@@ -45,11 +45,17 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<ProductGroupModel>(parameters, ct);
         }
 
-        public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
+        public Task<ProductGroupDeleteResultModel> DeleteAsync(int id, ProductGroupDeleteOptionsModel options, CancellationToken ct = default)
         {
-            var parameters = new UriParameters(id);
-            return DeleteAsync<DeleteResult>(parameters, ct);
-        } 
+            var parameters = new UriParameters([id], options);
+            return DeleteAsync<ProductGroupDeleteResultModel>(parameters, ct);
+        }
+
+        public async Task<ExistResult> NameExistAsync(string name, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["name", name, "exist"]);
+            return await GetAsync<ExistResult>(parameters, cancellationToken).ConfigureAwait(false);
+        }
 
         #endregion
     }
