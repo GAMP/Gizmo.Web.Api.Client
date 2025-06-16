@@ -46,6 +46,12 @@ namespace Gizmo.Web.Api.Clients
             return DeleteAsync<DeleteResult>(parameters, ct);
         }
 
+        public Task<UpdateResult> UnDeleteAsync(int id, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters(new object[] { id, "undelete" });
+            return PutAsync<UpdateResult>(parameters, ct);
+        }
+
         public Task<IEnumerable<ProductBundledModel>> GetBundledProductsAsync(int bundleId, CancellationToken ct = default)
         {
             var parameters = new UriParameters(new object[] { "bundle", bundleId, "bundledproducts" });
@@ -256,5 +262,10 @@ namespace Gizmo.Web.Api.Clients
             return await GetAsync<ExistResult>(parameters, cancellationToken).ConfigureAwait(false);
         }
 
+        public Task<ProductsCountersModel> GetCountersAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["counters"]);
+            return GetAsync<ProductsCountersModel>(parameters, cancellationToken);
+        }
     }
 }
