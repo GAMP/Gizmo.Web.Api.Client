@@ -34,5 +34,11 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters();
             return PostAsync<CreateResult>(parameters, model, ct);
         }
+
+        public Task<PagedList<StockCountEntryModel>> GetEntriesAsync(int id, StockCountEntryFilter filter, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters([id, "entries"], filter);
+            return GetAsync<PagedList<StockCountEntryModel>>(parameters, ct);
+        }
     }
 }
