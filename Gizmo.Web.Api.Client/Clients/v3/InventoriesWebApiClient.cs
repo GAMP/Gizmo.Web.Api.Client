@@ -22,9 +22,15 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<PagedList<InventoryModel>>(parameters, cancellationToken);
         }
 
+        public Task<InventoryModel> GetByIdAsync(int id, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters(id);
+            return GetAsync<InventoryModel>(parameters, ct);
+        }
+
         public Task<PagedList<InventoryEntryModel>> EntriesAsync(int id, InventoryEntryFilter filter, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters([id], filter);
+            var parameters = new UriParameters([id, "entries"], filter);
             return GetAsync<PagedList<InventoryEntryModel>>(parameters, cancellationToken);
         }
 
