@@ -14,10 +14,10 @@ namespace Gizmo.Web.Api.Clients
         {
         }
 
-        public async Task<PagedList<ProductStockModel>> GetAsync(ProductsStockFilter filter, CancellationToken cancellationToken = default)
+        public async Task<PagedList<ProductStockLevelModel>> GetAsync(ProductStockLevelFilter filter, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(filter);
-            return await GetAsync<PagedList<ProductStockModel>>(parameters, cancellationToken);
+            return await GetAsync<PagedList<ProductStockLevelModel>>(parameters, cancellationToken);
         }
 
         public async Task<ProductStockModel> GetByIdAsync(int id, CancellationToken cancellationToken = default)
