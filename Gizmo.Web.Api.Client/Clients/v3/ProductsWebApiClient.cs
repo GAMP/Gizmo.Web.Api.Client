@@ -46,7 +46,7 @@ namespace Gizmo.Web.Api.Clients
             return DeleteAsync<DeleteResult>(parameters, ct);
         }
 
-        public Task<UpdateResult> UnDeleteAsync(int id, CancellationToken ct = default)
+        public Task<UpdateResult> UndeleteAsync(int id, CancellationToken ct = default)
         {
             var parameters = new UriParameters(new object[] { id, "undelete" });
             return PutAsync<UpdateResult>(parameters, ct);
