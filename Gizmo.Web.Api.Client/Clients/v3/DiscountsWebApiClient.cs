@@ -30,7 +30,7 @@ namespace Gizmo.Web.Api.Client.Clients.v3
         public Task<CreateResult> CreateAsync(DiscountModelCreate model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters();
-            return PutAsync<CreateResult>(parameters, model, cancellationToken);
+            return PostAsync<CreateResult>(parameters, model, cancellationToken);
         }
 
         public Task<UpdateResult> UpdateAsync(DiscountModelUpdate model, CancellationToken cancellationToken = default)
