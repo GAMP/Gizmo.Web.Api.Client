@@ -20,7 +20,7 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<PagedList<ReservationModel>>(parameters, cancellationToken);
         }
 
-        public Task<CreateResult> CreateAsync(ReservationModelCreate model, CancellationToken cancellationToken = default)
+        public Task<CreateResult> CreateAsync(HostReservationModelCreate model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters();
             return PostAsync<CreateResult>(parameters, model, cancellationToken);
