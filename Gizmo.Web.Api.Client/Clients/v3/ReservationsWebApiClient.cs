@@ -55,5 +55,17 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters(["hosts", hostId, "next"]);
             return GetAsync<NextHostReservationModel>(parameters, cancellationToken);
         }
+
+        public Task<UpdateResult> CancelAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "cancel"]);
+            return PutAsync<UpdateResult>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> CompleteAsync(int id, int hostId, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "host", hostId, "complete"]);
+            return PutAsync<UpdateResult>(parameters, cancellationToken);
+        }
     }
 }
