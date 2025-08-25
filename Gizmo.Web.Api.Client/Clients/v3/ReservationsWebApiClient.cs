@@ -1,8 +1,9 @@
-﻿using Gizmo.Web.Api.Models;
-using Microsoft.Extensions.Options;
+﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Gizmo.Web.Api.Models;
+using Microsoft.Extensions.Options;
 
 namespace Gizmo.Web.Api.Clients
 {
@@ -56,6 +57,12 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<NextHostReservationModel>(parameters, cancellationToken);
         }
 
+        public Task<UpdateResult> MoveAsync(int id, ReservationHostMoveModel model, CancellationToken cancellationToken)
+        {
+            var parameters = new UriParameters([id, "host", "move"]);
+            return PutAsync<UpdateResult>(parameters, model, cancellationToken);
+        }
+
         public Task<UpdateResult> CancelAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "cancel"]);
@@ -66,6 +73,30 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters([id, "host", hostId, "complete"]);
             return PutAsync<UpdateResult>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> CompleteAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "complete"]);
+            return PutAsync<UpdateResult>(parameters, cancellationToken);
+        }
+
+        public Task<PagedList<ReservationAvailableHostModel>> AvailabilityAsync(ReservationHostAvailabilityFilterModel filter, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["availability"], filter);
+            return GetAsync<PagedList<ReservationAvailableHostModel>>(parameters, cancellationToken);
+        }
+
+        public Task<IEnumerable<ReservationOfferCreateResultModel>> OfferAsync(ReservationOfferCreateModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["offer"], model);
+            return GetAsync<IEnumerable<ReservationOfferCreateResultModel>>(parameters, cancellationToken);
+        }
+
+        public Task<ReservationAcceptOfferResultModel> OfferAcceptAsync(HostReservationOfferAcceptModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["offer", "accept"]);
+            return PostAsync<ReservationAcceptOfferResultModel>(parameters, model, cancellationToken);
         }
     }
 }
