@@ -123,10 +123,10 @@ namespace Gizmo.Web.Api.Client.Clients.v3
             return GetAsync<CartStateModel>(parameters, cancellationToken);
         }
 
-        public Task<CartAcceptResultModel> AcceptAsync(Guid id, CancellationToken cancellationToken = default)
+        public Task<CartAcceptResultModel> AcceptAsync(Guid id, CartAcceptModel model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "accept"]);
-            return PostAsync<CartAcceptResultModel>(parameters, cancellationToken);
+            return PostAsync<CartAcceptResultModel>(parameters, model, cancellationToken);
         }
     }
 }
