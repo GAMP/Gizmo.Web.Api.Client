@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Gizmo.Web.Api.Models;
-using Gizmo.Web.Api.Models.Enumerations;
 
 namespace Gizmo.Web.Api.Clients
 {
