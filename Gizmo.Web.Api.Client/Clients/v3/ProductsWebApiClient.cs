@@ -267,5 +267,12 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters(["counters"]);
             return GetAsync<ProductsCountersModel>(parameters, cancellationToken);
         }
+
+        public Task<UpdateResult> UpdateDisplayOrder(DisplayOrderModelUpdate model, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters(["displayorder"]);
+            return PutAsync<UpdateResult>(parameters, model, ct);
+        }
+
     }
 }
