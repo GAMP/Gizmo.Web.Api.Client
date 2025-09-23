@@ -29,7 +29,7 @@ namespace Gizmo.Web.Api.Client.Clients.v3
         public Task<CreateResult> CreateAsync(DiscountGroupModelCreate model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters();
-            return PutAsync<CreateResult>(parameters, model, cancellationToken);
+            return PostAsync<CreateResult>(parameters, model, cancellationToken);
         }
 
         public Task<UpdateResult> UpdateAsync(DiscountGroupModelUpdate model, CancellationToken cancellationToken = default)
@@ -48,6 +48,12 @@ namespace Gizmo.Web.Api.Client.Clients.v3
         {
             var parameters = new UriParameters([id, "undelete"]);
             return PutAsync<UpdateResult>(parameters, cancellationToken, cancellationToken);
+        }
+
+        public async Task<ExistResult> NameExistAsync(string name, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["name", name, "exist"]);
+            return await GetAsync<ExistResult>(parameters, cancellationToken).ConfigureAwait(false);
         }
     }
 }
