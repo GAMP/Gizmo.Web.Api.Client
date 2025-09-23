@@ -72,7 +72,7 @@ namespace Gizmo.Web.Api.Client.Clients.v3
         public Task<DeleteResult> EnableAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "enable"]);
-            return DeleteAsync<DeleteResult>(parameters, cancellationToken);
+            return PutAsync<DeleteResult>(parameters, cancellationToken);
         }
 
         public Task<UpdateResult> DisableAsync(int id, CancellationToken cancellationToken = default)
