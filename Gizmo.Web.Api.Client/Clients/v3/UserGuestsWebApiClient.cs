@@ -39,5 +39,11 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters([userId, "release"]);
             return PostAsync<bool>(parameters, null, cancellationToken);
         }
+
+        public Task<int> JoinedAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["joined"]);
+            return GetAsync<int>(parameters, cancellationToken);
+        }
     }
 }
