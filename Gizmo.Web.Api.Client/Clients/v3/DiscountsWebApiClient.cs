@@ -2,11 +2,10 @@
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Gizmo.Web.Api.Clients;
 using Gizmo.Web.Api.Models;
 using Microsoft.Extensions.Options;
 
-namespace Gizmo.Web.Api.Client.Clients.v3
+namespace Gizmo.Web.Api.Clients
 {
     [WebApiRoute("api/v3/discounts")]
     public sealed class DiscountsWebApiClient : WebApiClientBase

@@ -5,7 +5,7 @@ using Gizmo.Web.Api.Clients;
 using Gizmo.Web.Api.Models;
 using Microsoft.Extensions.Options;
 
-namespace Gizmo.Web.Api.Client.Clients.v3
+namespace Gizmo.Web.Api.Clients
 {
     [WebApiRoute("api/v3/discountgroups")]
     public sealed class DiscountGroupsWebApiClient : WebApiClientBase
