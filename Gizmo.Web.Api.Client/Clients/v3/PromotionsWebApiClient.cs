@@ -45,6 +45,12 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<IEnumerable<PromotionCodeModel>>(parameters, cancellationToken);
         }
 
+        public Task<PromotionCodeModel> PromotionCodeAsync(int promoCodeId, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["codes", promoCodeId]);
+            return GetAsync<PromotionCodeModel>(parameters, cancellationToken);
+        }
+
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(id);
