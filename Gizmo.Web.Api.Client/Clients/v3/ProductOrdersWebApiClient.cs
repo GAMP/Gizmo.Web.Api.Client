@@ -1,9 +1,9 @@
-﻿using Gizmo.Web.Api.Models;
-using Microsoft.Extensions.Options;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Gizmo.Web.Api.Models;
+using Microsoft.Extensions.Options;
 
 namespace Gizmo.Web.Api.Clients
 {
@@ -43,12 +43,6 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters([id, "active"]);
             return GetAsync<ActiveOrderModel?>(parameters, cancellationToken);
-        }
-
-        public Task<OrderInvoiceResultModel> InvoiceAsync(int id, OrderInvoiceModel orderInvoiceModel, CancellationToken cancellationToken = default)
-        {
-            var parameters = new UriParameters([id, "invoice"]);
-            return PutAsync<OrderInvoiceResultModel>(parameters, orderInvoiceModel, cancellationToken);
         }
 
         public Task<UpdateResult> ProcessAsync(int id, CancellationToken cancellationToken = default)
@@ -117,21 +111,10 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<ProductPriceRequestResponseModel>(parameters, cancellationToken);
         }
 
-        public Task<OrderInvoiceCreateResultModel> CreateAsync(OrderInvoiceModel model, CancellationToken cancellationToken = default)
-        {
-            return PostAsync<OrderInvoiceCreateResultModel>(UriParameters.Empty, model, cancellationToken);
-        }
-
-        public Task<OrderInvoiceCreateMultiResultModel> CreateAsync(OrderInvoiceCreateMultiModel model, CancellationToken cancellationToken = default)
-        {
-            var parameters = new UriParameters(["multi"]);
-            return PostAsync<OrderInvoiceCreateMultiResultModel>(parameters, model, cancellationToken);
-        }
-
-        public Task<OrderPaymentsCreateResult> PaymentsAsync(int id, OrderPaymentsCreateModel model, CancellationToken cancellationToken = default)
+        public Task<InvoicePaymentsCreateResultModel> PaymentsAsync(int id, OrderPaymentsCreateModel model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "payments"]);
-            return PostAsync<OrderPaymentsCreateResult>(parameters, model, cancellationToken);
+            return PostAsync<InvoicePaymentsCreateResultModel>(parameters, model, cancellationToken);
         }
     }
 }

@@ -52,5 +52,11 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters(["user", userId, "balance", "close"]);
             return PostAsync<UpdateResult>(parameters, model, cancellationToken);
         }
+
+        public Task<InvoicePaymentsCreateResultModel> PaymentsAsync(int id, InvoicePaymentsCreateModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "payments"]);
+            return PostAsync<InvoicePaymentsCreateResultModel>(parameters, model, cancellationToken);
+        }
     }
 }
