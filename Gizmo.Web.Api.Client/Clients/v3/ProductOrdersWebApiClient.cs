@@ -111,6 +111,12 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<ProductPriceRequestResponseModel>(parameters, cancellationToken);
         }
 
+        public Task<int?> OrderLineByMarkAsync(string mark, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["orderlines", "mark", mark]);
+            return GetAsync<int?>(parameters, cancellationToken);
+        }
+
         public Task<UpdateResult> MarkAsync(int productOrderLineId, string? mark, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["orderlines", productOrderLineId, "mark", mark!]);
