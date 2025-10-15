@@ -105,10 +105,10 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<ReservationOrderModel>(parameters, cancellationToken);
         }
 
-        public  Task<IEnumerable<ReservationPaymentModel>> PaymentsAsync(int id, CancellationToken cancellationToken = default)
+        public  Task<IEnumerable<PaymentModel>> PaymentsAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "payments"]);
-            return GetAsync<IEnumerable<ReservationPaymentModel>>(parameters, cancellationToken);
+            return GetAsync<IEnumerable<PaymentModel>>(parameters, cancellationToken);
         }
     }
 }
