@@ -1,11 +1,10 @@
-﻿using Gizmo.Web.Api.Models;
-using Gizmo.Web.Api.Models.Abstractions;
-
-using Microsoft.Extensions.Options;
-
+﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Gizmo.Web.Api.Models;
+using Gizmo.Web.Api.Models.Abstractions;
+using Microsoft.Extensions.Options;
 
 namespace Gizmo.Web.Api.Clients
 {
@@ -57,6 +56,12 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters([id, "payments"]);
             return PostAsync<InvoicePaymentsCreateResultModel>(parameters, model, cancellationToken);
+        }
+
+        public Task<IEnumerable<PaymentModel>> PaymentsAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "payments"]);
+            return GetAsync<IEnumerable<PaymentModel>>(parameters, cancellationToken);
         }
     }
 }
