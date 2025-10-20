@@ -1,37 +1,33 @@
-﻿using Gizmo.Web.Api.Models;
-
-using Microsoft.Extensions.Options;
-
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Gizmo.Web.Api.Models;
+using Microsoft.Extensions.Options;
 
 namespace Gizmo.Web.Api.Clients
 {
     [WebApiRoute("api/v3/registertransactions")]
     public sealed class RegisterTransactionsWebApiClient : WebApiClientBase
     {
-        #region CONSTRUCTOR
         public RegisterTransactionsWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :
             base(httpClient, options, payloadSerializerProvider)
         {
         }
-        #endregion
-
-        #region FUNCTIONS
-
-        public Task<PagedList<RegisterTransactionModel>> GetAsync(RegisterTransactionsFilter filter, CancellationToken ct = default)
+        public Task<PagedList<RegisterTransactionModel>> GetAsync(RegisterTransactionsFilter filter, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(filter);
-            return GetAsync<PagedList<RegisterTransactionModel>>(parameters, ct);
+            return GetAsync<PagedList<RegisterTransactionModel>>(parameters, cancellationToken);
         }
 
-        public Task<RegisterTransactionModel> GetByIdAsync(int id, CancellationToken ct = default)
+        public Task<RegisterTransactionModel> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(id);
-            return GetAsync<RegisterTransactionModel>(parameters, ct);
-        } 
-        
-        #endregion
+            return GetAsync<RegisterTransactionModel>(parameters, cancellationToken);
+        }
+
+        public async Task<CreateResult> CreateAsync(RegisterTransactionModelCreate model, CancellationToken cancellationToken = default)
+        {
+            return await PostAsync<CreateResult>(UriParameters.Empty, model, cancellationToken).ConfigureAwait(false);
+        }
     }
 }
