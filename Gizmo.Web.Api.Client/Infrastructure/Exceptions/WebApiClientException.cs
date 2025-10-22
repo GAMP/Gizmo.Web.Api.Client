@@ -44,7 +44,7 @@ namespace Gizmo.Web.Api.Clients
             ErrorCodeType = errorCodeType;
             ErrorCodeTypeReadable = errorCodeTypeReadable;
             ErrorCode = errorCode;
-            ErrorCodeRedable = errorCodeReadable;
+            ErrorCodeReadable = errorCodeReadable;
             Errors = errors ?? Enumerable.Empty<WebApiError>();
         }
 
@@ -81,13 +81,13 @@ namespace Gizmo.Web.Api.Clients
         /// </summary>
         public int? ErrorCode
         {
-            get; protected set;
+            get; init;
         }
 
         /// <summary>
         /// Error code in human readable form.
         /// </summary>
-        public string? ErrorCodeRedable
+        public string? ErrorCodeReadable
         {
             get; init;
         }
@@ -111,7 +111,7 @@ namespace Gizmo.Web.Api.Clients
         /// <returns>True or false.</returns>
         public bool IsErrorCodeType(Enum errorCodeType)
         {
-            //we dont have error code type which means type will never match
+            //we don't have error code type which means type will never match
             if (ErrorCodeType == null)
                 return false;
 
@@ -129,7 +129,7 @@ namespace Gizmo.Web.Api.Clients
         /// <returns>True or false.</returns>
         public bool IsErrorCode(Enum errorCode)
         {
-            //we dont have error code which means type will never match
+            //we don't have error code which means type will never match
             if (ErrorCode == null)
                 return false;
 
