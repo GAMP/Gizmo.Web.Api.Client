@@ -28,7 +28,7 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<InvoiceModel>(parameters, cancellationToken);
         }
 
-        public Task<UpdateResult> VoidAsync(int id, IRefundOptions model, CancellationToken cancellationToken = default)
+        public Task<UpdateResult> VoidAsync(int id, RefundModel? model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "void"]);
             return PutAsync<UpdateResult>(parameters, model, cancellationToken);
@@ -62,6 +62,12 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters([id, "payments"]);
             return GetAsync<IEnumerable<PaymentModel>>(parameters, cancellationToken);
+        }
+
+        public Task<RefundStateModel> RefundStateAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "refund", "state"]);
+            return GetAsync<RefundStateModel>(parameters, cancellationToken);
         }
     }
 }
