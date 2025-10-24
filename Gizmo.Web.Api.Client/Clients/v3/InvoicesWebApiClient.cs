@@ -22,9 +22,9 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<PagedList<InvoiceModel>>(parameters, cancellationToken);
         }
 
-        public Task<InvoiceModel> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+        public Task<InvoiceModel> GetByIdAsync(int id, ModelFilterOptions options, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(id);
+            var parameters = new UriParameters(new object[] { id }, options);
             return GetAsync<InvoiceModel>(parameters, cancellationToken);
         }
 
