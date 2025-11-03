@@ -1,9 +1,10 @@
-﻿using System.Net.Http;
-using Gizmo.Web.Api.Models;
-using System.Threading.Tasks;
-using System.Threading;
-using Microsoft.Extensions.Options;
+﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+using Gizmo.Web.Api.Models;
+using Microsoft.Extensions.Options;
 
 namespace Gizmo.Web.Api.Clients
 {
@@ -49,6 +50,36 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters(["connections"]);
             return GetAsync<IEnumerable<CompanionConnectionInfoModel>>(parameters, ct);
+        }
+
+        public async Task OpenCashDrawerAsync(CancellationToken cancellationToken)
+        {
+            var parameters = new UriParameters(["cashdrawer", "open"]);
+            await PostAsync<UpdateResult>(parameters, null, cancellationToken);
+        }
+
+        public async Task PrinterXReportAsync(CancellationToken cancellationToken)
+        {
+            var parameters = new UriParameters(["printer", "x-report"]);
+            await PostAsync<UpdateResult>(parameters, null, cancellationToken);
+        }
+
+        public async Task PrinterXReportAsync(Guid companionGuid, int? deviceNumber, CancellationToken cancellationToken)
+        {
+            var parameters = new UriParameters([companionGuid, "printer", "x-report"]);
+            await PostAsync<UpdateResult>(parameters, null, cancellationToken);
+        }
+
+        public async Task TerminalXReportAsync(CancellationToken cancellationToken)
+        {
+            var parameters = new UriParameters(["terminal", "x-report"]);
+            await PostAsync<UpdateResult>(parameters, null, cancellationToken);
+        }
+
+        public async Task TerminalXReportAsync(Guid companionGuid, int? deviceNumber, CancellationToken cancellationToken)
+        {
+            var parameters = new UriParameters([companionGuid, "terminal", "x-report"]);
+            await PostAsync<UpdateResult>(parameters, null, cancellationToken);
         }
     }
 }
