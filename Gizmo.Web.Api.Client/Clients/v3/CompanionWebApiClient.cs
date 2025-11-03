@@ -66,7 +66,8 @@ namespace Gizmo.Web.Api.Clients
 
         public async Task PrinterXReportAsync(Guid companionGuid, int? deviceNumber, CancellationToken cancellationToken)
         {
-            var parameters = new UriParameters([companionGuid, "printer", "x-report"]);
+            var queryParameters = deviceNumber.HasValue ? new Dictionary<string, string> { { nameof(deviceNumber), deviceNumber.Value.ToString() } } : [];
+            var parameters = new UriParameters([companionGuid, "printer", "x-report"], queryParameters);
             await PostAsync<UpdateResult>(parameters, null, cancellationToken);
         }
 
@@ -78,7 +79,8 @@ namespace Gizmo.Web.Api.Clients
 
         public async Task TerminalXReportAsync(Guid companionGuid, int? deviceNumber, CancellationToken cancellationToken)
         {
-            var parameters = new UriParameters([companionGuid, "terminal", "x-report"]);
+            var queryParameters = deviceNumber.HasValue ? new Dictionary<string, string> { { nameof(deviceNumber), deviceNumber.Value.ToString() } } : [];
+            var parameters = new UriParameters([companionGuid, "terminal", "x-report"], queryParameters);
             await PostAsync<UpdateResult>(parameters, null, cancellationToken);
         }
     }
