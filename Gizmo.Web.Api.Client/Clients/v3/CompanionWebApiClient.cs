@@ -52,26 +52,26 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<IEnumerable<CompanionConnectionInfoModel>>(parameters, ct);
         }
 
-        public async Task OpenCashDrawerAsync(CancellationToken cancellationToken)
+        public async Task OpenCashDrawerAsync(CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["cashdrawer", "open"]);
             await PostAsync<UpdateResult>(parameters, null, cancellationToken);
         }
 
-        public async Task PrinterXReportAsync(CancellationToken cancellationToken)
+        public async Task PrinterXReportAsync(CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["printer", "x-report"]);
             await PostAsync<UpdateResult>(parameters, null, cancellationToken);
         }
 
-        public async Task PrinterXReportAsync(Guid companionGuid, int? deviceNumber, CancellationToken cancellationToken)
+        public async Task PrinterXReportAsync(Guid companionGuid, int? deviceNumber, CancellationToken cancellationToken= default)
         {
             var queryParameters = deviceNumber.HasValue ? new Dictionary<string, string> { { nameof(deviceNumber), deviceNumber.Value.ToString() } } : [];
             var parameters = new UriParameters([companionGuid, "printer", "x-report"], queryParameters);
             await PostAsync<UpdateResult>(parameters, null, cancellationToken);
         }
 
-        public async Task TerminalXReportAsync(CancellationToken cancellationToken)
+        public async Task TerminalXReportAsync(CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["terminal", "x-report"]);
             await PostAsync<UpdateResult>(parameters, null, cancellationToken);
