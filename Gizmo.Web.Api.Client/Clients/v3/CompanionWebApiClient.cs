@@ -16,40 +16,40 @@ namespace Gizmo.Web.Api.Clients
         {
         }
 
-        public Task<PagedList<CompanionModel>> GetAsync(CompanionFilterModel filter, CancellationToken ct = default)
+        public Task<PagedList<CompanionModel>> GetAsync(CompanionFilterModel filter, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(filter);
-            return GetAsync<PagedList<CompanionModel>>(parameters, ct);
+            return GetAsync<PagedList<CompanionModel>>(parameters, cancellationToken);
         }
 
-        public Task<CompanionModel> GetByIdAsync(int id, CancellationToken ct = default)
+        public Task<CompanionModel> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(id);
-            return GetAsync<CompanionModel>(parameters, ct);
+            return GetAsync<CompanionModel>(parameters, cancellationToken);
         }
 
-        public Task<CreateResult> CreateAsync(CompanionModelCreate model, CancellationToken ct = default)
+        public Task<CreateResult> CreateAsync(CompanionModelCreate model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters();
-            return PostAsync<CreateResult>(parameters, model, ct);
+            return PostAsync<CreateResult>(parameters, model, cancellationToken);
         }
 
-        public Task<UpdateResult> UpdateAsync(CompanionModelUpdate model, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateAsync(CompanionModelUpdate model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters();
-            return PutAsync<UpdateResult>(parameters, model, ct);
+            return PutAsync<UpdateResult>(parameters, model, cancellationToken);
         }
 
-        public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
+        public Task<DeleteResult> DeleteAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(id);
-            return DeleteAsync<DeleteResult>(parameters, ct);
+            return DeleteAsync<DeleteResult>(parameters, cancellationToken);
         }
 
-        public Task<IEnumerable<CompanionConnectionInfoModel>> ConnectionsAsync(CancellationToken ct = default)
+        public Task<IEnumerable<CompanionConnectionInfoModel>> ConnectionsAsync(CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["connections"]);
-            return GetAsync<IEnumerable<CompanionConnectionInfoModel>>(parameters, ct);
+            return GetAsync<IEnumerable<CompanionConnectionInfoModel>>(parameters, cancellationToken);
         }
 
         public async Task OpenCashDrawerAsync(CancellationToken cancellationToken = default)
@@ -64,7 +64,7 @@ namespace Gizmo.Web.Api.Clients
             await PostAsync<UpdateResult>(parameters, null, cancellationToken);
         }
 
-        public async Task PrinterXReportAsync(Guid companionGuid, int? deviceNumber, CancellationToken cancellationToken= default)
+        public async Task PrinterXReportAsync(Guid companionGuid, int? deviceNumber, CancellationToken cancellationToken = default)
         {
             var queryParameters = deviceNumber.HasValue ? new Dictionary<string, string> { { nameof(deviceNumber), deviceNumber.Value.ToString() } } : [];
             var parameters = new UriParameters([companionGuid, "printer", "x-report"], queryParameters);
@@ -77,7 +77,7 @@ namespace Gizmo.Web.Api.Clients
             await PostAsync<UpdateResult>(parameters, null, cancellationToken);
         }
 
-        public async Task TerminalXReportAsync(Guid companionGuid, int? deviceNumber, CancellationToken cancellationToken)
+        public async Task TerminalXReportAsync(Guid companionGuid, int? deviceNumber, CancellationToken cancellationToken = default)
         {
             var queryParameters = deviceNumber.HasValue ? new Dictionary<string, string> { { nameof(deviceNumber), deviceNumber.Value.ToString() } } : [];
             var parameters = new UriParameters([companionGuid, "terminal", "x-report"], queryParameters);
