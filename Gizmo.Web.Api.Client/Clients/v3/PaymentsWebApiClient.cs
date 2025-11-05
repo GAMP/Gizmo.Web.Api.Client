@@ -1,10 +1,8 @@
-﻿using Gizmo.Web.Api.Models;
-
-using Microsoft.Extensions.Options;
-
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Gizmo.Web.Api.Models;
+using Microsoft.Extensions.Options;
 
 namespace Gizmo.Web.Api.Clients
 {
@@ -16,10 +14,16 @@ namespace Gizmo.Web.Api.Clients
         {
         }
 
-        public Task<PagedListClassic<PaymentTransactionModel>> TransactionsAsync(PaymentTransactionFilterClassic filter, CancellationToken cancellationToken = default)
+        public Task<PagedListClassic<PaymentTransactionModel>> TransactionsAsync(PaymentTransactionFilter filter, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["transactions"], filter);
             return GetAsync<PagedListClassic<PaymentTransactionModel>>(parameters, cancellationToken);
+        }
+
+        public Task<PaymentTransactionsStatsModel> TransactionsStatsAsync(PaymentTransactionStatsFilter filter, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["transactions", "stats"], filter);
+            return GetAsync<PaymentTransactionsStatsModel>(parameters, cancellationToken);
         }
     }
 }
