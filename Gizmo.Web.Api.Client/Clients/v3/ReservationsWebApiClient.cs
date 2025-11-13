@@ -93,19 +93,13 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<IEnumerable<ReservationOfferCreateResultModel>>(parameters, cancellationToken);
         }
 
-        public Task<ReservationAcceptOfferResultModel> OfferAcceptAsync(HostReservationOfferAcceptModel model, CancellationToken cancellationToken = default)
-        {
-            var parameters = new UriParameters(["offer", "accept"]);
-            return PostAsync<ReservationAcceptOfferResultModel>(parameters, model, cancellationToken);
-        }
-
         public Task<ReservationOrderModel> OrderAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "order"]);
             return GetAsync<ReservationOrderModel>(parameters, cancellationToken);
         }
 
-        public  Task<IEnumerable<PaymentModel>> PaymentsAsync(int id, CancellationToken cancellationToken = default)
+        public Task<IEnumerable<PaymentModel>> PaymentsAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "payments"]);
             return GetAsync<IEnumerable<PaymentModel>>(parameters, cancellationToken);
