@@ -40,5 +40,19 @@ namespace Gizmo.Web.Api.Client
             return PostAsync<PaymentIntentCreateResultModel>(parameters, model, cancellationToken);
         }
 
+        /// <summary>
+        /// Waits for payment intent to complete and returns its final state.
+        /// </summary>
+        /// <param name="identifier">Payment intent identifier.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>Final state.</returns>
+        /// <remarks>
+        /// This function will block until the payment intent reaches a final state (Completed, Failed, Expired, Cancelled, Captured, Declined).<br></br>
+        /// It will return immediately if the payment intent is already in a final state.<br></br>
+        /// </remarks>
+        public Task<PaymentIntentState> WaitAsync(Guid identifier, CancellationToken cancellationToken = default)
+        {
+            return GetAsync<PaymentIntentState>(new UriParameters([identifier, "wait"]), cancellationToken);
+        }
     }
 }
