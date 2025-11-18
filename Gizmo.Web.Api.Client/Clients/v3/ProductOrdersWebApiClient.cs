@@ -129,10 +129,10 @@ namespace Gizmo.Web.Api.Clients
             return PutAsync<UpdateResult>(parameters, models, cancellationToken);
         }
 
-        public Task<InvoicePaymentsCreateResultModel> PaymentsAsync(int id, OrderPaymentsCreateModel model, CancellationToken cancellationToken = default)
+        public Task<OrderPaymentsCreateResult> PaymentsAsync(int id, OrderPaymentsCreateModel model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "payments"]);
-            return PostAsync<InvoicePaymentsCreateResultModel>(parameters, model, cancellationToken);
+            return PostAsync<OrderPaymentsCreateResult>(parameters, model, cancellationToken);
         }
 
         public Task<IEnumerable<PaymentModel>> PaymentsAsync(int id, CancellationToken cancellationToken = default)
