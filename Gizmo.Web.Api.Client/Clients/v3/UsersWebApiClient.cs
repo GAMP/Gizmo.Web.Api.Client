@@ -274,5 +274,11 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters([id, "stats"]);
             return GetAsync<UserStatsModel>(parameters, cancellationToken);
         }
+
+        public Task<IEnumerable<UserCommunicationChannel>> CommunicationChannelsAsync(int userId, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([userId, "communicationchannels"]);
+            return GetAsync<IEnumerable<UserCommunicationChannel>>(parameters, cancellationToken);
+        }
     }
 }
