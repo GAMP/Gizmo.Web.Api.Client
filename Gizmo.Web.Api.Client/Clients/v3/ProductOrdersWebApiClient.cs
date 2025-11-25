@@ -147,10 +147,10 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<string?>(parameters, cancellationToken);
         }
 
-        public Task<IEnumerable<OrderLineModel>> LinesAsync(int id, CancellationToken cancellationToken = default)
+        public Task<IEnumerable<ProductOrderLineModel>> LinesAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "lines"]);
-            return GetAsync<IEnumerable<OrderLineModel>>(parameters, cancellationToken);
+            return GetAsync<IEnumerable<ProductOrderLineModel>>(parameters, cancellationToken);
         }
     }
 }
