@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Gizmo.Web.Api.Models;
@@ -101,6 +102,54 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters([id, "client", "connection"]);
             return GetAsync<HostComputerConnectionStateModel>(parameters, cancellationToken);
+        }
+
+        public Task<IEnumerable<SystemProcessModel>> ProcessesAsync(int id, SystemProcessFilterModel filter, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "processes"], filter);
+            return GetAsync<IEnumerable<SystemProcessModel>>(parameters, cancellationToken);
+        }
+
+        public Task<SystemProcessModel> ProcessAsync(int id, int processId, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "processes", processId]);
+            return GetAsync<SystemProcessModel>(parameters, cancellationToken);
+        }
+
+        public Task<SystemProcessModuleModel> ProcessModuleAsync(int id, int processId, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "processes", processId, "module"]);
+            return GetAsync<SystemProcessModuleModel>(parameters, cancellationToken);
+        }
+
+        public Task<DeleteResult> ProcessTerminateAsync(int id, int processId, TerminateProcessParameters terminateParameters, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "processes", processId], terminateParameters);
+            return DeleteAsync<DeleteResult>(parameters, cancellationToken);
+        }
+
+        public Task<DeleteResult> ProcessTerminateAsync(int id, string processName, TerminateProcessParameters terminateParameters, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "processes", processName], terminateParameters);
+            return DeleteAsync<DeleteResult>(parameters, cancellationToken);
+        }
+
+        public Task<DeleteResult> ProcessTerminateByPathAsync(int id, string executablePath, TerminateProcessParameters terminateParameters, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "processes", "path", executablePath], terminateParameters);
+            return DeleteAsync<DeleteResult>(parameters, cancellationToken);
+        }
+
+        public Task<SystemProcessCreateResultModel> ProcessCreateAsync(int id, SystemProcessCreateModel createParameters, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "processes"]);
+            return PostAsync<SystemProcessCreateResultModel>(parameters, createParameters, cancellationToken);
+        }
+
+        public Task<double> CpuUsageAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "cpu", "usage"]);
+            return GetAsync<double>(parameters, cancellationToken);
         }
     }
 }
