@@ -151,5 +151,41 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters([id, "cpu", "usage"]);
             return GetAsync<double>(parameters, cancellationToken);
         }
+
+        public Task<SystemProcessCreateResultModel> BatchScriptExecuteAsync(int id, SystemScripProcessCreateModel createParameters, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "script", "batch"]);
+            return PostAsync<SystemProcessCreateResultModel>(parameters, createParameters, cancellationToken);
+        }
+
+        public Task<SystemProcessCreateResultModel> AutoItScriptExecuteAsync(int id, SystemScripProcessCreateModel createParameters, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "script", "autoit"]);
+            return PostAsync<SystemProcessCreateResultModel>(parameters, createParameters, cancellationToken);
+        }
+
+        public Task<SystemProcessCreateResultModel> VisualBasicScriptExecuteAsync(int id, SystemScripProcessCreateModel createParameters, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "script", "visualbasic"]);
+            return PostAsync<SystemProcessCreateResultModel>(parameters, createParameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> RegistryImportAsync(int id, SystemRegistryImportModel createParameters, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "registry", "import"]);
+            return PostAsync<UpdateResult>(parameters, createParameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> AlertNotificationAsync(int id, SystemAlertNotificationCreateModel createParameters, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "notifications", "alert"]);
+            return PostAsync<UpdateResult>(parameters, createParameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> JunctionCreateAsync(int id, SystemJunctionCreateModel createParameters, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "junction"]);
+            return PostAsync<UpdateResult>(parameters, createParameters, cancellationToken);
+        }
     }
 }
