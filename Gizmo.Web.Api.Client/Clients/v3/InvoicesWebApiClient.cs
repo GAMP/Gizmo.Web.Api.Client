@@ -3,7 +3,6 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Gizmo.Web.Api.Models;
-using Gizmo.Web.Api.Models.Abstractions;
 using Microsoft.Extensions.Options;
 
 namespace Gizmo.Web.Api.Clients
@@ -68,6 +67,18 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters([id, "refund", "state"]);
             return GetAsync<RefundStateModel>(parameters, cancellationToken);
+        }
+
+        public Task<FiscalReceiptStatusResultWaitModel> SaleReceiptWaitAsync(int id, CancellationToken cancellationToken)
+        {
+            var parameters = new UriParameters([id, "sale", "receipt", "wait"]);
+            return GetAsync<FiscalReceiptStatusResultWaitModel>(parameters, cancellationToken);
+        }
+ 
+        public Task<FiscalReceiptStatusResultWaitModel> ReturnReceiptWaitAsync(int id, CancellationToken cancellationToken)
+        {
+            var parameters = new UriParameters([id, "refund", "receipt", "wait"]);
+            return GetAsync<FiscalReceiptStatusResultWaitModel>(parameters, cancellationToken);
         }
     }
 }
