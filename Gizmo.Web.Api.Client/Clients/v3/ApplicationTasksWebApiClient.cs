@@ -20,36 +20,6 @@ namespace Gizmo.Web.Api.Clients
 
         #region FUNCTIONS
 
-        public Task<PagedList<ApplicationTaskModel>> GetAsync(ApplicationTasksFilter filter, CancellationToken ct = default)
-        {
-            var parameters = new UriParameters(filter);
-            return GetAsync<PagedList<ApplicationTaskModel>>(parameters, ct);
-        }
-
-        public Task<CreateResult> CreateAsync(ApplicationTaskModelCreate model, CancellationToken ct = default)
-        {
-            var parameters = new UriParameters();
-            return PostAsync<CreateResult>(parameters, model, ct);
-        }
-
-        public Task<UpdateResult> UpdateAsync(ApplicationTaskModelUpdate model, CancellationToken ct = default)
-        {
-            var parameters = new UriParameters();
-            return PutAsync<UpdateResult>(parameters, model, ct);
-        }
-
-        public Task<ApplicationTaskModel> GetByIdAsync(int id, CancellationToken ct = default)
-        {
-            var parameters = new UriParameters(id);
-            return GetAsync<ApplicationTaskModel>(parameters, ct);
-        }
-
-        public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
-        {
-            var parameters = new UriParameters(id);
-            return DeleteAsync<DeleteResult>(parameters, ct);
-        }
-
         public Task<IEnumerable<ApplicationTaskUsageModel>> GetUsagesAsync(int id, CancellationToken ct = default)
         {
             var parameters = new UriParameters([id, "usages"]);

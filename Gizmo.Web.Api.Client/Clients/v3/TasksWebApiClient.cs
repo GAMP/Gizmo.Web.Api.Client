@@ -1,6 +1,7 @@
 ﻿using Gizmo.Web.Api.Models;
 
 using Microsoft.Extensions.Options;
+using System;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -41,6 +42,54 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters(["counters"], filter);
             return GetAsync<PagedList<TaskCountersModel>>(parameters, ct);
+        }
+
+        public Task<CreateResult> CreateProcessAsync(TaskProcessCreateUpdateModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["process"]);
+            return PostAsync<CreateResult>(parameters, model, cancellationToken);
+        }
+
+        public Task<UpdateResult> UpdateProcessAsync(int id, TaskProcessCreateUpdateModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "process"]);
+            return PutAsync<UpdateResult>(parameters, model, cancellationToken);
+        }
+
+        public Task<CreateResult> CreateScriptAsync(TaskScriptCreateUpdateModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["script"]);
+            return PostAsync<CreateResult>(parameters, model, cancellationToken);
+        }
+
+        public Task<UpdateResult> UpdateScriptAsync(int id, TaskScriptCreateUpdateModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "script"]);
+            return PutAsync<UpdateResult>(parameters, model, cancellationToken);
+        }
+
+        public Task<CreateResult> CreateJunctionAsync(TaskJunctionCreateUpdateModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["junction"]);
+            return PostAsync<CreateResult>(parameters, model, cancellationToken);
+        }
+
+        public Task<UpdateResult> UpdateJunctionAsync(int id, TaskJunctionCreateUpdateModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "junction"]);
+            return PutAsync<UpdateResult>(parameters, model, cancellationToken);
+        }
+
+        public Task<CreateResult> CreateNotificationAsync(TaskNotificationCreateUpdateModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["notification"]);
+            return PostAsync<CreateResult>(parameters, model, cancellationToken);
+        }
+
+        public Task<UpdateResult> UpdateNotificationAsync(int id, TaskNotificationCreateUpdateModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "notification"]);
+            return PutAsync<UpdateResult>(parameters, model, cancellationToken);
         }
 
         #endregion
