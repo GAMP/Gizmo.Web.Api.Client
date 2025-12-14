@@ -32,13 +32,13 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<RefundStateModel>(parameters, cancellationToken);
         }
 
-        public Task<FiscalReceiptStatusResultWaitModel> PaymentReceiptWaitAsync(int id, CancellationToken cancellationToken)
+        public Task<FiscalReceiptStatusResultWaitModel> PaymentReceiptWaitAsync(int id, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters([id, "sale", "receipt", "wait"]);
+            var parameters = new UriParameters([id, "receipt", "wait"]);
             return GetAsync<FiscalReceiptStatusResultWaitModel>(parameters, cancellationToken);
         }
 
-        public Task<FiscalReceiptStatusResultWaitModel> RefundReceiptAsync(int id, CancellationToken cancellationToken)
+        public Task<FiscalReceiptStatusResultWaitModel> RefundReceiptAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "refund", "receipt", "wait"]);
             return GetAsync<FiscalReceiptStatusResultWaitModel>(parameters, cancellationToken);

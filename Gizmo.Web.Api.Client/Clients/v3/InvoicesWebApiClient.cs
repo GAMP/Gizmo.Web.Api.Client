@@ -27,10 +27,10 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<InvoiceModel>(parameters, cancellationToken);
         }
 
-        public Task<UpdateResult> VoidAsync(int id, RefundModel? model, CancellationToken cancellationToken = default)
+        public Task<InvoiceRefundCreateResultModel> VoidAsync(int id, RefundModel? model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "void"]);
-            return PutAsync<UpdateResult>(parameters, model, cancellationToken);
+            return PutAsync<InvoiceRefundCreateResultModel>(parameters, model, cancellationToken);
         }
 
         public Task<decimal> LineQuantityAsync(int invoiceLineId, CancellationToken cancellationToken = default)
@@ -69,13 +69,13 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<RefundStateModel>(parameters, cancellationToken);
         }
 
-        public Task<FiscalReceiptStatusResultWaitModel> SaleReceiptWaitAsync(int id, CancellationToken cancellationToken)
+        public Task<FiscalReceiptStatusResultWaitModel> SaleReceiptWaitAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "sale", "receipt", "wait"]);
             return GetAsync<FiscalReceiptStatusResultWaitModel>(parameters, cancellationToken);
         }
  
-        public Task<FiscalReceiptStatusResultWaitModel> ReturnReceiptWaitAsync(int id, CancellationToken cancellationToken)
+        public Task<FiscalReceiptStatusResultWaitModel> ReturnReceiptWaitAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "refund", "receipt", "wait"]);
             return GetAsync<FiscalReceiptStatusResultWaitModel>(parameters, cancellationToken);
