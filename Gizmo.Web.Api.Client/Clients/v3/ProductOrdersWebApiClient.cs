@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -129,9 +130,27 @@ namespace Gizmo.Web.Api.Clients
             return PutAsync<UpdateResult>(parameters, models, cancellationToken);
         }
 
+        public Task<PaymentsAllowedModel> PaymentMethodsAllowedAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "payment", "methods", "allowed"]);
+            return GetAsync<PaymentsAllowedModel>(parameters, cancellationToken);
+        }
+
         public Task<OrderPaymentsCreateResult> PaymentsAsync(int id, OrderPaymentsCreateModel model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "payments"]);
+            return PostAsync<OrderPaymentsCreateResult>(parameters, model, cancellationToken);
+        }
+
+        public Task<PaymentsAllowedModel> PaymentMethodsAllowedAsync(Guid identifier, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["intent", identifier, "payment", "methods", "allowed"]);
+            return GetAsync<PaymentsAllowedModel>(parameters, cancellationToken);
+        }
+
+        public Task<OrderPaymentsCreateResult> PaymentsAsync(Guid identifier, OrderPaymentsCreateModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["intent", identifier, "payments"]);
             return PostAsync<OrderPaymentsCreateResult>(parameters, model, cancellationToken);
         }
 
