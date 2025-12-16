@@ -29,5 +29,11 @@ namespace Gizmo.Web.Api.Clients
         {
             return await PostAsync<CreateResult>(UriParameters.Empty, model, cancellationToken).ConfigureAwait(false);
         }
+
+        public Task<FiscalReceiptStatusResultWaitModel> ReceiptWaitAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "receipt", "wait"]);
+            return GetAsync<FiscalReceiptStatusResultWaitModel>(parameters, cancellationToken);
+        }
     }
 }
