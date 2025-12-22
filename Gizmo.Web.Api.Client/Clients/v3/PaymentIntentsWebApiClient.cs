@@ -64,5 +64,10 @@ namespace Gizmo.Web.Api.Client
         {
             return GetAsync<PaymentIntentState>(new UriParameters([identifier, "wait"]), cancellationToken);
         }
+
+        public Task<UpdateResult> DiscardAsync(Guid identifier, CancellationToken cancellationToken = default)
+        {
+            return PostAsync<UpdateResult>(new UriParameters([identifier, "discard"]), cancellationToken);
+        }
     }
 }
