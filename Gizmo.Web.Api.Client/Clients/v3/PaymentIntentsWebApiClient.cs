@@ -42,7 +42,7 @@ namespace Gizmo.Web.Api.Client
 
         public Task<PaymentIntentCancelResultModel> CancelAsync(Guid identifier, CancellationToken cancellationToken = default)
         {
-            return GetAsync<PaymentIntentCancelResultModel>(new UriParameters([identifier, "cancel"]), cancellationToken);
+            return PostAsync<PaymentIntentCancelResultModel>(new UriParameters([identifier, "cancel"]), cancellationToken);
         }
 
         public Task<PaymentIntentOrderModel> OrderAsync(Guid identifier, CancellationToken cancellationToken = default)
