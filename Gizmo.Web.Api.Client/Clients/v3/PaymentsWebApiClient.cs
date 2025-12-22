@@ -26,10 +26,10 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<PaymentTransactionsStatsModel>(parameters, cancellationToken);
         }
 
-        public Task<PaymentReversResultModel> ReverseAsync(int id, PaymentReversalModel model, CancellationToken cancellationToken = default)
+        public Task<PaymentReversalResultModel> ReverseAsync(int id, PaymentReversalModel model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "reverse"]);
-            return PostAsync<PaymentReversResultModel>(parameters, model, cancellationToken);
+            return PostAsync<PaymentReversalResultModel>(parameters, model, cancellationToken);
         }
     }
 }
