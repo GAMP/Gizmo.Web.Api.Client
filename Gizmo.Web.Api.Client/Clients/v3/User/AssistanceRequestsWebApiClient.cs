@@ -7,7 +7,7 @@ using Microsoft.Extensions.Options;
 
 namespace Gizmo.Web.Api.User.Clients
 {
-    [WebApiRoute("api/user/v2/assistancerequests")]
+    [WebApiRoute("api/user/v3/assistancerequests")]
     public sealed class AssistanceRequestsWebApiClient : WebApiClientBase
     {
         public AssistanceRequestsWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) : base(httpClient, options, payloadSerializerProvider)
