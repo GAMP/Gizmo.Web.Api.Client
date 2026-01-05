@@ -6,7 +6,7 @@ using Gizmo.Web.Api.Clients;
 using Gizmo.Web.Api.Models;
 using Microsoft.Extensions.Options;
 
-namespace Gizmo.Web.Api.Client
+namespace Gizmo.Web.Api.Clients
 {
     [WebApiRoute("api/v3/paymentintents")]
     public sealed class PaymentIntentsWebApiClient : WebApiClientBase
