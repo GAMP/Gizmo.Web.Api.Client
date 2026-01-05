@@ -2,7 +2,6 @@
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Gizmo.Web.Api.Clients;
 using Gizmo.Web.Api.Models;
 using Microsoft.Extensions.Options;
 
