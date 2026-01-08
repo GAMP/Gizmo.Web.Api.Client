@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -77,8 +78,8 @@ namespace Gizmo.Web.Api.User.Clients
 
         public Task<UpdateResult> NoteAsync(Guid id, string? note, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters([id, "note", note!]);
-            return PostAsync<UpdateResult>(parameters, cancellationToken);
+            var parameters = new UriParameters([id, "note"], new Dictionary<string, string>() { { "Note", note ?? string.Empty } });
+            return PutAsync<UpdateResult>(parameters, cancellationToken);
         }
 
         public Task<CartStateModel> StateAsync(Guid id, CancellationToken cancellationToken = default)
