@@ -131,7 +131,7 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<UpdateResult> NoteAsync(Guid id, int userId, string? note, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters([id, userId, "note"], new Dictionary<string, string>() { { "Note", note ?? string.Empty } });
+            var parameters = new UriParameters([id, "users", userId, "note"], new Dictionary<string, string>() { { "Note", note ?? string.Empty } });
             return PutAsync<UpdateResult>(parameters, cancellationToken);
         }
 
