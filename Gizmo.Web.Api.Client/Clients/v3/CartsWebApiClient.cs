@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -126,6 +127,12 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters([id, "payments", "state"]);
             return GetAsync<CartPaymentsStateModel>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> NoteAsync(Guid id, int userId, string? note, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, userId, "note"], new Dictionary<string, string>() { { "Note", note ?? string.Empty } });
+            return PutAsync<UpdateResult>(parameters, cancellationToken);
         }
 
         public Task<CartAcceptResultModel> AcceptAsync(Guid id, CartAcceptModel model, CancellationToken cancellationToken = default)
