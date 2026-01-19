@@ -39,10 +39,10 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<ApplicationLicenseKey>(parameters, cancellationToken);
         }
 
-        public Task<LicensePluginMetadataModel> MetaDataAsync(CancellationToken cancellationToken = default)
+        public Task<IEnumerable<LicensePluginMetadataModel>> MetaDataAsync(CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["metadata"]);
-            return GetAsync<LicensePluginMetadataModel>(parameters, cancellationToken);
+            return GetAsync<IEnumerable<LicensePluginMetadataModel>>(parameters, cancellationToken);
         }
     }
 }
