@@ -280,5 +280,11 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters([userId, "communicationchannels"]);
             return GetAsync<IEnumerable<UserCommunicationChannel>>(parameters, cancellationToken);
         }
+
+        public Task<UpdateResult> SetSmartCardAsync(int userId, UserSetSmartCardUidModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([userId, "smartcard"]);
+            return PutAsync<UpdateResult>(parameters, model, cancellationToken);
+        }
     }
 }
