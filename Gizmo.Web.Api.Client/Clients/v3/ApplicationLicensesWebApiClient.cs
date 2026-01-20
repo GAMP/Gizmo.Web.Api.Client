@@ -16,10 +16,10 @@ namespace Gizmo.Web.Api.Clients
         {
         }
 
-        public Task<PagedList<ApplicationLicenseModel>> GetAsync(ApplicationLicensesFilter filter, CancellationToken cancellation = default)
+        public Task<PagedList<ApplicationLicenseModel>> GetAsync(ApplicationLicensesFilter filter, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(filter);
-            return GetAsync<PagedList<ApplicationLicenseModel>>(parameters, cancellation);
+            return GetAsync<PagedList<ApplicationLicenseModel>>(parameters, cancellationToken);
         }
 
         public Task<ApplicationLicenseModel> GetByIdAsync(int id, CancellationToken cancellationToken = default)
@@ -52,7 +52,7 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<CreateResult> CreateKeyAsync(int id, IEnumerable<ApplicationLicenseKeyValueModel> values, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(id);
+            var parameters = new UriParameters([id, "keys"]);
             return PostAsync<CreateResult>(parameters, values, cancellationToken);
         }
 
@@ -86,7 +86,7 @@ namespace Gizmo.Web.Api.Clients
             return PutAsync<UpdateResult>(parameters, cancellationToken);
         }
 
-        public Task<string> KeyDisplayValue(Guid plugin, IDictionary<string, string> keyValues, CancellationToken cancellationToken = default)
+        public Task<string> KeyDisplayValueAsync(Guid plugin, IDictionary<string, string> keyValues, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([plugin.ToString(), "keys"], keyValues);
             return GetAsync<string>(parameters, cancellationToken);
