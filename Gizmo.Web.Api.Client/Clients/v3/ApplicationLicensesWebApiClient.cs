@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,6 +38,12 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters(["keys", keyId]);
             return GetAsync<ApplicationLicenseKey>(parameters, cancellationToken);
+        }
+
+        public Task<string> KeyDisplayValue(Guid plugin, IDictionary<string, string> keyValues, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([plugin.ToString(), "keys"], keyValues);
+            return GetAsync<string>(parameters, cancellationToken);
         }
 
         public Task<IEnumerable<LicensePluginMetadataModel>> MetaDataAsync(CancellationToken cancellationToken = default)
