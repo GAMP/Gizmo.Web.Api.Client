@@ -1,12 +1,9 @@
-﻿using Gizmo.Web.Api.Models;
-
-using Microsoft.Extensions.Options;
-
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
+﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Gizmo.Web.Api.Models;
+using Microsoft.Extensions.Options;
 
 namespace Gizmo.Web.Api.Clients
 {
@@ -26,7 +23,7 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<PagedList<UserSearchResultModel>> SearchAsync(UserSearchFilter filter, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["search"],filter);
+            var parameters = new UriParameters(["search"], filter);
             return GetAsync<PagedList<UserSearchResultModel>>(parameters, cancellationToken);
         }
 
@@ -144,7 +141,7 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<UsageModel?>(parameters, cancellationToken);
         }
 
-        public Task<Dictionary<int,UserBalanceExtendedModel>> BalanceAsync(CancellationToken cancellationToken = default)
+        public Task<Dictionary<int, UserBalanceExtendedModel>> BalanceAsync(CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["balance"]);
             return GetAsync<Dictionary<int, UserBalanceExtendedModel>>(parameters, cancellationToken);
@@ -164,9 +161,9 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<UserBalanceExtendedModel>(parameters, cancellationToken);
         }
 
-        public Task<UserBalanceExtendedModel> BalanceAsync(int id, int hostGroupId, bool preferCache =false, CancellationToken cancellationToken = default)
+        public Task<UserBalanceExtendedModel> BalanceAsync(int id, int hostGroupId, bool preferCache = false, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters([id, "hostgroup", hostGroupId, "balance"],new Dictionary<string,string>() 
+            var parameters = new UriParameters([id, "hostgroup", hostGroupId, "balance"], new Dictionary<string, string>()
             {
                 { "PreferCache", preferCache.ToString() }
             });
@@ -285,6 +282,12 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters([userId, "smartcard"]);
             return PutAsync<UpdateResult>(parameters, model, cancellationToken);
+        }
+
+        public Task<ExistResult> SetSmartCardExistAsync(string smartCardUid, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["smartcard", smartCardUid, "exist"]);
+            return GetAsync<ExistResult>(parameters, cancellationToken);
         }
     }
 }
