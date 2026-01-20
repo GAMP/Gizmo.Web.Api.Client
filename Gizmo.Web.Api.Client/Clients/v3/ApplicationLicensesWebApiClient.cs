@@ -74,10 +74,10 @@ namespace Gizmo.Web.Api.Clients
             return DeleteAsync<DeleteResult>(parameters, cancellationToken);
         }
 
-        public Task<UpdateResult> SetKeyHostAsync(int keyId, int? hostId, CancellationToken cancellationToken = default)
+        public Task<UpdateResult> SetKeyHostAsync(int keyId, ApplicationLicenseSetHostIdModel setHostIdModel, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["keys", keyId, "host", hostId!]);
-            return PutAsync<UpdateResult>(parameters, cancellationToken);
+            var parameters = new UriParameters(["keys", keyId, "host"]);
+            return PutAsync<UpdateResult>(parameters, setHostIdModel, cancellationToken);
         }
 
         public Task<UpdateResult> EnableKeyAsync(int keyId, bool enable, CancellationToken cancellationToken = default)
@@ -88,7 +88,7 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<string> KeyDisplayValueAsync(Guid plugin, IDictionary<string, string> keyValues, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters([plugin.ToString(), "keys"], keyValues);
+            var parameters = new UriParameters([plugin.ToString(), "keys", "displayValue"], keyValues);
             return GetAsync<string>(parameters, cancellationToken);
         }
     }
