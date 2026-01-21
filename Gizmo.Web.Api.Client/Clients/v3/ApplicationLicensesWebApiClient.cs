@@ -44,6 +44,12 @@ namespace Gizmo.Web.Api.Clients
             return DeleteAsync<DeleteResult>(parameters, cancellationToken);
         }
 
+        public Task<IEnumerable<ApplicationLicenseKeyValueModel>> OptionsAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "options"]);
+            return GetAsync<IEnumerable<ApplicationLicenseKeyValueModel>>(parameters, cancellationToken);
+        }
+
         public Task<IEnumerable<ApplicationLicenseKey>> KeysAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "keys"]);
