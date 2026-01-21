@@ -28,6 +28,12 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<ApplicationLicenseModel>(parameters, cancellationToken);
         }
 
+        public Task<ExistResult> NameExistAsync(string name, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["name", name, "exist"]);
+            return GetAsync<ExistResult>(parameters, cancellationToken);
+        }
+
         public Task<CreateResult> CreateAsync(ApplicationLicenseModelCreate model, CancellationToken cancellationToken = default)
         {
             return PostAsync<CreateResult>(UriParameters.Empty, model, cancellationToken);
