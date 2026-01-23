@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Gizmo.Web.Api.Model;
 using Gizmo.Web.Api.Models;
 using Microsoft.Extensions.Options;
 
@@ -173,19 +174,25 @@ namespace Gizmo.Web.Api.Clients
         public Task<UserLoginResultModel> LoginAsync(int id, int hostId, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "login", hostId]);
-            return GetAsync<UserLoginResultModel>(parameters, cancellationToken);
+            return PostAsync<UserLoginResultModel>(parameters, cancellationToken);
         }
 
         public Task<UserLoginResultModel> LoginAsync(int id, int hostId, int slot, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "login", hostId, "slot", slot]);
-            return GetAsync<UserLoginResultModel>(parameters, cancellationToken);
+            return PostAsync<UserLoginResultModel>(parameters, cancellationToken);
+        }
+
+        public Task<UserLoginResultModel> MoveAsync(int id, UserMoveModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "move"]);
+            return PostAsync<UserLoginResultModel>(parameters, model, cancellationToken);
         }
 
         public Task<UserLogoutResultModel> LogoutAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "logout"]);
-            return GetAsync<UserLogoutResultModel>(parameters, cancellationToken);
+            return PostAsync<UserLogoutResultModel>(parameters, cancellationToken);
         }
 
         public Task<UsersCountersModel> GetCountersAsync(CancellationToken cancellationToken = default)
