@@ -295,5 +295,11 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters([id, "negativebalance"]);
             return PutAsync<UpdateResult>(parameters, model, cancellationToken);
         }
+
+        public Task<UpdateResult> BillingOptionsSetAsync(int id, UserBillingOptionsSetModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "billingoptions"]);
+            return PutAsync<UpdateResult>(parameters, model, cancellationToken);
+        }
     }
 }
