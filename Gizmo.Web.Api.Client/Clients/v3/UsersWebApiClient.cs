@@ -289,5 +289,11 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters(["smartcard", smartCardUid, "exist"]);
             return GetAsync<ExistResult>(parameters, cancellationToken);
         }
+
+        public Task<UpdateResult> NegativeBalanceSetAsync(int id, UserNegativeBalanceSetModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "negativebalance"]);
+            return PutAsync<UpdateResult>(parameters, model, cancellationToken);
+        }
     }
 }
