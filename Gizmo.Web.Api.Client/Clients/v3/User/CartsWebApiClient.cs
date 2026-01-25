@@ -64,7 +64,7 @@ namespace Gizmo.Web.Api.User.Clients
             return DeleteAsync<CartPromotionCodeRemoveModel>(parameters, cancellationToken);
         }
 
-        public Task<CartEntryPayTypeResultModel> PayTypeAsync(Guid id, Guid entryId, Gizmo.OrderLinePayType payType, CancellationToken cancellationToken = default)
+        public Task<CartEntryPayTypeResultModel> PayTypeAsync(Guid id, Guid entryId, Gizmo.Web.Api.Models.OrderLinePayType payType, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "entries", entryId, "paymentType", payType]);
             return PutAsync<CartEntryPayTypeResultModel>(parameters, cancellationToken);
