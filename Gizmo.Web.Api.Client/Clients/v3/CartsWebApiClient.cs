@@ -75,7 +75,7 @@ namespace Gizmo.Web.Api.Clients
             return PostAsync<CartEntryAddResultModel>(parameters, model, cancellationToken);
         }
 
-        public Task<CartEntryRemoveResultModel> RemoveAsync(Guid id, Guid entryId, CancellationToken cancellationToken)
+        public Task<CartEntryRemoveResultModel> RemoveAsync(Guid id, Guid entryId, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "entries", entryId]);
             return DeleteAsync<CartEntryRemoveResultModel>(parameters, cancellationToken);
