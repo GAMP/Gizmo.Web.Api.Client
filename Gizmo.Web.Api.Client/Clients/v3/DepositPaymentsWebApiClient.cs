@@ -43,5 +43,17 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters([id, "refund", "receipt", "wait"]);
             return GetAsync<FiscalReceiptStatusResultWaitModel>(parameters, cancellationToken);
         }
+
+        public Task<UpdateResult> WithdrawAsync(int userId, DepositWithdrawModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["users", userId, "withdraw"]);
+            return PutAsync<UpdateResult>(parameters, model, cancellationToken);
+        }
+
+        public Task<DepositWithdrawPaymentsStateModel> WithdrawPaymentsStateAsync(int userId, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["users", userId, "withdraw", "payments", "state"]);
+            return GetAsync<DepositWithdrawPaymentsStateModel>(parameters, cancellationToken);
+        }
     }
 }
