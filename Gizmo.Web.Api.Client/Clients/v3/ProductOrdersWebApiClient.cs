@@ -30,7 +30,7 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<OrderModel> GetByIdAsync(int id, ModelFilterOptions options, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(new object[] { id }, options);
+            var parameters = new UriParameters([id], options);
             return GetAsync<OrderModel>(parameters, cancellationToken);
         }
 
@@ -108,7 +108,7 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<ProductPriceRequestResponseModel> ProductUserPriceAsync(int userId, int productId, decimal quantity, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["product", productId, "user", userId, "quantity", quantity, "price"]);
+            var parameters = new UriParameters(["product", productId, "users", userId, "quantity", quantity, "price"]);
             return GetAsync<ProductPriceRequestResponseModel>(parameters, cancellationToken);
         }
 

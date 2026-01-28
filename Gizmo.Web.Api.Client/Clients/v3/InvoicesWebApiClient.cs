@@ -41,13 +41,13 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<UsageSessionActiveInvoiceResultModel> UsageSessionActiveInvoiceAsync(int userId, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["user", userId, "usagesession", "active", "invoice"]);
+            var parameters = new UriParameters(["users", userId, "usagesession", "active", "invoice"]);
             return PostAsync<UsageSessionActiveInvoiceResultModel>(parameters, null, cancellationToken);
         }
 
         public Task<UpdateResult> CloseBalanceAsync(int userId, CloseBalanceModel model, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["user", userId, "balance", "close"]);
+            var parameters = new UriParameters(["users", userId, "balance", "close"]);
             return PostAsync<UpdateResult>(parameters, model, cancellationToken);
         }
 

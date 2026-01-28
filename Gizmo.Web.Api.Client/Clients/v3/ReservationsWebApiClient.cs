@@ -104,5 +104,17 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters([id, "payments"]);
             return GetAsync<IEnumerable<PaymentModel>>(parameters, cancellationToken);
         }
+
+        public Task<UpdateResult> UserAddAsync(int id, ReservationUserModelCreate model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "users"]);
+            return PutAsync<UpdateResult>(parameters, model, cancellationToken);
+        }
+
+        public Task<DeleteResult> UserRemoveAsync(int id, int userId, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "users", userId]);
+            return PutAsync<DeleteResult>(parameters, cancellationToken);
+        }
     }
 }
