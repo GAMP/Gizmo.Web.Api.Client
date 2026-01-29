@@ -64,13 +64,13 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<CreateResult> CreateAsync(ScheduleReportCreateUpdateModel model, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["report"]);
+            var parameters = new UriParameters(["reports"]);
             return PostAsync<CreateResult>(parameters, model, cancellationToken);
         }
 
         public Task<UpdateResult> UpdateAsync(int id, ScheduleReportCreateUpdateModel model, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["report", id]);
+            var parameters = new UriParameters(["reports", id]);
             return PutAsync<UpdateResult>(parameters, model, cancellationToken);
         }
     }

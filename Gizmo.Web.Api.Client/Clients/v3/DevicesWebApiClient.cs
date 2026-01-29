@@ -1,7 +1,6 @@
 ﻿using Gizmo.Web.Api.Models;
 
 using Microsoft.Extensions.Options;
-using System;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -60,13 +59,13 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<CreateResult> DeviceHostAddAsync(int deviceId, int hostId, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters([deviceId, "host", hostId]);
+            var parameters = new UriParameters([deviceId, "hosts", hostId]);
             return PostAsync<CreateResult>(parameters, null, cancellationToken);
         }
 
         public Task<DeleteResult> DeviceHostRemoveAsync(int deviceId, int hostId, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters([deviceId, "host", hostId]);
+            var parameters = new UriParameters([deviceId, "hosts", hostId]);
             return DeleteAsync<DeleteResult>(parameters, cancellationToken);
         }
 

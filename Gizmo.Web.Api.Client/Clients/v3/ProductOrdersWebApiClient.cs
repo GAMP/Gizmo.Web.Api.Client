@@ -96,19 +96,19 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<ProductPriceRequestResponseModel> ProductPriceAsync(int productId, decimal quantity, int userGroupId, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["product", productId, "usergroup", userGroupId, "quantity", quantity, "price"]);
+            var parameters = new UriParameters(["products", productId, "usergroups", userGroupId, "quantity", quantity, "price"]);
             return GetAsync<ProductPriceRequestResponseModel>(parameters, cancellationToken);
         }
 
         public Task<ProductPriceRequestResponseModel> ProductPriceAsync(int productId, decimal quantity, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["product", productId, "quantity", quantity, "price"]);
+            var parameters = new UriParameters(["products", productId, "quantity", quantity, "price"]);
             return GetAsync<ProductPriceRequestResponseModel>(parameters, cancellationToken);
         }
 
         public Task<ProductPriceRequestResponseModel> ProductUserPriceAsync(int userId, int productId, decimal quantity, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["product", productId, "users", userId, "quantity", quantity, "price"]);
+            var parameters = new UriParameters(["products", productId, "users", userId, "quantity", quantity, "price"]);
             return GetAsync<ProductPriceRequestResponseModel>(parameters, cancellationToken);
         }
 
@@ -132,7 +132,7 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<PaymentsAllowedModel> PaymentMethodsAllowedAsync(int id, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters([id, "payment", "methods", "allowed"]);
+            var parameters = new UriParameters([id, "payments", "methods", "allowed"]);
             return GetAsync<PaymentsAllowedModel>(parameters, cancellationToken);
         }
 
@@ -144,19 +144,19 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<PaymentsAllowedModel> IntentPaymentMethodsAllowedAsync(Guid identifier, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["intent", identifier, "payment", "methods", "allowed"]);
+            var parameters = new UriParameters(["intents", identifier, "payments", "methods", "allowed"]);
             return GetAsync<PaymentsAllowedModel>(parameters, cancellationToken);
         }
 
         public Task<OrderIntentPaymentsCreateResult> IntentPaymentsAsync(Guid identifier, OrderPaymentsCreateModel model, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["intent", identifier, "payments"]);
+            var parameters = new UriParameters(["intents", identifier, "payments"]);
             return PostAsync<OrderIntentPaymentsCreateResult>(parameters, model, cancellationToken);
         }
 
         public Task<OrderIntentStateModel> IntentStateAsync(Guid identifier, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["intent", identifier, "state"]);
+            var parameters = new UriParameters(["intents", identifier, "state"]);
             return GetAsync<OrderIntentStateModel>(parameters, cancellationToken);
         }
 

@@ -53,13 +53,13 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<ClientOptionSkinImageModel> GetImageAsync(int id, SkinImageType skinImageType, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters([id, "image", (int)skinImageType]);
+            var parameters = new UriParameters([id, "images", (int)skinImageType]);
             return GetAsync<ClientOptionSkinImageModel>(parameters, cancellationToken);
         }
 
         public Task<UpdateResult> UpdateImageAsync(int id, ClientOptionSkinImageModel model, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters([id, "image"]);
+            var parameters = new UriParameters([id, "images"]);
             return PutAsync<UpdateResult>(parameters, model, cancellationToken);
         }
     }

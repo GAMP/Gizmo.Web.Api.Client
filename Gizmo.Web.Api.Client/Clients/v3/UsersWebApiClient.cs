@@ -163,7 +163,7 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<UserBalanceExtendedModel> BalanceAsync(int id, int hostGroupId, bool preferCache = false, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters([id, "hostgroup", hostGroupId, "balance"], new Dictionary<string, string>()
+            var parameters = new UriParameters([id, "hostgroups", hostGroupId, "balance"], new Dictionary<string, string>()
             {
                 { "PreferCache", preferCache.ToString() }
             });
@@ -262,13 +262,13 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<UpdateResult> AssetCheckOutAsync(int userId, int assetId, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters([userId, "asset", assetId, "checkout"]);
+            var parameters = new UriParameters([userId, "assets", assetId, "checkout"]);
             return PutAsync<UpdateResult>(parameters, cancellationToken);
         }
 
         public Task<UpdateResult> AssetCheckInAsync(int assetId, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["asset", assetId, "checkin"]);
+            var parameters = new UriParameters(["assets", assetId, "checkin"]);
             return PutAsync<UpdateResult>(parameters, cancellationToken);
         }
 

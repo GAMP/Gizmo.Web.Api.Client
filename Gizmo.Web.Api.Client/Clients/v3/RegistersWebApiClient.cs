@@ -16,46 +16,46 @@ namespace Gizmo.Web.Api.Clients
         {
         }
 
-        public Task<PagedList<RegisterModel>> GetAsync(RegistersFilter filter, CancellationToken ct = default)
+        public Task<PagedList<RegisterModel>> GetAsync(RegistersFilter filter, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(filter);
-            return GetAsync<PagedList<RegisterModel>>(parameters, ct);
+            return GetAsync<PagedList<RegisterModel>>(parameters, cancellationToken);
         }
 
-        public Task<RegisterModel> GetByIdAsync(int id, CancellationToken ct = default)
+        public Task<RegisterModel> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(id);
-            return GetAsync<RegisterModel>(parameters, ct);
+            return GetAsync<RegisterModel>(parameters, cancellationToken);
         }
 
-        public Task<CreateResult> CreateAsync(RegisterModelCreate model, CancellationToken ct = default)
+        public Task<CreateResult> CreateAsync(RegisterModelCreate model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters();
-            return PostAsync<CreateResult>(parameters, model, ct);
+            return PostAsync<CreateResult>(parameters, model, cancellationToken);
         }
 
-        public Task<UpdateResult> UpdateAsync(RegisterModelUpdate model, CancellationToken ct = default)
+        public Task<UpdateResult> UpdateAsync(RegisterModelUpdate model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters();
-            return PutAsync<UpdateResult>(parameters, model, ct);
+            return PutAsync<UpdateResult>(parameters, model, cancellationToken);
         }
 
-        public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
+        public Task<DeleteResult> DeleteAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(id);
-            return DeleteAsync<DeleteResult>(parameters, ct);
+            return DeleteAsync<DeleteResult>(parameters, cancellationToken);
         }
 
-        public Task<DeleteResult> UndeleteAsync(int id, CancellationToken ct = default)
+        public Task<DeleteResult> UndeleteAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "undelete"]);
-            return PutAsync<DeleteResult>(parameters, null, ct);
+            return PutAsync<DeleteResult>(parameters, null, cancellationToken);
         }
 
-        public Task<RegisterModel> CurrentAsync(CancellationToken ct = default)
+        public Task<RegisterModel> CurrentAsync(CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(new[] { "current" });
-            return GetAsync<RegisterModel>(parameters, ct);
+            var parameters = new UriParameters(["current"]);
+            return GetAsync<RegisterModel>(parameters, cancellationToken);
         }
 
         public async Task<UpdateResult> RenameAsync(int id, string name, CancellationToken cancellationToken = default)
@@ -72,7 +72,7 @@ namespace Gizmo.Web.Api.Clients
 
         public async Task<ExistResult> NameExistAsync(string name, int branchId, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["name", name, "branch", branchId, "exist"]);
+            var parameters = new UriParameters(["name", name, "branches", branchId, "exist"]);
             return await GetAsync<ExistResult>(parameters, cancellationToken).ConfigureAwait(false);
         }
     }

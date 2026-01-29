@@ -30,7 +30,7 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<IEnumerable<ReservedGuestReleaseModel>> HostReleaseAsync(int hostId, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["host", hostId, "release"]);
+            var parameters = new UriParameters(["hosts", hostId, "release"]);
             return PostAsync<IEnumerable<ReservedGuestReleaseModel>>(parameters, null, cancellationToken);
         }
 

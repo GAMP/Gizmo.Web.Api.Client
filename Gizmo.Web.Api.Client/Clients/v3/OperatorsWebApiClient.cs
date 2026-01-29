@@ -112,49 +112,49 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<CreateResult> ShiftStartAsync(ShiftStartModel model, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["current", "shift", "start"]);
+            var parameters = new UriParameters(["current", "shifts", "start"]);
             return PostAsync<CreateResult>(parameters, model, cancellationToken);
         }
 
         public Task<CreateResult> ShiftStartAsync(int id, ShiftStartModel model, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters([id, "shift", "start"]);
+            var parameters = new UriParameters([id, "shifts", "start"]);
             return PostAsync<CreateResult>(parameters, model, cancellationToken);
         }
 
         public Task<ActiveShiftModel> ShiftActiveAsync(CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["current", "shift", "active"]);
+            var parameters = new UriParameters(["current", "shifts", "active"]);
             return GetAsync<ActiveShiftModel>(parameters, cancellationToken);
         }
 
         public Task<UpdateResult> ShiftActiveEndAsync(ShiftEndModel model, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["current", "shift", "active", "end"]);
+            var parameters = new UriParameters(["current", "shifts", "active", "end"]);
             return PostAsync<UpdateResult>(parameters, model, cancellationToken);
         }
 
         public Task<UpdateResult> ShiftActiveLockAsync(CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["current", "shift", "active", "lock"]);
+            var parameters = new UriParameters(["current", "shifts", "active", "lock"]);
             return PutAsync<UpdateResult>(parameters, null, cancellationToken);
         }
 
         public Task<UpdateResult> ShiftActiveUnlockAsync(CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["current", "shift", "active", "unlock"]);
+            var parameters = new UriParameters(["current", "shifts", "active", "unlock"]);
             return PutAsync<UpdateResult>(parameters, null, cancellationToken);
         }
 
         public Task<ShiftOptionsModel> ShiftOptionsAsync(CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["current", "shift", "options"]);
+            var parameters = new UriParameters(["current", "shifts", "options"]);
             return GetAsync<ShiftOptionsModel>(parameters, cancellationToken);
         }
 
         public Task<ShiftExpectedModel> ShiftActiveExpectedAsync(CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["current", "shift", "active" , "expected"]);
+            var parameters = new UriParameters(["current", "shifts", "active" , "expected"]);
             return GetAsync<ShiftExpectedModel>(parameters, cancellationToken);
         }
 

@@ -70,7 +70,7 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<bool> FileNameExistsAsync(string fileName, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["file", fileName, "exists"]);
+            var parameters = new UriParameters(["files", fileName, "exists"]);
             return GetAsync<bool>(parameters, cancellationToken);
         }
 

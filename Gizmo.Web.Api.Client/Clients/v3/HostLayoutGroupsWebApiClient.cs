@@ -24,7 +24,7 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<HostLayoutGroupModel> GetByIdAsync(int id, ModelFilterOptions options, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(new object[] { id }, options);
+            var parameters = new UriParameters([id], options);
             return GetAsync<HostLayoutGroupModel>(parameters, cancellationToken);
         }
 
@@ -48,7 +48,7 @@ namespace Gizmo.Web.Api.Clients
 
         public async Task<HostLayoutModel> LayoutGetAsync(int id, int hostId, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters([id, "host", hostId, "layout"]);
+            var parameters = new UriParameters([id, "hosts", hostId, "layout"]);
             return await GetAsync<HostLayoutModel>(parameters, cancellationToken);
         }
 
@@ -60,31 +60,31 @@ namespace Gizmo.Web.Api.Clients
 
         public async Task<CreateResult> LayoutSetAsync(int id, int hostId, HostLayoutCreateUpdateModel model, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters([id, "host", hostId, "layout"]);
+            var parameters = new UriParameters([id, "hosts", hostId, "layout"]);
             return await PostAsync<CreateResult>(parameters, model, cancellationToken);
         }
 
         public async Task<CreateResult> LayoutGridPositionSetAsync(int id, int hostId, HostLayoutGridPositionCreateUpdateModel model, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters([id, "host", hostId, "layout", "grid", "position"]);
+            var parameters = new UriParameters([id, "hosts", hostId, "layout", "grid", "position"]);
             return await PostAsync<CreateResult>(parameters, model, cancellationToken);
         }
 
         public async Task<DeleteResult> LayoutDeleteAsync(int id, int hostId, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters([id, "host", hostId, "layout"]);
+            var parameters = new UriParameters([id, "hosts", hostId, "layout"]);
             return await DeleteAsync<DeleteResult>(parameters, cancellationToken);
         }
 
         public async Task<UpdateResult> LayoutHideAsync(int id, int hostId, bool hide, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters([id, "host", hostId, "layout", "hide", hide]);
+            var parameters = new UriParameters([id, "hosts", hostId, "layout", "hide", hide]);
             return await PostAsync<UpdateResult>(parameters, null, cancellationToken);
         }
-
+            
         public async Task<UpdateResult> HostsLayoutGridPositionSetAsync(int id, HostsLayoutGridPositionModel model, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters([id, "host", "layout", "grid", "position"]);
+            var parameters = new UriParameters([id, "hosts", "layout", "grid", "position"]);
             return await PutAsync<UpdateResult>(parameters, model, cancellationToken);
         }
     }
