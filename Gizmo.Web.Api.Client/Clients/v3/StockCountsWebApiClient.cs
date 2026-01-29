@@ -9,10 +9,10 @@ namespace Gizmo.Web.Api.Clients
     /// <summary>
     /// Stock count web api client.
     /// </summary>
-    [WebApiRoute("api/v3/stockcount")]
-    public sealed class StockCountWebApiClient : WebApiClientBase
+    [WebApiRoute("api/v3/stockcounts")]
+    public sealed class StockCountsWebApiClient : WebApiClientBase
     {
-        public StockCountWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :
+        public StockCountsWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :
            base(httpClient, options, payloadSerializerProvider)
         {
         }
