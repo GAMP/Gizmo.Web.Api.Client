@@ -45,10 +45,16 @@ namespace Gizmo.Web.Api.Clients
             return PostAsync<UsageSessionActiveInvoiceResultModel>(parameters, null, cancellationToken);
         }
 
-        public Task<UpdateResult> CloseBalanceAsync(int userId, CloseBalanceModel model, CancellationToken cancellationToken = default)
+        public Task<CloseBalanceResultModel> CloseBalanceAsync(CloseBalanceCreateModel model, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["users", userId, "balance", "close"]);
-            return PostAsync<UpdateResult>(parameters, model, cancellationToken);
+            var parameters = new UriParameters(["balance", "close"]);
+            return PostAsync<CloseBalanceResultModel>(parameters, model, cancellationToken);
+        }
+
+        public Task<CloseBalancePaymentsStateResultModel> CloseBalanceAsync(CloseBalancePaymentsStateCreateModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["balance", "close", "payments", "state"]);
+            return PostAsync<CloseBalancePaymentsStateResultModel>(parameters, model, cancellationToken);
         }
 
         public Task<InvoicePaymentsCreateResultModel> PaymentsAsync(int id, InvoicePaymentsCreateModel model, CancellationToken cancellationToken = default)
@@ -74,7 +80,7 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters([id, "sale", "receipt", "wait"]);
             return GetAsync<FiscalReceiptStatusResultWaitModel>(parameters, cancellationToken);
         }
- 
+
         public Task<FiscalReceiptStatusResultWaitModel> ReturnReceiptWaitAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "refund", "receipt", "wait"]);
