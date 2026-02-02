@@ -218,9 +218,15 @@ namespace Gizmo.Web.Api.Clients
             return PutAsync<UpdateResult>(parameters, model, cancellationToken);
         }
 
-        public Task<UpdateResult> UpdateUserBanAsync(int id, UserBanModel model, CancellationToken cancellationToken = default)
+        public Task<UpdateResult> BanAsync(int id, UserBanModel model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "ban"]);
+            return PutAsync<UpdateResult>(parameters, model, cancellationToken);
+        }
+
+        public Task<UpdateResult> UnBanAsync(int id, UserUnbanModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "unban"]);
             return PutAsync<UpdateResult>(parameters, model, cancellationToken);
         }
 
