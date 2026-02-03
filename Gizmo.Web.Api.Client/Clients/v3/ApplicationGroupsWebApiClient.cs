@@ -76,13 +76,13 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<IEnumerable<ApplicationGroupApplicationModel>> ApplicationApplicationGroupsGet(int id, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["application", id]);
+            var parameters = new UriParameters(["applications", id]);
             return GetAsync<IEnumerable<ApplicationGroupApplicationModel>>(parameters, cancellationToken);
         }
 
         public Task<CreateResult> ApplicationApplicationGroupCreate(int applicationId, int applicationGroupId, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["application", applicationId, applicationGroupId]);
+            var parameters = new UriParameters(["applications", applicationId, applicationGroupId]);
             return PostAsync<CreateResult>(parameters, cancellationToken);
         }
 
