@@ -34,10 +34,10 @@ namespace Gizmo.Web.Api.Clients
             return PostAsync<IEnumerable<ReservedGuestReleaseModel>>(parameters, null, cancellationToken);
         }
 
-        public Task<bool> ReleaseAsync(int userId, CancellationToken cancellationToken = default)
+        public Task<ReleaseGuestResultModel> ReleaseAsync(int userId, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([userId, "release"]);
-            return PostAsync<bool>(parameters, null, cancellationToken);
+            return PostAsync<ReleaseGuestResultModel>(parameters, null, cancellationToken);
         }
 
         public Task<int> JoinedAsync(CancellationToken cancellationToken = default)
