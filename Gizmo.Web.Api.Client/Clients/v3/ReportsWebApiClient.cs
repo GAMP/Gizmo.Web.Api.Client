@@ -150,5 +150,11 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters(["ordersstatistics"], parametersModel);
             return GetAsync<OrdersStatisticsReportModel>(parameters, cancellationToken);
         }
+
+        public Task<UserRegistrationReportModel> UserRegistrationAsync(UserRegistrationReportParametersModel parametersModel, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["userregistration"], parametersModel);
+            return GetAsync<UserRegistrationReportModel>(parameters, cancellationToken);
+        }
     }
 }
