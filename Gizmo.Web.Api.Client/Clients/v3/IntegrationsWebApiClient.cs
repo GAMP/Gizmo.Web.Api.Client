@@ -31,6 +31,12 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<IntegrationModel>(parameters, ct);
         }
 
+        public Task<IReadOnlyList<IntegrationTypeModel>> GetTypesAsync(CancellationToken ct = default)
+        {
+            var parameters = new UriParameters(new object[] { "types" });
+            return GetAsync<IReadOnlyList<IntegrationTypeModel>>(parameters, ct);
+        }
+
         public Task<IReadOnlyList<ModuleConfigSectionMetadata>> GetConfigSchemaAsync(Guid typeGuid, CancellationToken ct = default)
         {
             var parameters = new UriParameters(new object[] { "types", typeGuid, "config-schema" });
