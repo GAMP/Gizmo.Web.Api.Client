@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -186,6 +187,42 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters([id, "junction"]);
             return PostAsync<UpdateResult>(parameters, createParameters, cancellationToken);
+        }
+
+        public Task<FileSystemResultModel> FileSystemRenameAsync(int id, FileSystemRenameModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "fs", "rename"]);
+            return PostAsync<FileSystemResultModel>(parameters, model, cancellationToken);
+        }
+
+        public Task<FileSystemResultModel> FileSystemDeleteAsync(int id, FileSystemDeleteModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "fs", "delete"]);
+            return PostAsync<FileSystemResultModel>(parameters, model, cancellationToken);
+        }
+
+        public Task FileSystemDownloadAsync(int id, DirectoryEnumerateParametersModel model, Stream destination, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "fs", "download"], model);
+            return GetContentCopyAsync(parameters, destination, cancellationToken);
+        }
+
+        public Task FileSystemDownloadBatchAsync(int id, FileSystemDownloadBatchModel model, Stream destination, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "fs", "download", "batch"]);
+            return PostContentCopyAsync(parameters, model, destination, cancellationToken);
+        }
+
+        public IAsyncEnumerable<FileInfoModel> FileSystemEntriesAsync(int id, DirectoryEnumerateParametersModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "fs", "entries", "stream"], model);
+            return GetSseStreamAsync<FileInfoModel>(parameters, cancellationToken);
+        }
+
+        public Task<IEnumerable<FileSystemMountPoint>> FileSystemMountPointsAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "fs", "mountpoints"]);
+            return GetAsync<IEnumerable<FileSystemMountPoint>>(parameters, cancellationToken);
         }
     }
 }

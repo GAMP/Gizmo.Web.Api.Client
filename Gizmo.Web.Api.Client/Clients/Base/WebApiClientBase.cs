@@ -5,10 +5,14 @@ using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Net.ServerSentEvents;
 using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -35,6 +39,7 @@ namespace Gizmo.Web.Api.Clients
 
         private const string DEFAULT_HTTP_ERROR_MESSAGE = "Unknown error";
         private static readonly ValueTask<HttpContent> EMPTY_HTTP_CONTENT_VALUE_TASK = new();
+        private static readonly JsonSerializerOptions _sseJsonOptions = new(JsonSerializerDefaults.Web);
 
         #region PROPERTIES
 
@@ -96,6 +101,43 @@ namespace Gizmo.Web.Api.Clients
                 {
                     return await GetHttpMessageResultAsync<TResult>(responseMessage, ct);
                 }
+            }
+        }
+
+        protected async Task GetContentCopyAsync(IUriParameters parameters, Stream stream, CancellationToken ct = default)
+        {
+            var uri = CreateRequestUri(parameters);
+
+            using (var httpMessage = CreateHttpRequestMessage(uri, HttpMethod.Get))
+            {
+                using (var responseMessage = await HttpClient.SendAsync(httpMessage, HttpCompletionOption.ResponseHeadersRead, ct).ConfigureAwait(false))
+                {
+                    await ThrowApiExceptionIfRequiredAsync(responseMessage, ct);
+                    await responseMessage.Content.CopyToAsync(stream, ct);
+                }
+            }
+        }
+
+        #endregion
+
+        #region SSE
+
+        protected async IAsyncEnumerable<TResult> GetSseStreamAsync<TResult>(IUriParameters parameters, [EnumeratorCancellation] CancellationToken ct)
+        {
+            var uri = CreateRequestUri(parameters);
+
+            using var request = new HttpRequestMessage(HttpMethod.Get, uri);
+            request.Headers.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("text/event-stream"));
+
+            using var response = await HttpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, ct);
+            await ThrowApiExceptionIfRequiredAsync(response, ct);
+
+            using var stream = await response.Content.ReadAsStreamAsync(ct);
+
+            await foreach (var sseItem in SseParser.Create(stream, (_, data) =>
+                JsonSerializer.Deserialize<TResult>(data, _sseJsonOptions)!).EnumerateAsync(ct))
+            {
+                yield return sseItem.Data;
             }
         }
 
