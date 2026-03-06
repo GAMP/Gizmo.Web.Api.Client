@@ -239,6 +239,12 @@ namespace Gizmo.Web.Api.Clients
             return GetContentCopyAsync(parameters, destination, cancellationToken);
         }
 
+        public Task<(HttpResponseMessage Response, Stream Stream, long Length)> FileSystemOpenAsync(int id, FileSystemOpenModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "fs", "file"], model);
+            return GetContentStreamAsync(parameters, cancellationToken);
+        }
+
         public Task FileSystemWriteAsync(int id, FileSystemOpenModel model, Stream content, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "fs", "file"], model);

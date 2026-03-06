@@ -118,6 +118,34 @@ namespace Gizmo.Web.Api.Clients
             }
         }
 
+        /// <summary>
+        /// Returns the raw response stream without copying. Caller owns the returned
+        /// <see cref="HttpResponseMessage"/> and must dispose it when finished.
+        /// </summary>
+        protected async Task<(HttpResponseMessage Response, Stream Stream, long Length)> GetContentStreamAsync(IUriParameters parameters, CancellationToken ct = default)
+        {
+            var uri = CreateRequestUri(parameters);
+            var httpMessage = CreateHttpRequestMessage(uri, HttpMethod.Get);
+
+            HttpResponseMessage? responseMessage = null;
+            try
+            {
+                responseMessage = await HttpClient.SendAsync(httpMessage, HttpCompletionOption.ResponseHeadersRead, ct).ConfigureAwait(false);
+                await ThrowApiExceptionIfRequiredAsync(responseMessage, ct);
+
+                var stream = await responseMessage.Content.ReadAsStreamAsync(ct).ConfigureAwait(false);
+                var length = responseMessage.Content.Headers.ContentLength ?? -1;
+
+                return (responseMessage, stream, length);
+            }
+            catch
+            {
+                responseMessage?.Dispose();
+                httpMessage.Dispose();
+                throw;
+            }
+        }
+
         #endregion
 
         #region SSE
