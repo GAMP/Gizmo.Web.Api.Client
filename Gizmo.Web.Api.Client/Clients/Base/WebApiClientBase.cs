@@ -218,6 +218,56 @@ namespace Gizmo.Web.Api.Clients
 
         #endregion
 
+        #region PATCH
+
+        protected Task<TResult> PatchAsync<TResult>(IUriParameters parameters, CancellationToken ct = default)
+        {
+            return PatchAsync<TResult>(parameters, null, ct);
+        }
+
+        protected async Task<TResult> PatchAsync<TResult>(IUriParameters parameters, object? content, CancellationToken ct = default)
+        {
+            var uri = CreateRequestUri(parameters);
+
+            using var httpContent = await CreateContentAsync(content, ct);
+            var response = await PatchResultAsync<WebApiResponse<TResult>>(uri, httpContent, ct);
+
+            return response.Result;
+        }
+
+        private async Task<TResult> PatchResultAsync<TResult>(Uri uri, HttpContent content, CancellationToken ct = default)
+        {
+            using (var httpMessage = CreateHttpRequestMessage(uri, HttpMethod.Patch, content))
+            {
+                using (var responseMessage = await HttpClient.SendAsync(httpMessage, HttpCompletionOption.ResponseHeadersRead, ct).ConfigureAwait(false))
+                {
+                    return await GetHttpMessageResultAsync<TResult>(responseMessage, ct);
+                }
+            }
+        }
+
+        #endregion
+
+        #region PUT (stream)
+
+        protected async Task PutContentCopyAsync(IUriParameters parameters, Stream content, CancellationToken ct = default)
+        {
+            var uri = CreateRequestUri(parameters);
+
+            using var streamContent = new StreamContent(content);
+            streamContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
+
+            using (var httpMessage = CreateHttpRequestMessage(uri, HttpMethod.Put, streamContent))
+            {
+                using (var responseMessage = await HttpClient.SendAsync(httpMessage, HttpCompletionOption.ResponseHeadersRead, ct).ConfigureAwait(false))
+                {
+                    await ThrowApiExceptionIfRequiredAsync(responseMessage, ct);
+                }
+            }
+        }
+
+        #endregion
+
         #region DELETE
 
         protected async Task<TResult> DeleteAsync<TResult>(IUriParameters parameters, CancellationToken ct = default)
