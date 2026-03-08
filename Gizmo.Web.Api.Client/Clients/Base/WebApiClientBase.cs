@@ -287,6 +287,9 @@ namespace Gizmo.Web.Api.Clients
 
             using (var httpMessage = CreateHttpRequestMessage(uri, HttpMethod.Put, streamContent))
             {
+                // Enable streaming request body in WASM to avoid buffering the entire content into memory.
+                httpMessage.Options.Set(new HttpRequestOptionsKey<bool>("WebAssemblyEnableStreamingRequest"), true);
+
                 using (var responseMessage = await HttpClient.SendAsync(httpMessage, HttpCompletionOption.ResponseHeadersRead, ct).ConfigureAwait(false))
                 {
                     await ThrowApiExceptionIfRequiredAsync(responseMessage, ct);
