@@ -13,12 +13,14 @@
 		<RepositoryType>git</RepositoryType>
 		<Copyright>NETProjects</Copyright>
 		<PackageIcon>package_icon.png</PackageIcon>
-		<Version>1.0.4.0</Version>
+		<Version>1.0.7</Version>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="MessagePack" Version="2.5.198" />
-		<PackageReference Include="Microsoft.Extensions.Http.Polly" Version="10.0.2" />
+		<PackageReference Include="Microsoft.Extensions.Http.Polly" Version="10.0.3" />
 		<PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.1" />
 	</ItemGroup>
 
@@ -29,8 +31,12 @@
 	  </None>
 	</ItemGroup>
 
-	<ItemGroup>
-    <ProjectReference Include="..\..\Gizmo.Web.Api.Models\Gizmo.Web.Api.Models.csproj" />
+	<ItemGroup Condition="Exists('..\..\Gizmo.Web.Api.Models\Gizmo.Web.Api.Models.csproj')">
+		<ProjectReference Include="..\..\Gizmo.Web.Api.Models\Gizmo.Web.Api.Models.csproj" />
+	</ItemGroup>
+
+	<ItemGroup Condition="!Exists('..\..\Gizmo.Web.Api.Models\Gizmo.Web.Api.Models.csproj')">
+		<PackageReference Include="Gizmo.Web.Api.Models" Version="1.0.8" />
 	</ItemGroup>
 
 </Project>

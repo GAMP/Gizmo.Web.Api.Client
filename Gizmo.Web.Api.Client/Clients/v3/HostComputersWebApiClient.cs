@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -187,5 +188,93 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters([id, "junction"]);
             return PostAsync<UpdateResult>(parameters, createParameters, cancellationToken);
         }
+
+        #region FileSystem
+
+        public Task<IEnumerable<FileSystemMountPoint>> FileSystemGetDrivesAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "fs", "drives"]);
+            return GetAsync<IEnumerable<FileSystemMountPoint>>(parameters, cancellationToken);
+        }
+
+        public IAsyncEnumerable<FileInfoModel> FileSystemStreamDirectoryAsync(int id, DirectoryEnumerateParametersModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "fs", "directory", "stream"], model);
+            return GetSseStreamAsync<FileInfoModel>(parameters, cancellationToken);
+        }
+
+        public Task<FileInfoModel> FileSystemGetInfoAsync(int id, string path, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "fs", "info"], new PathQueryModel { Path = path });
+            return GetAsync<FileInfoModel>(parameters, cancellationToken);
+        }
+
+        public Task<bool> FileSystemExistsAsync(int id, string path, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "fs", "exists"], new PathQueryModel { Path = path });
+            return GetAsync<bool>(parameters, cancellationToken);
+        }
+
+        public Task FileSystemCreateDirectoryAsync(int id, string path, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "fs", "directory"], new PathQueryModel { Path = path });
+            return PostAsync<object>(parameters, null, cancellationToken);
+        }
+
+        public Task<FileSystemResultModel> FileSystemDeleteAsync(int id, string path, bool recursive, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "fs", "entry"], new FileSystemDeleteQueryModel { Path = path, Recursive = recursive });
+            return DeleteAsync<FileSystemResultModel>(parameters, cancellationToken);
+        }
+
+        public Task<FileSystemResultModel> FileSystemMoveAsync(int id, FileSystemMoveModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "fs", "move"]);
+            return PostAsync<FileSystemResultModel>(parameters, model, cancellationToken);
+        }
+
+        public Task FileSystemReadAsync(int id, FileSystemOpenModel model, Stream destination, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "fs", "file"], model);
+            return GetContentCopyAsync(parameters, destination, cancellationToken);
+        }
+
+        public Task<(HttpResponseMessage Response, Stream Stream, long Length)> FileSystemOpenAsync(int id, FileSystemOpenModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "fs", "file"], model);
+            return GetContentStreamAsync(parameters, cancellationToken);
+        }
+
+        public Task FileSystemWriteAsync(int id, FileSystemOpenModel model, Stream content, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "fs", "file"], model);
+            return PutContentCopyAsync(parameters, content, cancellationToken);
+        }
+
+        public Task<FileSystemResultModel> FileSystemSetAttributesAsync(int id, string path, FileAttributes attributes, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "fs", "attributes"], new FileSystemSetAttributesQueryModel { Path = path, Attributes = attributes });
+            return PatchAsync<FileSystemResultModel>(parameters, cancellationToken);
+        }
+
+        public Task<FileSystemResultModel> FileSystemSetLengthAsync(int id, string path, long length, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "fs", "length"], new FileSystemSetLengthQueryModel { Path = path, Length = length });
+            return PatchAsync<FileSystemResultModel>(parameters, cancellationToken);
+        }
+
+        public Task<FileSystemResultModel> FileSystemSetTimestampsAsync(int id, FileSystemSetTimestampsModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "fs", "timestamps"]);
+            return PatchAsync<FileSystemResultModel>(parameters, model, cancellationToken);
+        }
+
+        public Task FileSystemDownloadBatchAsync(int id, FileSystemDownloadBatchModel model, Stream destination, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "fs", "download", "batch"]);
+            return PostContentCopyAsync(parameters, model, destination, cancellationToken);
+        }
+
+        #endregion
     }
 }

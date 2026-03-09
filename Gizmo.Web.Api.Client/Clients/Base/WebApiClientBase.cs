@@ -5,10 +5,14 @@ using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Net.ServerSentEvents;
 using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -35,6 +39,7 @@ namespace Gizmo.Web.Api.Clients
 
         private const string DEFAULT_HTTP_ERROR_MESSAGE = "Unknown error";
         private static readonly ValueTask<HttpContent> EMPTY_HTTP_CONTENT_VALUE_TASK = new();
+        private static readonly JsonSerializerOptions _sseJsonOptions = new(JsonSerializerDefaults.Web);
 
         #region PROPERTIES
 
@@ -96,6 +101,71 @@ namespace Gizmo.Web.Api.Clients
                 {
                     return await GetHttpMessageResultAsync<TResult>(responseMessage, ct);
                 }
+            }
+        }
+
+        protected async Task GetContentCopyAsync(IUriParameters parameters, Stream stream, CancellationToken ct = default)
+        {
+            var uri = CreateRequestUri(parameters);
+
+            using (var httpMessage = CreateHttpRequestMessage(uri, HttpMethod.Get))
+            {
+                using (var responseMessage = await HttpClient.SendAsync(httpMessage, HttpCompletionOption.ResponseHeadersRead, ct).ConfigureAwait(false))
+                {
+                    await ThrowApiExceptionIfRequiredAsync(responseMessage, ct);
+                    await responseMessage.Content.CopyToAsync(stream, ct);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns the raw response stream without copying. Caller owns the returned
+        /// <see cref="HttpResponseMessage"/> and must dispose it when finished.
+        /// </summary>
+        protected async Task<(HttpResponseMessage Response, Stream Stream, long Length)> GetContentStreamAsync(IUriParameters parameters, CancellationToken ct = default)
+        {
+            var uri = CreateRequestUri(parameters);
+            var httpMessage = CreateHttpRequestMessage(uri, HttpMethod.Get);
+
+            HttpResponseMessage? responseMessage = null;
+            try
+            {
+                responseMessage = await HttpClient.SendAsync(httpMessage, HttpCompletionOption.ResponseHeadersRead, ct).ConfigureAwait(false);
+                await ThrowApiExceptionIfRequiredAsync(responseMessage, ct);
+
+                var stream = await responseMessage.Content.ReadAsStreamAsync(ct).ConfigureAwait(false);
+                var length = responseMessage.Content.Headers.ContentLength ?? -1;
+
+                return (responseMessage, stream, length);
+            }
+            catch
+            {
+                responseMessage?.Dispose();
+                httpMessage.Dispose();
+                throw;
+            }
+        }
+
+        #endregion
+
+        #region SSE
+
+        protected async IAsyncEnumerable<TResult> GetSseStreamAsync<TResult>(IUriParameters parameters, [EnumeratorCancellation] CancellationToken ct)
+        {
+            var uri = CreateRequestUri(parameters);
+
+            using var request = new HttpRequestMessage(HttpMethod.Get, uri);
+            request.Headers.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("text/event-stream"));
+
+            using var response = await HttpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, ct);
+            await ThrowApiExceptionIfRequiredAsync(response, ct);
+
+            using var stream = await response.Content.ReadAsStreamAsync(ct);
+
+            await foreach (var sseItem in SseParser.Create(stream, (_, data) =>
+                JsonSerializer.Deserialize<TResult>(data, _sseJsonOptions)!).EnumerateAsync(ct))
+            {
+                yield return sseItem.Data;
             }
         }
 
@@ -170,6 +240,59 @@ namespace Gizmo.Web.Api.Clients
                 {
                     await ThrowApiExceptionIfRequiredAsync(responseMessage, ct);
                     await responseMessage.Content.CopyToAsync(stream, ct);
+                }
+            }
+        }
+
+        #endregion
+
+        #region PATCH
+
+        protected Task<TResult> PatchAsync<TResult>(IUriParameters parameters, CancellationToken ct = default)
+        {
+            return PatchAsync<TResult>(parameters, null, ct);
+        }
+
+        protected async Task<TResult> PatchAsync<TResult>(IUriParameters parameters, object? content, CancellationToken ct = default)
+        {
+            var uri = CreateRequestUri(parameters);
+
+            using var httpContent = await CreateContentAsync(content, ct);
+            var response = await PatchResultAsync<WebApiResponse<TResult>>(uri, httpContent, ct);
+
+            return response.Result;
+        }
+
+        private async Task<TResult> PatchResultAsync<TResult>(Uri uri, HttpContent content, CancellationToken ct = default)
+        {
+            using (var httpMessage = CreateHttpRequestMessage(uri, HttpMethod.Patch, content))
+            {
+                using (var responseMessage = await HttpClient.SendAsync(httpMessage, HttpCompletionOption.ResponseHeadersRead, ct).ConfigureAwait(false))
+                {
+                    return await GetHttpMessageResultAsync<TResult>(responseMessage, ct);
+                }
+            }
+        }
+
+        #endregion
+
+        #region PUT (stream)
+
+        protected async Task PutContentCopyAsync(IUriParameters parameters, Stream content, CancellationToken ct = default)
+        {
+            var uri = CreateRequestUri(parameters);
+
+            using var streamContent = new StreamContent(content);
+            streamContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
+
+            using (var httpMessage = CreateHttpRequestMessage(uri, HttpMethod.Put, streamContent))
+            {
+                // Enable streaming request body in WASM to avoid buffering the entire content into memory.
+                httpMessage.Options.Set(new HttpRequestOptionsKey<bool>("WebAssemblyEnableStreamingRequest"), true);
+
+                using (var responseMessage = await HttpClient.SendAsync(httpMessage, HttpCompletionOption.ResponseHeadersRead, ct).ConfigureAwait(false))
+                {
+                    await ThrowApiExceptionIfRequiredAsync(responseMessage, ct);
                 }
             }
         }

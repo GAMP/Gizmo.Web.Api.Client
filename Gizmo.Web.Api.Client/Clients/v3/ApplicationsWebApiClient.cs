@@ -46,13 +46,13 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<ApplicationModelImage> GetApplicationImage(int id, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters([id, "image"]);
+            var parameters = new UriParameters([id, "images"]);
             return GetAsync<ApplicationModelImage>(parameters, cancellationToken);
         }
 
         public Task<UpdateResult> UpdateApplicationImage(int id, ApplicationModelImage model, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters([id, "image"]);
+            var parameters = new UriParameters([id, "images"]);
             return PutAsync<UpdateResult>(parameters, model, cancellationToken);
         }
 
