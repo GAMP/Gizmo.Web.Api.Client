@@ -670,5 +670,10 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters(["post", "automation"]);
             return PostAsync<UpdateResult>(parameters, options, cancellationToken);
         }
+
+        public Task<StoreOptionsReadPack> RemoteControlHotkeysPackAsync(CancellationToken cancellationToken = default)
+        {
+            return ReadAsync<RemoteControlHotkeysOptions>(cancellationToken);
+        }
     }
 }
