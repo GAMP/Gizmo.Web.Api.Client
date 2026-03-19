@@ -76,6 +76,12 @@ namespace Gizmo.Web.Api.Clients
             return PutAsync<UpdateResult>(parameters, null, cancellationToken);
         }
 
+        public Task<UpdateResult> RevokeCodeAsync(int promotionCodeId, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["codes", promotionCodeId, "revoke"]);
+            return PutAsync<UpdateResult>(parameters, null, cancellationToken);
+        }
+
         public async Task<Stream> ExportAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "export"]);
