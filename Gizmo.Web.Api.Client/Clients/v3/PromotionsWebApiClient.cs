@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -73,6 +74,15 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters([id, "disable"]);
             return PutAsync<UpdateResult>(parameters, null, cancellationToken);
+        }
+
+        public async Task<Stream> ExportAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "export"]);
+            var memoryStream = new MemoryStream();
+            await GetContentCopyAsync(parameters, memoryStream, cancellationToken).ConfigureAwait(false);
+            memoryStream.Seek(0, SeekOrigin.Begin);
+            return memoryStream;
         }
     }
 }
