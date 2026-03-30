@@ -24,8 +24,8 @@ namespace Gizmo.Web.Api.Clients
 
         private static void AddHeaders(HttpRequestMessage request)
         {
-            if (request.Headers.AcceptLanguage.Count == 0)
-                request.Headers.AcceptLanguage.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue(CultureInfo.CurrentUICulture.ToString()));
+            request.Headers.AcceptLanguage.Clear();
+            request.Headers.AcceptLanguage.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue(CultureInfo.CurrentUICulture.ToString()));
         }
     }
 }
