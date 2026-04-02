@@ -1,4 +1,6 @@
-﻿using System.Net.Http;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Gizmo.Web.Api.Models;
@@ -13,22 +15,16 @@ namespace Gizmo.Web.Api.Clients
         {
         }
 
-        public Task<PasswordRecoveryStartResultModelByMobile> PasswordByPhoneAsync(string username, CancellationToken cancellationToken = default)
+        public Task<IReadOnlyList<VerificationProviderModel>> GetProvidersAsync(int? userId = null, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["password", username, "phone"]);
-            return PostAsync<PasswordRecoveryStartResultModelByMobile>(parameters, cancellationToken);
+            var parameters = new UriParameters(["providers"], new { userId });
+            return GetAsync<IReadOnlyList<VerificationProviderModel>>(parameters, cancellationToken);
         }
 
-        public Task<PasswordRecoveryStartResultModelByEmail> PasswordByEmailAsync(string username, CancellationToken cancellationToken = default)
+        public Task<VerificationStartResultModel> PasswordRecoveryStartAsync(OperatorPasswordRecoveryStartModel model, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["password", username, "email"]);
-            return PostAsync<PasswordRecoveryStartResultModelByEmail>(parameters, cancellationToken);
-        }
-
-        public Task<PasswordRecoveryCompleteResultCode> PasswordRecoveryCompleteAsync(string token, string confirmationCode, string newPassword, CancellationToken cancellationToken = default)
-        {
-            var parameters = new UriParameters(["password", token, confirmationCode, "complete"], new RecoveryPasswordChangeModel { NewPassword = newPassword});
-            return PostAsync<PasswordRecoveryCompleteResultCode>(parameters, cancellationToken);
+            var parameters = new UriParameters(["password", "start"]);
+            return PostAsync<VerificationStartResultModel>(parameters, model, cancellationToken);
         }
     }
 }

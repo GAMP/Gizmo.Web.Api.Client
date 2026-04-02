@@ -1,7 +1,9 @@
-﻿using Gizmo.Web.Api.Models;
+using Gizmo.Web.Api.Models;
 
 using Microsoft.Extensions.Options;
 
+using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,26 +17,25 @@ namespace Gizmo.Web.Api.Clients
         public VerificationsWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) :
             base(httpClient, options, payloadSerializerProvider)
         {
-
         }
         #endregion
 
-        public Task<VerificationStartResultModelEmail> VerifyEmailStartAsync(int userId, string emailAddress, CancellationToken ct = default)
+        public Task<IReadOnlyList<VerificationProviderModel>> GetProvidersAsync(VerificationPurpose purpose, int? userId = null, CancellationToken ct = default)
         {
-            var parameters = new UriParameters(["email", userId, emailAddress]);
-            return PostAsync<VerificationStartResultModelEmail>(parameters, null, ct);
+            var parameters = new UriParameters(["providers"], new { purpose, userId });
+            return GetAsync<IReadOnlyList<VerificationProviderModel>>(parameters, ct);
         }
 
-        public Task<VerificationStartResultModelMobilePhone> VerifyMobilePhoneStart(int userId, string mobilePhoneNumber, CancellationToken ct = default)
+        public Task<VerificationStartResultModel> PhoneVerificationStartAsync(OperatorPhoneVerificationStartModel model, CancellationToken ct = default)
         {
-            var parameters = new UriParameters(["mobilephone", userId, mobilePhoneNumber]);
-            return PostAsync<VerificationStartResultModelMobilePhone>(parameters, null, ct);
+            var parameters = new UriParameters(["phone", "start"]);
+            return PostAsync<VerificationStartResultModel>(parameters, model, ct);
         }
 
-        public Task<VerificationStartResultModelMobilePhone> VerifyCurrentUserMobilePhoneStart(string mobilePhoneNumber, CancellationToken ct = default)
+        public Task<VerificationStartResultModel> EmailVerificationStartAsync(OperatorEmailVerificationStartModel model, CancellationToken ct = default)
         {
-            var parameters = new UriParameters(["mobilephone", mobilePhoneNumber]);
-            return PostAsync<VerificationStartResultModelMobilePhone>(parameters, null, ct);
+            var parameters = new UriParameters(["email", "start"]);
+            return PostAsync<VerificationStartResultModel>(parameters, model, ct);
         }
     }
 }
