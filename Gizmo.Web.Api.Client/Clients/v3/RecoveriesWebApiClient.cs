@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
@@ -17,7 +16,11 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<IReadOnlyList<VerificationProviderModel>> GetProvidersAsync(int? userId = null, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["providers"], new { userId });
+            var query = new Dictionary<string, string>();
+            if (userId.HasValue)
+                query["userId"] = userId.Value.ToString();
+
+            var parameters = new UriParameters(["providers"], query);
             return GetAsync<IReadOnlyList<VerificationProviderModel>>(parameters, cancellationToken);
         }
 
