@@ -25,5 +25,17 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters(["start"]);
             return PostAsync<VerificationStartResultModel>(parameters, model, cancellationToken);
         }
+
+        public Task<AccountCreationByTokenCompleteResultCode> CompleteAsync(RegistrationCompleteModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["complete"]);
+            return PostAsync<AccountCreationByTokenCompleteResultCode>(parameters, model, cancellationToken);
+        }
+
+        public Task<AccountCreationCompleteResultCode> DirectAsync(RegistrationDirectModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["direct"]);
+            return PostAsync<AccountCreationCompleteResultCode>(parameters, model, cancellationToken);
+        }
     }
 }
