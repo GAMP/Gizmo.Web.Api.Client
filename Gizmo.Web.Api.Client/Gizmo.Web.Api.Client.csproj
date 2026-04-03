@@ -13,7 +13,7 @@
 		<RepositoryType>git</RepositoryType>
 		<Copyright>NETProjects</Copyright>
 		<PackageIcon>package_icon.png</PackageIcon>
-		<Version>1.0.8</Version>
+		<Version>1.0.9</Version>
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	</PropertyGroup>
