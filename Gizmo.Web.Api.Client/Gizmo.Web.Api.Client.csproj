@@ -13,7 +13,7 @@
 		<RepositoryType>git</RepositoryType>
 		<Copyright>NETProjects</Copyright>
 		<PackageIcon>package_icon.png</PackageIcon>
-		<Version>1.0.9</Version>
+		<Version>1.0.11</Version>
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	</PropertyGroup>
@@ -36,7 +36,7 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="!Exists('..\..\Gizmo.Web.Api.Models\Gizmo.Web.Api.Models.csproj')">
-		<PackageReference Include="Gizmo.Web.Api.Models" Version="1.0.10" />
+		<PackageReference Include="Gizmo.Web.Api.Models" Version="1.0.11" />
 	</ItemGroup>
 
 </Project>
