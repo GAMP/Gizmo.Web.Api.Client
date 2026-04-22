@@ -32,5 +32,11 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters(["version"]);
             return GetAsync<string>(parameters, ct);
         }
+
+        public Task<InstanceInfoModel> InstanceAsync(CancellationToken ct = default)
+        {
+            var parameters = new UriParameters(["instance"]);
+            return GetAsync<InstanceInfoModel>(parameters, ct);
+        }
     }
 }
