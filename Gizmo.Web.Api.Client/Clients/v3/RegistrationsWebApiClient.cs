@@ -37,5 +37,11 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters(["direct"]);
             return PostAsync<AccountCreationCompleteResultCode>(parameters, model, cancellationToken);
         }
+
+        public Task<TokenConfirmedResultModel> ConfirmedAsync(TokenCheckModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["confirmed"]);
+            return PostAsync<TokenConfirmedResultModel>(parameters, model, cancellationToken);
+        }
     }
 }
