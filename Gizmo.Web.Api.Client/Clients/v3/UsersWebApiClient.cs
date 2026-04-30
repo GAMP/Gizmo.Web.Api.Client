@@ -302,6 +302,12 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<ExistResult>(parameters, cancellationToken);
         }
 
+        public Task<ExistResult> UsernameExistAsync(string username, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["username", username, "exist"]);
+            return GetAsync<ExistResult>(parameters, cancellationToken);
+        }
+
         public Task<UpdateResult> NegativeBalanceSetAsync(int id, UserNegativeBalanceSetModel model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "negativebalance"]);
