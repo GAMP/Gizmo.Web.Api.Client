@@ -112,9 +112,11 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<IEnumerable<HostStatusModel>>(parameters, cancellationToken);
         }
 
-        public Task<HostStatusModel> GetStatusByIdAsync(int id, CancellationToken cancellationToken = default)
+        public Task<HostStatusModel> GetStatusByIdAsync(int id, int? layoutGroupId = null, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters([id, "status"]);
+            var parameters = layoutGroupId.HasValue
+                ? new UriParameters([id, "status"], new Dictionary<string, string> { ["layoutGroupId"] = layoutGroupId.Value.ToString() })
+                : new UriParameters([id, "status"]);
             return GetAsync<HostStatusModel>(parameters, cancellationToken);
         }
 
