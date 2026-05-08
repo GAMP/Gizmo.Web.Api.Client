@@ -117,5 +117,11 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters([id, "status"]);
             return GetAsync<HostStatusModel>(parameters, cancellationToken);
         }
+
+        public IAsyncEnumerable<HostStatusChangedNotification> StreamStatusAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["status", "stream"]);
+            return GetSseStreamAsync<HostStatusChangedNotification>(parameters, cancellationToken);
+        }
     }
 }
