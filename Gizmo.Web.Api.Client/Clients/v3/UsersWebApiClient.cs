@@ -194,6 +194,12 @@ namespace Gizmo.Web.Api.Clients
             return PostAsync<UserLogoutResultModel>(parameters, cancellationToken);
         }
 
+        public Task<UserLogoutResultModel> LogoutAsync(int id, UserLogoutModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters([id, "logout"]);
+            return PostAsync<UserLogoutResultModel>(parameters, model, cancellationToken);
+        }
+
         public Task<UsersCountersModel> GetCountersAsync(CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["counters"]);
