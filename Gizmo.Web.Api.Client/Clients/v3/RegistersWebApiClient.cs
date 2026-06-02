@@ -2,6 +2,7 @@
 
 using Microsoft.Extensions.Options;
 
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -66,7 +67,7 @@ namespace Gizmo.Web.Api.Clients
 
         public async Task<ExistResult> NameExistAsync(string name, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["name", name, "exist"]);
+            var parameters = new UriParameters(["name", "exists"], new Dictionary<string, string> { ["name"] = name });
             return await GetAsync<ExistResult>(parameters, cancellationToken).ConfigureAwait(false);
         }
 

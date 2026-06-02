@@ -30,7 +30,7 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<ExistResult> NameExistAsync(string name, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["name", name, "exist"]);
+            var parameters = new UriParameters(["name", "exists"], new Dictionary<string, string> { ["name"] = name });
             return GetAsync<ExistResult>(parameters, cancellationToken);
         }
 
