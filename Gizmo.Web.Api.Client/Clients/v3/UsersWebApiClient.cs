@@ -302,9 +302,9 @@ namespace Gizmo.Web.Api.Clients
             return PutAsync<UpdateResult>(parameters, model, cancellationToken);
         }
 
-        public Task<ExistResult> SmartCardExistAsync(string smartCardUid, CancellationToken cancellationToken = default)
+        public Task<ExistResult> SmartCardExistsAsync(string smartCardUid, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["smartcard", smartCardUid, "exist"]);
+            var parameters = new UriParameters(["smartcard", "exists"], new Dictionary<string, string> { ["smartCardUid"] = smartCardUid });
             return GetAsync<ExistResult>(parameters, cancellationToken);
         }
 
