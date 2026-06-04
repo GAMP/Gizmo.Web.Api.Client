@@ -15,10 +15,18 @@ namespace Gizmo.Web.Api.User.Clients
         {
         }
 
-        public Task<IReadOnlyList<VerificationProviderModel>> GetProvidersAsync(string matchValue, CancellationToken cancellationToken = default)
+        public Task<IReadOnlyList<VerificationProviderModel>> GetProvidersAsync(string? matchValue = null, CancellationToken cancellationToken = default)
         {
-            var query = new Dictionary<string, string> { ["matchValue"] = matchValue };
-            var parameters = new UriParameters(["providers"], query);
+            UriParameters parameters;
+            if (!string.IsNullOrEmpty(matchValue))
+            {
+                var query = new Dictionary<string, string> { ["matchValue"] = matchValue };
+                parameters = new UriParameters(["providers"], query);
+            }
+            else
+            {
+                parameters = new UriParameters(["providers"]);
+            }
             return GetAsync<IReadOnlyList<VerificationProviderModel>>(parameters, cancellationToken);
         }
 
