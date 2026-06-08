@@ -22,5 +22,11 @@ namespace Gizmo.Web.Api.User.Clients
             var parameters = new UriParameters(["regional"]);
             return GetAsync<RegionalOptions>(parameters, ct);
         }
+
+        public Task<bool> RegistrationEnabledAsync(CancellationToken ct = default)
+        {
+            var parameters = new UriParameters(["registration"]);
+            return GetAsync<bool>(parameters, ct);
+        }
     }
 }
