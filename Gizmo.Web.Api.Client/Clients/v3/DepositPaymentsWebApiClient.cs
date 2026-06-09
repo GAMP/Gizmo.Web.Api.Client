@@ -44,9 +44,9 @@ namespace Gizmo.Web.Api.Clients
             return PutAsync<UpdateResult>(parameters, model, cancellationToken);
         }
 
-        public Task<DepositWithdrawPaymentsStateModel> WithdrawPaymentsStateAsync(int userId, CancellationToken cancellationToken = default)
+        public Task<DepositWithdrawPaymentsStateModel> WithdrawStateAsync(int userId, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["users", userId, "withdraw", "payments", "state"]);
+            var parameters = new UriParameters(["users", userId, "withdraw", "state"]);
             return GetAsync<DepositWithdrawPaymentsStateModel>(parameters, cancellationToken);
         }
     }
