@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -53,15 +54,21 @@ namespace Gizmo.Web.Api.Clients
         /// Waits for payment intent to complete and returns its final state.
         /// </summary>
         /// <param name="identifier">Payment intent identifier.</param>
+        /// <param name="waitForCompleted">
+        /// When false (default) the wait returns on the first transition out of pending (Captured on success),
+        /// before the order/deposit and its invoices are materialized. When true the wait blocks until the intent
+        /// is fully processed (Completed/Failed), so created invoices and deposit payments can be read immediately after.
+        /// </param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>Final state.</returns>
         /// <remarks>
         /// This function will block until the payment intent reaches a final state (Completed, Failed, Expired, Cancelled, Captured, Declined).<br></br>
         /// It will return immediately if the payment intent is already in a final state.<br></br>
         /// </remarks>
-        public Task<PaymentIntentState> WaitAsync(Guid identifier, CancellationToken cancellationToken = default)
+        public Task<PaymentIntentState> WaitAsync(Guid identifier, bool waitForCompleted = false, CancellationToken cancellationToken = default)
         {
-            return GetAsync<PaymentIntentState>(new UriParameters([identifier, "wait"]), cancellationToken);
+            var query = new Dictionary<string, string>() { [nameof(waitForCompleted)] = waitForCompleted.ToString() };
+            return GetAsync<PaymentIntentState>(new UriParameters([identifier, "wait"], query), cancellationToken);
         }
 
         public Task<UpdateResult> DiscardAsync(Guid identifier, CancellationToken cancellationToken = default)
