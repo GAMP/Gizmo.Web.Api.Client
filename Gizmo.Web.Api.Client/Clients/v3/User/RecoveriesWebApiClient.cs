@@ -8,6 +8,7 @@ using Microsoft.Extensions.Options;
 
 namespace Gizmo.Web.Api.User.Clients
 {
+    [UnsecureWebApiClient()]
     [WebApiRoute("api/user/v3/recoveries")]
     public sealed class RecoveriesWebApiClient : WebApiClientBase
     {

@@ -28,5 +28,11 @@ namespace Gizmo.Web.Api.User.Clients
             var parameters = new UriParameters(["registration"]);
             return GetAsync<bool>(parameters, ct);
         }
+
+        public Task<UserPasswordPolicyOptions> UserPasswordPolicyAsync(CancellationToken ct = default)
+        {
+            var parameters = new UriParameters(["user", "password", "policy"]);
+            return GetAsync<UserPasswordPolicyOptions>(parameters, ct);
+        }
     }
 }
