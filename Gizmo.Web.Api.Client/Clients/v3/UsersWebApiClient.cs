@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -31,6 +33,64 @@ namespace Gizmo.Web.Api.Clients
         {
             var parameters = new UriParameters();
             return PostAsync<CreateResult>(parameters, model, cancellationToken);
+        }
+
+        public Task<UsersAuditGetResultModel> GetAuditUsersAsync(UsersAuditModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["audit"], new Dictionary<string, string>()
+            {
+                { nameof(UsersAuditModel.ByPhone), model.ByPhone.ToString() },
+                { nameof(UsersAuditModel.ByEmail), model.ByEmail.ToString() },
+                { nameof(UsersAuditModel.DefaultCountryCode), model.DefaultCountryCode }
+            });
+
+            return GetAsync<UsersAuditGetResultModel>(parameters, cancellationToken);
+        }
+
+        public Task<Guid> AuditUsersAsync(UsersAuditModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["audit"]);
+            return PostAsync<Guid>(parameters, model, cancellationToken);
+        }
+
+        public async Task<UsersImportValidationResultModel> ValidateImportUsersAsync(UsersImportModel model,
+            Stream stream,
+            string fileName,
+            string contentType = "application/octet-stream",
+            CancellationToken cancellationToken = default)
+        {
+            using var content = new MultipartFormDataContent();
+            using var streamHttpContent = new StreamContent(stream);
+
+            streamHttpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(contentType);
+            content.Add(streamHttpContent, "file", fileName);
+
+            var parameters = new UriParameters(["import", "validate"], new Dictionary<string, string>()
+            {
+                { nameof(UsersImportModel.DefaultCountryCode), model.DefaultCountryCode }
+            });
+
+            return await PostAsync<UsersImportValidationResultModel>(parameters, content, cancellationToken);
+        }
+
+        public async Task<Guid> ImportUsersAsync(UsersImportModel model,
+            Stream stream,
+            string fileName,
+            string contentType = "application/octet-stream",
+            CancellationToken cancellationToken = default)
+        {
+            using var content = new MultipartFormDataContent();
+            using var streamHttpContent = new StreamContent(stream);
+
+            streamHttpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(contentType);
+            content.Add(streamHttpContent, "file", fileName);
+
+            var parameters = new UriParameters(["import"], new Dictionary<string, string>()
+            {
+                { nameof(UsersImportModel.DefaultCountryCode), model.DefaultCountryCode }
+            });
+
+            return await PostAsync<Guid>(parameters, content, cancellationToken);
         }
 
         public Task<UpdateResult> UpdateAsync(UserModelUpdate model, CancellationToken cancellationToken = default)
