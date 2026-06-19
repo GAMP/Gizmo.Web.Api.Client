@@ -53,7 +53,7 @@ namespace Gizmo.Web.Api.Clients
         public Task<UpdateResult> UnassignAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "unassign"]);
-            return PostAsync<UpdateResult>(parameters, cancellationToken);
+            return PutAsync<UpdateResult>(parameters, cancellationToken);
         }
 
         public Task<IEnumerable<ApplicationLicenseKeyValueModel>> OptionsAsync(int id, CancellationToken cancellationToken = default)
