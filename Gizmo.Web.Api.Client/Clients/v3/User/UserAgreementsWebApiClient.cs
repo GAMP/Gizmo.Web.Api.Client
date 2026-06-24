@@ -16,10 +16,10 @@ namespace Gizmo.Web.Api.User.Clients
         {
         }
 
-        public Task<PagedList<UserAgreementModel>> GetAsync(UserAgreementsFilter filter, CancellationToken cancellationToken = default)
+        public Task<PagedList<PublicUserAgreementModel>> GetAsync(PublicUserAgreementsFilter filter, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(filter);
-            return GetAsync<PagedList<UserAgreementModel>>(parameters, cancellationToken);
+            return GetAsync<PagedList<PublicUserAgreementModel>>(parameters, cancellationToken);
         }
     }
 }
