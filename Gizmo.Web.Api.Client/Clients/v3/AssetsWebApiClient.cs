@@ -1,5 +1,6 @@
 ﻿using Gizmo.Web.Api.Models;
 using Microsoft.Extensions.Options;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -45,9 +46,9 @@ namespace Gizmo.Web.Api.Clients
             return DeleteAsync<DeleteResult>(parameters, cancellationToken);
         }
 
-        public async Task<ExistResult> RfidExistAsync(string rfid, CancellationToken cancellationToken = default)
+        public async Task<ExistResult> RfidExistsAsync(string rfid, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["rfid", rfid, "exist"]);
+            var parameters = new UriParameters(["rfid", "exists"], new Dictionary<string, string> { ["rfid"] = rfid });
             return await GetAsync<ExistResult>(parameters, cancellationToken).ConfigureAwait(false);
         } 
     }

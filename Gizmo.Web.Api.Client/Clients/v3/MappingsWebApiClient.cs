@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Threading;
 using Gizmo.Web.Api.Models;
@@ -68,9 +69,9 @@ namespace Gizmo.Web.Api.Clients
             return DeleteAsync<DeleteResult>(parameters, cancellationToken);
         }
 
-        public Task<ExistResult> MountPointExistAsync(string mountPoint, CancellationToken cancellationToken)
+        public Task<ExistResult> MountPointExistsAsync(string mountPoint, CancellationToken cancellationToken)
         {
-            var parameters = new UriParameters(["mountpoint", mountPoint, "exist"]);
+            var parameters = new UriParameters(["mountpoint", "exists"], new Dictionary<string, string> { ["mountPoint"] = mountPoint });
             return GetAsync<ExistResult>(parameters, cancellationToken);
         }
     }

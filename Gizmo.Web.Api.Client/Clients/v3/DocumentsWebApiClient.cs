@@ -1,5 +1,6 @@
 ﻿#nullable enable
 
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Threading;
@@ -68,10 +69,10 @@ namespace Gizmo.Web.Api.Clients
             return PutAsync<UpdateResult>(parameters, cancellationToken, cancellationToken);
         }
 
-        public Task<bool> FileNameExistsAsync(string fileName, CancellationToken cancellationToken = default)
+        public Task<IEnumerable<ExistResult>> FileNameExistsAsync(string fileName, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["files", fileName, "exists"]);
-            return GetAsync<bool>(parameters, cancellationToken);
+            var parameters = new UriParameters(["files", "exists"], new Dictionary<string, string> { ["fileName"] = fileName });
+            return GetAsync<IEnumerable<ExistResult>>(parameters, cancellationToken);
         }
 
         public Task<UpdateResult> DescriptionAsync(int id, string? description, CancellationToken cancellationToken = default)

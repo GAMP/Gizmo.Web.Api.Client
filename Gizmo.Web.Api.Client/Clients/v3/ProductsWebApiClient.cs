@@ -40,6 +40,12 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<ProductModel>(parameters, ct);
         }
 
+        public Task<ProductModel> GetByIdAsync(int id, ModelFilterOptions options, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters(new object[] { id }, options);
+            return GetAsync<ProductModel>(parameters, ct);
+        }
+
         public Task<DeleteResult> DeleteAsync(int id, CancellationToken ct = default)
         {
             var parameters = new UriParameters(id);
@@ -258,7 +264,7 @@ namespace Gizmo.Web.Api.Clients
 
         public async Task<ExistResult> NameExistAsync(string name, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["name", name, "exist"]);
+            var parameters = new UriParameters(["name", "exists"], new Dictionary<string, string> { ["name"] = name });
             return await GetAsync<ExistResult>(parameters, cancellationToken).ConfigureAwait(false);
         }
 

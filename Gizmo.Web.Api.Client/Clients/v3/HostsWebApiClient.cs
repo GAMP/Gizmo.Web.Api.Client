@@ -105,5 +105,25 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters([id, "layoutgroups"]);
             return GetAsync<IEnumerable<HostHostLayoutGroupModel>>(parameters, cancellationToken);
         }
+
+        public Task<IEnumerable<HostStatusModel>> GetStatusAsync(HostStatusFilter filter, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["status"], filter);
+            return GetAsync<IEnumerable<HostStatusModel>>(parameters, cancellationToken);
+        }
+
+        public Task<HostStatusModel> GetStatusByIdAsync(int id, int? layoutGroupId = null, CancellationToken cancellationToken = default)
+        {
+            var parameters = layoutGroupId.HasValue
+                ? new UriParameters([id, "status"], new Dictionary<string, string> { ["layoutGroupId"] = layoutGroupId.Value.ToString() })
+                : new UriParameters([id, "status"]);
+            return GetAsync<HostStatusModel>(parameters, cancellationToken);
+        }
+
+        public IAsyncEnumerable<HostStatusChangedNotification> StreamStatusAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["status", "stream"]);
+            return GetSseStreamAsync<HostStatusChangedNotification>(parameters, cancellationToken);
+        }
     }
 }
