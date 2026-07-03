@@ -32,18 +32,6 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<DepositTransactionModel>(parameters, ct);
         }
 
-        public Task<CreateResult> CreateAsync(DepositTransactionModelCreate model, CancellationToken ct = default)
-        {
-            var parameters = new UriParameters();
-            return PostAsync<CreateResult>(parameters, model, ct);
-        }
-
-        public Task<UpdateResult> VoidDepositPaymentAsync(int id, DepositRefundOptions model, CancellationToken ct = default)
-        {
-            var parameters = new UriParameters([id, "void"]);
-            return PutAsync<UpdateResult>(parameters, model, ct);
-        }
-
         #endregion
     }
 }

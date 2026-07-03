@@ -30,7 +30,7 @@ namespace Gizmo.Web.Api.Clients
 
         public Task<ExistResult> NameExistAsync(string name, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["name", name, "exist"]);
+            var parameters = new UriParameters(["name", "exists"], new Dictionary<string, string> { ["name"] = name });
             return GetAsync<ExistResult>(parameters, cancellationToken);
         }
 
@@ -53,7 +53,7 @@ namespace Gizmo.Web.Api.Clients
         public Task<UpdateResult> UnassignAsync(int id, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "unassign"]);
-            return PostAsync<UpdateResult>(parameters, cancellationToken);
+            return PutAsync<UpdateResult>(parameters, cancellationToken);
         }
 
         public Task<IEnumerable<ApplicationLicenseKeyValueModel>> OptionsAsync(int id, CancellationToken cancellationToken = default)
