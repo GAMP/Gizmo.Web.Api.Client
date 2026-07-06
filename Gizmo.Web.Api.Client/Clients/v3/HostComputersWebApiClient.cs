@@ -27,9 +27,13 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<ScreenCaptureModel>(parameters, cancellationToken);
         }
 
-        public Task<UpdateResult> RebootAsync(int id, CancellationToken cancellationToken = default)
+        public Task<UpdateResult> RebootAsync(int id, bool keepSession = false, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters([id, "reboot"]);
+            //keepSession appended only when true so the default call keeps its existing URL ({id}/reboot);
+            //the server route accepts the segment as optional (default false).
+            var parameters = keepSession
+                ? new UriParameters([id, "reboot", keepSession])
+                : new UriParameters([id, "reboot"]);
             return PostAsync<UpdateResult>(parameters, null, cancellationToken);
         }
 
@@ -87,9 +91,13 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<bool>(parameters, cancellationToken);
         }
 
-        public Task<UpdateResult> RestartClientAsync(int id, CancellationToken cancellationToken = default)
+        public Task<UpdateResult> RestartClientAsync(int id, bool keepSession = false, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters([id, "client", "restart"]);
+            //keepSession appended only when true so the default call keeps its existing URL
+            //({id}/client/restart); the server route accepts the segment as optional (default false).
+            var parameters = keepSession
+                ? new UriParameters([id, "client", "restart", keepSession])
+                : new UriParameters([id, "client", "restart"]);
             return PostAsync<UpdateResult>(parameters, null, cancellationToken);
         }
 
