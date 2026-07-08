@@ -7,6 +7,7 @@ using Microsoft.Extensions.Options;
 
 namespace Gizmo.Web.Api.User.Clients
 {
+    [UnsecureWebApiClient()]
     [WebApiRoute("api/user/v3/tokens")]
     public sealed class TokensWebApiClient : WebApiClientBase
     {
