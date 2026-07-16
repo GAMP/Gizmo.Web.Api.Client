@@ -35,25 +35,25 @@ namespace Gizmo.Web.Api.Clients
             return PostAsync<CreateResult>(parameters, model, cancellationToken);
         }
 
-        public Task<UsersAuditGetResultModel> GetAuditUsersAsync(UsersAuditModel model, CancellationToken cancellationToken = default)
+        public Task<UsersAuditSearchResultModel> GetAuditUsersAsync(UsersAuditOptionsModel model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["audit"], new Dictionary<string, string>()
             {
-                { nameof(UsersAuditModel.ByPhone), model.ByPhone.ToString() },
-                { nameof(UsersAuditModel.ByEmail), model.ByEmail.ToString() },
-                { nameof(UsersAuditModel.DefaultCountryCode), model.DefaultCountryCode }
+                { nameof(UsersAuditOptionsModel.ByPhone), model.ByPhone.ToString() },
+                { nameof(UsersAuditOptionsModel.ByEmail), model.ByEmail.ToString() },
+                { nameof(UsersAuditOptionsModel.DefaultCountryCode), model.DefaultCountryCode }
             });
 
-            return GetAsync<UsersAuditGetResultModel>(parameters, cancellationToken);
+            return GetAsync<UsersAuditSearchResultModel>(parameters, cancellationToken);
         }
 
-        public Task<Guid> AuditUsersAsync(UsersAuditModel model, CancellationToken cancellationToken = default)
+        public Task<Guid> AuditUsersAsync(UsersAuditOptionsModel model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["audit"]);
             return PostAsync<Guid>(parameters, model, cancellationToken);
         }
 
-        public async Task<UsersImportValidationResultModel> ValidateImportUsersAsync(UsersImportModel model,
+        public async Task<UsersImportValidationResultModel> ValidateImportUsersAsync(UsersImportOptionsModel model,
             Stream stream,
             string fileName,
             string contentType = "application/octet-stream",
@@ -67,13 +67,13 @@ namespace Gizmo.Web.Api.Clients
 
             var parameters = new UriParameters(["import", "validate"], new Dictionary<string, string>()
             {
-                { nameof(UsersImportModel.DefaultCountryCode), model.DefaultCountryCode }
+                { nameof(UsersImportOptionsModel.DefaultCountryCode), model.DefaultCountryCode }
             });
 
             return await PostAsync<UsersImportValidationResultModel>(parameters, content, cancellationToken);
         }
 
-        public async Task<Guid> ImportUsersAsync(UsersImportModel model,
+        public async Task<Guid> ImportUsersAsync(UsersImportOptionsModel model,
             Stream stream,
             string fileName,
             string contentType = "application/octet-stream",
@@ -87,10 +87,31 @@ namespace Gizmo.Web.Api.Clients
 
             var parameters = new UriParameters(["import"], new Dictionary<string, string>()
             {
-                { nameof(UsersImportModel.DefaultCountryCode), model.DefaultCountryCode }
+                { nameof(UsersImportOptionsModel.DefaultCountryCode), model.DefaultCountryCode }
             });
 
             return await PostAsync<Guid>(parameters, content, cancellationToken);
+        }
+
+        public async Task<Stream> ExportImportUsersErrorsReportAsync(Guid reportId, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["import", "errors", "export"], new Dictionary<string, string>()
+            {
+                { "reportId", reportId.ToString() }
+            });
+
+            var stream = new MemoryStream();
+            try
+            {
+                await GetContentCopyAsync(parameters, stream, cancellationToken).ConfigureAwait(false);
+                stream.Seek(0, SeekOrigin.Begin);
+                return stream;
+            }
+            catch
+            {
+                stream.Dispose();
+                throw;
+            }
         }
 
         public Task<UpdateResult> UpdateAsync(UserModelUpdate model, CancellationToken cancellationToken = default)
