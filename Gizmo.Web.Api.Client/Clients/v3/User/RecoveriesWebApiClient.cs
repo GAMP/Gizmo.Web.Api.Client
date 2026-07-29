@@ -31,10 +31,10 @@ namespace Gizmo.Web.Api.User.Clients
             return GetAsync<IReadOnlyList<VerificationProviderModel>>(parameters, cancellationToken);
         }
 
-        public Task<VerificationStartResultModel> PasswordRecoveryStartAsync(UserPasswordRecoveryStartModel model, CancellationToken cancellationToken = default)
+        public Task<VerificationStartResultModelBase> PasswordRecoveryStartAsync(UserPasswordRecoveryStartModel model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["password", "start"]);
-            return PostAsync<VerificationStartResultModel>(parameters, model, cancellationToken);
+            return PostAsync<VerificationStartResultModelBase>(parameters, model, cancellationToken);
         }
     }
 }
