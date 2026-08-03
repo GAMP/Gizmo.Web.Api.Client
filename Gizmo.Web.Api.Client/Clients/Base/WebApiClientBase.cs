@@ -218,6 +218,29 @@ namespace Gizmo.Web.Api.Clients
             return response.Result;
         }
 
+        /// <summary>
+        /// Posts content serialized as <typeparamref name="TContent"/> rather than as <see cref="object"/>.
+        /// </summary>
+        /// <typeparam name="TResult">Result type.</typeparam>
+        /// <typeparam name="TContent">Declared content type used for serialization.</typeparam>
+        /// <param name="parameters">Uri parameters.</param>
+        /// <param name="content">Content object.</param>
+        /// <param name="ct">Cancellation token.</param>
+        /// <remarks>
+        /// Required for polymorphic request models. Serializers pick the formatter by the static type,
+        /// so posting a union base through the <see cref="object"/> overload drops the type discriminator
+        /// and the server cannot resolve the concrete request type.
+        /// </remarks>
+        protected async Task<TResult> PostAsync<TResult, TContent>(IUriParameters parameters, TContent content, CancellationToken ct = default)
+        {
+            var uri = CreateRequestUri(parameters);
+
+            using var httpContent = await CreateContentAsync(content, ct);
+            var response = await PostResultAsync<WebApiResponse<TResult>>(uri, httpContent, ct);
+
+            return response.Result;
+        }
+
         private async Task<TResult> PostResultAsync<TResult>(Uri uri, HttpContent content, CancellationToken ct = default)
         {
             using (var httpMessage = CreateHttpRequestMessage(uri, HttpMethod.Post, content))

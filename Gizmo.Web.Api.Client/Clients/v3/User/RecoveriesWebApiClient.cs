@@ -16,25 +16,16 @@ namespace Gizmo.Web.Api.User.Clients
         {
         }
 
-        public Task<IReadOnlyList<VerificationProviderModel>> GetProvidersAsync(string? matchValue = null, CancellationToken cancellationToken = default)
+        public Task<IReadOnlyList<AvailableVerificationMethodModel>> GetMethodsAsync(CancellationToken cancellationToken = default)
         {
-            UriParameters parameters;
-            if (!string.IsNullOrEmpty(matchValue))
-            {
-                var query = new Dictionary<string, string> { ["matchValue"] = matchValue };
-                parameters = new UriParameters(["providers"], query);
-            }
-            else
-            {
-                parameters = new UriParameters(["providers"]);
-            }
-            return GetAsync<IReadOnlyList<VerificationProviderModel>>(parameters, cancellationToken);
+            var parameters = new UriParameters(["methods"]);
+            return GetAsync<IReadOnlyList<AvailableVerificationMethodModel>>(parameters, cancellationToken);
         }
 
-        public Task<VerificationStartResultModelBase> PasswordRecoveryStartAsync(UserPasswordRecoveryStartModel model, CancellationToken cancellationToken = default)
+        public Task<VerificationStartResultModelBase> PasswordRecoveryStartAsync(PasswordRecoveryMethodStartModel model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["password", "start"]);
-            return PostAsync<VerificationStartResultModelBase>(parameters, model, cancellationToken);
+            return PostAsync<VerificationStartResultModelBase, PasswordRecoveryMethodStartModel>(parameters, model, cancellationToken);
         }
     }
 }

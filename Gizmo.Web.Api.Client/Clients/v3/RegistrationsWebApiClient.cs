@@ -14,16 +14,16 @@ namespace Gizmo.Web.Api.Clients
         {
         }
 
-        public Task<IReadOnlyList<VerificationProviderModel>> GetProvidersAsync(CancellationToken cancellationToken = default)
+        public Task<IReadOnlyList<AvailableVerificationMethodModel>> GetMethodsAsync(CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["providers"]);
-            return GetAsync<IReadOnlyList<VerificationProviderModel>>(parameters, cancellationToken);
+            var parameters = new UriParameters(["methods"]);
+            return GetAsync<IReadOnlyList<AvailableVerificationMethodModel>>(parameters, cancellationToken);
         }
 
-        public Task<VerificationStartResultModelBase> StartAsync(RegistrationStartModel model, CancellationToken cancellationToken = default)
+        public Task<VerificationStartResultModelBase> StartAsync(RegistrationMethodStartModel model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["start"]);
-            return PostAsync<VerificationStartResultModelBase>(parameters, model, cancellationToken);
+            return PostAsync<VerificationStartResultModelBase, RegistrationMethodStartModel>(parameters, model, cancellationToken);
         }
 
         public Task<AccountCreationByTokenCompleteResultCode> CompleteAsync(RegistrationCompleteModel model, CancellationToken cancellationToken = default)
