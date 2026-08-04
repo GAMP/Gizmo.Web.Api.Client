@@ -25,7 +25,10 @@ namespace Gizmo.Web.Api.User.Clients
         public Task<VerificationStartResultModelBase> PasswordRecoveryStartAsync(PasswordRecoveryMethodStartModel model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["password", "start"]);
-            return PostAsync<VerificationStartResultModelBase, PasswordRecoveryMethodStartModel>(parameters, model, cancellationToken);
+            return PostAsync<VerificationStartResultModelBase>(
+                parameters,
+                new PasswordRecoveryMethodStartRequest { Method = model },
+                cancellationToken);
         }
     }
 }
