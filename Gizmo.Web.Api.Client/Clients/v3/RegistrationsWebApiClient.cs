@@ -20,13 +20,10 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<IReadOnlyList<AvailableVerificationMethodModel>>(parameters, cancellationToken);
         }
 
-        public Task<VerificationStartResultModelBase> StartAsync(RegistrationMethodStartModel model, CancellationToken cancellationToken = default)
+        public Task<VerificationStartResultModelBase> StartAsync(VerificationMethodStartModelBase model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["start"]);
-            return PostAsync<VerificationStartResultModelBase>(
-                parameters,
-                new RegistrationMethodStartRequest { Method = model },
-                cancellationToken);
+            return PostAsync<VerificationStartResultModelBase>(parameters, model, cancellationToken);
         }
 
         public Task<AccountCreationByTokenCompleteResultCode> CompleteAsync(RegistrationCompleteModel model, CancellationToken cancellationToken = default)
