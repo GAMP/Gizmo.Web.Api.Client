@@ -16,23 +16,19 @@ namespace Gizmo.Web.Api.User.Clients
         {
         }
 
-        public Task<IReadOnlyList<AvailableVerificationMethodModel>> GetMethodsAsync(CancellationToken cancellationToken = default)
+        public Task<IReadOnlyList<AvailableVerificationMethodModel>> GetMethodsAsync(GetRecoveryMethodsModel model, CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["methods"]);
-            return GetAsync<IReadOnlyList<AvailableVerificationMethodModel>>(parameters, cancellationToken);
-        }
-
-        public Task<IReadOnlyList<AvailableVerificationMethodModel>> GetMethodsAsync(VerificationMethodValueKind valueKind, string? value, CancellationToken cancellationToken = default)
-        {
-            var query = new Dictionary<string, string> { ["valueKind"] = ((int)valueKind).ToString() };
-            if (!string.IsNullOrEmpty(value))
-                query["value"] = value;
+            var query = new Dictionary<string, string>
+            {
+                ["value"] = model.Value,
+                ["valueKind"] = ((int)model.ValueKind).ToString()
+            };
 
             var parameters = new UriParameters(["methods"], query);
             return GetAsync<IReadOnlyList<AvailableVerificationMethodModel>>(parameters, cancellationToken);
         }
 
-        public Task<VerificationStartResultModelBase> PasswordRecoveryStartAsync(VerificationMethodStartModelBase model, CancellationToken cancellationToken = default)
+        public Task<VerificationStartResultModelBase> PasswordRecoveryStartAsync(UserPasswordRecoveryMethodStartModel model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["password", "start"]);
             return PostAsync<VerificationStartResultModelBase>(parameters, model, cancellationToken);

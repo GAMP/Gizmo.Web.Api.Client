@@ -7,7 +7,8 @@ using Microsoft.Extensions.Options;
 
 namespace Gizmo.Web.Api.Clients
 {
-    [WebApiRoute("api/v3/registrations")]
+    [UnsecureWebApiClient()]
+    [WebApiRoute("api/user/v3/registrations")]
     public sealed class RegistrationsWebApiClient : WebApiClientBase
     {
         public RegistrationsWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) : base(httpClient, options, payloadSerializerProvider)
@@ -20,7 +21,7 @@ namespace Gizmo.Web.Api.Clients
             return GetAsync<IReadOnlyList<AvailableVerificationMethodModel>>(parameters, cancellationToken);
         }
 
-        public Task<VerificationStartResultModelBase> StartAsync(VerificationMethodStartModelBase model, CancellationToken cancellationToken = default)
+        public Task<VerificationStartResultModelBase> StartAsync(UserRegistrationMethodStartModel model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["start"]);
             return PostAsync<VerificationStartResultModelBase>(parameters, model, cancellationToken);
