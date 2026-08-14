@@ -14,6 +14,12 @@ namespace Gizmo.Web.Api.Clients
         {
         }
 
+        public Task<PagedList<DepositPaymentReceiptModel>> ReceiptsAsync(DepositPaymentReceiptsFilter filter, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["receipts"], filter);
+            return GetAsync<PagedList<DepositPaymentReceiptModel>>(parameters, cancellationToken);
+        }
+
         public Task<DepositPaymentRefundResultModel> VoidAsync(int id, RefundModel? model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "void"]);
