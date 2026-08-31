@@ -7,23 +7,24 @@ using Microsoft.Extensions.Options;
 
 namespace Gizmo.Web.Api.Clients
 {
-    [WebApiRoute("api/v3/registrations")]
+    [UnsecureWebApiClient()]
+    [WebApiRoute("api/user/v3/registrations")]
     public sealed class RegistrationsWebApiClient : WebApiClientBase
     {
         public RegistrationsWebApiClient(HttpClient httpClient, IOptions<WebApiClientOptions> options, IPayloadSerializerProvider payloadSerializerProvider) : base(httpClient, options, payloadSerializerProvider)
         {
         }
 
-        public Task<IReadOnlyList<VerificationProviderModel>> GetProvidersAsync(CancellationToken cancellationToken = default)
+        public Task<IReadOnlyList<AvailableVerificationMethodModel>> GetMethodsAsync(CancellationToken cancellationToken = default)
         {
-            var parameters = new UriParameters(["providers"]);
-            return GetAsync<IReadOnlyList<VerificationProviderModel>>(parameters, cancellationToken);
+            var parameters = new UriParameters(["methods"]);
+            return GetAsync<IReadOnlyList<AvailableVerificationMethodModel>>(parameters, cancellationToken);
         }
 
-        public Task<VerificationStartResultModel> StartAsync(RegistrationStartModel model, CancellationToken cancellationToken = default)
+        public Task<VerificationStartResultModelBase> StartAsync(UserRegistrationMethodStartModel model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["start"]);
-            return PostAsync<VerificationStartResultModel>(parameters, model, cancellationToken);
+            return PostAsync<VerificationStartResultModelBase>(parameters, model, cancellationToken);
         }
 
         public Task<AccountCreationByTokenCompleteResultCode> CompleteAsync(RegistrationCompleteModel model, CancellationToken cancellationToken = default)
