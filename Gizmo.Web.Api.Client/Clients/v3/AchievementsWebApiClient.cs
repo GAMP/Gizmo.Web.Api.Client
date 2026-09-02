@@ -67,17 +67,5 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters(["signals"]);
             return GetAsync<IReadOnlyList<AchievementSignalModel>>(parameters, cancellationToken);
         }
-
-        public Task<AchievementLadderModel> LadderGetAsync(CancellationToken cancellationToken = default)
-        {
-            var parameters = new UriParameters(["ladder"]);
-            return GetAsync<AchievementLadderModel>(parameters, cancellationToken);
-        }
-
-        public Task<UpdateResult> LadderSetAsync(AchievementLadderModel model, CancellationToken cancellationToken = default)
-        {
-            var parameters = new UriParameters(["ladder"]);
-            return PutAsync<UpdateResult>(parameters, model, cancellationToken);
-        }
     }
 }
