@@ -67,5 +67,35 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters(["signals"]);
             return GetAsync<IReadOnlyList<AchievementSignalModel>>(parameters, cancellationToken);
         }
+
+        /// <summary>
+        /// Gets a user's achievements view as the user sees it — the visible catalog with
+        /// lifetime completions, current-instance standing, live progress and state per
+        /// achievement. An unknown user id fails the standard entity-not-found way. Pass a
+        /// filter with Progress false to skip the expensive live measurement, or with
+        /// IncludeUnavailable false to list only what the user can still earn.
+        /// </summary>
+        public Task<UserAchievementsModel> GetUserAchievementsAsync(int userId, UserAchievementsFilter filter = null, CancellationToken cancellationToken = default)
+        {
+            var parameters = filter is null
+                ? new UriParameters(["users", userId, "achievements"])
+                : new UriParameters(["users", userId, "achievements"], filter);
+            return GetAsync<UserAchievementsModel>(parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a user's challenges view as the user sees it — the visible challenges with
+        /// requirement progress, earned completions and their reward grant states. Null for an
+        /// unknown user. Pass a filter with Progress false to skip the expensive live progress
+        /// collection, or with IncludeUnavailable false to list only the challenges that are
+        /// still open.
+        /// </summary>
+        public Task<UserAchievementChallengesModel> GetUserChallengesAsync(int userId, UserAchievementChallengesFilter filter = null, CancellationToken cancellationToken = default)
+        {
+            var parameters = filter is null
+                ? new UriParameters(["users", userId, "challenges"])
+                : new UriParameters(["users", userId, "challenges"], filter);
+            return GetAsync<UserAchievementChallengesModel>(parameters, cancellationToken);
+        }
     }
 }
