@@ -75,7 +75,7 @@ namespace Gizmo.Web.Api.Clients
         /// filter with Progress false to skip the expensive live measurement, or with
         /// IncludeUnavailable false to list only what the user can still earn.
         /// </summary>
-        public Task<UserAchievementsModel> GetUserAchievementsAsync(int userId, UserAchievementsFilter filter = null, CancellationToken cancellationToken = default)
+        public Task<UserAchievementsModel> GetUserAchievementsAsync(int userId, UserAchievementsFilter? filter = null, CancellationToken cancellationToken = default)
         {
             var parameters = filter is null
                 ? new UriParameters(["users", userId, "achievements"])
@@ -90,7 +90,7 @@ namespace Gizmo.Web.Api.Clients
         /// collection, or with IncludeUnavailable false to list only the challenges that are
         /// still open.
         /// </summary>
-        public Task<UserAchievementChallengesModel> GetUserChallengesAsync(int userId, UserAchievementChallengesFilter filter = null, CancellationToken cancellationToken = default)
+        public Task<UserAchievementChallengesModel> GetUserChallengesAsync(int userId, UserAchievementChallengesFilter? filter = null, CancellationToken cancellationToken = default)
         {
             var parameters = filter is null
                 ? new UriParameters(["users", userId, "challenges"])
