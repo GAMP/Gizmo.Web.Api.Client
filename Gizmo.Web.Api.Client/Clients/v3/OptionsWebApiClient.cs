@@ -77,6 +77,24 @@ namespace Gizmo.Web.Api.Clients
             return PostAsync<UpdateResult>(parameters, options, cancellationToken);
         }
 
+        public Task<ActionCenterOptions> ActionCenterAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["actioncenter"]);
+            return GetAsync<ActionCenterOptions>(parameters, cancellationToken);
+        }
+
+        public Task<StoreOptionsReadPack> ActionCenterPackAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["actioncenter", "pack"]);
+            return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> ActionCenterAsync(ActionCenterOptions options, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["actioncenter"]);
+            return PostAsync<UpdateResult>(parameters, options, cancellationToken);
+        }
+
         public Task<BusinessOptions> BusinessAsync(CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["business"]);
