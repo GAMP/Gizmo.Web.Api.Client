@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -121,7 +122,8 @@ namespace Gizmo.Web.Api.Clients
         public Task<UpdateResult> MarkAsync(IEnumerable<ProductOrderLineMarkModel> models, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["orderlines", "mark"]);
-            return PutAsync<UpdateResult>(parameters, models, cancellationToken);
+            //content is serialized by its runtime type, collection expression and linq iterator types have no formatter
+            return PutAsync<UpdateResult>(parameters, models.ToArray(), cancellationToken);
         }
 
         public Task<PaymentsAllowedModel> PaymentMethodsAllowedAsync(int id, CancellationToken cancellationToken = default)
