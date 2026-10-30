@@ -39,6 +39,15 @@ namespace Gizmo.Web.Api.Clients
             return PostAsync<AccountCreationCompleteResultCode>(parameters, model, cancellationToken);
         }
 
+        /// <summary>
+        /// Gets user information required by the default user group; <c>null</c> when no default group is configured.
+        /// </summary>
+        public Task<UserModelRequiredInfo?> GetRequiredInfoAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["requiredinfo"]);
+            return GetAsync<UserModelRequiredInfo?>(parameters, cancellationToken);
+        }
+
         public Task<TokenConfirmedResultModel> ConfirmedAsync(TokenCheckModel model, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(["confirmed"]);
