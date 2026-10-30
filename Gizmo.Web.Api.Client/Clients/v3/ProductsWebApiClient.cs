@@ -58,6 +58,12 @@ namespace Gizmo.Web.Api.Clients
             return PutAsync<UpdateResult>(parameters, ct);
         }
 
+        public Task<CreateResult> DuplicateAsync(int id, ProductModelDuplicate model, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters([id, "duplicate"]);
+            return PostAsync<CreateResult>(parameters, model, ct);
+        }
+
         public Task<IEnumerable<ProductBundledModel>> GetBundledProductsAsync(int bundleId, CancellationToken ct = default)
         {
             var parameters = new UriParameters(["bundle", bundleId, "bundledproducts"]);
