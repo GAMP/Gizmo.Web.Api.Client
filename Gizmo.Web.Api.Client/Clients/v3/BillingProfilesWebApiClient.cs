@@ -75,6 +75,12 @@ namespace Gizmo.Web.Api.Clients
             return DeleteAsync<DeleteResult>(parameters, ct);
         } 
 
+        public Task<CreateResult> DuplicateAsync(int id, BillingProfileModelDuplicate model, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters(new object[] { id, "duplicate" });
+            return PostAsync<CreateResult>(parameters, model, ct);
+        }
+
         #endregion
     }
 }
