@@ -27,13 +27,17 @@ namespace Gizmo.Web.Api.Clients.Builder
             //add payload serializer
             services.AddSingleton<IPayloadSerializerProvider, DefaultPayloadSerializerProvider>();
 
-            //find desired http client method
+            //client configuration belongs to the http client name, add it once rather than once per api client type
+            services.AddHttpClient(clientName, configureClient);
+
+            //find the typed client registration that binds to an existing name without adding configuration
             var httpMethod = Array.Find(typeof(HttpClientFactoryServiceCollectionExtensions).GetMethods(BindingFlags.Static | BindingFlags.Public),
                     methodInfo =>
                     methodInfo.Name == nameof(HttpClientFactoryServiceCollectionExtensions.AddHttpClient)
                     && methodInfo.IsGenericMethod
-                    && methodInfo.GetParameters().Length == 3
-                    && methodInfo.GetParameters()[2].ParameterType == typeof(Action<IServiceProvider, HttpClient>));
+                    && methodInfo.GetGenericArguments().Length == 1
+                    && methodInfo.GetParameters().Length == 2
+                    && methodInfo.GetParameters()[1].ParameterType == typeof(string));
 
             if (httpMethod == null)
                 throw new NotSupportedException("Unable to find AddHttpClient method.");
@@ -58,7 +62,7 @@ namespace Gizmo.Web.Api.Clients.Builder
                     //invoke the method
                     var httpClientBuilder = (IHttpClientBuilder)httpMethod
                         .MakeGenericMethod(clientType)
-                        .Invoke(null, [services, clientName, configureClient])!;
+                        .Invoke(null, [services, clientName])!;
                   
                     httpClientBuilders.Add(httpClientBuilder);
                 }
@@ -82,13 +86,17 @@ namespace Gizmo.Web.Api.Clients.Builder
             //add payload serializer
             services.AddSingleton<IPayloadSerializerProvider, DefaultPayloadSerializerProvider>();
 
-            //find desired http client method
+            //client configuration belongs to the http client name, add it once rather than once per api client type
+            services.AddHttpClient(clientName, configureClient);
+
+            //find the typed client registration that binds to an existing name without adding configuration
             var httpMethod = Array.Find(typeof(HttpClientFactoryServiceCollectionExtensions).GetMethods(BindingFlags.Static | BindingFlags.Public),
                     methodInfo =>
                     methodInfo.Name == nameof(HttpClientFactoryServiceCollectionExtensions.AddHttpClient)
                     && methodInfo.IsGenericMethod
-                    && methodInfo.GetParameters().Length == 3
-                    && methodInfo.GetParameters()[2].ParameterType == typeof(Action<IServiceProvider, HttpClient>));
+                    && methodInfo.GetGenericArguments().Length == 1
+                    && methodInfo.GetParameters().Length == 2
+                    && methodInfo.GetParameters()[1].ParameterType == typeof(string));
 
             if (httpMethod == null)
                 throw new NotSupportedException("Unable to find AddHttpClient method.");
@@ -113,7 +121,7 @@ namespace Gizmo.Web.Api.Clients.Builder
                         //invoke the method
                         var httpClientBuilder = (IHttpClientBuilder)httpMethod
                             .MakeGenericMethod(clientType)
-                            .Invoke(null, [services, clientName, configureClient])!;
+                            .Invoke(null, [services, clientName])!;
 
                         httpClientBuilders.Add(httpClientBuilder);
                     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,7 +24,9 @@ namespace Gizmo.Web.Api.Clients.Builder
         public WebApiClientBuilder(IServiceCollection services, IEnumerable<IHttpClientBuilder> httpClientBuilders)
         {
             _services = services;
-            _httpClientBuilders = httpClientBuilders;
+            //all web api client types share one http client name and the handler pipeline belongs to the name,
+            //configuring every type's builder would add the same handler once per api client type
+            _httpClientBuilders = httpClientBuilders.DistinctBy(builder => builder.Name).ToList();
         }
 
         #endregion
