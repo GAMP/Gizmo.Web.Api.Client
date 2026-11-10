@@ -32,5 +32,23 @@ namespace Gizmo.Web.Api.User.Clients
             var parameters = new UriParameters();
             return PutAsync<UpdateResult>(parameters, model, cancellationToken);
         }
+
+        /// <summary>
+        /// Changes the password of the current user.
+        /// </summary>
+        public Task<UpdateResult> ChangePasswordAsync(UserPasswordChangeModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["password"]);
+            return PutAsync<UpdateResult>(parameters, model, cancellationToken);
+        }
+
+        /// <summary>
+        /// Deletes the current user account (soft delete).
+        /// </summary>
+        public Task<DeleteResult> DeleteAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters();
+            return DeleteAsync<DeleteResult>(parameters, cancellationToken);
+        }
     }
 }
