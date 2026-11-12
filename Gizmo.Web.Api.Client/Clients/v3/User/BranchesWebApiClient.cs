@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,21 +19,12 @@ namespace Gizmo.Web.Api.User.Clients
         }
 
         /// <summary>
-        /// Gets the active branches ordered by name, optionally of one city.
+        /// Gets the active branches ordered by name.
         /// </summary>
         public Task<PagedList<UserBranchModel>> GetAsync(UserBranchesFilter filter, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters(filter);
             return GetAsync<PagedList<UserBranchModel>>(parameters, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the distinct cities of the active branches.
-        /// </summary>
-        public Task<IEnumerable<string>> GetCitiesAsync(CancellationToken cancellationToken = default)
-        {
-            var parameters = new UriParameters(["cities"]);
-            return GetAsync<IEnumerable<string>>(parameters, cancellationToken);
         }
 
         /// <summary>
