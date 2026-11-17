@@ -49,5 +49,23 @@ namespace Gizmo.Web.Api.Clients
             var parameters = new UriParameters(["license"]);
             return GetAsync<LicenseResultModel>(parameters, cancellationToken);
         }
+
+        public Task<InstanceBindingModel> BindingStateAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["binding"]);
+            return GetAsync<InstanceBindingModel>(parameters, cancellationToken);
+        }
+
+        public Task<InstanceBindingResultModel> BindingAsync(InstanceBindingParametersModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["binding"]);
+            return PostAsync<InstanceBindingResultModel>(parameters, model, cancellationToken);
+        }
+
+        public Task<PortalInstancesResultModel> InstancesAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["instances"]);
+            return GetAsync<PortalInstancesResultModel>(parameters, cancellationToken);
+        }
     }
 }
