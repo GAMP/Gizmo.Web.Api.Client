@@ -80,6 +80,18 @@ namespace Gizmo.Web.Api.Clients
             return PutAsync<UpdateResult>(parameters, ct);
         }
 
+        public Task<UserGroupProductAvailabilityModel> GetProductAvailabilityAsync(int id, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters([id, "productavailability"]);
+            return GetAsync<UserGroupProductAvailabilityModel>(parameters, ct);
+        }
+
+        public Task<UpdateResult> UpdateProductAvailabilityAsync(int id, UserGroupProductAvailabilityModel model, CancellationToken ct = default)
+        {
+            var parameters = new UriParameters([id, "productavailability"]);
+            return PutAsync<UpdateResult>(parameters, model, ct);
+        }
+
         #endregion
     }
 }
