@@ -90,5 +90,23 @@ namespace Gizmo.Web.Api.User.Clients
             var parameters = new UriParameters(["book"]);
             return PostAsync<UserReservationBookResultModel>(parameters, model, cancellationToken);
         }
+
+        /// <summary>
+        /// Starts the online payment of the whole outstanding amount of an own not paid reservation; returns the payment page url.
+        /// </summary>
+        public Task<UserReservationPayResultModel> PayAsync(UserReservationPayModel model, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["pay"]);
+            return PostAsync<UserReservationPayResultModel>(parameters, model, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the state of an own reservation payment; an abandoned payment is cancelled by the server.
+        /// </summary>
+        public Task<UserPaymentIntentStateModel> PaymentStateAsync(UserPaymentIntentFilter filter, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["payment", "state"], filter);
+            return GetAsync<UserPaymentIntentStateModel>(parameters, cancellationToken);
+        }
     }
 }
