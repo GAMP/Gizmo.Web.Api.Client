@@ -167,12 +167,6 @@ namespace Gizmo.Web.Api.Clients
             return PostAsync<SystemProcessCreateResultModel>(parameters, createParameters, cancellationToken);
         }
 
-        public Task<SystemProcessCreateResultModel> AutoItScriptExecuteAsync(int id, SystemScripProcessCreateModel createParameters, CancellationToken cancellationToken = default)
-        {
-            var parameters = new UriParameters([id, "script", "autoit"]);
-            return PostAsync<SystemProcessCreateResultModel>(parameters, createParameters, cancellationToken);
-        }
-
         public Task<SystemProcessCreateResultModel> VisualBasicScriptExecuteAsync(int id, SystemScripProcessCreateModel createParameters, CancellationToken cancellationToken = default)
         {
             var parameters = new UriParameters([id, "script", "visualbasic"]);
