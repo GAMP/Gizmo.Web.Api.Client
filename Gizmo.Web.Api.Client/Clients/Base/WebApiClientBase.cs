@@ -33,7 +33,6 @@ namespace Gizmo.Web.Api.Clients
         {
             HttpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
             SerializerProvider = payloadSerializerProvider;
-            Serializer = SerializerProvider.DefaultSerializer;
             Options = options.Value;
         }
 
@@ -61,7 +60,19 @@ namespace Gizmo.Web.Api.Clients
         /// <summary>
         /// Gets current payload serializer.
         /// </summary>
-        private IPayloadSerializer Serializer { get; }
+        private IPayloadSerializer Serializer => PayloadSerializerName is null
+            ? SerializerProvider.DefaultSerializer
+            : SerializerProvider.GetSerializer(PayloadSerializerName) ?? SerializerProvider.DefaultSerializer;
+
+        /// <summary>
+        /// Gets or sets the name of the payload serializer this client speaks.<br></br>
+        /// <b>Default value is null, which selects the default serializer.</b>
+        /// </summary>
+        /// <remarks>
+        /// Some endpoints answer with a different payload format than the default one, so the
+        /// serializer is selected per client instead of per service collection.
+        /// </remarks>
+        protected string? PayloadSerializerName { get; set; }
 
         /// <summary>
         /// Indicates that responses expected to be wrapped with <see cref="WebApiResponse{T}"/>.<br></br>
@@ -183,9 +194,10 @@ namespace Gizmo.Web.Api.Clients
             var uri = CreateRequestUri(parameters);
 
             using var httpContent = await CreateContentAsync(content, ct);
-            var response = await PutResultAsync<WebApiResponse<TResult>>(uri, httpContent, ct);
 
-            return response.Result;
+            return UseResponseWrapping
+                ? (await PutResultAsync<WebApiResponse<TResult>>(uri, httpContent, ct)).Result
+                : await PutResultAsync<TResult>(uri, httpContent, ct);
         }
 
         private async Task<TResult> PutResultAsync<TResult>(Uri uri, HttpContent content, CancellationToken ct = default)
@@ -213,9 +225,10 @@ namespace Gizmo.Web.Api.Clients
             var uri = CreateRequestUri(parameters);
 
             using var httpContent = await CreateContentAsync(content, ct);
-            var response = await PostResultAsync<WebApiResponse<TResult>>(uri, httpContent, ct);
 
-            return response.Result;
+            return UseResponseWrapping
+                ? (await PostResultAsync<WebApiResponse<TResult>>(uri, httpContent, ct)).Result
+                : await PostResultAsync<TResult>(uri, httpContent, ct);
         }
 
         private async Task<TResult> PostResultAsync<TResult>(Uri uri, HttpContent content, CancellationToken ct = default)
@@ -305,9 +318,9 @@ namespace Gizmo.Web.Api.Clients
         {
             var uri = CreateRequestUri(parameters);
 
-            var response = await DeleteResultAsync<WebApiResponse<TResult>>(uri, ct);
-
-            return response.Result;
+            return UseResponseWrapping
+                ? (await DeleteResultAsync<WebApiResponse<TResult>>(uri, ct)).Result
+                : await DeleteResultAsync<TResult>(uri, ct);
         }
 
         private async Task<TResult> DeleteResultAsync<TResult>(Uri uri, CancellationToken ct = default)
@@ -365,6 +378,10 @@ namespace Gizmo.Web.Api.Clients
             //error information provided by web api error result model
             await ThrowApiExceptionIfRequiredAsync(httpResponseMessage, ct);
 
+            //a no content response carries no payload to deserialize
+            if (httpResponseMessage.StatusCode == HttpStatusCode.NoContent)
+                return default!;
+
             try
             {
                 //create content stream
@@ -398,12 +415,16 @@ namespace Gizmo.Web.Api.Clients
                 //allow normal response message processing in case of OK status code.
                 case HttpStatusCode.OK:
                     return;
+                //a no content response is a successful response without a payload.
+                case HttpStatusCode.NoContent:
+                    return;
                 //web api should always respond with this two http status codes in case of an error
                 case HttpStatusCode.InternalServerError:
                 case HttpStatusCode.BadRequest:
                     if (!UseResponseWrapping)
                     {
-                        //in case responses are not wrapped we have no way of obtaining extended error information
+                        //an unwrapped response can still carry the shared error envelope, so it is read when present
+                        await ThrowApiExceptionFromErrorResponseAsync(httpResponseMessage, ct);
                         goto default;
                     }
                     break;
@@ -441,6 +462,37 @@ namespace Gizmo.Web.Api.Clients
                 //we should translate them to custom exceptions so we can handle them appropriately 
 
                 throw;
+            }
+        }
+
+        /// <summary>
+        /// Throws the shared client exception when the response body carries the web api error envelope.
+        /// </summary>
+        /// <param name="httpResponseMessage">HTTP response message.</param>
+        /// <param name="ct">Cancellation token.</param>
+        /// <remarks>
+        /// An endpoint that answers with an unwrapped payload can still answer with the shared error
+        /// envelope on failure, so the envelope is read when it is there. A body that is not the
+        /// envelope leaves the status code as the only available information.
+        /// </remarks>
+        private async Task ThrowApiExceptionFromErrorResponseAsync(HttpResponseMessage httpResponseMessage, CancellationToken ct)
+        {
+            try
+            {
+                using var contentStream = await httpResponseMessage.Content.ReadAsStreamAsync(ct);
+
+                var errorResponse = await Serializer.DeserializeAsync<WebApiErrorResponse>(contentStream, ct);
+
+                if (errorResponse is not null)
+                    ThrowExceptionForResponse(errorResponse);
+            }
+            catch (WebApiClientException)
+            {
+                throw;
+            }
+            catch
+            {
+                //the body is not the shared error envelope, the status code is the only available information
             }
         }
 
