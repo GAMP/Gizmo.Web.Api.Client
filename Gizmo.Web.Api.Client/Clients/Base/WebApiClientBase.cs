@@ -321,6 +321,25 @@ namespace Gizmo.Web.Api.Clients
             }
         }
 
+        /// <summary>
+        /// Sends a DELETE request with a body.
+        /// </summary>
+        /// <param name="parameters">Uri parameters.</param>
+        /// <param name="content">Request body.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        protected async Task<TResult> DeleteAsync<TResult>(IUriParameters parameters, object? content, CancellationToken cancellationToken = default)
+        {
+            var uri = CreateRequestUri(parameters);
+
+            using var httpContent = await CreateContentAsync(content, cancellationToken);
+            using var httpMessage = CreateHttpRequestMessage(uri, HttpMethod.Delete, httpContent);
+            using var responseMessage = await HttpClient.SendAsync(httpMessage, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+
+            var response = await GetHttpMessageResultAsync<WebApiResponse<TResult>>(responseMessage, cancellationToken);
+
+            return response.Result;
+        }
+
         #endregion
 
         #endregion
