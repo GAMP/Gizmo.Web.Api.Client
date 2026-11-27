@@ -693,5 +693,23 @@ namespace Gizmo.Web.Api.Clients
         {
             return ReadAsync<RemoteControlHotkeysOptions>(cancellationToken);
         }
+
+        public Task<AIOptions> AIAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["ai"]);
+            return GetAsync<AIOptions>(parameters, cancellationToken);
+        }
+
+        public Task<StoreOptionsReadPack> AIPackAsync(CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["ai", "pack"]);
+            return GetAsync<StoreOptionsReadPack>(parameters, cancellationToken);
+        }
+
+        public Task<UpdateResult> AIAsync(AIOptions options, CancellationToken cancellationToken = default)
+        {
+            var parameters = new UriParameters(["ai"]);
+            return PostAsync<UpdateResult>(parameters, options, cancellationToken);
+        }
     }
 }
