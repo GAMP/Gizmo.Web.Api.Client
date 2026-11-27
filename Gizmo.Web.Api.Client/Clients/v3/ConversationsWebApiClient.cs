@@ -51,6 +51,18 @@ namespace Gizmo.Web.Api.Clients
         }
 
         /// <summary>
+        /// Gets the enabled AI chat connections and the models each offers, for starting an AI conversation.
+        /// </summary>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <remarks>
+        /// A connection that could not list its models comes back with its error and no models.
+        /// </remarks>
+        public Task<IEnumerable<ConversationAIConnectionModel>> GetAIConnectionsAsync(CancellationToken cancellationToken = default)
+        {
+            return GetAsync<IEnumerable<ConversationAIConnectionModel>>(new UriParameters(["ai-models"]), cancellationToken);
+        }
+
+        /// <summary>
         /// Creates a conversation owned by the caller.
         /// </summary>
         /// <param name="model">The conversation; mentioned AIs and people are added, the first AI is the primary one.</param>
@@ -153,7 +165,19 @@ namespace Gizmo.Web.Api.Clients
         /// when the client fell too far behind; reconnecting is the caller's choice, passing the last entry's id.
         /// Read here rather than with the shared SSE helper, which ignores event types and sends no last event id.
         /// </remarks>
-        public async IAsyncEnumerable<ConversationEntryModel> StreamAsync(Guid? lastEventId = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        public IAsyncEnumerable<ConversationEntryModel> StreamAsync(Guid? lastEventId = null, CancellationToken cancellationToken = default) =>
+            StreamAsync(lastEventId, null, cancellationToken);
+
+        /// <summary>
+        /// Streams the entries of all the caller's conversations as they are stored, and says when the stream is open.
+        /// </summary>
+        /// <param name="lastEventId">The id of the last entry received before a reconnect; the server first re-sends
+        /// what was stored from shortly before it, so entries already held must be dropped by id.</param>
+        /// <param name="connected">Called once the server has answered: it subscribes the stream before answering, so
+        /// every entry stored from then on comes through it. A caller can load what came before only after this and
+        /// lose nothing in between.</param>
+        /// <param name="cancellationToken">Cancellation token; cancel to close the stream.</param>
+        public async IAsyncEnumerable<ConversationEntryModel> StreamAsync(Guid? lastEventId, Action? connected, [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             var uri = CreateRequestUri(new UriParameters(["stream"]));
 
@@ -165,6 +189,8 @@ namespace Gizmo.Web.Api.Clients
 
             using var response = await HttpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
             await ThrowApiExceptionIfRequiredAsync(response, cancellationToken);
+
+            connected?.Invoke();
 
             using var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
 
